@@ -1,0 +1,37 @@
+{
+    "name": "yab/formmaker",
+    "description": "Magical Form building Facades, helpers and more!",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Matt Lantz",
+            "email": "matt@yabhq.com"
+        },
+        {
+            "name": "Chris Blackwell",
+            "email": "chris@yabhq.com"
+        }
+    ],
+    "require": {
+        "php": ">=5.5.9",
+        "illuminate/support": "5.*",
+        "doctrine/dbal": "^2.5",
+        "laravelcollective/html": "^5.2|^5.1"
+    },
+    "require-dev": {
+        "illuminate/container": "^5.2|^5.1",
+        "mockery/mockery": "^0.9.4",
+        "mikey179/vfsStream": "^1.6",
+        "orchestra/testbench": "^3.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Yab\\FormMaker\\": "src/"
+        },
+        "files": [
+          "src/Helpers/form_maker.php",
+          "src/Helpers/input_maker.php"
+        ]
+    },
+    "minimum-stability": "stable"
+}
