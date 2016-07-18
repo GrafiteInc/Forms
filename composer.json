@@ -1,6 +1,6 @@
 {
     "name": "yab/formmaker",
-    "description": "Magical Form building Facades, helpers and more!",
+    "description": "A remarkably magical form and input maker tool for Laravel.",
     "license": "MIT",
     "authors": [
         {
