@@ -242,7 +242,6 @@ FormMaker::fromObject(Books::find(1), FormMaker::getFromColumns('books'))
 ```
 
 This will build the form off the columns of the table. Though the fromObject will scan through the object, but providing the table columns as the columns input allows the inputs to be set to thier correct type.
-```
 
 ----
 
