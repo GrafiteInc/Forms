@@ -2,7 +2,7 @@
 
 **FormMaker** - A remarkably magical form and input maker tool for Laravel.
 
-[![Codeship](https://img.shields.io/codeship/      .svg?maxAge=2592000)](https://packagist.org/packages/yab/formmaker)
+[![Codeship](https://img.shields.io/codeship/30f7f800-2f40-0134-aa06-4a25dba64f1f.svg?maxAge=2592000)](https://packagist.org/packages/yab/formmaker)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/YABhq/FormMaker/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/YABhq/FormMaker/?branch=develop)
 [![Packagist](https://img.shields.io/packagist/dt/yab/formmaker.svg?maxAge=2592000)](https://packagist.org/packages/yab/formmaker)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://packagist.org/packages/yab/formmaker)
