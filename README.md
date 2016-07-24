@@ -2,10 +2,10 @@
 
 **FormMaker** - A remarkably magical form and input maker tool for Laravel.
 
-[![Codeship](https://img.shields.io/codeship/30f7f800-2f40-0134-aa06-4a25dba64f1f.svg?maxAge=2592000)](https://packagist.org/packages/yab/formmaker)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/YABhq/FormMaker/badges/quality-score.png?b=develop)](https://scrutinizer-ci.com/g/YABhq/FormMaker/?branch=develop)
-[![Packagist](https://img.shields.io/packagist/dt/yab/formmaker.svg?maxAge=2592000)](https://packagist.org/packages/yab/formmaker)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg?maxAge=2592000)](https://packagist.org/packages/yab/formmaker)
+[![Codeship](https://img.shields.io/codeship/30f7f800-2f40-0134-aa06-4a25dba64f1f.svg)](https://packagist.org/packages/yab/formmaker)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/YABhq/FormMaker/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/YABhq/FormMaker/?branch=develop)
+[![Packagist](https://img.shields.io/packagist/dt/yab/formmaker.svg)](https://packagist.org/packages/yab/formmaker)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/yab/formmaker)
 
 The FormMaker package provides a set of tools for generating HTML forms with as little as 1 line of code. Don't want to write boring HTML, neither do we. The FormMaker will generate error containers, all fields defined by either the table or object column types, or if you prefer to have more control define a config. In the case that you want to write more than 1 line of code, FormMaker comes with the InputMaker service as well. With the InputMaker you can create any form of input, including html for Eloquent relationships.
 
@@ -44,6 +44,10 @@ php artisan vendor:publish --provider="Yab\FormMaker\FormMakerProvider"
 ----
 
 # FormMaker Guide
+
+## Config
+
+The config for the form maker is located in the `config` directory under form-maker. There you can define base classes for your forms or use the default bootstrap ones. You can also set types of input for column types.
 
 ## Blade Directives
 
