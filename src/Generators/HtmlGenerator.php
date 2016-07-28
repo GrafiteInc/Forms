@@ -113,9 +113,19 @@ class HtmlGenerator
     {
         $object = $config['object'];
         $relationship = $config['name'];
+        $method = 'all';
 
         $class = app()->make($config['config']['model']);
-        $items = $class->all();
+
+        if (isset($config['config']['method'])) {
+            $method = $config['config']['method'];
+        }
+
+        if (isset($config['config']['params'])) {
+            $items = $class->$method($config['config']['params']);
+        } else {
+            $items = $class->$method();
+        }
 
         foreach ($items as $item) {
             $config['config']['options'][$item->$label] = $item->$value;
