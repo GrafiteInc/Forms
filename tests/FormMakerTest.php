@@ -4,7 +4,7 @@ use Illuminate\Container\Container as Container;
 use Illuminate\Support\Facades\Facade as Facade;
 use Yab\FormMaker\Services\FormMaker;
 
-class FormMakerTest extends PHPUnit_Framework_TestCase
+class FormMakerTest extends TestCase
 {
     protected $app;
     protected $formMaker;

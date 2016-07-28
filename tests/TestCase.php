@@ -1,6 +1,6 @@
 <?php
 
-class AppTest extends Orchestra\Testbench\TestCase
+class TestCase extends Orchestra\Testbench\TestCase
 {
     protected $app;
 
@@ -42,17 +42,5 @@ class AppTest extends Orchestra\Testbench\TestCase
         ]);
         $this->withoutMiddleware();
         $this->withoutEvents();
-    }
-
-    public function testFormMaker()
-    {
-        $formMaker = $this->app['FormMaker'];
-        $this->assertTrue(is_object($formMaker));
-    }
-
-    public function testInputMaker()
-    {
-        $inputMaker = $this->app['InputMaker'];
-        $this->assertTrue(is_object($inputMaker));
     }
 }

@@ -4,7 +4,7 @@ use Illuminate\Container\Container as Container;
 use Illuminate\Support\Facades\Facade as Facade;
 use Yab\FormMaker\Generators\HtmlGenerator;
 
-class HtmlGeneratorTest extends PHPUnit_Framework_TestCase
+class HtmlGeneratorTest extends TestCase
 {
     protected $app;
     protected $html;
