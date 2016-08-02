@@ -43,7 +43,7 @@ php artisan vendor:publish --provider="Yab\FormMaker\FormMakerProvider"
 
 ## Documentation
 
-[https://laracogs.com/docs/Services/form_maker](https://laracogs.com/docs/Services/form_maker)
+[https://laracogs.com/docs/Services/form_maker](https://laracogs.com/docs/Services/form_maker)<br>
 [https://laracogs.com/docs/Services/input_maker](https://laracogs.com/docs/Services/input_maker)
 
 ## License
