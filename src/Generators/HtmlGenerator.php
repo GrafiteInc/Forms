@@ -159,7 +159,7 @@ class HtmlGenerator
             $population = '';
         }
 
-        $inputString = '<input '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.' '.$minMax.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
+        $inputString = '<input '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.$minMax.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
 
         return $inputString;
     }
@@ -239,7 +239,7 @@ class HtmlGenerator
     public function setMinMax($config)
     {
         if ($config['inputType'] === 'float' || $config['inputType'] === 'decimal' || $config['inputType'] === 'integer') {
-            return 'min="" max=""';
+            return ' min="" max="" ';
         }
         return '';
     }        
