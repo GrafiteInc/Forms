@@ -227,4 +227,20 @@ class HtmlGenerator
 
         return '';
     }
+
+    /**
+     * Expose min/max variables for number element
+     *
+     * @param array $config
+     *
+     * @return string
+     */
+    public function setMinMax($config)
+    {
+        if ($config['inputType'] === 'float' || $config['inputType'] === 'decimal') {
+            return 'min="" max=""';
+        }
+        return '';
+    }        
+    
 }
