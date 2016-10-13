@@ -50,10 +50,14 @@ class InputCalibrator
      */
     public function isSelected($config, $checkType)
     {
-        $selected = (isset($config['inputs'][$config['name']])
-            || isset($config['config']['selected'])
-            || $config['objectValue'] === 'on'
-            || $config['objectValue'] == 1) ? $checkType : '';
+        $selected = false;
+
+        if (! is_object($config['objectValue'])) {
+            $selected = (isset($config['inputs'][$config['name']])
+                || isset($config['config']['selected'])
+                || $config['objectValue'] === 'on'
+                || $config['objectValue'] == 1) ? $checkType : '';
+        }
 
         return $selected;
     }
