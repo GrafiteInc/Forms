@@ -112,7 +112,13 @@ class HtmlGenerator
     public function makeRelationship($config, $label = 'name', $value = 'id', $custom = '')
     {
         $object = $config['object'];
-        $relationship = $config['name'];
+        
+        if (isset($config['config']['relationship'])){
+            $relationship = $config['config']['relationship'];    
+        } else {
+            $relationship = $config['name'];
+        }
+        
         $method = 'all';
 
         $class = app()->make($config['config']['model']);
