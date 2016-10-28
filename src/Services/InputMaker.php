@@ -70,7 +70,7 @@ class InputMaker
             'inputTypes'  => Config::get('form-maker.inputTypes', $defaultConfig['inputTypes']),
             'inputs'      => $this->getInput(),
             'object'      => $object,
-            'objectValue' => (isset($object->$name) && !method_exists($object, $name)) ? $object->$name : $name,
+            'objectValue' => (isset($object->$name) && !method_exists($object, $name)) ? $object->$name : '',
             'placeholder' => $this->inputUtilities->placeholder($config, $name),
         ];
 

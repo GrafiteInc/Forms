@@ -111,7 +111,7 @@ class InputCalibrator
         }
 
         $alt_name = (isset($field['alt_name'])) ? $field['alt_name'] : ucfirst($column);
-        $placeholder = (isset($field['placeholder'])) ? $field['placeholder'] : $alt_name;
+        $placeholder = (isset($field['placeholder'])) ? $field['placeholder'] : $this->cleanString($alt_name);
 
         return $placeholder;
     }
