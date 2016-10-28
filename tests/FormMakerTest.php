@@ -60,7 +60,7 @@ class FormMakerTest extends TestCase
         $test = $this->formMaker->fromArray($testArray);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-group "><label class="control-label" for="Name">Name</label><input  id="Name" class="form-control" type="text" name="name"    placeholder="Name"></div><div class="form-group "><label class="control-label" for="Age">Number</label><input  id="Age" class="form-control" type="number" name="age"    placeholder="Number"></div>', $test);
+        $this->assertEquals('<div class="form-group "><label class="control-label" for="Name">Name</label><input  id="Name" class="form-control" type="text" name="name"   value="" placeholder="Name"></div><div class="form-group "><label class="control-label" for="Age">Number</label><input  id="Age" class="form-control" type="number" name="age"   value="" placeholder="Number"></div>', $test);
     }
 
     public function testFromArrayWithColumns()
@@ -73,7 +73,7 @@ class FormMakerTest extends TestCase
         $test = $this->formMaker->fromArray($testArray, ['name']);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-group "><label class="control-label" for="Name">Name</label><input  id="Name" class="form-control" type="text" name="name"    placeholder="Name"></div>', $test);
+        $this->assertEquals('<div class="form-group "><label class="control-label" for="Name">Name</label><input  id="Name" class="form-control" type="text" name="name"   value="" placeholder="Name"></div>', $test);
     }
 
     public function testFromObject()
@@ -96,6 +96,6 @@ class FormMakerTest extends TestCase
         $test = $this->formMaker->fromObject((object) $testObject, $columns);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-group "><label class="control-label" for="Name">Name</label><input  id="Name" class="form-control" type="text" name="name"    placeholder="Name"></div><div class="form-group "><label class="control-label" for="Age">Age</label><input  id="Age" class="form-control" type="number" name="age"    placeholder="Age"></div>', $test);
+        $this->assertEquals('<div class="form-group "><label class="control-label" for="Name">Name</label><input  id="Name" class="form-control" type="text" name="name"   value="" placeholder="Name"></div><div class="form-group "><label class="control-label" for="Age">Age</label><input  id="Age" class="form-control" type="number" name="age"   value="" placeholder="Age"></div>', $test);
     }
 }
