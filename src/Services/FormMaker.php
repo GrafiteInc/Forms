@@ -64,7 +64,7 @@ class FormMaker
         $reformatted = true,
         $populated = false,
         $idAndTimestamps = false,
-        $connetion = env('DB_CONNECTION', null)
+        $connetion = null
     ) {
         $formBuild = '';
         $tableColumns = Schema::connection($connection)->getColumnListing($table);
