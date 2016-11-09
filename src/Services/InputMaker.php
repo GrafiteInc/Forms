@@ -300,7 +300,7 @@ class InputMaker
             $nameProperties = explode('[', $config['objectValue']);
             foreach ($nameProperties as $property) {
                 $realProperty = str_replace(']', '', $property);
-                $final = $final->$realProperty;
+                $final = $final[$realProperty];
             }
             $config['objectValue'] = $final;
         }
