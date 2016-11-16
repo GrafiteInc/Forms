@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.8] - 2016-11-16
+
+### Added
+- Now you can set the connection for the table
+- More unit tests
+
 ## [v1.0.7] - 2016-10-28
 
 ### Fixed

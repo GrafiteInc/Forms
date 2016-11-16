@@ -37,6 +37,30 @@ class FormMakerTest extends TestCase
             ->andReturn([])
             ->getMock();
 
+        $database = Mockery::mock('database');
+        $database->shouldReceive('connection')
+            ->withAnyArgs()
+            ->andReturn($database);
+        $database->shouldReceive('getDoctrineColumn')
+            ->withAnyArgs()
+            ->andReturn($database);
+        $database->shouldReceive('getType')
+            ->withAnyArgs()
+            ->andReturn($database);
+        $database->shouldReceive('getName')
+            ->withAnyArgs()
+            ->andReturn('string');
+        $database->shouldReceive('getColumnListing')
+            ->withAnyArgs()
+            ->andReturn([
+                'string' => 'title',
+                'string' => 'author',
+            ]);
+        $database->shouldReceive('getSchemaBuilder')
+            ->withAnyArgs()
+            ->andReturn($database)
+            ->getMock();
+
         $session = Mockery::mock('session');
         $session->shouldReceive('isStarted')->withAnyArgs()->andReturn(true);
         $session->shouldReceive('get')->withAnyArgs()->andReturn(collect([]));
@@ -44,10 +68,27 @@ class FormMakerTest extends TestCase
         $this->app->instance('config', $config);
         $this->app->instance('session', $session);
         $this->app->instance('request', $request);
+        $this->app->instance('db', $database);
 
         Facade::setFacadeApplication($this->app);
 
         $this->formMaker = new FormMaker();
+    }
+
+    public function testSetConnection()
+    {
+        $test = $this->formMaker->setConnection('alternate');
+
+        $this->assertTrue(is_string($test->connection));
+        $this->assertEquals('alternate', $test->connection);
+    }
+
+    public function testFromTable()
+    {
+        $test = $this->formMaker->fromTable('books');
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals('<div class="form-group "><label class="control-label" for="Author">Author</label><input  id="Author" class="form-control" type="text" name="author"    placeholder="Author"></div>', $test);
     }
 
     public function testFromArray()

@@ -17,6 +17,8 @@ class FormMaker
 
     protected $inputUtilities;
 
+    public $connection;
+
     protected $columnTypes = [
         'integer',
         'string',
@@ -41,6 +43,13 @@ class FormMaker
     {
         $this->inputMaker = new InputMaker();
         $this->inputUtilities = new InputCalibrator();
+        $this->connection = env('DB_CONNECTION', 'mysql');
+    }
+
+    public function setConnection($connection)
+    {
+        $this->connection = $connection;
+        return $this;
     }
 
     /**
@@ -63,15 +72,14 @@ class FormMaker
         $view = null,
         $reformatted = true,
         $populated = false,
-        $idAndTimestamps = false,
-        $connetion = null
+        $idAndTimestamps = false
     ) {
         $formBuild = '';
-        $tableColumns = Schema::connection($connection)->getColumnListing($table);
+        $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 
         if (is_null($columns)) {
             foreach ($tableColumns as $column) {
-                $type = DB::connection($connection)->getDoctrineColumn($table, $column)->getType()->getName();
+                $type = DB::connection($this->connection)->getDoctrineColumn($table, $column)->getType()->getName();
                 $columns[$column] = $type;
             }
         }
