@@ -63,14 +63,15 @@ class FormMaker
         $view = null,
         $reformatted = true,
         $populated = false,
-        $idAndTimestamps = false
+        $idAndTimestamps = false,
+        $connetion = null
     ) {
         $formBuild = '';
-        $tableColumns = Schema::getColumnListing($table);
+        $tableColumns = Schema::connection($connection)->getColumnListing($table);
 
         if (is_null($columns)) {
             foreach ($tableColumns as $column) {
-                $type = DB::connection()->getDoctrineColumn($table, $column)->getType()->getName();
+                $type = DB::connection($connection)->getDoctrineColumn($table, $column)->getType()->getName();
                 $columns[$column] = $type;
             }
         }
@@ -338,9 +339,9 @@ class FormMaker
      *
      * @return array
      */
-    public function getTableColumns($table, $allColumns = false)
+    public function getTableColumns($table, $allColumns = false, $connection = null)
     {
-        $tableColumns = Schema::getColumnListing($table);
+        $tableColumns = Schema::connection($connection)->getColumnListing($table);
 
         $tableTypeColumns = [];
         $badColumns = ['id', 'created_at', 'updated_at'];
@@ -351,7 +352,7 @@ class FormMaker
 
         foreach ($tableColumns as $column) {
             if (!in_array($column, $badColumns)) {
-                $type = DB::connection()->getDoctrineColumn($table, $column)->getType()->getName();
+                $type = DB::connection($connection)->getDoctrineColumn($table, $column)->getType()->getName();
                 $tableTypeColumns[$column]['type'] = $type;
             }
         }
