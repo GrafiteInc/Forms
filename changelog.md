@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.9] - 2016-11-17
+
+### Fixed
+- Tagging realignment
+
 ## [v1.0.8] - 2016-11-16
 
 ### Added
