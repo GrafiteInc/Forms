@@ -43,8 +43,8 @@ php artisan vendor:publish --provider="Yab\FormMaker\FormMakerProvider"
 
 ## Documentation
 
-[https://laracogs.com/docs/Services/form_maker](https://laracogs.com/docs/Services/form_maker)<br>
-[https://laracogs.com/docs/Services/input_maker](https://laracogs.com/docs/Services/input_maker)
+[https://laracogs.com/docs/services/form_maker](https://laracogs.com/docs/services/form_maker)<br>
+[https://laracogs.com/docs/services/input_maker](https://laracogs.com/docs/services/input_maker)
 
 ## License
 FormMaker is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
