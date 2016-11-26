@@ -57,7 +57,11 @@ class HtmlGenerator
             if ($selected == '') {
                 $selectedValue = ((string) $config['objectValue'] === (string) $value) ? 'selected' : '';
             } else {
-                $selectedValue = ((string) $selected === (string) $value) ? 'selected' : '';
+                if (is_array(json_decode($config['objectValue']))) {
+                    $selectedValue = (in_array($value, json_decode($config['objectValue']))) ? 'selected' : '';
+                } else {
+                    $selectedValue = ((string) $selected === (string) $value) ? 'selected' : '';
+                }
             }
             $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
         }
@@ -112,13 +116,13 @@ class HtmlGenerator
     public function makeRelationship($config, $label = 'name', $value = 'id', $custom = '')
     {
         $object = $config['object'];
-        
+
         if (isset($config['config']['relationship'])){
-            $relationship = $config['config']['relationship'];    
+            $relationship = $config['config']['relationship'];
         } else {
             $relationship = $config['name'];
         }
-        
+
         $method = 'all';
 
         $class = app()->make($config['config']['model']);

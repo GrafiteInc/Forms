@@ -295,6 +295,10 @@ class InputMaker
      */
     public function prepareObjectValue($config)
     {
+        if (is_array($config['objectValue'])) {
+            $config['objectValue'] = json_encode($config['objectValue']);
+        }
+
         if (strpos($config['objectValue'], '[') > 0 && $config['object']) {
             $final = $config['object'];
             $nameProperties = explode('[', $config['objectValue']);

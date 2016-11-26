@@ -56,7 +56,8 @@ class InputCalibrator
             $selected = (isset($config['inputs'][$config['name']])
                 || isset($config['config']['selected'])
                 || $config['objectValue'] === 'on'
-                || $config['objectValue'] == 1) ? $checkType : '';
+                || $config['objectValue'] == 1
+                || is_array(json_decode($config['objectValue']))) ? $checkType : '';
         }
 
         return $selected;
