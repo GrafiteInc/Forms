@@ -37,8 +37,8 @@ class Job extends Model
 
 class InputMakerTest extends TestCase
 {
-    // protected $app;
-    // protected $inputMaker;
+    protected $app;
+    protected $inputMaker;
 
     public function setUp()
     {
@@ -60,6 +60,80 @@ class InputMakerTest extends TestCase
 
         $this->assertTrue(is_string($test));
         $this->assertEquals($test, '<input  id="Name" class="form-control" type="text" name="name"   value="test" placeholder="Name">');
+    }
+
+    public function testCreateCheckboxArray()
+    {
+        $object = (object) [ 'gender[male]' => 'on' ];
+        $test = $this->inputMaker->create('gender[male]', [
+            'type' => 'checkbox'
+        ], $object);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals($test, '<input  id="Gender[male]" checked type="checkbox" name="gender[male]">');
+    }
+
+    public function testCreateMultipleSelect()
+    {
+        $object = (object) [ 'countries' => json_encode(["Canada", "America"]) ];
+        $test = $this->inputMaker->create('countries', [
+            'type' => 'select',
+            'custom' => 'multiple',
+            'options' => [
+                "Canada" => "Canada",
+                "America" => "America",
+                "UK" => "UK",
+                "Ireland" => "Ireland",
+            ]
+        ], $object);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals($test, '<select multiple id="Countries" class="form-control" name="countries"><option value="Canada" selected>Canada</option><option value="America" selected>America</option><option value="UK" >UK</option><option value="Ireland" >Ireland</option></select>');
+    }
+
+    public function testCreateMultipleNestedString()
+    {
+        $entry = app(Entry::class)->create([
+            'name' => 'test entry',
+            'details' => 'this entry is written in'
+        ]);
+
+        $test = $this->inputMaker->create('meta[user[id]]', [
+            'type' => 'number',
+        ], $entry);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals($test, '<input  id="Meta[user[id]]" class="form-control" type="number" name="meta[user[id]]"   value="1" placeholder="Meta User Id">');
+    }
+
+    public function testCreateSingleNestedString()
+    {
+        $entry = app(Entry::class)->create([
+            'name' => 'test entry',
+            'details' => 'this entry is written in'
+        ]);
+
+        $test = $this->inputMaker->create('meta[created_at]', [
+            'type' => 'string',
+        ], $entry);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals($test, '<input  id="Meta[created_at]" class="form-control" type="text" name="meta[created_at]"   value="1999-01-01 06:15:00" placeholder="Meta Created At">');
+    }
+
+    public function testCreateSpecialString()
+    {
+        $entry = app(Entry::class)->create([
+            'name' => 'test entry',
+            'details' => 'this entry is written in [markdown](http://markdown.com)'
+        ]);
+
+        $test = $this->inputMaker->create('details', [
+            'type' => 'text',
+        ], $entry);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals($test, '<textarea  id="Details" class="form-control" name="details" placeholder="Details">this entry is written in [markdown](http://markdown.com)</textarea>');
     }
 
     public function testCreateRelationshipDefault()
