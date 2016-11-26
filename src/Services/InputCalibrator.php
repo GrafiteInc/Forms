@@ -107,8 +107,8 @@ class InputCalibrator
         }
 
         if (strpos($column, '[') > 0) {
-            preg_match_all("/\[([^\]]*)\]/", $column, $matches);
-            $column = $matches[1][0];
+            $nested = explode('[', str_replace(']', '', $column));
+            $column = implode(' ', $nested);
         }
 
         $alt_name = (isset($field['alt_name'])) ? $field['alt_name'] : ucfirst($column);

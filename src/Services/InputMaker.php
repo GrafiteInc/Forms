@@ -70,13 +70,39 @@ class InputMaker
             'inputTypes'  => Config::get('form-maker.inputTypes', $defaultConfig['inputTypes']),
             'inputs'      => $this->getInput(),
             'object'      => $object,
-            'objectValue' => (isset($object->$name) && !method_exists($object, $name)) ? $object->$name : '',
+            'objectValue' => $this->getObjectValue($object, $name),
             'placeholder' => $this->inputUtilities->placeholder($config, $name),
         ];
 
         $inputConfig = $this->refineConfigs($inputConfig, $reformatted, $name, $config);
 
         return $this->inputStringPreparer($inputConfig);
+    }
+
+    /**
+     * Get the object value from the object with the name
+     *
+     * @param  mixed $object
+     * @param  string $name
+     * @return mixed
+     */
+    public function getObjectValue($object, $name)
+    {
+        if (isset($object->$name) && !method_exists($object, $name)) {
+            return $object->$name;
+        }
+
+        // If its a nested value like meta[user[phone]]
+        if (strpos($name, '[') > 0) {
+            $nested = explode('[', str_replace(']', '', $name));
+            $final = $object;
+            foreach ($nested as $property) {
+                $final = $final->{$property};
+            }
+            return $final;
+        }
+
+        return '';
     }
 
     /**
@@ -297,16 +323,6 @@ class InputMaker
     {
         if (is_array($config['objectValue'])) {
             $config['objectValue'] = json_encode($config['objectValue']);
-        }
-
-        if (strpos($config['objectValue'], '[') > 0 && $config['object']) {
-            $final = $config['object'];
-            $nameProperties = explode('[', $config['objectValue']);
-            foreach ($nameProperties as $property) {
-                $realProperty = str_replace(']', '', $property);
-                $final = $final[$realProperty];
-            }
-            $config['objectValue'] = $final;
         }
 
         return $config;

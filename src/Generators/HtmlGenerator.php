@@ -57,7 +57,7 @@ class HtmlGenerator
             if ($selected == '') {
                 $selectedValue = ((string) $config['objectValue'] === (string) $value) ? 'selected' : '';
             } else {
-                if (is_array(json_decode($config['objectValue']))) {
+                if (isset($config['objectValue']) && is_array(json_decode($config['objectValue']))) {
                     $selectedValue = (in_array($value, json_decode($config['objectValue']))) ? 'selected' : '';
                 } else {
                     $selectedValue = ((string) $selected === (string) $value) ? 'selected' : '';
