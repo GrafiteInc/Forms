@@ -43,7 +43,7 @@ class FormMaker
     {
         $this->inputMaker = new InputMaker();
         $this->inputUtilities = new InputCalibrator();
-        $this->connection = env('DB_CONNECTION', 'mysql');
+        $this->connection = config('database.default');
     }
 
     public function setConnection($connection)
