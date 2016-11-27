@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.11] - 2016-11-27
+
+### Fixed
+- Fixes an issue with setting the default connection
+
 ## [v1.0.10] - 2016-11-26
 
 ### Added
