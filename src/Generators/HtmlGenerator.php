@@ -66,7 +66,7 @@ class HtmlGenerator
             $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
         }
 
-        return '<select '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>';
+        return '<select '.$custom.' id="'.str_replace('[]', '', ucfirst($config['name'])).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>';
     }
 
     /**
@@ -122,6 +122,9 @@ class HtmlGenerator
         } else {
             $relationship = $config['name'];
         }
+
+        // Removes the array indication for select multiple
+        $relationship = str_replace('[]', '', $relationship);
 
         $method = 'all';
 

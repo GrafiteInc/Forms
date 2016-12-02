@@ -76,7 +76,7 @@ class InputMakerTest extends TestCase
     public function testCreateMultipleSelect()
     {
         $object = (object) [ 'countries' => json_encode(["Canada", "America"]) ];
-        $test = $this->inputMaker->create('countries', [
+        $test = $this->inputMaker->create('countries[]', [
             'type' => 'select',
             'custom' => 'multiple',
             'options' => [
@@ -88,7 +88,7 @@ class InputMakerTest extends TestCase
         ], $object);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals($test, '<select multiple id="Countries" class="form-control" name="countries"><option value="Canada" selected>Canada</option><option value="America" selected>America</option><option value="UK" >UK</option><option value="Ireland" >Ireland</option></select>');
+        $this->assertEquals($test, '<select multiple id="Countries" class="form-control" name="countries[]"><option value="Canada" selected>Canada</option><option value="America" selected>America</option><option value="UK" >UK</option><option value="Ireland" >Ireland</option></select>');
     }
 
     public function testCreateMultipleNestedString()
@@ -162,17 +162,17 @@ class InputMakerTest extends TestCase
             'name' => 'Brogrammer'
         ]);
 
-        $test = $this->inputMaker->create('jobs', [
-            'options' => [],
+        $test = $this->inputMaker->create('jobs[]', [
             'type' => 'relationship',
             'model' => 'Job',
-            'method' => 'all',
             'label' => 'name',
-            'value' => 'id'
-        ], $user, 'form-control', false, true);
+            'options' => app(Job::class)->all()->pluck('id', 'name'),
+            'value' => 'id',
+            'custom' => 'multiple'
+        ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals($test, '<select  id="Jobs" class="form-control" name="jobs"><option value="1" selected>Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select>');
+        $this->assertEquals($test, '<select multiple id="Jobs" class="form-control" name="jobs[]"><option value="1" selected>Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select>');
     }
 
     public function testCreateRelationshipCustom()

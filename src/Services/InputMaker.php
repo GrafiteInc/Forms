@@ -97,7 +97,9 @@ class InputMaker
             $nested = explode('[', str_replace(']', '', $name));
             $final = $object;
             foreach ($nested as $property) {
-                $final = $final->{$property};
+                if (! empty($property) && isset($final->{$property})) {
+                    $final = $final->{$property};
+                }
             }
             return $final;
         }
