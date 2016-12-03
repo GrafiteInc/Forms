@@ -136,7 +136,7 @@ class InputMakerTest extends TestCase
         $this->assertEquals($test, '<textarea  id="Details" class="form-control" name="details" placeholder="Details">this entry is written in [markdown](http://markdown.com)</textarea>');
     }
 
-    public function testCreateRelationshipDefault()
+    public function testCreateRelationshipWithoutObject()
     {
         $user = app(User::class)->create([
             'name' => 'Joe',
@@ -170,6 +170,44 @@ class InputMakerTest extends TestCase
             'value' => 'id',
             'custom' => 'multiple'
         ]);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals($test, '<select multiple id="Jobs" class="form-control" name="jobs[]"><option value="1" >Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select>');
+    }
+
+    public function testCreateRelationshipDefault()
+    {
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password'
+        ]);
+
+        $job = app(Job::class)->create([
+            'name' => 'Worker',
+            'user_id' => 1
+        ]);
+
+        $user->job_id = $job->id;
+        $user->save();
+
+        app(Job::class)->create([
+            'name' => 'BlackSmith'
+        ]);
+        app(Job::class)->create([
+            'name' => 'Police'
+        ]);
+        app(Job::class)->create([
+            'name' => 'Brogrammer'
+        ]);
+
+        $test = $this->inputMaker->create('jobs[]', [
+            'type' => 'relationship',
+            'model' => 'Job',
+            'label' => 'name',
+            'value' => 'id',
+            'custom' => 'multiple'
+        ], $user);
 
         $this->assertTrue(is_string($test));
         $this->assertEquals($test, '<select multiple id="Jobs" class="form-control" name="jobs[]"><option value="1" selected>Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select>');
