@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.12] - 2016-12-03
+
+### Changed
+- getTableColumns moved connection to class level setting
+
+### Fixed
+- Improved column reading
+- Fixed issue with multiple selects
+
 ## [v1.0.11] - 2016-11-27
 
 ### Fixed
