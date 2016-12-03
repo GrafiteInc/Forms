@@ -46,6 +46,11 @@ class FormMaker
         $this->connection = config('database.default');
     }
 
+    /**
+     * Set the form maker connection
+     *
+     * @param string $connection
+     */
     public function setConnection($connection)
     {
         $this->connection = $connection;
@@ -75,16 +80,13 @@ class FormMaker
         $idAndTimestamps = false
     ) {
         $formBuild = '';
-        $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 
-        if (is_null($columns)) {
-            foreach ($tableColumns as $column) {
-                $type = DB::connection($this->connection)->getDoctrineColumn($table, $column)->getType()->getName();
-                $columns[$column] = $type;
-            }
+        $tableColumns = $this->getTableColumns($table, true);
+        foreach ($tableColumns as $column => $value) {
+            $columns[$column] = $value['type'];
         }
 
-        if (!$idAndTimestamps) {
+        if (! $idAndTimestamps) {
             unset($columns['id']);
             unset($columns['created_at']);
             unset($columns['updated_at']);
@@ -347,9 +349,9 @@ class FormMaker
      *
      * @return array
      */
-    public function getTableColumns($table, $allColumns = false, $connection = null)
+    public function getTableColumns($table, $allColumns = false)
     {
-        $tableColumns = Schema::connection($connection)->getColumnListing($table);
+        $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 
         $tableTypeColumns = [];
         $badColumns = ['id', 'created_at', 'updated_at'];
@@ -360,7 +362,7 @@ class FormMaker
 
         foreach ($tableColumns as $column) {
             if (!in_array($column, $badColumns)) {
-                $type = DB::connection($connection)->getDoctrineColumn($table, $column)->getType()->getName();
+                $type = DB::connection($this->connection)->getDoctrineColumn($table, $column)->getType()->getName();
                 $tableTypeColumns[$column]['type'] = $type;
             }
         }
