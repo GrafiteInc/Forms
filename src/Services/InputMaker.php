@@ -60,16 +60,16 @@ class InputMaker
      */
     public function create($name, $config, $object = null, $class = 'form-control', $reformatted = false, $populated = true)
     {
-        $defaultConfig = include(__DIR__.'/../../config/form-maker.php');
+        $defaultConfig = include __DIR__.'/../../config/form-maker.php';
 
         $inputConfig = [
-            'populated'   => $populated,
-            'name'        => $name,
-            'class'       => $this->prepareTheClass($class, $config),
-            'config'      => $config,
-            'inputTypes'  => Config::get('form-maker.inputTypes', $defaultConfig['inputTypes']),
-            'inputs'      => $this->getInput(),
-            'object'      => $object,
+            'populated' => $populated,
+            'name' => $name,
+            'class' => $this->prepareTheClass($class, $config),
+            'config' => $config,
+            'inputTypes' => Config::get('form-maker.inputTypes', $defaultConfig['inputTypes']),
+            'inputs' => $this->getInput(),
+            'object' => $object,
             'objectValue' => $this->getObjectValue($object, $name),
             'placeholder' => $this->inputUtilities->placeholder($config, $name),
         ];
@@ -80,10 +80,11 @@ class InputMaker
     }
 
     /**
-     * Get the object value from the object with the name
+     * Get the object value from the object with the name.
      *
-     * @param  mixed $object
-     * @param  string $name
+     * @param mixed  $object
+     * @param string $name
+     *
      * @return mixed
      */
     public function getObjectValue($object, $name)
@@ -97,10 +98,11 @@ class InputMaker
             $nested = explode('[', str_replace(']', '', $name));
             $final = $object;
             foreach ($nested as $property) {
-                if (! empty($property) && isset($final->{$property})) {
+                if (!empty($property) && isset($final->{$property})) {
                     $final = $final->{$property};
                 }
             }
+
             return $final;
         }
 
