@@ -47,13 +47,14 @@ class FormMaker
     }
 
     /**
-     * Set the form maker connection
+     * Set the form maker connection.
      *
      * @param string $connection
      */
     public function setConnection($connection)
     {
         $this->connection = $connection;
+
         return $this;
     }
 
@@ -82,11 +83,13 @@ class FormMaker
         $formBuild = '';
 
         $tableColumns = $this->getTableColumns($table, true);
-        foreach ($tableColumns as $column => $value) {
-            $columns[$column] = $value['type'];
+        if (is_null($columns)) {
+            foreach ($tableColumns as $column => $value) {
+                $columns[$column] = $value['type'];
+            }
         }
 
-        if (! $idAndTimestamps) {
+        if (!$idAndTimestamps) {
             unset($columns['id']);
             unset($columns['created_at']);
             unset($columns['updated_at']);
@@ -264,10 +267,10 @@ class FormMaker
             $formBuild .= '</div>';
         } else {
             $formBuild = View::make($view, [
-                'labelFor'       => ucfirst($column),
-                'label'          => $this->columnLabel($field, $column),
-                'input'          => $input,
-                'errorMessage'   => $this->errorMessage($errorMessage),
+                'labelFor' => ucfirst($column),
+                'label' => $this->columnLabel($field, $column),
+                'input' => $input,
+                'errorMessage' => $this->errorMessage($errorMessage),
                 'errorHighlight' => $errorHighlight,
             ]);
         }
