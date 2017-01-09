@@ -3,7 +3,7 @@
 namespace Yab\FormMaker\Services;
 
 /**
- * Input Calibration
+ * Input Calibration.
  */
 class InputCalibrator
 {
@@ -52,11 +52,11 @@ class InputCalibrator
     {
         $selected = false;
 
-        if (! is_object($config['objectValue'])) {
+        if (!is_object($config['objectValue'])) {
             $selected = (isset($config['inputs'][$config['name']])
                 || isset($config['config']['selected'])
                 || $config['objectValue'] === 'on'
-                || $config['objectValue'] == 1
+                || ($config['objectValue'] == 1 && $checkType == 'checked')
                 || is_array(json_decode($config['objectValue']))) ? $checkType : '';
         }
 
