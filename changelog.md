@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.14] - 2017-01-09
+
+### Fixed
+- Repaired issue with certain number values
+
 ## [v1.0.13] - 2016-12-20
 
 ### Fixed
