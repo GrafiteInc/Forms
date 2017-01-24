@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.0.15] - 2017-01-24
+
+### Added
+- New default_value config
+
+### Changed
+- Set compatibility guide
+- Minor CS changes
+
+### Fixed
+- Issue with null fields
+
 ## [v1.0.14] - 2017-01-09
 
 ### Fixed
