@@ -14,7 +14,7 @@ class InputMaker
 {
     protected $htmlGenerator;
 
-    protected $inputUtilities;
+    protected $inputCalibrator;
 
     protected $inputGroups = [
         'text' => [
@@ -43,7 +43,7 @@ class InputMaker
     public function __construct()
     {
         $this->htmlGenerator = new HtmlGenerator();
-        $this->inputUtilities = new InputCalibrator();
+        $this->inputCalibrator = new InputCalibrator();
     }
 
     /**
@@ -71,7 +71,7 @@ class InputMaker
             'inputs' => $this->getInput(),
             'object' => $object,
             'objectValue' => $this->getObjectValue($object, $name),
-            'placeholder' => $this->inputUtilities->placeholder($config, $name),
+            'placeholder' => $this->inputCalibrator->placeholder($config, $name),
         ];
 
         $inputConfig = $this->refineConfigs($inputConfig, $reformatted, $name, $config);
@@ -89,7 +89,7 @@ class InputMaker
      */
     public function getObjectValue($object, $name)
     {
-        if (isset($object->$name) && !method_exists($object, $name)) {
+        if (is_object($object) && isset($object->$name) && !method_exists($object, $name)) {
             return $object->$name;
         }
 
@@ -100,6 +100,8 @@ class InputMaker
             foreach ($nested as $property) {
                 if (!empty($property) && isset($final->{$property})) {
                     $final = $final->{$property};
+                } elseif (is_object($final) && is_null($final->{$property})) {
+                    $final = '';
                 }
             }
 
@@ -233,10 +235,12 @@ class InputMaker
         if (!empty($inputConfig['inputs']) && isset($inputConfig['inputs'][$name])) {
             $inputConfig['populated'] = true;
             $inputConfig['objectValue'] = $inputConfig['inputs'][$name];
+        } elseif (isset($inputConfig['config']['default_value'])) {
+            $inputConfig['objectValue'] = $inputConfig['config']['default_value'];
         }
 
         if ($reformatted) {
-            $inputConfig['placeholder'] = $this->inputUtilities->cleanString($this->inputUtilities->placeholder($config, $name));
+            $inputConfig['placeholder'] = $this->inputCalibrator->cleanString($this->inputCalibrator->placeholder($config, $name));
         }
 
         if (!isset($config['type'])) {
@@ -262,10 +266,10 @@ class InputMaker
     private function inputStringGenerator($config)
     {
         $config = $this->prepareObjectValue($config);
-        $population = $this->inputUtilities->getPopulation($config);
-        $checkType = $this->inputUtilities->checkType($config, $this->inputGroups['checkbox']);
-        $selected = $this->inputUtilities->isSelected($config, $checkType);
-        $custom = $this->inputUtilities->getField($config, 'custom');
+        $population = $this->inputCalibrator->getPopulation($config);
+        $checkType = $this->inputCalibrator->checkType($config, $this->inputGroups['checkbox']);
+        $selected = $this->inputCalibrator->isSelected($config, $checkType);
+        $custom = $this->inputCalibrator->getField($config, 'custom');
         $method = $this->getGeneratorMethod($config['inputType']);
 
         $standardMethods = [
@@ -286,8 +290,8 @@ class InputMaker
         } elseif ($method === 'makeRelationship') {
             $inputString = $this->htmlGenerator->makeRelationship(
                 $config,
-                $this->inputUtilities->getField($config, 'label', 'name'),
-                $this->inputUtilities->getField($config, 'value', 'id'),
+                $this->inputCalibrator->getField($config, 'label', 'name'),
+                $this->inputCalibrator->getField($config, 'value', 'id'),
                 $custom
             );
         } else {

@@ -62,11 +62,18 @@ class InputMakerTest extends TestCase
         $this->assertEquals($test, '<input  id="Name" class="form-control" type="text" name="name"   value="test" placeholder="Name">');
     }
 
+    public function testCreateStringWithDefaultValue()
+    {
+        $test = $this->inputMaker->create('name', ['type' => 'string', 'default_value' => 'awesome']);
+
+        $this->assertEquals($test, '<input  id="Name" class="form-control" type="text" name="name"   value="awesome" placeholder="Name">');
+    }
+
     public function testCreateCheckboxArray()
     {
-        $object = (object) [ 'gender[male]' => 'on' ];
+        $object = (object) ['gender[male]' => 'on'];
         $test = $this->inputMaker->create('gender[male]', [
-            'type' => 'checkbox'
+            'type' => 'checkbox',
         ], $object);
 
         $this->assertTrue(is_string($test));
@@ -75,16 +82,16 @@ class InputMakerTest extends TestCase
 
     public function testCreateMultipleSelect()
     {
-        $object = (object) [ 'countries' => json_encode(["Canada", "America"]) ];
+        $object = (object) ['countries' => json_encode(['Canada', 'America'])];
         $test = $this->inputMaker->create('countries[]', [
             'type' => 'select',
             'custom' => 'multiple',
             'options' => [
-                "Canada" => "Canada",
-                "America" => "America",
-                "UK" => "UK",
-                "Ireland" => "Ireland",
-            ]
+                'Canada' => 'Canada',
+                'America' => 'America',
+                'UK' => 'UK',
+                'Ireland' => 'Ireland',
+            ],
         ], $object);
 
         $this->assertTrue(is_string($test));
@@ -95,7 +102,7 @@ class InputMakerTest extends TestCase
     {
         $entry = app(Entry::class)->create([
             'name' => 'test entry',
-            'details' => 'this entry is written in'
+            'details' => 'this entry is written in',
         ]);
 
         $test = $this->inputMaker->create('meta[user[id]]', [
@@ -110,7 +117,7 @@ class InputMakerTest extends TestCase
     {
         $entry = app(Entry::class)->create([
             'name' => 'test entry',
-            'details' => 'this entry is written in'
+            'details' => 'this entry is written in',
         ]);
 
         $test = $this->inputMaker->create('meta[created_at]', [
@@ -125,7 +132,7 @@ class InputMakerTest extends TestCase
     {
         $entry = app(Entry::class)->create([
             'name' => 'test entry',
-            'details' => 'this entry is written in [markdown](http://markdown.com)'
+            'details' => 'this entry is written in [markdown](http://markdown.com)',
         ]);
 
         $test = $this->inputMaker->create('details', [
@@ -141,25 +148,25 @@ class InputMakerTest extends TestCase
         $user = app(User::class)->create([
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $job = app(Job::class)->create([
             'name' => 'Worker',
-            'user_id' => 1
+            'user_id' => 1,
         ]);
 
         $user->job_id = $job->id;
         $user->save();
 
         app(Job::class)->create([
-            'name' => 'BlackSmith'
+            'name' => 'BlackSmith',
         ]);
         app(Job::class)->create([
-            'name' => 'Police'
+            'name' => 'Police',
         ]);
         app(Job::class)->create([
-            'name' => 'Brogrammer'
+            'name' => 'Brogrammer',
         ]);
 
         $test = $this->inputMaker->create('jobs[]', [
@@ -168,7 +175,7 @@ class InputMakerTest extends TestCase
             'label' => 'name',
             'options' => app(Job::class)->all()->pluck('id', 'name'),
             'value' => 'id',
-            'custom' => 'multiple'
+            'custom' => 'multiple',
         ]);
 
         $this->assertTrue(is_string($test));
@@ -180,25 +187,25 @@ class InputMakerTest extends TestCase
         $user = app(User::class)->create([
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $job = app(Job::class)->create([
             'name' => 'Worker',
-            'user_id' => 1
+            'user_id' => 1,
         ]);
 
         $user->job_id = $job->id;
         $user->save();
 
         app(Job::class)->create([
-            'name' => 'BlackSmith'
+            'name' => 'BlackSmith',
         ]);
         app(Job::class)->create([
-            'name' => 'Police'
+            'name' => 'Police',
         ]);
         app(Job::class)->create([
-            'name' => 'Brogrammer'
+            'name' => 'Brogrammer',
         ]);
 
         $test = $this->inputMaker->create('jobs[]', [
@@ -206,7 +213,7 @@ class InputMakerTest extends TestCase
             'model' => 'Job',
             'label' => 'name',
             'value' => 'id',
-            'custom' => 'multiple'
+            'custom' => 'multiple',
         ], $user);
 
         $this->assertTrue(is_string($test));
@@ -218,25 +225,25 @@ class InputMakerTest extends TestCase
         $user = app(User::class)->create([
             'name' => 'Joe',
             'email' => 'joe@haltandcatchfire.com',
-            'password' => 'password'
+            'password' => 'password',
         ]);
 
         $job = app(Job::class)->create([
             'name' => 'Worker',
-            'user_id' => 1
+            'user_id' => 1,
         ]);
 
         $user->job_id = $job->id;
         $user->save();
 
         app(Job::class)->create([
-            'name' => 'BlackSmith'
+            'name' => 'BlackSmith',
         ]);
         app(Job::class)->create([
-            'name' => 'Police'
+            'name' => 'Police',
         ]);
         app(Job::class)->create([
-            'name' => 'Brogrammer'
+            'name' => 'Brogrammer',
         ]);
 
         $test = $this->inputMaker->create('jobs', [
@@ -246,7 +253,7 @@ class InputMakerTest extends TestCase
             'method' => 'custom',
             'params' => ['Bro'],
             'label' => 'name',
-            'value' => 'id'
+            'value' => 'id',
         ], $user, 'form-control', false, true);
 
         $this->assertTrue(is_string($test));

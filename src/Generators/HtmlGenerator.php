@@ -117,7 +117,7 @@ class HtmlGenerator
     {
         $object = $config['object'];
 
-        if (isset($config['config']['relationship'])){
+        if (isset($config['config']['relationship'])) {
             $relationship = $config['config']['relationship'];
         } else {
             $relationship = $config['name'];
@@ -202,7 +202,7 @@ class HtmlGenerator
      */
     public function getPopulation($config)
     {
-        if ($config['populated'] && $config['name'] !== $config['objectValue']) {
+        if ($config['populated'] && ($config['name'] !== $config['objectValue'])) {
             return 'value="'.$config['objectValue'].'"';
         }
 
