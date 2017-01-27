@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.1.0] - 2017-01-27
+
+### Changed
+- Laravel 5.4 compatibility
+
 ## [v1.0.15] - 2017-01-24
 
 ### Added
