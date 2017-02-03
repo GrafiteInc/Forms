@@ -35,10 +35,6 @@ class TestCase extends Orchestra\Testbench\TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->withFactories(__DIR__.'/../src/Models/Factories');
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
-        ]);
         $this->withoutMiddleware();
         $this->withoutEvents();
     }
