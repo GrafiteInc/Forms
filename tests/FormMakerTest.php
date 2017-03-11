@@ -33,7 +33,6 @@ class FormMakerTest extends TestCase
 
         $this->artisan('migrate', [
             '--database' => 'testbench',
-            '--realpath' => realpath(__DIR__.'/migrations'),
         ]);
 
         $this->formMaker = new FormMaker();
