@@ -44,10 +44,6 @@ class InputMakerTest extends TestCase
     {
         parent::setUp();
 
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
-        ]);
-
         $this->testUser = app(User::class);
         $this->inputMaker = app(InputMaker::class);
     }

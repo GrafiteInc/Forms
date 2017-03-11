@@ -1,5 +1,7 @@
 <?php
 
+use Illuminate\Support\Facades\File;
+
 class TestCase extends Orchestra\Testbench\TestCase
 {
     protected $app;
@@ -35,6 +37,14 @@ class TestCase extends Orchestra\Testbench\TestCase
     public function setUp()
     {
         parent::setUp();
+
+        $destinationDir = realpath(__DIR__.'/../vendor/orchestra/testbench/fixture/database/migrations');
+        File::copyDirectory(realpath(__DIR__.'/migrations'), $destinationDir);
+
+        $this->artisan('migrate', [
+            '--database' => 'testbench',
+        ]);
+
         $this->withoutMiddleware();
         $this->withoutEvents();
     }

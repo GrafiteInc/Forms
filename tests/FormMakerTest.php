@@ -30,11 +30,6 @@ class FormMakerTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-
-        $this->artisan('migrate', [
-            '--database' => 'testbench',
-        ]);
-
         $this->formMaker = new FormMaker();
     }
 
