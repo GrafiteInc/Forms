@@ -46,7 +46,6 @@ class InputMakerTest extends TestCase
 
         $this->artisan('migrate', [
             '--database' => 'testbench',
-            '--realpath' => realpath(__DIR__.'/migrations'),
         ]);
 
         $this->testUser = app(User::class);
