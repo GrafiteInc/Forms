@@ -93,6 +93,7 @@ class FormMaker
             unset($columns['id']);
             unset($columns['created_at']);
             unset($columns['updated_at']);
+            unset($columns['deleted_at']);
         }
 
         foreach ($columns as $column => $columnConfig) {
@@ -357,7 +358,7 @@ class FormMaker
         $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
 
         $tableTypeColumns = [];
-        $badColumns = ['id', 'created_at', 'updated_at'];
+        $badColumns = ['id', 'created_at', 'updated_at', 'deleted_at'];
 
         if ($allColumns) {
             $badColumns = [];

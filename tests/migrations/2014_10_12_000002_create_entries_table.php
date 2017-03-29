@@ -17,6 +17,7 @@ class CreateEntriesTable extends Migration
             $table->string('name')->default();
             $table->text('details')->default();
             $table->nullableTimestamps();
+            $table->softDeletes();
         });
     }
 
