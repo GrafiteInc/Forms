@@ -105,7 +105,7 @@ class InputMakerTest extends TestCase
         ], $entry);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals($test, '<input  id="Meta[user[id]]" class="form-control" type="number" name="meta[user[id]]"   value="1" placeholder="Meta User Id">');
+        $this->assertEquals($test, '<input  id="Meta[user[id]]" class="form-control" type="number" name="meta[user[id]]"   value="1" placeholder="Meta user id">');
     }
 
     public function testCreateSingleNestedString()
@@ -120,7 +120,7 @@ class InputMakerTest extends TestCase
         ], $entry);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals($test, '<input  id="Meta[created_at]" class="form-control" type="text" name="meta[created_at]"   value="1999-01-01 06:15:00" placeholder="Meta Created At">');
+        $this->assertEquals($test, '<input  id="Meta[created_at]" class="form-control" type="text" name="meta[created_at]"   value="1999-01-01 06:15:00" placeholder="Meta created at">');
     }
 
     public function testCreateSpecialString()

@@ -126,6 +126,6 @@ class InputCalibrator
      */
     public function cleanString($string)
     {
-        return ucwords(str_replace('_', ' ', $string));
+        return str_replace('_', ' ', $string);
     }
 }
