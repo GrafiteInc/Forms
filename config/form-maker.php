@@ -9,6 +9,7 @@
 return [
 
     'form' => [
+        'form-class' => 'form-control',
         'group-class' => 'form-group',
         'error-class' => 'has-error',
         'label-class' => 'control-label',

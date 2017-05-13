@@ -58,9 +58,13 @@ class InputMaker
      *
      * @return string
      */
-    public function create($name, $config, $object = null, $class = 'form-control', $reformatted = false, $populated = true)
+    public function create($name, $config, $object = null, $class = null, $reformatted = false, $populated = true)
     {
         $defaultConfig = include __DIR__.'/../../config/form-maker.php';
+
+        if (is_null($class)) {
+            $class = config('form-maker.forms.form-class', 'form-control');
+        }
 
         $inputConfig = [
             'populated' => $populated,

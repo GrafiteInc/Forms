@@ -74,13 +74,17 @@ class FormMaker
     public function fromTable(
         $table,
         $columns = null,
-        $class = 'form-control',
+        $class = null,
         $view = null,
         $reformatted = true,
         $populated = false,
         $idAndTimestamps = false
     ) {
         $formBuild = '';
+
+        if (is_null($class)) {
+            $class = config('form-maker.forms.form-class', 'form-control');
+        }
 
         $tableColumns = $this->getTableColumns($table, true);
         if (is_null($columns)) {
@@ -126,12 +130,17 @@ class FormMaker
         $array,
         $columns = null,
         $view = null,
-        $class = 'form-control',
+        $class = null,
         $populated = true,
         $reformatted = false,
         $timestamps = false
     ) {
         $formBuild = '';
+
+        if (is_null($class)) {
+            $class = config('form-maker.forms.form-class', 'form-control');
+        }
+
         $array = $this->cleanupIdAndTimeStamps($array, $timestamps, false);
         $errors = $this->getFormErrors();
 
@@ -171,7 +180,7 @@ class FormMaker
         $object,
         $columns = null,
         $view = null,
-        $class = 'form-control',
+        $class = null,
         $populated = true,
         $reformatted = false,
         $timestamps = false
@@ -180,6 +189,10 @@ class FormMaker
 
         if (is_null($columns)) {
             $columns = array_keys($object['attributes']);
+        }
+
+        if (is_null($class)) {
+            $class = config('form-maker.forms.form-class', 'form-control');
         }
 
         $columns = $this->cleanupIdAndTimeStamps($columns, $timestamps, false);
@@ -366,7 +379,9 @@ class FormMaker
 
         foreach ($tableColumns as $column) {
             if (!in_array($column, $badColumns)) {
-                $type = DB::connection($this->connection)->getDoctrineColumn($table, $column)->getType()->getName();
+                $type = DB::connection($this->connection)
+                    ->getDoctrineColumn(DB::connection($this->connection)->getTablePrefix().$table, $column)
+                    ->getType()->getName();
                 $tableTypeColumns[$column]['type'] = $type;
             }
         }
