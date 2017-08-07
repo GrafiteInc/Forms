@@ -284,6 +284,7 @@ class FormMaker
                 'labelFor' => ucfirst($column),
                 'label' => $this->columnLabel($field, $column),
                 'input' => $input,
+                'field' => $field,
                 'errorMessage' => $this->errorMessage($errorMessage),
                 'errorHighlight' => $errorHighlight,
             ]);
