@@ -53,17 +53,20 @@ class HtmlGenerator
     public function makeSelected($config, $selected, $custom)
     {
         $options = '';
-        foreach ($config['config']['options'] as $key => $value) {
-            if ($selected == '') {
-                $selectedValue = ((string) $config['objectValue'] === (string) $value) ? 'selected' : '';
-            } else {
-                if (isset($config['objectValue']) && is_array(json_decode($config['objectValue']))) {
-                    $selectedValue = (in_array($value, json_decode($config['objectValue']))) ? 'selected' : '';
+
+        if (isset($config['config']['options'])) {
+            foreach ($config['config']['options'] as $key => $value) {
+                if ($selected == '') {
+                    $selectedValue = ((string) $config['objectValue'] === (string) $value) ? 'selected' : '';
                 } else {
-                    $selectedValue = ((string) $selected === (string) $value) ? 'selected' : '';
+                    if (isset($config['objectValue']) && is_array(json_decode($config['objectValue']))) {
+                        $selectedValue = (in_array($value, json_decode($config['objectValue']))) ? 'selected' : '';
+                    } else {
+                        $selectedValue = ((string) $selected === (string) $value) ? 'selected' : '';
+                    }
                 }
+                $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
             }
-            $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
         }
 
         return '<select '.$custom.' id="'.str_replace('[]', '', ucfirst($config['name'])).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>';
