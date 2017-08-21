@@ -40,6 +40,17 @@ class InputMaker
         ],
     ];
 
+    protected $standardMethods = [
+        'makeHidden',
+        'makeText',
+    ];
+
+    protected $selectedMethods = [
+        'makeSelected',
+        'makeCheckbox',
+        'makeRadio',
+    ];
+
     public function __construct()
     {
         $this->htmlGenerator = new HtmlGenerator();
@@ -126,6 +137,7 @@ class InputMaker
     {
         $inputString = '';
         $beforeAfterCondition = ($this->before($config) > '' || $this->after($config) > '');
+        $method = $this->getGeneratorMethod($config['inputType']);
 
         if ($beforeAfterCondition) {
             $inputString .= '<div class="input-group">';
@@ -137,6 +149,10 @@ class InputMaker
 
         if ($beforeAfterCondition) {
             $inputString .= '</div>';
+        }
+
+        if (config('form-maker.form.orientation') == 'horizontal' && !in_array($method, $this->selectedMethods)) {
+            return '<div class="'.config('form-maker.form.input-column', '').'">'.$inputString.'</div>';
         }
 
         return $inputString;
@@ -276,20 +292,11 @@ class InputMaker
         $custom = $this->inputCalibrator->getField($config, 'custom');
         $method = $this->getGeneratorMethod($config['inputType']);
 
-        $standardMethods = [
-            'makeHidden',
-            'makeText',
-        ];
-
-        $selectedMethods = [
-            'makeSelected',
-            'makeCheckbox',
-            'makeRadio',
-        ];
-
-        if (in_array($method, $standardMethods)) {
+        if (in_array($method, $this->standardMethods)) {
             $inputString = $this->htmlGenerator->$method($config, $population, $custom);
-        } elseif (in_array($method, $selectedMethods)) {
+        } elseif (in_array($method, $this->selectedMethods)) {
+            // add extra class
+
             $inputString = $this->htmlGenerator->$method($config, $selected, $custom);
         } elseif ($method === 'makeRelationship') {
             $inputString = $this->htmlGenerator->makeRelationship(
