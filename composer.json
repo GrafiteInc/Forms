@@ -14,7 +14,7 @@
     ],
     "require": {
         "php": ">=5.6.4",
-        "doctrine/dbal": "^2.5",
+        "doctrine/dbal": "2.5.*",
         "illuminate/support": "5.4.*",
         "laravelcollective/html": "5.4.*",
         "orchestra/database": "^3.3"
