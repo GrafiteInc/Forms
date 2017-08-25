@@ -314,7 +314,7 @@ class FormMaker
             $singleLineCheckType = true;
         }
 
-        $formBuild = '<label class="'.$formLabelClass.' '.$labelColumn.'" for="'.ucfirst($column).'">';
+        $formBuild = '<label class="'.trim($formLabelClass.' '.$labelColumn).'" for="'.ucfirst($column).'">';
         $formBuild .= $this->inputUtilities->cleanString($this->columnLabel($field, $column));
         $formBuild .= '</label>'.$input.$this->errorMessage($errorMessage);
 
