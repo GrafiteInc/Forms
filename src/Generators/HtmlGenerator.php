@@ -95,7 +95,7 @@ class HtmlGenerator
      */
     public function makeCheckbox($config, $selected, $custom)
     {
-        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'">';
+        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class='. $config['config']['class'] .'>';
     }
 
     /**
@@ -109,7 +109,7 @@ class HtmlGenerator
      */
     public function makeRadio($config, $selected, $custom)
     {
-        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'">';
+        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'" class='. $config['config']['class'] .'>';
     }
 
     /*
