@@ -163,14 +163,18 @@ class HtmlGenerator
             $config['config']['options'][$item->$label] = $item->$value;
         }
 
-        if (!isset($config['config']['multiple'])) {
-            $selected = '';
+        if (!isset($config['config']['selected'])) {
+            if (!isset($config['config']['multiple'])) {
+                $selected = '';
 
-            if (is_object($object) && $object->$relationship()->first()) {
-                $selected = $object->$relationship()->first()->$value;
+                if (is_object($object) && $object->$relationship()->first()) {
+                    $selected = $object->$relationship()->first()->$value;
+                }
+            } else {
+                $selected = $class->$method->pluck($value, $label);
             }
         } else {
-            $selected = $class->$method->pluck($value, $label);
+            $selected = $config['config']['selected'];
         }
 
         return $this->makeSelected($config, $selected, $custom);

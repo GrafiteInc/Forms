@@ -18,6 +18,17 @@ class CreateJobsTable extends Migration
             $table->string('name');
             $table->nullableTimestamps();
         });
+
+        Schema::create('ideas', function (Blueprint $table) {
+            $table->increments('id');
+            $table->string('name');
+            $table->nullableTimestamps();
+        });
+
+        Schema::create('idea_user', function (Blueprint $table) {
+            $table->integer('idea_id')->default(0);
+            $table->integer('user_id')->default(0);
+        });
     }
 
     /**
@@ -28,5 +39,7 @@ class CreateJobsTable extends Migration
     public function down()
     {
         Schema::drop('jobs');
+
+        Schema::drop('ideas');
     }
 }
