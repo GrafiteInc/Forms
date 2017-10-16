@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.2.1] - 2017-10-16
+
+### Added
+- Nullable option for dropdowns
+
+### Fixed
+- Exception with relationships
+- Custom class config
+
 ## [v1.2.0] - 2017-08-31
 
 ### Changed
