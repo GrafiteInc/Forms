@@ -89,7 +89,7 @@ class InputMakerTest extends TestCase
         ], $object);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals($test, '<input  id="Gender[male]" checked type="checkbox" name="gender[male]" class="form-control">');
+        $this->assertEquals($test, '<input  id="Gender[male]" checked type="checkbox" name="gender[male]" class="form-check-input">');
     }
 
     public function testCreateMultipleSelect()
