@@ -80,7 +80,7 @@ class FormMaker
         $populated = false,
         $idAndTimestamps = false
     ) {
-        $formBuild = '';
+        $formBuild = [];
 
         if (is_null($class)) {
             $class = config('form-maker.forms.form-class', 'form-control');
@@ -107,10 +107,10 @@ class FormMaker
 
             $errors = $this->getFormErrors();
             $input = $this->inputMaker->create($column, $columnConfig, $column, $class, $reformatted, $populated);
-            $formBuild .= $this->formBuilder($view, $errors, $columnConfig, $column, $input);
+            $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
         }
 
-        return $formBuild;
+        return $this->buildUsingTheme($formBuild, config('form-maker.form.theme'));
     }
 
     /**
@@ -135,7 +135,7 @@ class FormMaker
         $reformatted = false,
         $timestamps = false
     ) {
-        $formBuild = '';
+        $formBuild = [];
 
         if (is_null($class)) {
             $class = config('form-maker.forms.form-class', 'form-control');
@@ -157,10 +157,10 @@ class FormMaker
             }
 
             $input = $this->inputMaker->create($column, $columnConfig, $array, $class, $reformatted, $populated);
-            $formBuild .= $this->formBuilder($view, $errors, $columnConfig, $column, $input);
+            $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
         }
 
-        return $formBuild;
+        return $this->buildUsingTheme($formBuild, config('form-maker.form.theme'));
     }
 
     /**
@@ -185,7 +185,7 @@ class FormMaker
         $reformatted = false,
         $timestamps = false
     ) {
-        $formBuild = '';
+        $formBuild = [];
 
         if (is_null($columns)) {
             $columns = array_keys($object['attributes']);
@@ -206,10 +206,10 @@ class FormMaker
                 $columnConfig = ['type' => 'hidden'];
             }
             $input = $this->inputMaker->create($column, $columnConfig, $object, $class, $reformatted, $populated);
-            $formBuild .= $this->formBuilder($view, $errors, $columnConfig, $column, $input);
+            $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
         }
 
-        return $formBuild;
+        return $this->buildUsingTheme($formBuild, config('form-maker.form.theme'));
     }
 
     /**
@@ -337,6 +337,47 @@ class FormMaker
         }
 
         return $formBuild;
+    }
+
+    /**
+     * Generate the HTML for a 'themed' (e.g. two column) form using the existing array of form elements
+     *
+     * @param array  $formBuild
+     * @param string $theme
+     *
+     * @return string
+     */
+    private function buildUsingTheme($formBuild, $theme = 'default')
+    {
+        switch ($theme) {
+            case 'bootstrap-two-col':
+                return $this->buildTwoColumnForm($formBuild);
+            default:
+                return implode("", $formBuild); 
+                
+        }
+    }
+
+    /**
+     * Build a two column form using standard bootstrap classes
+     * 
+     * @param  array $formBuild
+     * @return string
+     */
+    public function buildTwoColumnForm($formBuild)
+    {
+        $newFormBuild = [];
+        $formChunks = array_chunk($formBuild, 2);
+        foreach ($formChunks as $chunk) {
+            $newFormBuild[] = '<div class="row">';
+            foreach ($chunk as $element) {
+                $newFormBuild[] = '<div class="col-md-6">';
+                $newFormBuild[] = $element;
+                $newFormBuild[] = '</div>';
+            }
+            $newFormBuild[] = '</div>';
+        }
+        return implode("", $newFormBuild); 
     }
 
     /**
