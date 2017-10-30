@@ -351,7 +351,7 @@ class FormMaker
     {
         switch ($theme) {
             case 'bootstrap-two-col':
-                return $this->buildTwoColumnForm($formBuild);
+                return $this->buildBootstrapTwoColumnForm($formBuild);
             default:
                 return implode("", $formBuild); 
                 
@@ -364,7 +364,7 @@ class FormMaker
      * @param  array $formBuild
      * @return string
      */
-    public function buildTwoColumnForm($formBuild)
+    private function buildBootstrapTwoColumnForm($formBuild)
     {
         $newFormBuild = [];
         $formChunks = array_chunk($formBuild, 2);
