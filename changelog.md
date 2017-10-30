@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.1.6] - 2017-10-30
+
+### Added
+- New theme support
+
+### Changed
+- Version support
+
 ## [v1.2.3] - 2017-10-27
 
 ### Added
