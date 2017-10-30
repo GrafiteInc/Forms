@@ -67,22 +67,22 @@ class HtmlGeneratorTest extends TestCase
     {
         $test = $this->html->makeCheckbox([
             'name' => 'test',
-            'class' => 'form-control',
+            'class' => 'customClass',
         ], 'selected', '');
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<input  id="Test" selected type="checkbox" name="test">', $test);
+        $this->assertEquals('<input  id="Test" selected type="checkbox" name="test" class="customClass">', $test);
     }
 
     public function testMakeRadio()
     {
         $test = $this->html->makeRadio([
             'name' => 'test',
-            'class' => 'form-control',
+            'class' => 'customClass',
         ], 'selected', '');
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<input  id="Test" selected type="radio" name="test">', $test);
+        $this->assertEquals('<input  id="Test" selected type="radio" name="test" class="customClass">', $test);
     }
 
     public function testMakeInputString()

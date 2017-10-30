@@ -264,8 +264,8 @@ class FormMaker
      */
     private function formBuilder($view, $errors, $field, $column, $input)
     {
-        $formGroupClass = Config::get('form-maker.form.group-class', 'form-group');
-        $formErrorClass = Config::get('form-maker.form.error-class', 'has-error');
+        $formGroupClass = config('form-maker.form.group-class', 'form-group');
+        $formErrorClass = config('form-maker.form.error-class', 'has-error');
 
         $errorHighlight = '';
         $errorMessage = false;
@@ -284,6 +284,7 @@ class FormMaker
                 'labelFor' => ucfirst($column),
                 'label' => $this->columnLabel($field, $column),
                 'input' => $input,
+                'field' => $field,
                 'errorMessage' => $this->errorMessage($errorMessage),
                 'errorHighlight' => $errorHighlight,
             ]);
@@ -304,18 +305,32 @@ class FormMaker
      */
     public function formContentBuild($field, $column, $input, $errorMessage)
     {
-        $formLabelClass = Config::get('form-maker.form.label-class', 'control-label');
+        $labelColumn = $labelCheckableColumn = '';
+        $singleLineCheckType = false;
+        $formLabelClass = config('form-maker.form.label-class', 'control-label');
 
-        $formBuild = '<label class="'.$formLabelClass.'" for="'.ucfirst($column).'">';
+        if (config('form-maker.form.orientation') == 'horizontal') {
+            $labelColumn = config('form-maker.form.label-column');
+            $labelCheckableColumn = config('form-maker.form.checkbox-column');
+            $singleLineCheckType = true;
+        }
+
+        $formBuild = '<label class="'.trim($formLabelClass.' '.$labelColumn).'" for="'.ucfirst($column).'">';
         $formBuild .= $this->inputUtilities->cleanString($this->columnLabel($field, $column));
         $formBuild .= '</label>'.$input.$this->errorMessage($errorMessage);
 
         if (isset($field['type'])) {
             if (in_array($field['type'], ['radio', 'checkbox'])) {
                 $formBuild = '<div class="'.$field['type'].'">';
+                if ($singleLineCheckType) {
+                    $formBuild .= '<div class="'.$labelCheckableColumn.'">';
+                }
                 $formBuild .= '<label for="'.ucfirst($column).'" class="'.$formLabelClass.'">'.$input;
                 $formBuild .= $this->inputUtilities->cleanString($this->columnLabel($field, $column));
                 $formBuild .= '</label>'.$this->errorMessage($errorMessage).'</div>';
+                if ($singleLineCheckType) {
+                    $formBuild .= '</div>';
+                }
             } elseif (stristr($field['type'], 'hidden')) {
                 $formBuild = $input;
             }

@@ -53,16 +53,31 @@ class HtmlGenerator
     public function makeSelected($config, $selected, $custom)
     {
         $options = '';
+
+        if (isset($config['config']['multiple'])) {
+            $custom = 'multiple';
+            $config['name'] = $config['name'].'[]';
+        }
+
         foreach ($config['config']['options'] as $key => $value) {
-            if ($selected == '') {
-                $selectedValue = ((string) $config['objectValue'] === (string) $value) ? 'selected' : '';
+            $selectedValue = '';
+
+            if (isset($config['config']['multiple']) && is_object($selected)) {
+                if (in_array($value, $selected->toArray())) {
+                    $selectedValue = 'selected';
+                }
             } else {
-                if (isset($config['objectValue']) && is_array(json_decode($config['objectValue']))) {
-                    $selectedValue = (in_array($value, json_decode($config['objectValue']))) ? 'selected' : '';
+                if ($selected == '') {
+                    $selectedValue = ((string) $config['objectValue'] === (string) $value) ? 'selected' : '';
                 } else {
-                    $selectedValue = ((string) $selected === (string) $value) ? 'selected' : '';
+                    if (isset($config['objectValue']) && is_array(json_decode($config['objectValue']))) {
+                        $selectedValue = (in_array($value, json_decode($config['objectValue']))) ? 'selected' : '';
+                    } else {
+                        $selectedValue = ((string) $selected === (string) $value) ? 'selected' : '';
+                    }
                 }
             }
+
             $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
         }
 
@@ -80,7 +95,11 @@ class HtmlGenerator
      */
     public function makeCheckbox($config, $selected, $custom)
     {
-        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'">';
+        if ($config['class'] == 'form-control') {
+            $config['class'] = 'form-check-input';
+        }
+
+        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
     /**
@@ -94,7 +113,7 @@ class HtmlGenerator
      */
     public function makeRadio($config, $selected, $custom)
     {
-        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'">';
+        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
     /*
@@ -128,7 +147,11 @@ class HtmlGenerator
 
         $method = 'all';
 
-        $class = app()->make($config['config']['model']);
+        if (!is_object($config['config']['model'])) {
+            $class = app()->make($config['config']['model']);
+        } else {
+            $class = $config['config']['model'];
+        }
 
         if (isset($config['config']['method'])) {
             $method = $config['config']['method'];
@@ -140,13 +163,25 @@ class HtmlGenerator
             $items = $class->$method();
         }
 
+        if (isset($config['config']['nullable']) && $config['config']['nullable'] === true) {
+            $config['config']['options']['- Select -'] = null;
+        }
         foreach ($items as $item) {
             $config['config']['options'][$item->$label] = $item->$value;
         }
 
-        $selected = '';
-        if (is_object($object) && $object->$relationship()->first()) {
-            $selected = $object->$relationship()->first()->$value;
+        if (!isset($config['config']['selected'])) {
+            if (!isset($config['config']['multiple'])) {
+                $selected = '';
+
+                if (is_object($object) && $object->$relationship()->first()) {
+                    $selected = $object->$relationship()->first()->$value;
+                }
+            } else {
+                $selected = $class->$method->pluck($value, $label);
+            }
+        } else {
+            $selected = $config['config']['selected'];
         }
 
         return $this->makeSelected($config, $selected, $custom);

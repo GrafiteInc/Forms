@@ -38,7 +38,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     {
         parent::setUp();
 
-        $destinationDir = realpath(__DIR__.'/../vendor/orchestra/testbench/fixture/database/migrations');
+        $destinationDir = realpath(__DIR__.'/../vendor/orchestra/testbench-core/laravel/database/migrations');
         File::copyDirectory(realpath(__DIR__.'/migrations'), $destinationDir);
 
         $this->artisan('migrate', [

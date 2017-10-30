@@ -15,6 +15,23 @@ class User extends Model
     {
         return $this->hasOne('Job');
     }
+
+    public function ideas()
+    {
+        return $this->belongsToMany('Idea');
+    }
+}
+
+class Idea extends Model
+{
+    public $fillable = [
+        'name',
+    ];
+
+    public function user()
+    {
+        return $this->hasOne('User');
+    }
 }
 
 class Job extends Model
@@ -72,7 +89,7 @@ class InputMakerTest extends TestCase
         ], $object);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals($test, '<input  id="Gender[male]" checked type="checkbox" name="gender[male]">');
+        $this->assertEquals($test, '<input  id="Gender[male]" checked type="checkbox" name="gender[male]" class="form-check-input">');
     }
 
     public function testCreateMultipleSelect()
@@ -253,5 +270,43 @@ class InputMakerTest extends TestCase
 
         $this->assertTrue(is_string($test));
         $this->assertEquals($test, '<select  id="Jobs" class="form-control" name="jobs"><option value="4" >Brogrammer</option></select>');
+    }
+
+    public function testCreateRelationshipCustomMultiple()
+    {
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password',
+        ]);
+
+        $idea1 = app(Idea::class)->create([
+            'name' => 'Thing',
+        ]);
+
+        $idea2 = app(Idea::class)->create([
+            'name' => 'Foo',
+        ]);
+
+        app(Idea::class)->create([
+            'name' => 'Bar',
+        ]);
+        app(Idea::class)->create([
+            'name' => 'Drink',
+        ]);
+
+        $user->ideas()->attach([$idea1->id, $idea2->id]);
+
+        $test = $this->inputMaker->create('ideas', [
+            'selected' => app(User::class)->where('name', 'Joe')->first()->ideas()->pluck('id'),
+            'type' => 'relationship',
+            'model' => 'Idea',
+            'label' => 'name',
+            'value' => 'id',
+            'multiple' => true,
+        ], $user, 'form-control', false, true);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals($test, '<select multiple id="Ideas" class="form-control" name="ideas[]"><option value="1" selected>Thing</option><option value="2" selected>Foo</option><option value="3" >Bar</option><option value="4" >Drink</option></select>');
     }
 }
