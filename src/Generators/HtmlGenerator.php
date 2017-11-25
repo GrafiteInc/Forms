@@ -52,11 +52,16 @@ class HtmlGenerator
      */
     public function makeSelected($config, $selected, $custom)
     {
-        $options = '';
+        $options = $prefix = $suffix = '';
 
         if (isset($config['config']['multiple'])) {
             $custom = 'multiple';
             $config['name'] = $config['name'].'[]';
+        }
+
+        if (config('form-maker.form.orientation') === 'horizontal') {
+            $prefix = '<div class="'.config('form-maker.form.input-column').'">';
+            $suffix = '</div>';
         }
 
         foreach ($config['config']['options'] as $key => $value) {
@@ -81,7 +86,7 @@ class HtmlGenerator
             $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
         }
 
-        return '<select '.$custom.' id="'.str_replace('[]', '', ucfirst($config['name'])).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>';
+        return $prefix.'<select '.$custom.' id="'.str_replace('[]', '', ucfirst($config['name'])).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>'.$suffix;
     }
 
     /**
