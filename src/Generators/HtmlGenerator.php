@@ -238,7 +238,7 @@ class HtmlGenerator
     public function getPopulation($config)
     {
         if ($config['populated'] && ($config['name'] !== $config['objectValue'])) {
-            return 'value="'.$config['objectValue'].'"';
+            return 'value="'.htmlspecialchars($config['objectValue']).'"';
         }
 
         return '';
