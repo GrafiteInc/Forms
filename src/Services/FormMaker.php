@@ -13,6 +13,8 @@ use Illuminate\Support\Facades\View;
  */
 class FormMaker
 {
+    protected $columns = 1;
+
     protected $inputMaker;
 
     protected $inputUtilities;
@@ -54,6 +56,18 @@ class FormMaker
     public function setConnection($connection)
     {
         $this->connection = $connection;
+
+        return $this;
+    }
+
+    /**
+     * Set the columns of the form
+     *
+     * @param int $columns
+     */
+    public function setColumns($columns)
+    {
+        $this->columns = $columns;
 
         return $this;
     }
@@ -110,7 +124,7 @@ class FormMaker
             $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
         }
 
-        return $this->buildUsingTheme($formBuild, config('form-maker.form.theme'));
+        return $this->buildUsingColumns($formBuild, config('form-maker.form.theme'));
     }
 
     /**
@@ -160,7 +174,7 @@ class FormMaker
             $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
         }
 
-        return $this->buildUsingTheme($formBuild, config('form-maker.form.theme'));
+        return $this->buildUsingColumns($formBuild, config('form-maker.form.theme'));
     }
 
     /**
@@ -209,7 +223,7 @@ class FormMaker
             $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
         }
 
-        return $this->buildUsingTheme($formBuild, config('form-maker.form.theme'));
+        return $this->buildUsingColumns($formBuild, config('form-maker.form.theme'));
     }
 
     /**
@@ -343,41 +357,61 @@ class FormMaker
      * Generate the HTML for a 'themed' (e.g. two column) form using the existing array of form elements
      *
      * @param array  $formBuild
-     * @param string $theme
+     * @param string $columns
      *
      * @return string
      */
-    private function buildUsingTheme($formBuild, $theme = 'default')
+    private function buildUsingColumns($formBuild, $columns = 'default')
     {
-        switch ($theme) {
-            case 'bootstrap-two-col':
-                return $this->buildBootstrapTwoColumnForm($formBuild);
+        $columns = $this->columns;
+
+        if ($columns == 'default') {
+            $columns = 1;
+        }
+
+        if ($columns == 'bootstrap-two-col') {
+            $columns = 2;
+        }
+
+        switch ($columns) {
+            case 1:
+                return implode("", $formBuild);
+            case 2:
+                return $this->buildBootstrapColumnForm($formBuild, 2);
+            case 3:
+                return $this->buildBootstrapColumnForm($formBuild, 3);
+            case 4:
+                return $this->buildBootstrapColumnForm($formBuild, 4);
+            case 6:
+                return $this->buildBootstrapColumnForm($formBuild, 6);
             default:
-                return implode("", $formBuild); 
-                
+                return implode("", $formBuild);
         }
     }
 
     /**
      * Build a two column form using standard bootstrap classes
-     * 
+     *
      * @param  array $formBuild
      * @return string
      */
-    private function buildBootstrapTwoColumnForm($formBuild)
+    private function buildBootstrapColumnForm($formBuild, $columns)
     {
         $newFormBuild = [];
-        $formChunks = array_chunk($formBuild, 2);
+        $formChunks = array_chunk($formBuild, $columns);
+        $class = 'col-md-'.(12 / $columns);
+
         foreach ($formChunks as $chunk) {
             $newFormBuild[] = '<div class="row">';
             foreach ($chunk as $element) {
-                $newFormBuild[] = '<div class="col-md-6">';
+                $newFormBuild[] = '<div class="'.$class.'">';
                 $newFormBuild[] = $element;
                 $newFormBuild[] = '</div>';
             }
             $newFormBuild[] = '</div>';
         }
-        return implode("", $newFormBuild); 
+
+        return implode("", $newFormBuild);
     }
 
     /**
