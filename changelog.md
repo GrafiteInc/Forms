@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.2.6] - 2017-11-27
+
+### Added
+- New name option
+- New set columns layout option
+
+### Fixed
+- Issue with relationships
+- Issue with horizontal selects
+
 ## [v1.2.5] - 2017-11-25
 
 ### Fixed
