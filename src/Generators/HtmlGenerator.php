@@ -183,7 +183,7 @@ class HtmlGenerator
                     $selected = $object->$relationship()->first()->$value;
                 }
             } else {
-                $selected = $class->$method->pluck($value, $label);
+                $selected = $class->$method()->pluck($value, $label);
             }
         } else {
             $selected = $config['config']['selected'];
