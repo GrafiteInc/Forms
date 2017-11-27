@@ -41,6 +41,23 @@ class InputCalibrator
     }
 
     /**
+     * Customizable input name
+     *
+     * @param  string $name
+     * @param  array $config
+     *
+     * @return string
+     */
+    public function getName($name, $config)
+    {
+        if (isset($config['name'])) {
+            $name = $config['name'];
+        }
+
+        return $name;
+    }
+
+    /**
      * Has been selected.
      *
      * @param array  $config

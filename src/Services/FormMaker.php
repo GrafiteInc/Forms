@@ -17,7 +17,7 @@ class FormMaker
 
     protected $inputMaker;
 
-    protected $inputUtilities;
+    protected $inputCalibrator;
 
     public $connection;
 
@@ -44,7 +44,7 @@ class FormMaker
     public function __construct()
     {
         $this->inputMaker = new InputMaker();
-        $this->inputUtilities = new InputCalibrator();
+        $this->inputCalibrator = new InputCalibrator();
         $this->connection = config('database.default');
     }
 
@@ -329,8 +329,10 @@ class FormMaker
             $singleLineCheckType = true;
         }
 
-        $formBuild = '<label class="'.trim($formLabelClass.' '.$labelColumn).'" for="'.ucfirst($column).'">';
-        $formBuild .= $this->inputUtilities->cleanString($this->columnLabel($field, $column));
+        $name = ucfirst($this->inputCalibrator->getName($column, $field));
+
+        $formBuild = '<label class="'.trim($formLabelClass.' '.$labelColumn).'" for="'.$name.'">';
+        $formBuild .= $this->inputCalibrator->cleanString($this->columnLabel($field, $column));
         $formBuild .= '</label>'.$input.$this->errorMessage($errorMessage);
 
         if (isset($field['type'])) {
@@ -340,7 +342,7 @@ class FormMaker
                     $formBuild .= '<div class="'.$labelCheckableColumn.'">';
                 }
                 $formBuild .= '<label for="'.ucfirst($column).'" class="'.$formLabelClass.'">'.$input;
-                $formBuild .= $this->inputUtilities->cleanString($this->columnLabel($field, $column));
+                $formBuild .= $this->inputCalibrator->cleanString($this->columnLabel($field, $column));
                 $formBuild .= '</label>'.$this->errorMessage($errorMessage).'</div>';
                 if ($singleLineCheckType) {
                     $formBuild .= '</div>';

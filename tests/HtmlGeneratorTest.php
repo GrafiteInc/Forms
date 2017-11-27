@@ -11,19 +11,9 @@ class HtmlGeneratorTest extends TestCase
 
     public function setUp()
     {
-        $this->app = new Container();
-        $this->app->singleton('app', Container::class);
+        parent::setUp();
 
-        $config = Mockery::mock('config')->shouldReceive('get')->withAnyArgs()->andReturn(['string' => 'string'])->getMock();
-        $session = Mockery::mock('session')->shouldReceive('isStarted')->withAnyArgs()->andReturn(true)->getMock();
-        $request = Mockery::mock('request')->shouldReceive('old')->withAnyArgs()->andReturn([])->getMock();
-        $this->app->instance('config', $config);
-        $this->app->instance('session', $session);
-        $this->app->instance('request', $request);
-
-        Facade::setFacadeApplication($this->app);
-
-        $this->html = new HtmlGenerator();
+        $this->html = app(HtmlGenerator::class);
     }
 
     public function testMakeHidden()
