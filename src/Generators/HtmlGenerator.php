@@ -179,7 +179,13 @@ class HtmlGenerator
             if (!isset($config['config']['multiple'])) {
                 $selected = '';
 
-                if (is_object($object) && $object->$relationship()->first()) {
+                if (is_object($object) && method_exists($object, $relationship)) {
+                    $selected = $object->$relationship()->first()->$value;
+                }
+
+                $relationship = str_replace('_id', '', $relationship);
+
+                if (method_exists($object, $relationship)) {
                     $selected = $object->$relationship()->first()->$value;
                 }
             } else {
@@ -243,6 +249,12 @@ class HtmlGenerator
     public function getPopulation($config)
     {
         if ($config['populated'] && ($config['name'] !== $config['objectValue'])) {
+
+            if ($config['type'] == 'date') {
+                $format = (isset($config['format'])) ? $config['format'] : 'Y-m-d';
+                $config['objectValue'] = $config['objectValue']->format($format);
+            }
+
             return 'value="'.htmlspecialchars($config['objectValue']).'"';
         }
 
