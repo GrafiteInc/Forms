@@ -250,7 +250,7 @@ class HtmlGenerator
     {
         if ($config['populated'] && ($config['name'] !== $config['objectValue'])) {
 
-            if ($config['type'] == 'date') {
+            if ($config['type'] == 'date' && method_exists($config['objectValue'], 'format')) {
                 $format = (isset($config['format'])) ? $config['format'] : 'Y-m-d';
                 $config['objectValue'] = $config['objectValue']->format($format);
             }
