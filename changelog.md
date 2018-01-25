@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.2.9] - 2018-01-25
+
+### Fixed
+- Fixed issue with null values for relationships
+
 ## [v1.2.8] - 2018-01-09
 
 ### Fixed
