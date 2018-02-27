@@ -180,13 +180,17 @@ class HtmlGenerator
                 $selected = '';
 
                 if (is_object($object) && method_exists($object, $relationship)) {
-                    $selected = $object->$relationship()->first()->$value ?? '';
+                    if ($object->$relationship()->first()) {
+                        $selected = $object->$relationship()->first()->$value;
+                    }
                 }
 
                 $relationship = str_replace('_id', '', $relationship);
 
                 if (method_exists($object, $relationship)) {
-                    $selected = $object->$relationship()->first()->$value ?? '';
+                    if ($object->$relationship()->first()) {
+                        $selected = $object->$relationship()->first()->$value;
+                    }
                 }
             } else {
                 $selected = $class->$method()->pluck($value, $label);
