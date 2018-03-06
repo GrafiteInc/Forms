@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.2.10] - 2018-03-06
+
+### Changed
+- Makes checkboxes bootstrap 4 compatible
+
 ## [v1.2.9] - 2018-02-27
 
 ### Fixed
