@@ -101,7 +101,11 @@ class HtmlGenerator
     public function makeCheckbox($config, $selected, $custom)
     {
         if (str_contains($config['class'], 'form-control')) {
-            $config['class'] = str_replace('form-control', 'form-check-input', $config['class']);
+            if (str_contains($config['class'], 'form-check-inline')) {
+                $config['class'] = str_replace('form-control', '', $config['class']);
+            } else {
+                $config['class'] = str_replace('form-control', 'form-check-input', $config['class']);
+            }
         }
 
         return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
