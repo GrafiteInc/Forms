@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\FormMaker\Generators;
+namespace Grafite\FormMaker\Generators;
 
 /**
  * Generate the CRUD.

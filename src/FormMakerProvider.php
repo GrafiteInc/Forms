@@ -1,12 +1,12 @@
 <?php
 
-namespace Yab\FormMaker;
+namespace Grafite\FormMaker;
 
 use Illuminate\Foundation\AliasLoader;
 use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Yab\FormMaker\Services\FormMaker;
-use Yab\FormMaker\Services\InputMaker;
+use Grafite\FormMaker\Services\FormMaker;
+use Grafite\FormMaker\Services\InputMaker;
 
 class FormMakerProvider extends ServiceProvider
 {
@@ -53,8 +53,8 @@ class FormMakerProvider extends ServiceProvider
 
         $loader = AliasLoader::getInstance();
 
-        $loader->alias('FormMaker', \Yab\FormMaker\Facades\FormMaker::class);
-        $loader->alias('InputMaker', \Yab\FormMaker\Facades\InputMaker::class);
+        $loader->alias('FormMaker', \Grafite\FormMaker\Facades\FormMaker::class);
+        $loader->alias('InputMaker', \Grafite\FormMaker\Facades\InputMaker::class);
 
         // Thrid party
         $loader->alias('Form', \Collective\Html\FormFacade::class);

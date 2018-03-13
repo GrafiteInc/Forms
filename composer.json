@@ -1,15 +1,11 @@
 {
-    "name": "yab/formmaker",
+    "name": "grafite/formmaker",
     "description": "A remarkably magical form and input maker tool for Laravel.",
     "license": "MIT",
     "authors": [
         {
             "name": "Matt Lantz",
-            "email": "matt@yabhq.com"
-        },
-        {
-            "name": "Chris Blackwell",
-            "email": "chris@yabhq.com"
+            "email": "mattlantz@gmail.com"
         }
     ],
     "require": {
@@ -27,7 +23,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Yab\\FormMaker\\": "src/"
+            "Grafite\\FormMaker\\": "src/"
         },
         "files": [
           "src/Helpers/form_maker.php",
@@ -42,7 +38,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Yab\\FormMaker\\FormMakerProvider"
+                "Grafite\\FormMaker\\FormMakerProvider"
             ]
         }
     },

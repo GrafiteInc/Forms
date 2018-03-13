@@ -20,7 +20,7 @@ class TestCase extends Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Yab\FormMaker\FormMakerProvider::class,
+            \Grafite\FormMaker\FormMakerProvider::class,
         ];
     }
 
@@ -29,8 +29,8 @@ class TestCase extends Orchestra\Testbench\TestCase
         return [
             'Form' => \Collective\Html\FormFacade::class,
             'HTML' => \Collective\Html\HtmlFacade::class,
-            'FormMaker' => \Yab\FormMaker\Facades\FormMaker::class,
-            'InputMaker' => \Yab\FormMaker\Facades\InputMaker::class,
+            'FormMaker' => \Grafite\FormMaker\Facades\FormMaker::class,
+            'InputMaker' => \Grafite\FormMaker\Facades\InputMaker::class,
         ];
     }
 

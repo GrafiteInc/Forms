@@ -1,11 +1,11 @@
 <?php
 
-namespace Yab\FormMaker\Services;
+namespace Grafite\FormMaker\Services;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Yab\FormMaker\Generators\HtmlGenerator;
+use Grafite\FormMaker\Generators\HtmlGenerator;
 
 /**
  * $this->elper to make an HTML input.

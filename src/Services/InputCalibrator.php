@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\FormMaker\Services;
+namespace Grafite\FormMaker\Services;
 
 /**
  * Input Calibration.

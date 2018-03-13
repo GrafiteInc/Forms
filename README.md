@@ -2,16 +2,14 @@
 
 **FormMaker** - A remarkably magical form and input maker tool for Laravel.
 
-[![Build Status](https://travis-ci.org/YABhq/FormMaker.svg?branch=master)](https://travis-ci.org/YABhq/FormMaker)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/YABhq/FormMaker/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/YABhq/FormMaker/?branch=develop)
-[![Packagist](https://img.shields.io/packagist/dt/yab/formmaker.svg)](https://packagist.org/packages/yab/formmaker)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/yab/formmaker)
+[![Build Status](https://travis-ci.org/GrafiteInc/FormMaker.svg?branch=master)](https://travis-ci.org/GrafiteInc/FormMaker)
+[![Packagist](https://img.shields.io/packagist/dt/grafite/formmaker.svg)](https://packagist.org/packages/grafite/formmaker)
+[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/grafite/formmaker)
 
 The FormMaker package provides a set of tools for generating HTML forms with as little as 1 line of code. Don't want to write boring HTML, neither do we. The FormMaker will generate error containers, all fields defined by either the table or object column types, or if you prefer to have more control define a config. In the case that you want to write more than 1 line of code, FormMaker comes with the InputMaker service as well. With the InputMaker you can create any form of input, including html for Eloquent relationships.
 
 ##### Author(s):
-* [Matt Lantz](https://github.com/mlantz) ([@mattylantz](http://twitter.com/mattylantz), matt at yabhq dot com)
-* [Chris Blackwell](https://github.com/chrisblackwell) ([@chrisblackwell](https://twitter.com/chrisblackwell), chris at yabhq dot com)
+* [Matt Lantz](https://github.com/mlantz) ([@mattylantz](http://twitter.com/mattylantz), mattlantz at gmail dot com)
 
 ## Requirements
 
@@ -22,7 +20,7 @@ The FormMaker package provides a set of tools for generating HTML forms with as 
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| 5.4.x - 5.5.x | 1.2.x | yes |
+| ^5.4.x | 1.2.x | yes |
 | 5.4.x | 1.1.x | no |
 | 5.3.x | 1.0.x | no |
 
@@ -35,17 +33,17 @@ composer create-project laravel/laravel your-project-name
 
 Then run the following to add FormMaker
 ```php
-composer require "yab/formmaker"
+composer require "grafite/formmaker"
 ```
 
 Add this to the `config/app.php` in the providers array:
 ```php
-Yab\FormMaker\FormMakerProvider::class
+Grafite\FormMaker\FormMakerProvider::class
 ```
 
 Time to publish those assets!
 ```php
-php artisan vendor:publish --provider="Yab\FormMaker\FormMakerProvider"
+php artisan vendor:publish --provider="Grafite\FormMaker\FormMakerProvider"
 ```
 
 ## Documentation

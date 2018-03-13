@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\FormMaker\Services;
+namespace Grafite\FormMaker\Services;
 
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;

@@ -1,6 +1,6 @@
 <?php
 
-namespace Yab\FormMaker\Facades;
+namespace Grafite\FormMaker\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
