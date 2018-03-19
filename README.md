@@ -21,7 +21,7 @@ The FormMaker package provides a set of tools for generating HTML forms with as 
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| ^5.4.x | 1.2.x | yes |
+| ^5.4.x | 1.3.x | yes |
 | 5.4.x | 1.1.x | no |
 | 5.3.x | 1.0.x | no |
 
@@ -37,11 +37,6 @@ Then run the following to add FormMaker
 composer require "grafite/formmaker"
 ```
 
-Add this to the `config/app.php` in the providers array:
-```php
-Grafite\FormMaker\FormMakerProvider::class
-```
-
 Time to publish those assets!
 ```php
 php artisan vendor:publish --provider="Grafite\FormMaker\FormMakerProvider"
@@ -49,8 +44,8 @@ php artisan vendor:publish --provider="Grafite\FormMaker\FormMakerProvider"
 
 ## Documentation
 
-[https://laracogs.com/docs/services/form_maker](https://laracogs.com/docs/services/form_maker)<br>
-[https://laracogs.com/docs/services/input_maker](https://laracogs.com/docs/services/input_maker)
+[https://docs.grafite.ca/others/form_maker](https://docs.grafite.ca/others/form_maker)<br>
+[https://docs.grafite.ca/others/input_maker](https://docs.grafite.ca/others/input_maker)
 
 ## License
 FormMaker is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
