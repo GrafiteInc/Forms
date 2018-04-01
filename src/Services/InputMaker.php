@@ -80,6 +80,7 @@ class InputMaker
         $inputConfig = [
             'populated' => $populated,
             'name' => $this->inputCalibrator->getName($name, $config),
+            'id' => $this->inputCalibrator->getId($name, $config),
             'class' => $this->prepareTheClass($class, $config),
             'config' => $config,
             'inputTypes' => Config::get('form-maker.inputTypes', $defaultConfig['inputTypes']),

@@ -58,6 +58,25 @@ class InputCalibrator
     }
 
     /**
+     * Customizable input name
+     *
+     * @param  string $name
+     * @param  array $config
+     *
+     * @return string
+     */
+    public function getId($name, $config)
+    {
+        $inputId = str_replace('[]', '', ucfirst($name));
+
+        if (isset($config['id'])) {
+            $inputId = $config['id'];
+        }
+
+        return $inputId;
+    }
+
+    /**
      * Has been selected.
      *
      * @param array  $config

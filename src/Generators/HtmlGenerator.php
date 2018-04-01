@@ -2,6 +2,8 @@
 
 namespace Grafite\FormMaker\Generators;
 
+use Grafite\FormMaker\Services\InputCalibrator;
+
 /**
  * Generate the CRUD.
  */
@@ -24,7 +26,7 @@ class HtmlGenerator
      */
     public function makeHidden($config, $population, $custom)
     {
-        return '<input '.$custom.' id="'.ucfirst($config['name']).'" name="'.$config['name'].'" type="hidden" value="'.$population.'">';
+        return '<input '.$custom.' id="'.$this->getId($config).'" name="'.$config['name'].'" type="hidden" value="'.$population.'">';
     }
 
     /**
@@ -38,7 +40,7 @@ class HtmlGenerator
      */
     public function makeText($config, $population, $custom)
     {
-        return '<textarea '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
+        return '<textarea '.$custom.' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
     }
 
     /**
@@ -86,7 +88,7 @@ class HtmlGenerator
             $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
         }
 
-        return $prefix.'<select '.$custom.' id="'.str_replace('[]', '', ucfirst($config['name'])).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>'.$suffix;
+        return $prefix.'<select '.$custom.' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>'.$suffix;
     }
 
     /**
@@ -108,7 +110,7 @@ class HtmlGenerator
             }
         }
 
-        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
+        return '<input '.$custom.' id="'.$this->getId($config).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
     /**
@@ -122,7 +124,7 @@ class HtmlGenerator
      */
     public function makeRadio($config, $selected, $custom)
     {
-        return '<input '.$custom.' id="'.ucfirst($config['name']).'" '.$selected.' type="radio" name="'.$config['name'].'" class="'. $config['class'] .'">';
+        return '<input '.$custom.' id="'.$this->getId($config).'" '.$selected.' type="radio" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
     /*
@@ -225,7 +227,7 @@ class HtmlGenerator
             $population = '';
         }
 
-        $inputString = '<input '.$custom.' id="'.ucfirst($config['name']).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
+        $inputString = '<input '.$custom.' id="'.$this->getId($config).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
 
         return $inputString;
     }
@@ -267,6 +269,18 @@ class HtmlGenerator
         }
 
         return '';
+    }
+
+    /**
+     * Get an items ID
+     *
+     * @param  array $config
+     *
+     * @return string
+     */
+    public function getId($config)
+    {
+        return app(InputCalibrator::class)->getId($config['name'], $config);
     }
 
     /**

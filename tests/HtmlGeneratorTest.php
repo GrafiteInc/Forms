@@ -24,6 +24,14 @@ class HtmlGeneratorTest extends TestCase
         $this->assertEquals('<input  id="Test" name="test" type="hidden" value="test">', $test);
     }
 
+    public function testMakeHiddenSpecialId()
+    {
+        $test = $this->html->makeHidden(['id' => 'specialHidden', 'name' => 'test'], 'test', '');
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals('<input  id="specialHidden" name="test" type="hidden" value="test">', $test);
+    }
+
     public function testMakeText()
     {
         $test = $this->html->makeText([
