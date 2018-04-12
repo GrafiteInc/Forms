@@ -141,7 +141,7 @@ class InputMaker
         $method = $this->getGeneratorMethod($config['inputType']);
 
         if ($beforeAfterCondition) {
-            $inputString .= '<div class="input-group">';
+            $inputString .= '<div class="'.config('form-maker.form.before_after_input_wrapper', 'input-group').'">';
         }
 
         $inputString .= $this->before($config);

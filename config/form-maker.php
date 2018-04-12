@@ -12,6 +12,7 @@ return [
         'group-class' => 'form-group',
         'error-class' => 'has-error',
         'label-class' => 'control-label',
+        'before_after_input_wrapper' => 'input-group',
 
         /*
          * --------------------------------------------------------------------------
