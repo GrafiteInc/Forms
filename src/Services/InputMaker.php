@@ -171,11 +171,15 @@ class InputMaker
     {
         $attributeString = '';
 
-        foreach ($attributes as $key => $value) {
-            $attributeString .= $key.'="'.$value.'"';
+        if (!isset($attributes['for'])) {
+            $attributeString = 'for="'.$name.'"';
         }
 
-        return '<label for="'.$name.'" '.$attributeString.'>'.$name.'</label>';
+        foreach ($attributes as $key => $value) {
+            $attributeString .= $key.'="'.$value.'" ';
+        }
+
+        return '<label '.$attributeString.'>'.$name.'</label>';
     }
 
     /**
