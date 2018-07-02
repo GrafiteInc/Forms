@@ -202,7 +202,7 @@ class FormMaker
         $formBuild = [];
 
         if (is_null($columns)) {
-            $columns = array_keys($object['attributes']);
+            $columns = is_array($object['attributes']) ? array_keys($object['attributes']) : [];
         }
 
         if (is_null($class)) {
