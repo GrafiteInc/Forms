@@ -20,13 +20,13 @@ class HtmlGenerator
      *
      * @param array  $config
      * @param string $population
-     * @param string $custom
+     * @param mixed $custom
      *
      * @return string
      */
     public function makeHidden($config, $population, $custom)
     {
-        return '<input '.$custom.' id="'.$this->getId($config).'" name="'.$config['name'].'" type="hidden" value="'.$population.'">';
+        return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" name="'.$config['name'].'" type="hidden" value="'.$population.'">';
     }
 
     /**
@@ -34,13 +34,13 @@ class HtmlGenerator
      *
      * @param array  $config
      * @param string $population
-     * @param string $custom
+     * @param mixed $custom
      *
      * @return string
      */
     public function makeText($config, $population, $custom)
     {
-        return '<textarea '.$custom.' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
+        return '<textarea '.$this->processCustom($custom).' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'" placeholder="'.$config['placeholder'].'">'.$population.'</textarea>';
     }
 
     /**
@@ -48,7 +48,7 @@ class HtmlGenerator
      *
      * @param array  $config
      * @param string $selected
-     * @param string $custom
+     * @param mixed $custom
      *
      * @return string
      */
@@ -88,7 +88,7 @@ class HtmlGenerator
             $options .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
         }
 
-        return $prefix.'<select '.$custom.' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>'.$suffix;
+        return $prefix.'<select '.$this->processCustom($custom).' id="'.$this->getId($config).'" class="'.$config['class'].'" name="'.$config['name'].'">'.$options.'</select>'.$suffix;
     }
 
     /**
@@ -96,7 +96,7 @@ class HtmlGenerator
      *
      * @param array  $config
      * @param string $selected
-     * @param string $custom
+     * @param mixed $custom
      *
      * @return string
      */
@@ -110,7 +110,7 @@ class HtmlGenerator
             }
         }
 
-        return '<input '.$custom.' id="'.$this->getId($config).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
+        return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
     /**
@@ -118,13 +118,13 @@ class HtmlGenerator
      *
      * @param array  $config
      * @param string $selected
-     * @param string $custom
+     * @param mixed $custom
      *
      * @return string
      */
     public function makeRadio($config, $selected, $custom)
     {
-        return '<input '.$custom.' id="'.$this->getId($config).'" '.$selected.' type="radio" name="'.$config['name'].'" class="'. $config['class'] .'">';
+        return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" '.$selected.' type="radio" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
     /*
@@ -139,7 +139,7 @@ class HtmlGenerator
      * @param array  $config
      * @param string $label
      * @param string $value
-     * @param string $custom
+     * @param mixed $custom
      *
      * @return string
      */
@@ -227,7 +227,7 @@ class HtmlGenerator
             $population = '';
         }
 
-        $inputString = '<input '.$custom.' id="'.$this->getId($config).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
+        $inputString = '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" class="'.$config['class'].'" type="'.$config['type'].'" name="'.$config['name'].$multipleArray.'" '.$floatingNumber.' '.$multiple.' '.$population.' placeholder="'.$config['placeholder'].'">';
 
         return $inputString;
     }
@@ -313,5 +313,21 @@ class HtmlGenerator
         }
 
         return '';
+    }
+
+    /**
+     * Process custom attributes since there can be many
+     *
+     * @param  mixed $custom
+     *
+     * @return string
+     */
+    public function processCustom($custom)
+    {
+        if (is_array($custom)) {
+            return implode(' ', $custom);
+        }
+
+        return $custom;
     }
 }
