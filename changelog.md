@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.3.4] - 2018-08-28
+
+### Added
+- Ability to handle arrays for custom attributes
+
 ## [v1.3.3] - 2018-07-02
 
 ### Fixed
