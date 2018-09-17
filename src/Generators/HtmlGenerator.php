@@ -143,27 +143,6 @@ class HtmlGenerator
      *
      * @return string
      */
-    /**
-     * Make a relationship input.
-     *
-     * @param array  $config
-     * @param mixed $label
-     * @param string $value
-     * @param mixed $custom
-     *
-     * @return string
-     */
-    
-    /**
-     * Make a relationship input.
-     *
-     * @param array  $config
-     * @param mixed $label
-     * @param string $value
-     * @param mixed $custom
-     *
-     * @return string
-     */
     public function makeRelationship($config, $label = 'name', $value = 'id', $custom = '')
     {
         $object = $config['object'];
