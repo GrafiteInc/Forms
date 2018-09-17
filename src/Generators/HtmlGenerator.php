@@ -137,7 +137,28 @@ class HtmlGenerator
      * Make a relationship input.
      *
      * @param array  $config
-     * @param string $label
+     * @param mixed $label
+     * @param string $value
+     * @param mixed $custom
+     *
+     * @return string
+     */
+    /**
+     * Make a relationship input.
+     *
+     * @param array  $config
+     * @param mixed $label
+     * @param string $value
+     * @param mixed $custom
+     *
+     * @return string
+     */
+    
+    /**
+     * Make a relationship input.
+     *
+     * @param array  $config
+     * @param mixed $label
      * @param string $value
      * @param mixed $custom
      *
@@ -177,8 +198,11 @@ class HtmlGenerator
         if (isset($config['config']['nullable']) && $config['config']['nullable'] === true) {
             $config['config']['options']['- Select -'] = null;
         }
+
+        $glue = $this->makeGlue($custom);
+
         foreach ($items as $item) {
-            $config['config']['options'][$item->$label] = $item->$value;
+            $config['config']['options'][$this->makeAttributeLabel($item,$label,$glue)] = $item->$value;
         }
 
         if (!isset($config['config']['selected'])) {
@@ -199,13 +223,54 @@ class HtmlGenerator
                     }
                 }
             } else {
-                $selected = $class->$method()->pluck($value, $label);
+                if(is_array($label)) {
+                    // just get the first of the multiple attributes for plucking the selected values
+                    $pluckThis = current($label);
+                } else {
+                    $pluckThis = $label;
+                }
+                $selected = $class->$method()->pluck($value, $pluckThis);
             }
         } else {
             $selected = $config['config']['selected'];
         }
 
         return $this->makeSelected($config, $selected, $custom);
+    }
+
+    /**
+     * make some glue for attributes...
+     * allows for custom attribute to override the glue.
+     *
+     * @param $custom
+     * @param string $default
+     * @return string
+     */
+    private function makeGlue(&$custom, $default=" - "){
+        if(isset($custom['glue'])) {
+            $glue = $custom['glue'];
+            unset($custom['glue']);
+        } else {
+            $glue = $default;
+        }
+        return $glue;
+    }
+
+    /**
+     * Generate the text for selecting multiple attributes
+     *
+     * @param \Illuminate\Database\Eloquent\Model $item
+     * @param mixed $label
+     * @param string $glue
+     * @return string
+     */
+    private function makeAttributeLabel($item,$label,$glue){
+        if(is_array($label)) {
+            return implode($glue, array_map(function($attribute) use ($item){
+                return $item->$attribute;
+            }, $label));
+        }
+        return $item->$label;
     }
 
     /**
