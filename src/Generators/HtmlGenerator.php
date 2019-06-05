@@ -265,7 +265,7 @@ class HtmlGenerator
                 $config['objectValue'] = $config['objectValue']->format($format);
             }
 
-            return 'value="'.htmlspecialchars($config['objectValue']).'"';
+            return 'value="'.html_entity_decode($config['objectValue']).'"';
         }
 
         return '';
