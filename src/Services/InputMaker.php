@@ -5,18 +5,20 @@ namespace Grafite\FormMaker\Services;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
-use Grafite\FormMaker\Generators\HtmlGenerator;
+use Grafite\FormMaker\Builders\FieldBuilder;
 
-/**
- * $this->elper to make an HTML input.
- */
+
 class InputMaker
 {
-    protected $htmlGenerator;
+    protected $field;
 
     protected $inputCalibrator;
 
     protected $inputGroups = [
+        'file' => [
+            'file',
+            'image',
+        ],
         'text' => [
             'text',
             'textarea',
@@ -43,6 +45,7 @@ class InputMaker
     protected $standardMethods = [
         'makeHidden',
         'makeText',
+        'makeFile',
     ];
 
     protected $selectedMethods = [
@@ -53,7 +56,7 @@ class InputMaker
 
     public function __construct()
     {
-        $this->htmlGenerator = new HtmlGenerator();
+        $this->field = app(FieldBuilder::class);
         $this->inputCalibrator = new InputCalibrator();
     }
 
@@ -83,7 +86,7 @@ class InputMaker
             'id' => $this->inputCalibrator->getId($name, $config),
             'class' => $this->prepareTheClass($class, $config),
             'config' => $config,
-            'inputTypes' => Config::get('form-maker.inputTypes', $defaultConfig['inputTypes']),
+            'inputTypes' => config('form-maker.inputTypes', $defaultConfig['inputTypes']),
             'inputs' => $this->getInput(),
             'object' => $object,
             'objectValue' => $this->getObjectValue($object, $name),
@@ -152,34 +155,11 @@ class InputMaker
             $inputString .= '</div>';
         }
 
-        if (config('form-maker.form.orientation') == 'horizontal' && !in_array($method, $this->selectedMethods)) {
-            return '<div class="'.config('form-maker.form.input-column', '').'">'.$inputString.'</div>';
-        }
+        // if ($this->orientation == 'horizontal' && !in_array($method, $this->selectedMethods)) {
+        //     return '<div class="'.config('form-maker.form.input-column', 'col-md-10').'">'.$inputString.'</div>';
+        // }
 
         return $inputString;
-    }
-
-    /**
-     * Create a label for an input.
-     *
-     * @param string $name
-     * @param array  $attributes
-     *
-     * @return string
-     */
-    public function label($name, $attributes = [])
-    {
-        $attributeString = '';
-
-        if (!isset($attributes['for'])) {
-            $attributeString = 'for="'.$name.'"';
-        }
-
-        foreach ($attributes as $key => $value) {
-            $attributeString .= $key.'="'.$value.'" ';
-        }
-
-        return '<label '.$attributeString.'>'.$name.'</label>';
     }
 
     /**
@@ -298,13 +278,13 @@ class InputMaker
         $method = $this->getGeneratorMethod($config['inputType']);
 
         if (in_array($method, $this->standardMethods)) {
-            $inputString = $this->htmlGenerator->$method($config, $population, $custom);
+            $inputString = $this->field->$method($config, $population, $custom);
         } elseif (in_array($method, $this->selectedMethods)) {
             // add extra class
 
-            $inputString = $this->htmlGenerator->$method($config, $selected, $custom);
+            $inputString = $this->field->$method($config, $selected, $custom);
         } elseif ($method === 'makeRelationship') {
-            $inputString = $this->htmlGenerator->makeRelationship(
+            $inputString = $this->field->makeRelationship(
                 $config,
                 $this->inputCalibrator->getField($config, 'label', 'name'),
                 $this->inputCalibrator->getField($config, 'value', 'id'),
@@ -312,7 +292,7 @@ class InputMaker
             );
         } else {
             $config = $this->prepareType($config);
-            $inputString = $this->htmlGenerator->makeHTMLInputString($config);
+            $inputString = $this->field->makeHTMLInputString($config);
         }
 
         return $inputString;
@@ -362,6 +342,9 @@ class InputMaker
     public function getGeneratorMethod($type)
     {
         switch ($type) {
+            case in_array($type, $this->inputGroups['file']):
+                return 'makeFile';
+
             case in_array($type, $this->inputGroups['hidden']):
                 return 'makeHidden';
 

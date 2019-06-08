@@ -9,7 +9,7 @@ class HtmlGeneratorTest extends TestCase
     protected $app;
     protected $html;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

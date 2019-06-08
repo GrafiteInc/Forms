@@ -57,7 +57,7 @@ class InputMakerTest extends TestCase
     protected $app;
     protected $inputMaker;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

@@ -27,14 +27,12 @@ class TestCase extends Orchestra\Testbench\TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'Form' => \Collective\Html\FormFacade::class,
-            'HTML' => \Collective\Html\HtmlFacade::class,
             'FormMaker' => \Grafite\FormMaker\Facades\FormMaker::class,
             'InputMaker' => \Grafite\FormMaker\Facades\InputMaker::class,
         ];
     }
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
 

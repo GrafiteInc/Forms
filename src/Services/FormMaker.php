@@ -2,11 +2,12 @@
 
 namespace Grafite\FormMaker\Services;
 
-use Illuminate\Support\Facades\Config;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\View;
+use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\Facades\Session;
-use Illuminate\Support\Facades\View;
 
 /**
  * FormMaker helper to make table and object form mapping easy.
@@ -14,6 +15,8 @@ use Illuminate\Support\Facades\View;
 class FormMaker
 {
     protected $columns = 1;
+
+    protected $orientation;
 
     protected $inputMaker;
 
@@ -68,6 +71,18 @@ class FormMaker
     public function setColumns($columns)
     {
         $this->columns = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Set the columns of the form
+     *
+     * @param int $columns
+     */
+    public function setOrientation($orientation)
+    {
+        $this->orientation = $orientation;
 
         return $this;
     }
@@ -223,6 +238,10 @@ class FormMaker
             $formBuild[] = $this->formBuilder($view, $errors, $columnConfig, $column, $input);
         }
 
+        if (is_null($this->orientation)) {
+            $this->orientation = config('form-maker.form.orientation', 'vertical');
+        }
+
         return $this->buildUsingColumns($formBuild, config('form-maker.form.theme'));
     }
 
@@ -289,6 +308,10 @@ class FormMaker
             $errorMessage = $errors->get($column);
         }
 
+        if ($this->orientation == 'horizontal') {
+            $formGroupClass = $formGroupClass.' row';
+        }
+
         if (is_null($view)) {
             $formBuild = '<div class="'.$formGroupClass.' '.$errorHighlight.'">';
             $formBuild .= $this->formContentBuild($field, $column, $input, $errorMessage);
@@ -319,35 +342,61 @@ class FormMaker
      */
     public function formContentBuild($field, $column, $input, $errorMessage)
     {
-        $labelColumn = $labelCheckableColumn = '';
+        $labelColumn = $inputColumn = '';
         $singleLineCheckType = false;
         $formLabelClass = config('form-maker.form.label-class', 'control-label');
 
-        if (config('form-maker.form.orientation') == 'horizontal') {
-            $labelColumn = config('form-maker.form.label-column');
-            $labelCheckableColumn = config('form-maker.form.checkbox-column');
+        if ($this->orientation == 'horizontal') {
+            $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label');
+            $inputColumn = config('form-maker.form.input-column', 'col-md-10');
+            $checkboxColumn = config('form-maker.form.checkbox-column', 'offset-md-2 col-md-10');
             $singleLineCheckType = true;
         }
 
+        $formBuild = '';
+
         $name = ucfirst($this->inputCalibrator->getName($column, $field));
 
-        $formBuild = '<label class="'.trim($formLabelClass.' '.$labelColumn).'" for="'.$name.'">';
+        $formBuild .= '<label class="'.trim($formLabelClass.' '.$labelColumn).'" for="'.$name.'">';
         $formBuild .= $this->inputCalibrator->cleanString($this->columnLabel($field, $column));
-        $formBuild .= '</label>'.$input.$this->errorMessage($errorMessage);
+        $formBuild .= '</label>';
+
+        if ($singleLineCheckType) {
+            $formBuild .= '<div class="'.$inputColumn.'">';
+        }
+
+        $formBuild .= $input.$this->errorMessage($errorMessage);
+
+        if ($singleLineCheckType) {
+            $formBuild .= '</div>';
+        }
 
         if (isset($field['type'])) {
-            if (in_array($field['type'], ['radio', 'checkbox'])) {
-                $formBuild = '<div class="'.$field['type'].'">';
+            if (in_array($field['type'], ['radio', 'checkbox', 'checkbox-inline', 'radio-inline'])) {
+                $formBuild = '';
                 if ($singleLineCheckType) {
-                    $formBuild .= '<div class="'.$labelCheckableColumn.'">';
+                    $formBuild .= '<legend class="'.$labelColumn.' pt-0">';
+                    $formBuild .= $field['custom']['legend'] ?? $this->inputCalibrator->cleanString($this->columnLabel($field, $column));
+                    $formBuild .= '</legend>';
+                    $formBuild .= '<div class="'.$inputColumn.'">';
                 }
-                $formBuild .= '<label for="'.ucfirst($column).'" class="'.$formLabelClass.'">'.$input;
+
+                $formClass = 'form-check form-check-inline';
+
+                if (Str::contains($field['type'], '-inline')) {
+                    $formClass = 'form-check-inline';
+                }
+
+                $formBuild .= '<div class="'.$formClass.'">';
+                $formBuild .= $input.'<label for="'.ucfirst($column).'" class="form-check-label">';
                 $formBuild .= $this->inputCalibrator->cleanString($this->columnLabel($field, $column));
                 $formBuild .= '</label>'.$this->errorMessage($errorMessage).'</div>';
                 if ($singleLineCheckType) {
                     $formBuild .= '</div>';
                 }
-            } elseif (stristr($field['type'], 'hidden')) {
+            }
+
+            if (stristr($field['type'], 'hidden')) {
                 $formBuild = $input;
             }
         }

@@ -24,9 +24,9 @@ return [
         */
 
         'orientation' => 'vertical',
-        'label-column' => 'col-md-2',
+        'label-column' => 'col-md-2 col-form-label',
         'input-column' => 'col-md-10',
-        'checkbox-column' => 'col-md-offset-2 col-md-10',
+        'checkbox-column' => 'offset-md-2 col-md-10',
     ],
 
     'inputTypes' => [

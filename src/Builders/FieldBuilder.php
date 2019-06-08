@@ -1,19 +1,123 @@
 <?php
 
-namespace Grafite\FormMaker\Generators;
+namespace Grafite\FormMaker\Builders;
 
 use Grafite\FormMaker\Services\InputCalibrator;
 
-/**
- * Generate the CRUD.
- */
-class HtmlGenerator
+class FieldBuilder
 {
-    /*
-    |--------------------------------------------------------------------------
-    | Standard HTML Inputs
-    |--------------------------------------------------------------------------
-    */
+    /**
+     * Create a submit button element.
+     *
+     * @param  string $value
+     * @param  array  $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function submit($value = null, $options = [])
+    {
+        return $this->makeInput('submit', null, $value, $options);
+    }
+
+    /**
+     * Make an html button
+     *
+     * @param string $value
+     * @param array $options
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    public function button($value = null, $options = [])
+    {
+        if (! array_key_exists('type', $options)) {
+            $options['type'] = 'button';
+        }
+
+        return $this->toHtmlString('<button' . $this->attributes($options) . '>' . $value . '</button>');
+    }
+
+    /**
+     * Make an input string
+     *
+     * @param string $type
+     * @param string $name
+     * @param mixed $value
+     * @param array $options
+     *
+     * @return string
+     */
+    public function makeInput($type, $name, $value, $options)
+    {
+        return '<input '.$this->attributes($options).' name="'.$name.'" type="'.$type.'" value="'.$value.'">';
+    }
+
+    /**
+     * Build an HTML attribute string from an array.
+     *
+     * @param array $attributes
+     *
+     * @return string
+     */
+    public function attributes($attributes)
+    {
+        $html = [];
+
+        foreach ((array) $attributes as $key => $value) {
+            $element = $this->attributeElement($key, $value);
+
+            if (! is_null($element)) {
+                $html[] = $element;
+            }
+        }
+
+        return count($html) > 0 ? ' ' . implode(' ', $html) : '';
+    }
+
+    /**
+     * Build a single attribute element.
+     *
+     * @param string $key
+     * @param string $value
+     *
+     * @return string
+     */
+    public function attributeElement($key, $value)
+    {
+        if (is_numeric($key)) {
+            return $value;
+        }
+
+        if (is_bool($value) && $key !== 'value') {
+            return $value ? $key : '';
+        }
+
+        if (is_array($value) && $key === 'class') {
+            return 'class="' . implode(' ', $value) . '"';
+        }
+
+        if (! is_null($value)) {
+            return $key . '="' . e($value, false) . '"';
+        }
+    }
+
+    /**
+     * Make text input.
+     *
+     * @param array  $config
+     * @param string $population
+     * @param mixed $custom
+     *
+     * @return string
+     */
+    public function makeFile($config, $population, $custom)
+    {
+        $multiple = $this->isMultiple($config, 'multiple');
+        $multipleArray = $this->isMultiple($config, '[]');
+
+        $label = '<label class="custom-file-label" for="'.$this->getId($config).'">Choose file</label>';
+
+        return '<div class="custom-file"><input '.$this->processCustom($custom).' id="'.$this->getId($config).'" class="custom-file-input" type="file" name="'.$config['name'].$multipleArray.'" '.$multiple.'>'.$label.'</div>';
+    }
 
     /**
      * Make a hidden input.
@@ -24,7 +128,7 @@ class HtmlGenerator
      *
      * @return string
      */
-    public function makeHidden($config, $population, $custom)
+    public function makeHidden($config, $population, $custom = [])
     {
         return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" name="'.$config['name'].'" type="hidden" value="'.$population.'">';
     }
@@ -61,10 +165,10 @@ class HtmlGenerator
             $config['name'] = $config['name'].'[]';
         }
 
-        if (config('form-maker.form.orientation') === 'horizontal') {
-            $prefix = '<div class="'.config('form-maker.form.input-column').'">';
-            $suffix = '</div>';
-        }
+        // if (config('form-maker.form.orientation') === 'horizontal') {
+        //     $prefix = '<div class="'.config('form-maker.form.input-column').'">';
+        //     $suffix = '</div>';
+        // }
 
         foreach ($config['config']['options'] as $key => $value) {
             $selectedValue = '';
@@ -103,11 +207,7 @@ class HtmlGenerator
     public function makeCheckbox($config, $selected, $custom)
     {
         if (str_contains($config['class'], 'form-control')) {
-            if (str_contains($config['class'], 'form-check-inline')) {
-                $config['class'] = str_replace('form-control', '', $config['class']);
-            } else {
-                $config['class'] = str_replace('form-control', 'form-check-input', $config['class']);
-            }
+            $config['class'] = str_replace('form-control', '', $config['class']);
         }
 
         return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" '.$selected.' type="checkbox" name="'.$config['name'].'" class="'. $config['class'] .'">';
@@ -124,6 +224,10 @@ class HtmlGenerator
      */
     public function makeRadio($config, $selected, $custom)
     {
+        if (str_contains($config['class'], 'form-control')) {
+            $config['class'] = str_replace('form-control', '', $config['class']);
+        }
+
         return '<input '.$this->processCustom($custom).' id="'.$this->getId($config).'" '.$selected.' type="radio" name="'.$config['name'].'" class="'. $config['class'] .'">';
     }
 
@@ -325,9 +429,21 @@ class HtmlGenerator
     public function processCustom($custom)
     {
         if (is_array($custom)) {
-            return implode(' ', $custom);
+            return $this->attributes($custom);
         }
 
         return $custom;
+    }
+
+    /**
+     * Transform the string to an Html serializable object
+     *
+     * @param $html
+     *
+     * @return \Illuminate\Support\HtmlString
+     */
+    protected function toHtmlString($html)
+    {
+        return new HtmlString($html);
     }
 }

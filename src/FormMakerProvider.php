@@ -63,14 +63,6 @@ class FormMakerProvider extends ServiceProvider
     {
         /*
         |--------------------------------------------------------------------------
-        | Providers
-        |--------------------------------------------------------------------------
-        */
-
-        $this->app->register(\Collective\Html\HtmlServiceProvider::class);
-
-        /*
-        |--------------------------------------------------------------------------
         | Register the Utilities
         |--------------------------------------------------------------------------
         */
@@ -87,9 +79,5 @@ class FormMakerProvider extends ServiceProvider
 
         $loader->alias('FormMaker', \Grafite\FormMaker\Facades\FormMaker::class);
         $loader->alias('InputMaker', \Grafite\FormMaker\Facades\InputMaker::class);
-
-        // Thrid party
-        $loader->alias('Form', \Collective\Html\FormFacade::class);
-        $loader->alias('HTML', \Collective\Html\HtmlFacade::class);
     }
 }
