@@ -4,17 +4,17 @@ namespace Grafite\FormMaker\Fields;
 
 use Grafite\FormMaker\Fields\Field;
 
-class Code extends Field
+class Image extends Field
 {
     protected static function getType()
     {
-        return 'text';
+        return 'image';
     }
 
-    protected static function getAttributes()
+    protected static function getOptions()
     {
         return [
-            'rows' => 5,
+            'before' => 'Image',
         ];
     }
 }

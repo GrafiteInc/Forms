@@ -4,17 +4,17 @@ namespace Grafite\FormMaker\Fields;
 
 use Grafite\FormMaker\Fields\Field;
 
-class CheckboxInline extends Field
+class CustomFile extends Field
 {
     protected static function getType()
     {
-        return 'checkbox-inline';
+        return 'custom-file';
     }
 
-    protected static function getAttributes()
+    protected static function getOptions()
     {
         return [
-            'class' => 'form-check-input',
+            'before' => 'Upload',
         ];
     }
 }

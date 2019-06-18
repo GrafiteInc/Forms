@@ -4,17 +4,18 @@ namespace Grafite\FormMaker\Fields;
 
 use Grafite\FormMaker\Fields\Field;
 
-class CheckboxInline extends Field
+class Date extends Field
 {
     protected static function getType()
     {
-        return 'checkbox-inline';
+        return 'date';
     }
 
-    protected static function getAttributes()
+    protected static function getOptions()
     {
         return [
-            'class' => 'form-check-input',
+            'format' => 'Y-m-d',
+            'before' => 'Date',
         ];
     }
 }

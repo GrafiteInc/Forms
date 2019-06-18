@@ -14,27 +14,14 @@ class Field
         return [];
     }
 
-    protected static function getAttributes()
+    protected static function getSelectOptions()
     {
         return [];
     }
 
-    protected static function getIgnoredOptions()
+    protected static function getAttributes()
     {
-        return [
-            'type',
-            'label',
-            'custom',
-            'placeholder',
-            'options',
-            'multiple',
-            'model',
-            'label',
-            'value',
-            'class',
-            'before',
-            'after',
-        ];
+        return [];
     }
 
     public static function make($name, $options = [])
@@ -44,43 +31,26 @@ class Field
         return [
             $name => [
                 'type' => static::getType(),
-                'custom' => static::parseAttributes($options),
-                'placeholder' => $options['placeholder'] ?? null,
-                'alt_name' => $options['label'] ?? null,
-                'options' => $options['options'] ?? null,
-                'class' => $options['class'] ?? null,
-                'model' => $options['model'] ?? null,
-                'multiple' => $options['multiple'] ?? null,
-                'multiple' => $options['multiple'] ?? null,
+                'attributes' => static::getAttributes() ?? [],
+                'options' => static::getSelectOptions() ?? [],
                 'label' => $options['label'] ?? null,
-                'value' => $options['value'] ?? null,
+                'model_options' => [
+                    'label' => $options['label'] ?? 'name',
+                    'value' => $options['value'] ?? 'id',
+                    'params' => $options['params'] ?? null,
+                    'method' => $options['method'] ?? 'all',
+                ],
+                'model' => $options['model'] ?? null,
                 'before' => static::getWrappers($options, 'before'),
                 'after' => static::getWrappers($options, 'after'),
+                'view' => static::getView() ?? null,
             ]
         ];
     }
 
     protected static function parseOptions($options)
     {
-        $staticOptions = static::getOptions();
-
-        return array_merge($options, $staticOptions);
-    }
-
-    protected static function parseAttributes($options)
-    {
-        $ignoredOptions = static::getIgnoredOptions();
-        $staticOptions = static::getAttributes();
-
-        $uniqueOptions = [];
-
-        foreach ($options as $key => $option) {
-            if (!in_array($key, $ignoredOptions)) {
-                $uniqueOptions[$key] = $option;
-            }
-        }
-
-        return array_merge($uniqueOptions, $staticOptions);
+        return array_merge(static::getOptions(), $options);
     }
 
     protected static function getWrappers($options, $key)
@@ -99,7 +69,9 @@ class Field
 
         return null;
     }
+
+    protected static function getView()
+    {
+        return null;
+    }
 }
-
-
-

@@ -11,7 +11,7 @@ class Checkbox extends Field
         return 'checkbox';
     }
 
-    protected static function getOptions()
+    protected static function getAttributes()
     {
         return [
             'class' => 'form-check-input'

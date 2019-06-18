@@ -4,17 +4,17 @@ namespace Grafite\FormMaker\Fields;
 
 use Grafite\FormMaker\Fields\Field;
 
-class CheckboxInline extends Field
+class Decimal extends Field
 {
     protected static function getType()
     {
-        return 'checkbox-inline';
+        return 'number';
     }
 
     protected static function getAttributes()
     {
         return [
-            'class' => 'form-check-input',
+            'step' => 'any',
         ];
     }
 }

@@ -11,7 +11,7 @@ class HasMany extends Field
         return 'relationship';
     }
 
-    protected static function getOptions()
+    protected static function getAttributes()
     {
         return [
             'multiple' => true,

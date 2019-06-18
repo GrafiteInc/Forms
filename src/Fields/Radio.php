@@ -11,7 +11,7 @@ class Radio extends Field
         return 'radio';
     }
 
-    protected static function getOptions()
+    protected static function getAttributes()
     {
         return [
             'class' => 'form-check-input'

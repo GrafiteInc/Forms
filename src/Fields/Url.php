@@ -4,10 +4,10 @@ namespace Grafite\FormMaker\Fields;
 
 use Grafite\FormMaker\Fields\Field;
 
-class Text extends Field
+class Url extends Field
 {
     protected static function getType()
     {
-        return 'text';
+        return 'url';
     }
 }

@@ -180,9 +180,7 @@ class Form
      */
     public function token()
     {
-        return $this->field->makeHidden([
-                    'name' => '_token',
-                ], $this->session->token());
+        return $this->field->makeInput('hidden', '_token', $this->session->token());
     }
 
     /**
@@ -199,9 +197,7 @@ class Form
         list($method, $appendage) = [strtoupper($method), ''];
 
         if (in_array($method, $this->spoofedMethods)) {
-            $appendage .= $this->field->makeHidden([
-                'name' => '_method',
-            ], $method);
+            $appendage .= $this->field->makeInput('hidden', '_method', $method);
         }
 
         if ($method !== 'GET') {
