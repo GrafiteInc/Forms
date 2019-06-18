@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v1.3.5] - 2019-06-18
+
+### Fixed
+- Issue with 5.8 compatibility
+
 ## [v1.3.4] - 2018-08-28
 
 ### Added

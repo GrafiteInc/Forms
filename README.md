@@ -22,7 +22,7 @@ The FormMaker package provides a set of tools for generating HTML forms with as 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
 | ^5.8.x | 2.0.x | yes |
-| 5.4.x - 5.7.x | 1.3.x | no |
+| 5.4.x - 5.8.x | 1.3.x | no |
 | 5.4.x | 1.1.x | no |
 | 5.3.x | 1.0.x | no |
 
