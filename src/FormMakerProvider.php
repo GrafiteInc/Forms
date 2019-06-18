@@ -2,11 +2,9 @@
 
 namespace Grafite\FormMaker;
 
-use Illuminate\Foundation\AliasLoader;
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
-use Grafite\FormMaker\Services\FormMaker;
-use Grafite\FormMaker\Services\InputMaker;
+use Grafite\FormMaker\Commands\MakeFormCommand;
+use Grafite\FormMaker\Commands\MakeFieldCommand;
 
 class FormMakerProvider extends ServiceProvider
 {
@@ -23,35 +21,14 @@ class FormMakerProvider extends ServiceProvider
 
         /*
         |--------------------------------------------------------------------------
-        | Blade Directives
+        | Commands
         |--------------------------------------------------------------------------
         */
 
-        // Form Maker
-        Blade::directive('form_maker_table', function ($expression) {
-            return "<?php e(FormMaker::fromTable($expression)); ?>";
-        });
-
-        Blade::directive('form_maker_array', function ($expression) {
-            return "<?php e(FormMaker::fromArray($expression)); ?>";
-        });
-
-        Blade::directive('form_maker_object', function ($expression) {
-            return "<?php e(FormMaker::fromObject($expression)); ?>";
-        });
-
-        Blade::directive('form_maker_columns', function ($expression) {
-            return "<?php e(FormMaker::getTableColumns($expression)); ?>";
-        });
-
-        // Label Maker
-        Blade::directive('input_maker_label', function ($expression) {
-            return "<?php e(InputMaker::label($expression)); ?>";
-        });
-
-        Blade::directive('input_maker_create', function ($expression) {
-            return "<?php e(InputMaker::create($expression)); ?>";
-        });
+        $this->commands([
+            MakeFieldCommand::class,
+            MakeFormCommand::class,
+        ]);
     }
 
     /**
@@ -61,23 +38,6 @@ class FormMakerProvider extends ServiceProvider
      */
     public function register()
     {
-        /*
-        |--------------------------------------------------------------------------
-        | Register the Utilities
-        |--------------------------------------------------------------------------
-        */
-
-        $this->app->singleton('FormMaker', function () {
-            return new FormMaker();
-        });
-
-        $this->app->singleton('InputMaker', function () {
-            return new InputMaker();
-        });
-
-        $loader = AliasLoader::getInstance();
-
-        $loader->alias('FormMaker', \Grafite\FormMaker\Facades\FormMaker::class);
-        $loader->alias('InputMaker', \Grafite\FormMaker\Facades\InputMaker::class);
+        //
     }
 }
