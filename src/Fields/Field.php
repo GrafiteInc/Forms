@@ -18,26 +18,54 @@ class Field
         'format',
     ];
 
+    /**
+     * Get type
+     *
+     * @return string
+     */
     protected static function getType()
     {
         return 'text';
     }
 
+    /**
+     * Get options
+     *
+     * @return array
+     */
     protected static function getOptions()
     {
         return [];
     }
 
+    /**
+     * Get select options for <select>
+     *
+     * @return array
+     */
     protected static function getSelectOptions()
     {
         return [];
     }
 
+    /**
+     * Get attributes
+     *
+     * @return array
+     */
     protected static function getAttributes()
     {
         return [];
     }
 
+    /**
+     * Make a field config for the FieldMaker
+     *
+     * @param string $name
+     * @param array $options
+     *
+     * @return array
+     */
     public static function make($name, $options = [])
     {
         $options = static::parseOptions($options);
@@ -64,11 +92,25 @@ class Field
         ];
     }
 
+    /**
+     * Parse the options
+     *
+     * @param array $options
+     *
+     * @return array
+     */
     protected static function parseOptions($options)
     {
         return array_merge(static::getOptions(), $options);
     }
 
+    /**
+     * Parse attributes for defaults
+     *
+     * @param array $options
+     *
+     * @return array
+     */
     protected static function parseAttributes($options)
     {
         foreach (self::FIELD_OPTIONS as $option) {
@@ -78,6 +120,14 @@ class Field
         return array_merge(static::getAttributes(), $options);
     }
 
+    /**
+     * Get the wrappers for the input fields
+     *
+     * @param array $options
+     * @param string $key
+     *
+     * @return mixed
+     */
     protected static function getWrappers($options, $key)
     {
         $class = 'append';
@@ -95,6 +145,11 @@ class Field
         return null;
     }
 
+    /**
+     * View path for a custom template
+     *
+     * @return mixed
+     */
     protected static function getView()
     {
         return null;
