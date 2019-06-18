@@ -3,6 +3,22 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.0.0] - 2019-06-18
+
+### Added
+- New Fields classes
+- New Form class
+- New ModelForm class
+
+### Changed
+- FormMaker now creates form from ModelForm classes rather than arrays and config files
+
+### Removed
+- LaravelCollective packages
+- InputMaker
+- Blade Directives
+- some Helpers
+
 ## [v1.3.5] - 2019-06-18
 
 ### Fixed
