@@ -14,7 +14,7 @@ The FormMaker package provides a set of tools for generating HTML forms with as 
 
 ## Requirements
 
-1. PHP 7.1+
+1. PHP 7.2+
 2. OpenSSL
 
 ## Compatability and Support
