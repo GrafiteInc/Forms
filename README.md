@@ -45,8 +45,7 @@ php artisan vendor:publish --provider="Grafite\FormMaker\FormMakerProvider"
 
 ## Documentation
 
-[https://docs.grafite.ca/others/form_maker](https://docs.grafite.ca/others/form_maker)<br>
-[https://docs.grafite.ca/others/input_maker](https://docs.grafite.ca/others/input_maker)
+[https://docs.grafite.ca/others/form_maker](https://docs.grafite.ca/others/form_maker)
 
 ## License
 FormMaker is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
