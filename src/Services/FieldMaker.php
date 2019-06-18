@@ -74,7 +74,7 @@ class FieldMaker
             $withErrors = true;
         }
 
-        $label = $this->label($column, $columnConfig, $withErrors);
+        $label = $this->label($column, $columnConfig, null, $withErrors);
 
         if (in_array($columnConfig['type'], $this->standard)) {
             $field = $this->builder->makeInput(
@@ -168,7 +168,7 @@ class FieldMaker
 
     public function getObjectValue($object, $name)
     {
-        if (is_object($object) && isset($object->$name) && !method_exists($object, $name)) {
+        if (is_object($object) && isset($object->$name)) {
             return $object->$name;
         }
 
@@ -246,8 +246,7 @@ class FieldMaker
             'id' => ucwords(str_replace('_', ' ', $name)),
         ];
 
-
-        $options['attributes'] = array_merge($default, $options['attributes']);
+        $options['attributes'] = array_merge($default, $options['attributes'] ?? []);
 
         return $options;
     }

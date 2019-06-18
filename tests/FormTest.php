@@ -2,7 +2,9 @@
 
 use Grafite\FormMaker\Forms\Form;
 use Grafite\FormMaker\Fields\Text;
+use Grafite\FormMaker\Fields\Email;
 use Illuminate\Support\Facades\Route;
+use Grafite\FormMaker\Forms\ModelForm;
 
 class FormTest extends TestCase
 {
@@ -21,44 +23,57 @@ class FormTest extends TestCase
 
     public function testOpen()
     {
+        $form = $this->form->open([
+            'url' => [
+                'somewhere/special'
+            ],
+            'files' => true,
+        ]);
 
-        // dd($this->form->action('post', 'going.somewhere'));
-        // dd(Text::make('address', null, [
-        //     'placeholder' => 'address'
-        // ]));
-
-        // dd($this->form->submit('Save'));
-
-        // dd($this->form->open([
-        //     'url' => [
-        //         'somewhere/special'
-        //     ],
-        //     'files' => true,
-        // ]));
-    }
-
-    public function testModel()
-    {
-        # code...
+        $this->assertStringContainsString('http://localhost/somewhere/special', $form);
+        $this->assertStringContainsString('method="POST"', $form);
+        $this->assertStringContainsString('enctype="multipart/form-data"', $form);
     }
 
     public function testClose()
     {
-        # code...
+        $form = $this->form->close();
+
+        $this->assertStringContainsString('</form>', $form);
     }
 
     public function testToken()
     {
-        # code...
+        $form = $this->form->token();
+
+        $this->assertStringContainsString('name="_token"', $form);
     }
 
     public function testConfirm()
     {
-        # code...
+        $form = $this->form->confirm('Are you sure?');
+
+        $this->assertStringContainsString('Are you sure?', $form->confirmMessage);
     }
 
     public function testAction()
     {
-        # code...
+        $form = $this->form->action('post', 'going.somewhere');
+
+        $this->assertStringContainsString('_token', (string) $form);
+        $this->assertStringContainsString('localhost/foo', (string) $form);
+        $this->assertStringContainsString('POST', (string) $form);
+        $this->assertStringContainsString('btn btn-primary', (string) $form);
+    }
+
+    public function testActionWithConfirm()
+    {
+        $form = $this->form->confirm('Are you sure?')->action('post', 'going.somewhere');
+
+        $this->assertStringContainsString('_token', (string) $form);
+        $this->assertStringContainsString('localhost/foo', (string) $form);
+        $this->assertStringContainsString('POST', (string) $form);
+        $this->assertStringContainsString('btn btn-primary', (string) $form);
+        $this->assertStringContainsString('Are you sure?', (string) $form);
     }
 }

@@ -4,6 +4,7 @@ namespace Grafite\FormMaker\Builders;
 
 use DateTime;
 use Illuminate\Support\Str;
+use Illuminate\Support\HtmlString;
 
 class FieldBuilder
 {
@@ -34,7 +35,7 @@ class FieldBuilder
             $options['type'] = 'button';
         }
 
-        return $this->toHtmlString('<button' . $this->attributes($options) . '>' . $value . '</button>');
+        return '<button' . $this->attributes($options) . '>' . $value . '</button>';
     }
 
     /**
@@ -122,7 +123,7 @@ class FieldBuilder
 
         unset($options['class']);
 
-        $label = '<label class="custom-file-label" for="'.$options['id'].'">Choose file</label>';
+        $label = '<label class="custom-file-label" for="'.$options['attributes']['id'].'">Choose file</label>';
 
         return '<div class="custom-file"><input '.$this->attributes($options['attributes']).' class="custom-file-input" type="file" name="'.$name.'">'.$label.'</div>';
     }
@@ -193,7 +194,9 @@ class FieldBuilder
         foreach ($options['options'] as $key => $value) {
             $selectedValue = '';
 
-            if (isset($options['attributes']['multiple']) && (is_object($selected) || is_array($selected))) {
+            if (isset($options['attributes']['multiple'])
+                && (is_object($selected) || is_array($selected))
+            ) {
                 if (in_array($value, collect($selected)->toArray())) {
                     $selectedValue = 'selected';
                 }
@@ -295,21 +298,38 @@ class FieldBuilder
             $class = app()->make($options['model']);
         }
 
-        if (isset($options['method'])) {
-            $method = $options['method'];
+        if (isset($options['model_options']['method'])) {
+            $method = $options['model_options']['method'];
         }
 
-        $items = $class->$method();
+        if (!isset($options['model_options']['params'])) {
+            $items = $class->$method();
+        }
 
-        if (isset($options['params'])) {
-            $items = $class->$method($options['params']);
+        if (isset($options['model_options']['params'])) {
+            $items = $class->$method($options['model_options']['params']);
         }
 
         foreach ($items as $item) {
-            $optionLabel = $options['model_options']['label'];
-            $optionValue = $options['model_options']['value'];
+            $optionLabel = $options['model_options']['label'] ?? 'name';
+            $optionValue = $options['model_options']['value'] ?? 'id';
 
             $options['options'][$item->$optionLabel] = $item->$optionValue;
+        }
+
+        // In case we get an Eloquent Collection or Collection
+        // without specifying the ID tag which we're checking
+        // the select values from - we need to set the values
+        // to an array of IDs.
+        if (method_exists($value, 'toArray')) {
+            $parsedValues = [];
+            $optionValue = $options['model_options']['value'];
+
+            foreach ($value->toArray() as $valueItem) {
+                $parsedValues[] = $valueItem[$optionValue];
+            }
+
+            $value = $parsedValues;
         }
 
         return $this->makeSelect($name, $value, $options);

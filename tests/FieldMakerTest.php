@@ -1,9 +1,12 @@
 <?php
 
 use Grafite\FormMaker\Fields\Text;
+use Grafite\FormMaker\Fields\HasOne;
 use Grafite\FormMaker\Fields\Number;
 use Grafite\FormMaker\Fields\Select;
+use Grafite\FormMaker\Fields\HasMany;
 use Grafite\FormMaker\Fields\Checkbox;
+use Grafite\FormMaker\Fields\TextArea;
 use Illuminate\Database\Eloquent\Model;
 use Grafite\FormMaker\Services\FieldMaker;
 
@@ -28,6 +31,11 @@ class User extends Model
     public function getNameAttribute()
     {
         return 'joe';
+    }
+
+    public function getIdAttribute()
+    {
+        return 3;
     }
 }
 
@@ -79,7 +87,7 @@ class FieldMakerTest extends TestCase
         $config = Text::make('name');
         $field = $this->fieldMaker->make('name', $config['name']);
 
-        $this->assertEquals('<div class="form-group"><label class="" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div>', $field);
     }
 
     public function testMakeTextWithObject()
@@ -87,7 +95,7 @@ class FieldMakerTest extends TestCase
         $config = Text::make('name');
         $field = $this->fieldMaker->make('name', $config['name'], $this->user);
 
-        $this->assertEquals('<div class="form-group"><label class="" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value="joe"></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value="joe"></div>', $field);
     }
 
     public function testCreateCheckboxArray()
@@ -116,7 +124,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('countries', $config['countries'], $object);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="" for="Countries">Countries</label><select  class="form-control" id="Countries" multiple name="countries[]"><option value="Canada" >Canada</option><option value="America" >America</option><option value="UK" >UK</option><option value="Ireland" >Ireland</option></select></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Countries">Countries</label><select  class="form-control" id="Countries" multiple name="countries[]"><option value="Canada" >Canada</option><option value="America" >America</option><option value="UK" >UK</option><option value="Ireland" >Ireland</option></select></div>', $field);
     }
 
     public function testCreateMultipleNestedString()
@@ -134,7 +142,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('meta[user[id]]', $config['meta[user[id]]'], $entry);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="" for="MetaId">Meta Id</label><input  class="form-control" id="MetaId" name="meta[user[id]]" type="number" value="1"></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="MetaId">Meta Id</label><input  class="form-control" id="MetaId" name="meta[user[id]]" type="number" value="1"></div>', $field);
     }
 
     public function testCreateSingleNestedString()
@@ -149,176 +157,221 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('meta[created_at]', $config['meta[created_at]'], $entry);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="" for="Meta[created_at]">Meta[created_at]</label><input  class="form-control" id="Meta[created At]" name="meta[created_at]" type="text" value="1999-01-01"></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Meta[created_at]">Meta[created_at]</label><input  class="form-control" id="Meta[created At]" name="meta[created_at]" type="text" value="1999-01-01"></div>', $field);
     }
 
     public function testCreateSpecialString()
     {
-    //     $entry = app(Entry::class)->create([
-    //         'name' => 'test entry',
-    //         'details' => 'this entry is written in [markdown](http://markdown.com)',
-    //     ]);
+        $entry = app(Entry::class)->create([
+            'name' => 'test entry',
+            'details' => 'this entry is written in [markdown](http://markdown.com)',
+        ]);
 
-    //     $field = $this->fieldMaker->make('details', [
-    //         'type' => 'text',
-    //     ], $entry);
+        $config = TextArea::make('details');
 
-    //     $this->assertTrue(is_string($field));
-    //     $this->assertEquals($field, '<textarea  id="Details" class="form-control" name="details" placeholder="Details">this entry is written in [markdown](http://markdown.com)</textarea>');
+        $field = $this->fieldMaker->make('details', $config['details'], $entry);
+
+        $this->assertTrue(is_string($field));
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Details">Details</label><textarea  class="form-control" id="Details" rows="5" name="details">this entry is written in [markdown](http://markdown.com)</textarea></div>', $field);
     }
 
     public function testCreateRelationshipWithoutObject()
     {
-    //     $user = app(User::class)->create([
-    //         'name' => 'Joe',
-    //         'email' => 'joe@haltandcatchfire.com',
-    //         'password' => 'password',
-    //     ]);
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password',
+        ]);
 
-    //     $job = app(Job::class)->create([
-    //         'name' => 'Worker',
-    //         'user_id' => 1,
-    //     ]);
+        $job = app(Job::class)->create([
+            'name' => 'Worker',
+            'user_id' => 1,
+        ]);
 
-    //     $user->job_id = $job->id;
-    //     $user->save();
+        $user->job_id = $job->id;
+        $user->save();
 
-    //     app(Job::class)->create([
-    //         'name' => 'BlackSmith',
-    //     ]);
-    //     app(Job::class)->create([
-    //         'name' => 'Police',
-    //     ]);
-    //     app(Job::class)->create([
-    //         'name' => 'Brogrammer',
-    //     ]);
+        app(Job::class)->create([
+            'name' => 'BlackSmith',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Police',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Brogrammer',
+        ]);
 
-    //     $field = $this->fieldMaker->make('jobs[]', [
-    //         'type' => 'relationship',
-    //         'model' => 'Job',
-    //         'label' => 'name',
-    //         'options' => app(Job::class)->all()->pluck('id', 'name'),
-    //         'value' => 'id',
-    //         'custom' => 'multiple',
-    //     ]);
+        $config = HasMany::make('jobs', [
+            'model' => Job::class,
+            'model_options' => [
+                // 'options' => app(Job::class)->all()->pluck('id', 'name'),
+                'label' => 'name',
+                'value' => 'id',
+            ]
+        ]);
 
-    //     $this->assertTrue(is_string($field));
-    //     $this->assertEquals($field, '<select multiple id="Jobs" class="form-control" name="jobs[]"><option value="1" >Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select>');
+        $field = $this->fieldMaker->make('jobs', $config['jobs']);
+
+        $this->assertTrue(is_string($field));
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select  class="form-control" id="Jobs" multiple name="jobs[]"><option value="1" >Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select></div>', $field);
     }
 
-    public function testCreateRelationshipDefault()
+     public function testCreateRelationshipWithoutObjectWithForcedOptions()
     {
-    //     $user = app(User::class)->create([
-    //         'name' => 'Joe',
-    //         'email' => 'joe@haltandcatchfire.com',
-    //         'password' => 'password',
-    //     ]);
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password',
+        ]);
 
-    //     $job = app(Job::class)->create([
-    //         'name' => 'Worker',
-    //         'user_id' => 1,
-    //     ]);
+        $job = app(Job::class)->create([
+            'name' => 'Worker',
+            'user_id' => 1,
+        ]);
 
-    //     $user->job_id = $job->id;
-    //     $user->save();
+        $user->job_id = $job->id;
+        $user->save();
 
-    //     app(Job::class)->create([
-    //         'name' => 'BlackSmith',
-    //     ]);
-    //     app(Job::class)->create([
-    //         'name' => 'Police',
-    //     ]);
-    //     app(Job::class)->create([
-    //         'name' => 'Brogrammer',
-    //     ]);
+        app(Job::class)->create([
+            'name' => 'BlackSmith',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Police',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Brogrammer',
+        ]);
 
-    //     $field = $this->fieldMaker->make('jobs[]', [
-    //         'type' => 'relationship',
-    //         'model' => 'Job',
-    //         'label' => 'name',
-    //         'value' => 'id',
-    //         'custom' => 'multiple',
-    //     ], $user);
+        $config = HasMany::make('jobs', [
+            'model' => Job::class,
+            'options' => app(Job::class)->all()->pluck('id', 'name')->toArray(),
+        ]);
 
-    //     $this->assertTrue(is_string($field));
-    //     $this->assertEquals($field, '<select multiple id="Jobs" class="form-control" name="jobs[]"><option value="1" selected>Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select>');
+        $field = $this->fieldMaker->make('jobs', $config['jobs']);
+
+        $this->assertTrue(is_string($field));
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select  class="form-control" id="Jobs" multiple name="jobs[]"><option value="1" >Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select></div>', $field);
+    }
+
+    public function testCreateRelationshipHasOne()
+    {
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password',
+        ]);
+
+        $job = app(Job::class)->create([
+            'name' => 'Worker',
+            'user_id' => 1,
+        ]);
+
+        $user->job_id = $job->id;
+        $user->save();
+
+        app(Job::class)->create([
+            'name' => 'BlackSmith',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Police',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Brogrammer',
+        ]);
+
+        $config = HasOne::make('jobs', [
+            'model' => Job::class,
+            'model_options' => [
+                'label' => 'name',
+                'value' => 'id',
+            ]
+        ]);
+
+        $field = $this->fieldMaker->make('jobs', $config['jobs'], $user);
+
+        $this->assertTrue(is_string($field));
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select  class="form-control" id="Jobs" name="jobs"><option value="1" >Worker</option><option value="2" >BlackSmith</option><option value="3" >Police</option><option value="4" >Brogrammer</option></select></div>', $field);
     }
 
     public function testCreateRelationshipCustom()
     {
-    //     $user = app(User::class)->create([
-    //         'name' => 'Joe',
-    //         'email' => 'joe@haltandcatchfire.com',
-    //         'password' => 'password',
-    //     ]);
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password',
+        ]);
 
-    //     $job = app(Job::class)->create([
-    //         'name' => 'Worker',
-    //         'user_id' => 1,
-    //     ]);
+        $job = app(Job::class)->create([
+            'name' => 'Worker',
+            'user_id' => 1,
+        ]);
 
-    //     $user->job_id = $job->id;
-    //     $user->save();
+        $user->job_id = $job->id;
+        $user->save();
 
-    //     app(Job::class)->create([
-    //         'name' => 'BlackSmith',
-    //     ]);
-    //     app(Job::class)->create([
-    //         'name' => 'Police',
-    //     ]);
-    //     app(Job::class)->create([
-    //         'name' => 'Brogrammer',
-    //     ]);
+        app(Job::class)->create([
+            'name' => 'BlackSmith',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Police',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Brogrammer',
+        ]);
 
-    //     $field = $this->fieldMaker->make('jobs', [
-    //         'options' => [],
-    //         'type' => 'relationship',
-    //         'model' => 'Job',
-    //         'method' => 'custom',
-    //         'params' => ['Bro'],
-    //         'label' => 'name',
-    //         'value' => 'id',
-    //     ], $user, 'form-control', false, true);
+        $config = HasOne::make('jobs', [
+            'model' => Job::class,
+            'model_options' => [
+                'method' => 'custom',
+                'params' => [
+                    'Bro'
+                ],
+                'label' => 'name',
+                'value' => 'id',
+            ],
+        ]);
 
-    //     $this->assertTrue(is_string($field));
-    //     $this->assertEquals($field, '<select  id="Jobs" class="form-control" name="jobs"><option value="4" >Brogrammer</option></select>');
+        $field = $this->fieldMaker->make('jobs', $config['jobs'], $user);
+
+        $this->assertTrue(is_string($field));
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select  class="form-control" id="Jobs" name="jobs"><option value="4" >Brogrammer</option></select></div>', $field);
     }
 
     public function testCreateRelationshipCustomMultiple()
     {
-    //     $user = app(User::class)->create([
-    //         'name' => 'Joe',
-    //         'email' => 'joe@haltandcatchfire.com',
-    //         'password' => 'password',
-    //     ]);
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password',
+        ]);
 
-    //     $idea1 = app(Idea::class)->create([
-    //         'name' => 'Thing',
-    //     ]);
+        $idea1 = app(Idea::class)->create([
+            'name' => 'Thing',
+        ]);
+        $idea2 = app(Idea::class)->create([
+            'name' => 'Foo',
+        ]);
 
-    //     $idea2 = app(Idea::class)->create([
-    //         'name' => 'Foo',
-    //     ]);
+        app(Idea::class)->create([
+            'name' => 'Bar',
+        ]);
+        app(Idea::class)->create([
+            'name' => 'Drink',
+        ]);
 
-    //     app(Idea::class)->create([
-    //         'name' => 'Bar',
-    //     ]);
-    //     app(Idea::class)->create([
-    //         'name' => 'Drink',
-    //     ]);
+        $user->ideas()->attach([$idea1->id, $idea2->id]);
 
-    //     $user->ideas()->attach([$idea1->id, $idea2->id]);
+        $config = HasMany::make('ideas', [
+            'model' => Idea::class,
+            'model_options' => [
+                'label' => 'name',
+                'value' => 'id',
+            ],
+        ]);
 
-    //     $field = $this->fieldMaker->make('ideas', [
-    //         'selected' => app(User::class)->where('name', 'Joe')->first()->ideas()->pluck('id'),
-    //         'type' => 'relationship',
-    //         'model' => 'Idea',
-    //         'label' => 'name',
-    //         'value' => 'id',
-    //         'multiple' => true,
-    //     ], $user, 'form-control', false, true);
+        $field = $this->fieldMaker->make('ideas', $config['ideas'], $user);
 
-    //     $this->assertTrue(is_string($field));
-    //     $this->assertEquals($field, '<select multiple id="Ideas" class="form-control" name="ideas[]"><option value="1" selected>Thing</option><option value="2" selected>Foo</option><option value="3" >Bar</option><option value="4" >Drink</option></select>');
+        $this->assertTrue(is_string($field));
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Ideas">Ideas</label><select  class="form-control" id="Ideas" multiple name="ideas[]"><option value="1" selected>Thing</option><option value="2" selected>Foo</option><option value="3" >Bar</option><option value="4" >Drink</option></select></div>', $field);
     }
 }

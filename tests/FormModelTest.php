@@ -1,9 +1,24 @@
 <?php
 
-use Grafite\FormMaker\Forms\Form;
 use Grafite\FormMaker\Fields\Text;
+use Grafite\FormMaker\Fields\Email;
 use Illuminate\Support\Facades\Route;
 use Grafite\FormMaker\Forms\ModelForm;
+
+class UserForm extends ModelForm
+{
+    public $model = User::class;
+
+    public $routePrefix = 'users';
+
+    public function fields()
+    {
+        return [
+            Text::make('name'),
+            Email::make('email'),
+        ];
+    }
+}
 
 class FormModelTest extends TestCase
 {
@@ -15,51 +30,42 @@ class FormModelTest extends TestCase
             'token' => 'tester',
         ]);
 
-        // Route::post('foo')->name('going.somewhere');
+        Route::post('users')->name('users');
+        Route::get('users')->name('users.index');
+        Route::put('users/{id}')->name('users.update');
+        Route::delete('users/{id}')->name('users.destroy');
 
-        // $this->form = app(ModelForm::class);
+        $this->form = app(UserForm::class);
     }
 
-    public function testOpen()
+    public function testCreate()
     {
+        $form = $this->form->create();
 
-        // dd($this->form->action('post', 'going.somewhere'));
-        // dd(Text::make('address', null, [
-        //     'placeholder' => 'address'
-        // ]));
+        $this->assertStringContainsString('http://localhost/users', $form);
+        $this->assertStringContainsString('method="POST"', $form);
 
-        // dd($this->form->submit('Save'));
-
-        // dd($this->form->open([
-        //     'url' => [
-        //         'somewhere/special'
-        //     ],
-        //     'files' => true,
-        // ]));
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input  class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
 
-    public function testModel()
+    public function testUpdate()
     {
-        # code...
+        $user = new User();
+
+        $form = $this->form->edit($user);
+
+        $this->assertStringContainsString('http://localhost/users/3', $form);
+        $this->assertStringContainsString('PUT', $form);
     }
 
-    public function testClose()
+    public function testDelete()
     {
-        # code...
-    }
+        $user = new User();
 
-    public function testToken()
-    {
-        # code...
-    }
+        $form = $this->form->delete($user);
 
-    public function testConfirm()
-    {
-        # code...
-    }
-
-    public function testAction()
-    {
-        # code...
+        $this->assertStringContainsString('http://localhost/users/3', $form);
+        $this->assertStringContainsString('DELETE', $form);
     }
 }

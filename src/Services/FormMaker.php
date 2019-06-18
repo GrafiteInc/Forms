@@ -78,10 +78,7 @@ class FormMaker
         $fieldCollection = [];
 
         if (empty($fields)) {
-            $tableColumns = $this->getTableColumns($table, true);
-            foreach ($tableColumns as $column => $value) {
-                $fields[$column] = $this->getNormalizedType($value['type']);
-            }
+            $fields = $this->getTableAsFields($table);
         }
 
         $fields = $this->cleanupIdAndTimeStamps($fields);
@@ -174,6 +171,30 @@ class FormMaker
     }
 
     /**
+     * Get table columns as fields
+     *
+     * @param string $table
+     *
+     * @return array
+     */
+    public function getTableAsFields($table)
+    {
+        $fields = [];
+
+        $tableColumns = $this->getTableColumns($table, true);
+
+        $tableColumns = $this->cleanupIdAndTimeStamps($tableColumns);
+
+        foreach ($tableColumns as $column => $value) {
+            $fields[$column] = [
+                'type' => $this->getNormalizedType($value['type'])
+            ];
+        }
+
+        return $fields;
+    }
+
+    /**
      * Build a two column form using standard bootstrap classes
      *
      * @param  array $formBuild
@@ -240,9 +261,9 @@ class FormMaker
             'boolean' => 'number',
             'string' => 'text',
             'guid' => 'text',
-            'text' => 'text',
+            'text' => 'textarea',
             'date' => 'date',
-            'datetime' => 'datetime',
+            'datetime' => 'datetime-local',
             'datetimetz' => 'datetime-local',
             'time' => 'time',
         ];
