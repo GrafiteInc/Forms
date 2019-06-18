@@ -65,7 +65,7 @@ class FieldMaker
         $value = $this->getOldValue($column);
 
         if (!is_null($object)) {
-            $value = $object->$column;
+            $value = $this->getObjectValue($object, $column);
         }
 
         $errors = $this->getFieldErrors($column, $object);
@@ -126,7 +126,6 @@ class FieldMaker
         if ($this->orientation === 'horizontal') {
             $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label');
             $inputColumn = config('form-maker.form.input-column', 'col-md-10');
-            // $checkboxColumn = config('form-maker.form.checkbox-column', 'offset-md-2 col-md-10');
 
             $label = $this->label($column, $columnConfig, $labelColumn, $withErrors);
 
@@ -149,7 +148,7 @@ class FieldMaker
             $class = config('form-maker.form.label-class', 'control-label');
         }
 
-        if ($columnConfig['label']) {
+        if (isset($columnConfig['label'])) {
             $label = $columnConfig['label'];
         }
 
@@ -157,12 +156,39 @@ class FieldMaker
             $class = $class.' '.config('form-maker.form.error-class', 'has-error');
         }
 
-        return "<label class=\"{$class}\" for=\"{$this->stripArrayHandles($column)}\">{$label}</label>";
+        $id = $columnConfig['attributes']['id'] ?? $this->stripArrayHandles($column);
+
+        return "<label class=\"{$class}\" for=\"{$id}\">{$label}</label>";
     }
 
     public function wrapField($fieldGroup, $label, $fieldString, $errors)
     {
         return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}</div>{$errors}";
+    }
+
+    public function getObjectValue($object, $name)
+    {
+        if (is_object($object) && isset($object->$name) && !method_exists($object, $name)) {
+            return $object->$name;
+        }
+
+        // If its a nested value like meta[user[phone]]
+        if (strpos($name, '[') > 0) {
+            $nested = explode('[', str_replace(']', '', $name));
+            $final = $object;
+
+            foreach ($nested as $property) {
+                if (!empty($property) && isset($final->{$property})) {
+                    $final = $final->{$property};
+                } elseif (is_object($final) && is_null($final->{$property})) {
+                    $final = '';
+                }
+            }
+
+            return $final;
+        }
+
+        return '';
     }
 
     public function getFieldErrors($column)

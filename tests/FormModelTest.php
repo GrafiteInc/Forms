@@ -15,27 +15,27 @@ class FormModelTest extends TestCase
             'token' => 'tester',
         ]);
 
-        Route::post('foo')->name('going.somewhere');
+        // Route::post('foo')->name('going.somewhere');
 
-        $this->form = app(ModelForm::class);
+        // $this->form = app(ModelForm::class);
     }
 
     public function testOpen()
     {
 
-        dd($this->form->action('post', 'going.somewhere'));
+        // dd($this->form->action('post', 'going.somewhere'));
         // dd(Text::make('address', null, [
         //     'placeholder' => 'address'
         // ]));
 
-        dd($this->form->submit('Save'));
+        // dd($this->form->submit('Save'));
 
-        dd($this->form->open([
-            'url' => [
-                'somewhere/special'
-            ],
-            'files' => true,
-        ]));
+        // dd($this->form->open([
+        //     'url' => [
+        //         'somewhere/special'
+        //     ],
+        //     'files' => true,
+        // ]));
     }
 
     public function testModel()

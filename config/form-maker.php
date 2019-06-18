@@ -26,28 +26,6 @@ return [
         'orientation' => 'vertical',
         'label-column' => 'col-md-2 col-form-label',
         'input-column' => 'col-md-10',
-        'checkbox-column' => 'offset-md-2 col-md-10',
-    ],
-
-    'inputTypes' => [
-        'number'            => 'number',
-        'integer'           => 'number',
-        'float'             => 'number',
-        'decimal'           => 'number',
-        'boolean'           => 'number',
-        'string'            => 'text',
-        'email'             => 'text',
-        'varchar'           => 'text',
-        'file'              => 'file',
-        'image'             => 'file',
-        'datetime'          => 'date',
-        'date'              => 'date',
-        'password'          => 'password',
-        'textarea'          => 'textarea',
-        'select'            => null,
-        'checkbox'          => null,
-        'checkbox-inline'   => null,
-        'radio'             => null,
-        'radio-inline'      => null,
     ]
+
 ];
