@@ -25,9 +25,7 @@
             "Grafite\\FormMaker\\": "src/"
         },
         "files": [
-          "src/Helpers/form.php",
-          "src/Helpers/form_maker.php",
-          "src/Helpers/input_maker.php"
+          "src/Helpers/form.php"
         ]
     },
     "autoload-dev": {
