@@ -10,6 +10,8 @@ class FieldMaker
 {
     protected $builder;
 
+    public $orientation;
+
     protected $standard = [
         'hidden',
         'text',
@@ -56,6 +58,10 @@ class FieldMaker
         $withErrors = false;
         $fieldGroup = config('form-maker.form.group-class', 'form-group');
 
+        if ($this->orientation === 'horizontal') {
+            $fieldGroup = $fieldGroup.' row';
+        }
+
         $value = $this->getOldValue($column);
 
         if (!is_null($object)) {
@@ -99,7 +105,9 @@ class FieldMaker
         }
 
         if (in_array($columnConfig['type'], $this->specialSelect)) {
-            return $this->builder->makeCheckInput(
+            $label = '';
+
+            $field = $this->builder->makeCheckInput(
                 $column,
                 $value,
                 $this->parseOptions($column, $columnConfig)
@@ -110,13 +118,36 @@ class FieldMaker
             throw new Exception("Unknown field type.", 1);
         }
 
-        return $this->wrapField($fieldGroup, $label, $field, $errors, $columnConfig);
+        $before = $this->before($columnConfig);
+        $after = $this->after($columnConfig);
+
+        $fieldString = $before.$field.$after;
+
+        if ($this->orientation === 'horizontal') {
+            $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label');
+            $inputColumn = config('form-maker.form.input-column', 'col-md-10');
+            // $checkboxColumn = config('form-maker.form.checkbox-column', 'offset-md-2 col-md-10');
+
+            $label = $this->label($column, $columnConfig, $labelColumn, $withErrors);
+
+            if (in_array($columnConfig['type'], $this->specialSelect)) {
+                $legend = $columnConfig['legend'] ?? $columnConfig['label'];
+                $label = "<legend class=\"{$labelColumn} pt-0\">{$legend}</legend>";
+            }
+
+            $fieldString = "<div class=\"{$inputColumn}\">{$fieldString}</div>";
+        }
+
+        return $this->wrapField($fieldGroup, $label, $fieldString, $errors);
     }
 
-    public function label($column, $columnConfig, $withErrors = false)
+    public function label($column, $columnConfig, $class = null, $withErrors = false)
     {
         $label = ucfirst($column);
-        $class = config('form-maker.form.label-class', 'control-label');
+
+        if (is_null($class)) {
+            $class = config('form-maker.form.label-class', 'control-label');
+        }
 
         if ($columnConfig['label']) {
             $label = $columnConfig['label'];
@@ -129,12 +160,9 @@ class FieldMaker
         return "<label class=\"{$class}\" for=\"{$this->stripArrayHandles($column)}\">{$label}</label>";
     }
 
-    public function wrapField($fieldGroup, $label, $field, $errors, $columnConfig)
+    public function wrapField($fieldGroup, $label, $fieldString, $errors)
     {
-        $before = $this->before($columnConfig);
-        $after = $this->after($columnConfig);
-
-        return "<div class=\"{$fieldGroup}\">{$label}{$before}{$field}{$after}</div>{$errors}";
+        return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}</div>{$errors}";
     }
 
     public function getFieldErrors($column)

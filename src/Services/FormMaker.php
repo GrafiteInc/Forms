@@ -60,7 +60,7 @@ class FormMaker
      */
     public function setOrientation($orientation)
     {
-        $this->orientation = $orientation;
+        $this->fieldMaker->orientation = $orientation;
 
         return $this;
     }

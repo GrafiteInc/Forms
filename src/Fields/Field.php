@@ -33,6 +33,7 @@ class Field
                 'type' => static::getType(),
                 'attributes' => static::getAttributes() ?? [],
                 'options' => static::getSelectOptions() ?? [],
+                'legend' => $options['legend'] ?? null,
                 'label' => $options['label'] ?? null,
                 'model_options' => [
                     'label' => $options['label'] ?? 'name',

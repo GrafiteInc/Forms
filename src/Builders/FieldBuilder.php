@@ -3,6 +3,7 @@
 namespace Grafite\FormMaker\Builders;
 
 use DateTime;
+use Illuminate\Support\Str;
 
 class FieldBuilder
 {
@@ -151,6 +152,8 @@ class FieldBuilder
      */
     public function makeCheckboxInline($name, $value, $options)
     {
+        $options['check-inline'] = true;
+
         return $this->makeCheckbox($name, $value, $options);
     }
 
@@ -165,6 +168,8 @@ class FieldBuilder
      */
     public function makeRadioInline($name, $value, $options)
     {
+        $options['check-inline'] = true;
+
         return $this->makeRadio($name, $value, $options);
     }
 
@@ -204,9 +209,40 @@ class FieldBuilder
         return '<select '.$this->attributes($options['attributes']).' name="'.$name.'">'.$selectOptions.'</select>';
     }
 
+    /**
+     * Make a checkbox.
+     *
+     * @param string $name
+     * @param mixed $value
+     * @param array $options
+     *
+     * @return string
+     */
     public function makeCheckInput($name, $value, $options)
     {
-        dd('ok, this gets special wrappers');
+        $options['attributes']['class'] = 'form-check-input';
+
+        if (Str::contains($options['type'], '-inline')) {
+            $options['check-inline'] = true;
+        }
+
+        if (in_array($options['type'], ['radio', 'radio-inline'])) {
+            $field = $this->makeRadio($name, $value, $options);
+        }
+
+        $field = $this->makeCheckbox($name, $value, $options);
+
+        $formClass = 'form-check';
+
+        if (isset($options['check-inline'])) {
+            $formClass = 'form-check form-check-inline';
+        }
+
+        $fieldWrapper = "<div class=\"{$formClass}\">";
+
+        $fieldLabel = "<label class=\"form-check-label\">{$options['label']}</label>";
+
+        return $fieldWrapper.$field.$fieldLabel.'</div>';
     }
 
     /**
@@ -220,7 +256,9 @@ class FieldBuilder
      */
     public function makeCheckbox($name, $value, $options)
     {
-        return '<input '.$this->attributes($options['attributes']).' type="checkbox" name="'.$name.'">';
+        $checked = $this->isChecked($value, $options);
+
+        return '<input '.$this->attributes($options['attributes']).' type="checkbox" name="'.$name.'" '.$checked.'>';
     }
 
     /**
@@ -234,7 +272,9 @@ class FieldBuilder
      */
     public function makeRadio($name, $value, $options)
     {
-        return '<input '.$this->attributes($options['attributes']).' type="radio" name="'.$name.'">';
+        $checked = $this->isChecked($value, $options);
+
+        return '<input '.$this->attributes($options['attributes']).' type="radio" name="'.$name.'" '.$checked.'>';
     }
 
     /**
@@ -273,6 +313,29 @@ class FieldBuilder
         }
 
         return $this->makeSelect($name, $value, $options);
+    }
+
+    /**
+     * Check if a field is checked
+     *
+     * @param mixed $value
+     * @param array $options
+     *
+     * @return boolean
+     */
+    public function isChecked($value, $options)
+    {
+        if (isset($options['attributes']['value'])) {
+            if ($value === $options['attributes']['value']) {
+                return 'checked';
+            }
+        }
+
+        if ($value === true || $value === 'on' || $value === 1) {
+            return 'checked';
+        }
+
+        return '';
     }
 
     /**
