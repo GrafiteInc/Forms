@@ -11,6 +11,10 @@ class UserForm extends ModelForm
 
     public $routePrefix = 'users';
 
+    public $buttons = [
+        'save' => 'Save'
+    ];
+
     public function fields()
     {
         return [

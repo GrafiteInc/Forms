@@ -280,10 +280,14 @@ class ModelForm extends Form
      */
     protected function formButtonsAndClose()
     {
-        $lastRowInForm = '<div class="row"><div class="col-md-12 d-flex justify-content-between">';
+        $flexAlignment = (isset($this->buttons['cancel'])) ? 'between' : 'end';
 
-        $lastRowInForm .= '<a class="'.$this->buttonClasses['cancel']
-            .'" href="'.url($this->buttonLinks['cancel']).'">'.$this->buttons['cancel'].'</a>';
+        $lastRowInForm = '<div class="row"><div class="col-md-12 d-flex justify-content-'.$flexAlignment.'">';
+
+        if (isset($this->buttons['cancel'])) {
+            $lastRowInForm .= '<a class="'.$this->buttonClasses['cancel']
+                .'" href="'.url($this->buttonLinks['cancel']).'">'.$this->buttons['cancel'].'</a>';
+        }
 
         $lastRowInForm .= $this->field->submit($this->buttons['save'], [
             'class' => 'btn btn-primary'
