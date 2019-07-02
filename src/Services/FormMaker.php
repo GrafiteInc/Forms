@@ -95,6 +95,30 @@ class FormMaker
     }
 
     /**
+     * Generate a form from just the fields.
+     *
+     * @param string $table Table name
+     * @param array  $fields Field configs
+     *
+     * @return string
+     */
+    public function fromFields($fields = [])
+    {
+        $fieldCollection = [];
+
+        foreach ($fields as $column => $columnConfig) {
+            if (is_numeric($column)) {
+                $column = array_key_first($columnConfig);
+                $columnConfig = $columnConfig[$column];
+            }
+
+            $fieldCollection[] = $this->fieldMaker->make($column, $columnConfig);
+        }
+
+        return $this->buildUsingColumns($fieldCollection);
+    }
+
+    /**
      * Build the form from an object.
      *
      * @param object $object An object to base the form off

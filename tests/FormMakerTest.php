@@ -1,8 +1,10 @@
 <?php
 
+use Grafite\FormMaker\Fields\Text;
+use Grafite\FormMaker\Fields\TextArea;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 use Grafite\FormMaker\Services\FormMaker;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Entry extends Model
 {
@@ -53,6 +55,17 @@ class FormMakerTest extends TestCase
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea  class="form-control" id="Details" name="details"></textarea></div>', $test);
+    }
+
+    public function testFromFields()
+    {
+        $test = $this->formMaker->fromFields([
+            Text::make('name'),
+            TextArea::make('details'),
+        ]);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea  class="form-control" id="Details" rows="5" name="details"></textarea></div>', $test);
     }
 
     public function testFromTableSimulated()
