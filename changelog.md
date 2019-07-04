@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.1.1] - 2019-07-04
+
+### Fixed
+- Issue with Laravel 5.8
+
 ## [v1.3.5] - 2019-06-18
 
 ### Fixed
