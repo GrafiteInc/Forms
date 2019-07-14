@@ -144,6 +144,24 @@ class BaseForm extends Form
     }
 
     /**
+     * Set the route
+     *
+     * @param string $name
+     * @param array $parameters
+     *
+     * @return \Grafite\FormMaker\Forms\BaseForm
+     */
+    public function setRoute($name, $parameters = [], $absolute = true)
+    {
+        $this->route = [
+            $name,
+            $parameters
+        ];
+
+        return $this;
+    }
+
+    /**
      * Create a form
      *
      * @return \Grafite\FormMaker\Forms\BaseForm
@@ -157,9 +175,7 @@ class BaseForm extends Form
         }
 
         $this->html = $this->open([
-            'route' => [
-                $this->route
-            ],
+            'route' => $this->route,
             'method' => $this->method,
             'files' => $this->hasFiles,
             'class' => $formClass,

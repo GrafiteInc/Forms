@@ -222,7 +222,8 @@ class ModelForm extends Form
 
         $this->html = $this->model($model, [
             'route' => [
-                $this->routes['update'], $model->id
+                $this->routes['update'],
+                $model->id
             ],
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
@@ -250,7 +251,8 @@ class ModelForm extends Form
     {
         $this->html = $this->model($model, [
             'route' => [
-                $this->routes['delete'], $model->id
+                $this->routes['delete'],
+                $model->id
             ],
             'method' => $this->methods['delete'],
             'class' => 'form-inline'
