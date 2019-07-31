@@ -259,7 +259,7 @@ class FieldBuilder
      */
     public function makeCheckbox($name, $value, $options)
     {
-        $checked = $this->isChecked($value, $options);
+        $checked = $this->isChecked($name, $value, $options);
 
         return '<input '.$this->attributes($options['attributes']).' type="checkbox" name="'.$name.'" '.$checked.'>';
     }
@@ -275,7 +275,7 @@ class FieldBuilder
      */
     public function makeRadio($name, $value, $options)
     {
-        $checked = $this->isChecked($value, $options);
+        $checked = $this->isChecked($name, $value, $options);
 
         return '<input '.$this->attributes($options['attributes']).' type="radio" name="'.$name.'" '.$checked.'>';
     }
@@ -343,12 +343,16 @@ class FieldBuilder
      *
      * @return boolean
      */
-    public function isChecked($value, $options)
+    public function isChecked($name, $value, $options)
     {
         if (isset($options['attributes']['value'])) {
             if ($value === $options['attributes']['value']) {
                 return 'checked';
             }
+        }
+
+        if (Str::contains($name, $value)) {
+            return 'checked';
         }
 
         if ($value === true || $value === 'on' || $value === 1) {

@@ -210,26 +210,29 @@ class FieldBuilderTest extends TestCase
 
     public function testIsChecked()
     {
-        $test = $this->builder->isChecked(true, []);
+        $test = $this->builder->isChecked('foo', true, []);
         $this->assertEquals('checked', $test);
 
-        $test = $this->builder->isChecked('on', []);
+        $test = $this->builder->isChecked('foo', 'on', []);
         $this->assertEquals('checked', $test);
 
-        $test = $this->builder->isChecked(1, []);
+        $test = $this->builder->isChecked('foo', 1, []);
         $this->assertEquals('checked', $test);
 
-        $test = $this->builder->isChecked(null, []);
+        $test = $this->builder->isChecked('foo', null, []);
         $this->assertEquals('', $test);
 
-        $test = $this->builder->isChecked(null, [
+        $test = $this->builder->isChecked('foo', ['foo'], []);
+        $this->assertEquals('checked', $test);
+
+        $test = $this->builder->isChecked('foo', null, [
             'attributes' => [
                 'value' => 'foo'
             ]
         ]);
         $this->assertEquals('', $test);
 
-        $test = $this->builder->isChecked('foo', [
+        $test = $this->builder->isChecked('foo', 'foo', [
             'attributes' => [
                 'value' => 'foo'
             ]
