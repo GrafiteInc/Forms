@@ -35,7 +35,7 @@ class {form} extends ModelForm
      * @var array
      */
     public $buttons = [
-        'save' => 'Save'
+        'submit' => 'Save'
     ];
 
     /**

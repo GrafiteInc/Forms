@@ -67,7 +67,7 @@ class ModelForm extends Form
      * @var array
      */
     public $routes = [
-        'create' => '',
+        'create' => '.store',
         'update' => '.update',
         'delete' => '.destroy',
     ];
@@ -89,7 +89,7 @@ class ModelForm extends Form
      * @var array
      */
     public $buttons = [
-        'save' => 'Save',
+        'submit' => 'Save',
         'cancel' => 'Cancel',
     ];
 
@@ -108,7 +108,7 @@ class ModelForm extends Form
      * @var array
      */
     public $buttonClasses = [
-        'save' => 'btn btn-primary',
+        'submit' => 'btn btn-primary',
         'cancel' => 'btn btn-secondary',
         'delete' => 'btn btn-danger',
     ];
@@ -176,6 +176,8 @@ class ModelForm extends Form
             $this->builder->setOrientation($this->orientation);
         }
 
+        $this->builder->setSections($this->setSections());
+
         foreach ($this->routes as $key => $route) {
             $this->routes[$key] = "{$this->routePrefix}{$route}";
         }
@@ -222,8 +224,7 @@ class ModelForm extends Form
 
         $this->html = $this->model($model, [
             'route' => [
-                $this->routes['update'],
-                $model->id
+                $this->routes['update'], $model->id
             ],
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
@@ -251,8 +252,7 @@ class ModelForm extends Form
     {
         $this->html = $this->model($model, [
             'route' => [
-                $this->routes['delete'],
-                $model->id
+                $this->routes['delete'], $model->id
             ],
             'method' => $this->methods['delete'],
             'class' => 'form-inline'
@@ -291,13 +291,23 @@ class ModelForm extends Form
                 .'" href="'.url($this->buttonLinks['cancel']).'">'.$this->buttons['cancel'].'</a>';
         }
 
-        $lastRowInForm .= $this->field->submit($this->buttons['save'], [
+        $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
             'class' => 'btn btn-primary'
         ]);
 
         $lastRowInForm .= '</div></div>'.$this->close();
 
         return $lastRowInForm;
+    }
+
+    /**
+     * Set the form sections
+     *
+     * @return array
+     */
+    public function setSections()
+    {
+        return [array_keys($this->parseFields($this->fields()))];
     }
 
     /**

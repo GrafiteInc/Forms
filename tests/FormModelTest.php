@@ -12,7 +12,7 @@ class UserForm extends ModelForm
     public $routePrefix = 'users';
 
     public $buttons = [
-        'save' => 'Save'
+        'submit' => 'Save'
     ];
 
     public function fields()
@@ -34,7 +34,7 @@ class FormModelTest extends TestCase
             'token' => 'tester',
         ]);
 
-        Route::post('users')->name('users');
+        Route::post('users')->name('users.store');
         Route::get('users')->name('users.index');
         Route::put('users/{id}')->name('users.update');
         Route::delete('users/{id}')->name('users.destroy');

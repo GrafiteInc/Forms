@@ -5,14 +5,14 @@ namespace Grafite\FormMaker\Commands;
 use Illuminate\Support\Str;
 use Illuminate\Console\Command;
 
-class MakeFormCommand extends Command
+class MakeModelFormCommand extends Command
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $signature = 'make:form {model}';
+    protected $signature = 'make:model-form {model}';
 
     /**
      * The console command description.

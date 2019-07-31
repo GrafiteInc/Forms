@@ -64,7 +64,7 @@ class BaseForm extends Form
      * @var array
      */
     public $buttons = [
-        'save' => 'Save',
+        'submit' => 'Submit',
         'cancel' => 'Cancel',
     ];
 
@@ -83,9 +83,8 @@ class BaseForm extends Form
      * @var array
      */
     public $buttonClasses = [
-        'save' => 'btn btn-primary',
+        'submit' => 'btn btn-primary',
         'cancel' => 'btn btn-secondary',
-        'delete' => 'btn btn-danger',
     ];
 
     /**
@@ -208,13 +207,23 @@ class BaseForm extends Form
                 .'" href="'.url($this->buttonLinks['cancel']).'">'.$this->buttons['cancel'].'</a>';
         }
 
-        $lastRowInForm .= $this->field->submit($this->buttons['save'], [
+        $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
             'class' => 'btn btn-primary'
         ]);
 
         $lastRowInForm .= '</div></div>'.$this->close();
 
         return $lastRowInForm;
+    }
+
+    /**
+     * Set the form sections
+     *
+     * @return array
+     */
+    public function setSections()
+    {
+        return [array_keys($this->parseFields($this->fields()))];
     }
 
     /**

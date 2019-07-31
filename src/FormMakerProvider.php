@@ -3,8 +3,9 @@
 namespace Grafite\FormMaker;
 
 use Illuminate\Support\ServiceProvider;
-use Grafite\FormMaker\Commands\MakeFormCommand;
 use Grafite\FormMaker\Commands\MakeFieldCommand;
+use Grafite\FormMaker\Commands\MakeBaseFormCommand;
+use Grafite\FormMaker\Commands\MakeModelFormCommand;
 
 class FormMakerProvider extends ServiceProvider
 {
@@ -27,7 +28,8 @@ class FormMakerProvider extends ServiceProvider
 
         $this->commands([
             MakeFieldCommand::class,
-            MakeFormCommand::class,
+            MakeModelFormCommand::class,
+            MakeBaseFormCommand::class,
         ]);
     }
 

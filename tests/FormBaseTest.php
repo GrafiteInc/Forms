@@ -9,7 +9,7 @@ class UserSecurityForm extends BaseForm
     public $route = 'user.security';
 
     public $buttons = [
-        'save' => 'Save'
+        'submit' => 'Save'
     ];
 
     public function fields()
