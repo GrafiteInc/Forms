@@ -13,6 +13,8 @@ class FormMaker
 {
     protected $columns = 1;
 
+    protected $sections = [];
+
     protected $orientation;
 
     protected $fieldMaker;
@@ -54,6 +56,18 @@ class FormMaker
     }
 
     /**
+     * Set the sections of the form
+     *
+     * @param array $sections
+     */
+    public function setSections($sections)
+    {
+        $this->sections = $sections;
+
+        return $this;
+    }
+
+    /**
      * Set the columns of the form
      *
      * @param int $columns
@@ -88,7 +102,7 @@ class FormMaker
                 $column = $columnConfig;
             }
 
-            $fieldCollection[] = $this->fieldMaker->make($column, $columnConfig);
+            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
 
         return $this->buildUsingColumns($fieldCollection);
@@ -112,7 +126,7 @@ class FormMaker
                 $columnConfig = $columnConfig[$column];
             }
 
-            $fieldCollection[] = $this->fieldMaker->make($column, $columnConfig);
+            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
 
         return $this->buildUsingColumns($fieldCollection);
@@ -145,7 +159,7 @@ class FormMaker
                 ];
             }
 
-            $fieldCollection[] = $this->fieldMaker->make($column, $columnConfig, $object);
+            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig, $object);
         }
 
         return $this->buildUsingColumns($fieldCollection);
@@ -218,17 +232,17 @@ class FormMaker
         return $fields;
     }
 
-    /**
-     * Build a two column form using standard bootstrap classes
-     *
-     * @param  array $formBuild
-     * @return string
-     */
-    private function buildBootstrapColumnForm($formBuild, $columns)
+    private function buildSection($fields, $columns, $label = null)
     {
         $newFormBuild = [];
-        $formChunks = array_chunk($formBuild, $columns);
+        $formChunks = array_chunk($fields, $columns);
         $class = 'col-md-'.(12 / $columns);
+
+        if (!is_null($label)) {
+            $newFormBuild[] = '<div class="row">';
+            $newFormBuild[] = '<div class="col-md-12"><h4 class="mt-2 mb-2">'.$label.'</h4><hr></div>';
+            $newFormBuild[] = '</div>';
+        }
 
         foreach ($formChunks as $chunk) {
             $newFormBuild[] = '<div class="row">';
@@ -241,6 +255,38 @@ class FormMaker
         }
 
         return implode("", $newFormBuild);
+    }
+
+    /**
+     * Build a two column form using standard bootstrap classes
+     *
+     * @param  array $formBuild
+     * @param  int $columns
+     * @return string
+     */
+    private function buildBootstrapColumnForm($formBuild, $columns)
+    {
+        $formSections = [];
+
+        foreach ($this->sections as $section => $fields) {
+            $label = null;
+
+            if (is_string($section)) {
+                $label = $section;
+            }
+
+            $inputs = [];
+
+            foreach ($fields as $field) {
+                $inputs[] = $formBuild[$field];
+            }
+
+            $formSections[] = $this->buildSection($inputs, $columns, $label);
+        }
+
+        return implode("", $formSections);
+
+
     }
 
     /**
