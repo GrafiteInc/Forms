@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.1.2] - 2019-07-31
+
+### Added
+- New base form maker command
+- New form sections
+
+### Changed
+- Save key is now submit
+
+### Fixed
+- Standard route consistency
+- Array values for checkboxes
+
 ## [v2.1.1] - 2019-07-14
 
 ### Added
