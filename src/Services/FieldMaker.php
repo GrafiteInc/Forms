@@ -55,7 +55,6 @@ class FieldMaker
     public function make(string $column, array $columnConfig, $object = null)
     {
         $field = null;
-        $withErrors = false;
         $fieldGroup = config('form-maker.form.group-class', 'form-group');
 
         if ($this->orientation === 'horizontal') {
@@ -70,11 +69,7 @@ class FieldMaker
 
         $errors = $this->getFieldErrors($column, $object);
 
-        if (!empty($errors)) {
-            $withErrors = true;
-        }
-
-        $label = $this->label($column, $columnConfig, null, $withErrors);
+        $label = $this->label($column, $columnConfig, null, $errors);
 
         if (in_array($columnConfig['type'], $this->standard)) {
             $field = $this->builder->makeInput(
@@ -140,7 +135,7 @@ class FieldMaker
         return $this->wrapField($fieldGroup, $label, $fieldString, $errors);
     }
 
-    public function label($column, $columnConfig, $class = null, $withErrors = false)
+    public function label($column, $columnConfig, $class = null, $errors)
     {
         $label = ucfirst($column);
 
@@ -152,7 +147,7 @@ class FieldMaker
             $label = $columnConfig['label'];
         }
 
-        if ($withErrors) {
+        if (!empty($errors)) {
             $class = $class.' '.config('form-maker.form.error-class', 'has-error');
         }
 

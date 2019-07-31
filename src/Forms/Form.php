@@ -2,12 +2,10 @@
 
 namespace Grafite\FormMaker\Forms;
 
-use Grafite\FormMaker\Builders\FieldBuilder;
-use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Request;
-use Illuminate\Support\HtmlString;
-use Illuminate\Contracts\Routing\UrlGenerator;
 use Illuminate\Support\Arr;
+use Illuminate\Support\HtmlString;
+use Illuminate\Routing\UrlGenerator;
+use Grafite\FormMaker\Builders\FieldBuilder;
 
 class Form
 {
@@ -24,6 +22,13 @@ class Form
      * @var mixed
      */
     public $model;
+
+    /**
+     * The URL Generator
+     *
+     * @var \Illuminate\Contracts\Routing\UrlGenerator
+     */
+    public $url;
 
     /**
      * Html string for output
@@ -65,21 +70,12 @@ class Form
 
     /**
      * Create a new form builder instance.
-     *
-     * @param  \Illuminate\Contracts\Routing\UrlGenerator $url
-     * @param  \Illuminate\Contracts\View\Factory $view
-     * @param  \\Grafite\FormMaker\Builders\FieldBuilder $fieldBuilder
      */
-    public function __construct(
-        UrlGenerator $url,
-        Factory $view,
-        FieldBuilder $fieldBuilder
-    ) {
-        $this->url = $url;
-        $this->view = $view;
-        $this->field = $fieldBuilder;
+    public function __construct()
+    {
+        $this->url = app(UrlGenerator::class);
+        $this->field = app(FieldBuilder::class);
         $this->session = session();
-
     }
 
     /**

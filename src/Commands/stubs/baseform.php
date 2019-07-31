@@ -9,9 +9,13 @@ class {form} extends BaseForm
     /**
      * The form route
      *
+     * If you need to inject a parameter
+     * to the route, then use the `setRoute`
+     * method.
+     *
      * @var string
      */
-    public $route;
+    public $route = '';
 
     /**
      * Buttons and values
