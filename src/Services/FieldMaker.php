@@ -122,7 +122,7 @@ class FieldMaker
             $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label');
             $inputColumn = config('form-maker.form.input-column', 'col-md-10');
 
-            $label = $this->label($column, $columnConfig, $labelColumn, $withErrors);
+            $label = $this->label($column, $columnConfig, $labelColumn, $errors);
 
             if (in_array($columnConfig['type'], $this->specialSelect)) {
                 $legend = $columnConfig['legend'] ?? $columnConfig['label'];
