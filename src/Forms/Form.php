@@ -45,6 +45,13 @@ class Form
     public $confirmMessage;
 
     /**
+     * Method for delete confirmation
+     *
+     * @var string
+     */
+    public $confirmMethod;
+
+    /**
      * The reserved form open attributes.
      *
      * @var array
@@ -98,9 +105,15 @@ class Form
             'class' => 'btn btn-primary'
         ], $options);
 
-        if (!empty($this->confirmMessage)) {
+        if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {
             $options = array_merge($options, [
                 'onclick' => "return confirm('{$this->confirmMessage}')"
+            ]);
+        }
+
+        if (!empty($this->confirmMessage) && !is_null($this->confirmMethod)) {
+            $options = array_merge($options, [
+                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')"
             ]);
         }
 
@@ -115,12 +128,14 @@ class Form
      * Set the confirmation message for delete forms
      *
      * @param string $message
+     * @param string $method
      *
      * @return \Grafite\FormMaker\Forms\ModelForm
      */
-    public function confirm($message)
+    public function confirm($message, $method = null)
     {
         $this->confirmMessage = $message;
+        $this->confirmMethod = $method;
 
         return $this;
     }

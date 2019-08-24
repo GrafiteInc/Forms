@@ -190,9 +190,15 @@ class ModelForm extends HtmlForm
             'class' => $this->buttonClasses['delete'],
         ];
 
-        if (!empty($this->confirmMessage)) {
+        if (!empty($this->confirmMessage) && is_null($this->confirmMessage)) {
             $options = array_merge($options, [
                 'onclick' => "return confirm('{$this->confirmMessage}')"
+            ]);
+        }
+
+        if (!empty($this->confirmMessage) && !is_null($this->confirmMethod)) {
+            $options = array_merge($options, [
+                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')"
             ]);
         }
 

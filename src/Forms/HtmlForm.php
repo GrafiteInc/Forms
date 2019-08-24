@@ -53,6 +53,13 @@ class HtmlForm extends Form
     public $confirmMessage;
 
     /**
+     * Method for delete confirmation
+     *
+     * @var string
+     */
+    public $confirmMethod;
+
+    /**
      * The field builder
      *
      * @var \Grafite\FormMaker\Builders\FieldBuilder
@@ -132,12 +139,14 @@ class HtmlForm extends Form
      * Set the confirmation message for delete forms
      *
      * @param string $message
+     * @param string $method
      *
      * @return \Grafite\FormMaker\Forms\ModelForm
      */
-    public function confirm($message)
+    public function confirm($message, $method = null)
     {
         $this->confirmMessage = $message;
+        $this->confirmMethod = $method;
 
         return $this;
     }
