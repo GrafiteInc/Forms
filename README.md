@@ -21,7 +21,7 @@ The FormMaker package provides a set of tools for generating HTML forms with as 
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| ^5.8.x | 2.0.x | yes |
+| ^5.8.x | 2.1.x | yes |
 | 5.4.x - 5.8.x | 1.3.x | no |
 | 5.4.x | 1.1.x | no |
 | 5.3.x | 1.0.x | no |
@@ -45,7 +45,7 @@ php artisan vendor:publish --provider="Grafite\FormMaker\FormMakerProvider"
 
 ## Documentation
 
-[https://docs.grafite.ca/others/form_maker](https://docs.grafite.ca/others/form_maker)
+[https://docs.grafite.ca/utilities/form_maker](https://docs.grafite.ca/utilities/form_maker)
 
 ## License
 FormMaker is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
