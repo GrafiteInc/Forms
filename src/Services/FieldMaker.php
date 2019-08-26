@@ -158,6 +158,10 @@ class FieldMaker
 
     public function wrapField($fieldGroup, $label, $fieldString, $errors)
     {
+        if (Str::contains($fieldString, 'hidden')) {
+            return $fieldString;
+        }
+
         return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}</div>{$errors}";
     }
 
