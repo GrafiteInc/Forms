@@ -203,6 +203,8 @@ class FormMaker
                 return $this->buildBootstrapColumnForm($formBuild, 4);
             case 6:
                 return $this->buildBootstrapColumnForm($formBuild, 6);
+            case 'sections':
+                return $this->buildBootstrapColumnForm($formBuild, null);
             default:
                 return implode("", $formBuild);
         }
@@ -232,10 +234,24 @@ class FormMaker
         return $fields;
     }
 
+    /**
+     * Build a section of fields
+     *
+     * @param array $fields
+     * @param int|null $columns
+     * @param string $label
+     * @return string
+     */
     private function buildSection($fields, $columns, $label = null)
     {
         $newFormBuild = [];
+
+        if (is_null($columns)) {
+            $columns = count($fields);
+        }
+
         $formChunks = array_chunk($fields, $columns);
+
         $class = 'col-md-'.(12 / $columns);
 
         if (!is_null($label)) {
