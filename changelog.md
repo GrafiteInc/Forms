@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.1.6] - 2019-08-26
+
+### Added
+- New section based column layout
+
 ## [v2.1.5] - 2019-08-24
 
 ### Added
