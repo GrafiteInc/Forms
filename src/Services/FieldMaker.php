@@ -110,7 +110,12 @@ class FieldMaker
         }
 
         if (is_null($field)) {
-            throw new Exception("Unknown field type.", 1);
+            $field = $this->builder->makeField(
+                $columnConfig['type'],
+                $column,
+                $value,
+                $this->parseOptions($column, $columnConfig)['attributes']
+            );
         }
 
         $before = $this->before($columnConfig);

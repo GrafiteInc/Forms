@@ -58,6 +58,25 @@ class FieldBuilder
     }
 
     /**
+     * Make an field string
+     *
+     * @param string $type
+     * @param string $name
+     * @param mixed $value
+     * @param array $options
+     *
+     * @return string
+     */
+    public function makeField($type, $name, $value, $options = [])
+    {
+        if ($value instanceof DateTime) {
+            $value = $value->format($options['format'] ?? 'Y-m-d');
+        }
+
+        return '<'.$type.' '.$this->attributes($options).' name="'.$name.'" value="'.$value.'"></'.$type.'>';
+    }
+
+    /**
      * Build an HTML attribute string from an array.
      *
      * @param array $attributes

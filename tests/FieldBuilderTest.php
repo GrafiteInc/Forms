@@ -22,6 +22,14 @@ class FieldBuilderTest extends TestCase
         $this->assertEquals('<input  name="name" type="text" value="superman">', $test);
     }
 
+    public function testMakeField()
+    {
+        $test = $this->builder->makeField('datepicker', 'name', 'superman', []);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals('<datepicker  name="name" value="superman"></datepicker>', $test);
+    }
+
     public function testMakeButton()
     {
         $test = $this->builder->button('Clicker');
