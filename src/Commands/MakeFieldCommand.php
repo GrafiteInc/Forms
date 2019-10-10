@@ -31,6 +31,11 @@ class MakeFieldCommand extends Command
         $field = $this->argument('field');
 
         $fileName = ucfirst($field).'.php';
+
+        if (!is_dir(app_path('Http/Forms/Fields'))) {
+            mkdir(app_path('Http/Forms/Fields'));
+        }
+
         $file = app_path('Http/Forms/Fields/'.$fileName);
         $stub = __DIR__.'/stubs/field.php';
 
