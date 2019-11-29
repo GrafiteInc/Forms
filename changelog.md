@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.1.11] - 2019-11-29
+
+### Fixed
+- Minor issue with boolean value
+
 ## [v2.1.10] - 2019-10-10
 
 ### Fixed
