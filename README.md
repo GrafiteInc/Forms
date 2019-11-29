@@ -1,4 +1,4 @@
-# FormMaker
+![Grafite FormMaker](GrafiteFormMaker-banner.png)
 
 **FormMaker** - A remarkably magical form and input maker tool for Laravel.
 
