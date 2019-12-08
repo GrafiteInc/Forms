@@ -2,8 +2,6 @@
 
 namespace Grafite\FormMaker\Commands;
 
-use Illuminate\Console\GeneratorCommand;
-
 class MakeBaseFormCommand extends BaseCommand
 {
     /**
