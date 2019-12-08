@@ -2,17 +2,16 @@
 
 namespace Grafite\FormMaker\Commands;
 
-use Illuminate\Support\Str;
-use Illuminate\Console\Command;
+use Illuminate\Console\GeneratorCommand;
 
-class MakeFieldCommand extends Command
+class MakeFieldCommand extends BaseCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $signature = 'make:field {field}';
+    protected $name = 'make:field';
 
     /**
      * The console command description.
@@ -22,31 +21,31 @@ class MakeFieldCommand extends Command
     protected $description = 'Create a new field';
 
     /**
-     * Execute the console command.
+     * The type of class being generated.
      *
-     * @return mixed
+     * @var string
      */
-    public function handle()
+    protected $type = 'field';
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
     {
-        $field = $this->argument('field');
+        return __DIR__ . '/stubs/field.php';
+    }
 
-        $fileName = ucfirst($field).'.php';
-
-        if (!is_dir(app_path('Http/Forms/Fields'))) {
-            mkdir(app_path('Http/Forms/Fields'));
-        }
-
-        $file = app_path('Http/Forms/Fields/'.$fileName);
-        $stub = __DIR__.'/stubs/field.php';
-
-        $contents = file_get_contents($stub);
-
-        $contents = str_replace('{field}', $field, $contents);
-
-        if (!file_exists($file)) {
-            file_put_contents(app_path('Http/Forms/Fields/'.$fileName), $contents);
-        }
-
-        $this->info('You have a form for '.$field.' field.');
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param string $rootNamespace
+     *
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace)
+    {
+        return $rootNamespace . '\Http\Fields';
     }
 }
