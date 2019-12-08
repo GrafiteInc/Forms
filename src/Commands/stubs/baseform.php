@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Forms;
+namespace DummyNamespace;
 
 use Grafite\FormMaker\Forms\BaseForm;
 
-class {form} extends BaseForm
+class DummyClass extends BaseForm
 {
     /**
      * The form route
