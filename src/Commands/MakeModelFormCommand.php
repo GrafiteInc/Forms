@@ -3,16 +3,15 @@
 namespace Grafite\FormMaker\Commands;
 
 use Illuminate\Support\Str;
-use Illuminate\Console\Command;
 
-class MakeModelFormCommand extends Command
+class MakeModelFormCommand extends BaseCommand
 {
     /**
      * The console command name.
      *
      * @var string
      */
-    protected $signature = 'make:model-form {model}';
+    protected $name = 'make:model-form';
 
     /**
      * The console command description.
@@ -22,28 +21,56 @@ class MakeModelFormCommand extends Command
     protected $description = 'Create a new model form';
 
     /**
-     * Execute the console command.
+     * Route prefix variable.
      *
-     * @return mixed
+     * @var string
      */
-    public function handle()
+    protected $routePrefix;
+
+    /**
+     * Model name variable.
+     *
+     * @var string
+     */
+    protected $modelName;
+
+    /**
+     * Build the class with the given name.
+     *
+     * @param string $name
+     *
+     * @return string
+     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     */
+    protected function buildClass($name)
     {
-        $model = $this->argument('model');
+        $stub = $this->files->get($this->getStub());
 
-        $fileName = ucfirst($model).'Form.php';
-        $file = app_path('Http/Forms/'.$fileName);
-        $stub = __DIR__.'/stubs/form.php';
+        return $this->replaceNamespace($stub, $name)
+            ->replaceOtherVariables($stub, ['DummyModel', 'DummyPrefix'], [$this->modelName, Str::plural(strtolower($this->routePrefix))])
+            ->replaceClass($stub, $name);
 
-        $contents = file_get_contents($stub);
+    }
 
-        $contents = str_replace('{form}', $model.'Form', $contents);
-        $contents = str_replace('{model}', $model, $contents);
-        $contents = str_replace('{prefix}', Str::plural(strtolower($model)), $contents);
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
+    {
+        return __DIR__ . '/stubs/form.php';
+    }
 
-        if (!file_exists($file)) {
-            file_put_contents(app_path('Http/Forms/'.$fileName), $contents);
-        }
-
-        $this->info('You have a form for '.$model.' model.');
+    /**
+     * Get the desired class name from the input.
+     *
+     * @return string
+     */
+    protected function getNameInput()
+    {
+        $this->routePrefix = $this->argument('name');
+        $this->modelName = ucfirst($this->routePrefix);
+        return ucfirst(trim($this->argument('name'))) . ucfirst($this->type);
     }
 }
