@@ -1,10 +1,10 @@
 <?php
 
-namespace App\Http\Forms\Fields;
+namespace DummyNamespace;
 
 use Grafite\FormMaker\Fields\Field;
 
-class {field} extends Field
+class DummyClass extends Field
 {
     /**
      * Input type

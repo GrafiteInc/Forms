@@ -1,18 +1,17 @@
 <?php
 
-namespace App\Http\Forms;
+namespace DummyNamespace;
 
 use Grafite\FormMaker\Forms\ModelForm;
 
-class {form} extends ModelForm
+class DummyClass extends ModelForm
 {
-
     /**
      * The model for the form
      *
      * @var \Illuminate\Database\Eloquent\Model
      */
-    public $model = {model}::class;
+    public $model = DummyModel::class;
 
     /**
      * Required prefix of routes
@@ -22,7 +21,7 @@ class {form} extends ModelForm
      *
      * @var string
      */
-    public $routePrefix = '{prefix}';
+    public $routePrefix = 'DummyPrefix';
 
     /**
      * Buttons and values
