@@ -8,7 +8,7 @@ class UserSecurityAjaxForm extends BaseForm
 {
     public $route = 'user.security';
 
-    public $ajaxMethod = 'ajax';
+    public $submitMethod = 'ajax';
 
     public $buttons = [
         'submit' => 'Save'
@@ -22,7 +22,7 @@ class UserSecurityAjaxForm extends BaseForm
     }
 }
 
-class FormBaseAjaxTest extends TestCase
+class FormBaseSubmitMethodTest extends TestCase
 {
     public function setUp(): void
     {
