@@ -28,6 +28,13 @@ class HtmlForm extends Form
     public $hasFiles = false;
 
     /**
+     * An ajax method to perform the form submission
+     *
+     * @var boolean
+     */
+    public $ajaxMethod = null;
+
+    /**
      * The route prefix, generally single form of model
      *
      * @var string
@@ -116,9 +123,16 @@ class HtmlForm extends Form
                 .'" href="'.url($this->buttonLinks['cancel']).'">'.$this->buttons['cancel'].'</a>';
         }
 
-        $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
-            'class' => 'btn btn-primary'
-        ]);
+        if (!is_null($this->ajaxMethod)) {
+            $lastRowInForm .= $this->field->button($this->buttons['submit'], [
+                'class' => 'btn btn-primary',
+                'onclick' => "{$this->ajaxMethod}(event)"
+            ]);
+        } else {
+            $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
+                'class' => 'btn btn-primary'
+            ]);
+        }
 
         $lastRowInForm .= '</div></div>'.$this->close();
 
