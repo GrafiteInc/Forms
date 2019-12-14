@@ -5,6 +5,7 @@ namespace Grafite\FormMaker;
 use Illuminate\Support\ServiceProvider;
 use Grafite\FormMaker\Commands\MakeFieldCommand;
 use Grafite\FormMaker\Commands\MakeBaseFormCommand;
+use Grafite\FormMaker\Commands\MakeFormTestCommand;
 use Grafite\FormMaker\Commands\MakeModelFormCommand;
 use Grafite\FormMaker\Commands\MakeFormFactoryCommand;
 
@@ -32,6 +33,7 @@ class FormMakerProvider extends ServiceProvider
             MakeModelFormCommand::class,
             MakeBaseFormCommand::class,
             MakeFormFactoryCommand::class,
+            MakeFormTestCommand::class,
         ]);
     }
 
