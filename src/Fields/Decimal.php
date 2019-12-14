@@ -17,4 +17,9 @@ class Decimal extends Field
             'step' => 'any',
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'randomFloat';
+    }
 }

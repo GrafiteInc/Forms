@@ -6,6 +6,7 @@ use Illuminate\Support\ServiceProvider;
 use Grafite\FormMaker\Commands\MakeFieldCommand;
 use Grafite\FormMaker\Commands\MakeBaseFormCommand;
 use Grafite\FormMaker\Commands\MakeModelFormCommand;
+use Grafite\FormMaker\Commands\MakeFormFactoryCommand;
 
 class FormMakerProvider extends ServiceProvider
 {
@@ -30,6 +31,7 @@ class FormMakerProvider extends ServiceProvider
             MakeFieldCommand::class,
             MakeModelFormCommand::class,
             MakeBaseFormCommand::class,
+            MakeFormFactoryCommand::class,
         ]);
     }
 

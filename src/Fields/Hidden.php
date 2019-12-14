@@ -10,4 +10,9 @@ class Hidden extends Field
     {
         return 'hidden';
     }
+
+    protected static function getFactory()
+    {
+        return 'text(50)';
+    }
 }

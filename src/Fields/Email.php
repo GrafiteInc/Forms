@@ -10,4 +10,9 @@ class Email extends Field
     {
         return 'email';
     }
+
+    protected static function getFactory()
+    {
+        return 'email';
+    }
 }

@@ -10,4 +10,9 @@ class Range extends Field
     {
         return 'range';
     }
+
+    protected static function getFactory()
+    {
+        return 'numberBetween(1, 10)';
+    }
 }

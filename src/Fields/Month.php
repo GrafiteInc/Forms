@@ -10,4 +10,9 @@ class Month extends Field
     {
         return 'month';
     }
+
+    protected static function getFactory()
+    {
+        return 'month';
+    }
 }

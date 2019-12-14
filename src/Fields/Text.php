@@ -10,4 +10,9 @@ class Text extends Field
     {
         return 'text';
     }
+
+    protected static function getFactory()
+    {
+        return 'text(50)';
+    }
 }

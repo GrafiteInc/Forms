@@ -10,4 +10,9 @@ class HasOne extends Field
     {
         return 'relationship';
     }
+
+    protected static function getFactory()
+    {
+        return null;
+    }
 }

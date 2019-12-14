@@ -17,4 +17,9 @@ class File extends Field
             'before' => 'Upload',
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'image';
+    }
 }

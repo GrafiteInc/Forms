@@ -10,4 +10,9 @@ class Week extends Field
     {
         return 'week';
     }
+
+    protected static function getFactory()
+    {
+        return 'week';
+    }
 }

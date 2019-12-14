@@ -4,15 +4,15 @@ namespace Grafite\FormMaker\Fields;
 
 use Grafite\FormMaker\Fields\Field;
 
-class Telephone extends Field
+class Name extends Field
 {
     protected static function getType()
     {
-        return 'tel';
+        return 'text';
     }
 
     protected static function getFactory()
     {
-        return 'phone';
+        return 'name';
     }
 }

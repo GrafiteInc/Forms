@@ -18,4 +18,9 @@ class DatetimeLocal extends Field
             'before' => 'Date/Time',
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'dateTime';
+    }
 }

@@ -17,4 +17,9 @@ class Image extends Field
             'before' => 'Image',
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'image';
+    }
 }

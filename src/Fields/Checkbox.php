@@ -17,4 +17,9 @@ class Checkbox extends Field
             'class' => 'form-check-input'
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'boolean';
+    }
 }

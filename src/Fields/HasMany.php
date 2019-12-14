@@ -17,4 +17,9 @@ class HasMany extends Field
             'multiple' => true,
         ];
     }
+
+    protected static function getFactory()
+    {
+        return null;
+    }
 }

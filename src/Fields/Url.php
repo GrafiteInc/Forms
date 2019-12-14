@@ -10,4 +10,9 @@ class Url extends Field
     {
         return 'url';
     }
+
+    protected static function getFactory()
+    {
+        return 'url';
+    }
 }

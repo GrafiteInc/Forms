@@ -18,4 +18,9 @@ class Date extends Field
             'before' => 'Date',
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'date';
+    }
 }

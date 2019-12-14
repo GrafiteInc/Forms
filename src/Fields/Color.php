@@ -17,4 +17,9 @@ class Color extends Field
             'before' => 'Color',
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'safeColorName';
+    }
 }

@@ -208,4 +208,18 @@ class ModelForm extends HtmlForm
 
         return $this;
     }
+
+    public function factoryFields()
+    {
+        $factory = '';
+
+        foreach ($this->fields as $settings) {
+            $field = array_keys($settings)[0];
+            if (!is_null($settings[$field]['factory'])) {
+                $factory .= "\x20\x20\x20\x20\x20\x20\x20\x20'{$field}' => \$faker->{$settings[$field]['factory']},\n";
+            }
+        }
+
+        return $factory;
+    }
 }

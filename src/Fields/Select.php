@@ -10,4 +10,9 @@ class Select extends Field
     {
         return 'select';
     }
+
+    protected static function getFactory()
+    {
+        return 'text(50)';
+    }
 }

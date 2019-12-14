@@ -29,6 +29,16 @@ class Field
     }
 
     /**
+     * Get factory
+     *
+     * @return string
+     */
+    protected static function getFactory()
+    {
+        return 'text(50)';
+    }
+
+    /**
      * Get options
      *
      * @return array
@@ -88,6 +98,7 @@ class Field
                 'after' => static::getWrappers($options, 'after'),
                 'view' => static::getView() ?? null,
                 'attributes' => static::parseAttributes($options) ?? [],
+                'factory' => static::getFactory(),
             ]
         ];
     }

@@ -10,4 +10,9 @@ class Password extends Field
     {
         return 'password';
     }
+
+    protected static function getFactory()
+    {
+        return 'password';
+    }
 }

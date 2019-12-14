@@ -1,6 +1,6 @@
 <?php
 
-use Grafite\FormMaker\Fields\Text;
+use Grafite\FormMaker\Fields\Name;
 use Grafite\FormMaker\Fields\Email;
 use Illuminate\Support\Facades\Route;
 use Grafite\FormMaker\Forms\ModelForm;
@@ -18,7 +18,7 @@ class UserForm extends ModelForm
     public function fields()
     {
         return [
-            Text::make('name'),
+            Name::make('name'),
             Email::make('email'),
         ];
     }

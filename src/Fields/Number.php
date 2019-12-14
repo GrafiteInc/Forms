@@ -10,4 +10,14 @@ class Number extends Field
     {
         return 'number';
     }
+
+    /**
+     * Get factory
+     *
+     * @return string
+     */
+    protected static function getFactory()
+    {
+        return 'randomNumber()';
+    }
 }

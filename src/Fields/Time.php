@@ -10,4 +10,9 @@ class Time extends Field
     {
         return 'time';
     }
+
+    protected static function getFactory()
+    {
+        return 'time';
+    }
 }

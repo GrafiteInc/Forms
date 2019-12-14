@@ -17,4 +17,9 @@ class Textarea extends Field
             'rows' => 5,
         ];
     }
+
+    protected static function getFactory()
+    {
+        return 'text(300)';
+    }
 }
