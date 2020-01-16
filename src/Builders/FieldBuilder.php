@@ -210,6 +210,12 @@ class FieldBuilder
             $name = $name.'[]';
         }
 
+        if (isset($options['null_value']) && $options['null_value']) {
+            $nullValue = [];
+            $nullValue[$options['null_label'] ?? 'None'] = null;
+            $options['options'] = array_merge($nullValue, $options['options']);
+        }
+
         foreach ($options['options'] as $key => $value) {
             $selectedValue = '';
 
@@ -327,6 +333,10 @@ class FieldBuilder
 
         if (isset($options['model_options']['params'])) {
             $items = $class->$method($options['model_options']['params']);
+        }
+
+        if (isset($options['null_value']) && $options['null_value']) {
+            $options['options'][$options['null_label']] = null;
         }
 
         foreach ($items as $item) {

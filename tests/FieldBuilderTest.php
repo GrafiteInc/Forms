@@ -191,6 +191,33 @@ class FieldBuilderTest extends TestCase
         $this->assertEquals('<input  id="Avatar" class="foo-class" type="radio" name="avatar" >', $test);
     }
 
+    public function testMakeRelationshipWithNone()
+    {
+        app(Job::class)->create([
+            'name' => 'BlackSmith',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Police',
+        ]);
+        app(Job::class)->create([
+            'name' => 'Brogrammer',
+        ]);
+
+        $test = $this->builder->makeRelationship('avatar', null, [
+            'model' => Job::class,
+            'options' => app(Job::class)->all()->pluck('id', 'name')->toArray(),
+            'null_value' => true,
+            'null_label' => 'foo',
+            'attributes' => [
+                'id' => 'Avatar',
+                'class' => 'foo-class'
+            ]
+        ]);
+
+        $this->assertTrue(is_string($test));
+        $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="" selected>foo</option><option value="1" >BlackSmith</option><option value="2" >Police</option><option value="3" >Brogrammer</option></select>', $test);
+    }
+
     public function testMakeRelationship()
     {
         app(Job::class)->create([

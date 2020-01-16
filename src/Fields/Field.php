@@ -10,6 +10,8 @@ class Field
         'legend',
         'label',
         'model',
+        'null_value',
+        'null_label',
         'model_options',
         'before',
         'after',
@@ -88,6 +90,8 @@ class Field
                 'legend' => $options['legend'] ?? null,
                 'label' => $options['label'] ?? null,
                 'model' => $options['model'] ?? null,
+                'null_value' => $options['null_value'] ?? false,
+                'null_label' => $options['null_label'] ?? 'None',
                 'model_options' => [
                     'label' => $options['model_options']['label'] ?? 'name',
                     'value' => $options['model_options']['value'] ?? 'id',
