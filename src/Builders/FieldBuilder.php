@@ -54,7 +54,7 @@ class FieldBuilder
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
-        return '<input '.$this->attributes($options).' name="'.$name.'" type="'.$type.'" value="'.$value.'">';
+        return '<input '.$this->attributes($options).' name="'.$name.'" type="'.$type.'" value="'.e($value).'">';
     }
 
     /**
@@ -73,7 +73,7 @@ class FieldBuilder
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
-        return '<'.$type.' '.$this->attributes($options).' name="'.$name.'" value="'.$value.'"></'.$type.'>';
+        return '<'.$type.' '.$this->attributes($options).' name="'.$name.'" value="'.e($value).'"></'.$type.'>';
     }
 
     /**
@@ -158,7 +158,7 @@ class FieldBuilder
      */
     public function makeTextarea($name, $value, $options)
     {
-        return '<textarea '.$this->attributes($options['attributes']).' name="'.$name.'">'.$value.'</textarea>';
+        return '<textarea '.$this->attributes($options['attributes']).' name="'.$name.'">'.e($value).'</textarea>';
     }
 
     /**
