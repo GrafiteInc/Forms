@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.2.1] - 2020-01-21
+
+### Fixed
+- Minor issue with not escaping values
+
 ## [v2.2.0] - 2020-01-16
 
 ### Added
