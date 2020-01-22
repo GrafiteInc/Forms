@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.3.0] - 2020-01-22
+
+### Added
+- New config options allowing for no bootstrap based classes
+
 ## [v2.2.1] - 2020-01-21
 
 ### Fixed
