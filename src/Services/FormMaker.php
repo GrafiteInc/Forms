@@ -252,16 +252,21 @@ class FormMaker
 
         $formChunks = array_chunk($fields, $columns);
 
-        $class = 'col-md-'.(12 / $columns);
+        $columnBase = config('form-maker.sections.column-base', 'col-md-');
+        $rowClass = config('form-maker.sections.row-class', 'row');
+        $fullSizeColumn = config('form-maker.sections.full-size-column', 'col-md-12');
+        $headerSpacing = config('form-maker.sections.header-spacing', 'mt-2 mb-2');
+
+        $class = $columnBase.(12 / $columns);
 
         if (!is_null($label)) {
-            $newFormBuild[] = '<div class="row">';
-            $newFormBuild[] = '<div class="col-md-12"><h4 class="mt-2 mb-2">'.$label.'</h4><hr></div>';
+            $newFormBuild[] = '<div class="'.$rowClass.'">';
+            $newFormBuild[] = '<div class="'.$fullSizeColumn.'"><h4 class="'.$headerSpacing.'">'.$label.'</h4><hr></div>';
             $newFormBuild[] = '</div>';
         }
 
         foreach ($formChunks as $chunk) {
-            $newFormBuild[] = '<div class="row">';
+            $newFormBuild[] = '<div class="'.$rowClass.'">';
             foreach ($chunk as $element) {
                 $newFormBuild[] = '<div class="'.$class.'">';
                 $newFormBuild[] = $element;

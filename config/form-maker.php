@@ -10,9 +10,23 @@ return [
 
     'form' => [
         'group-class' => 'form-group',
-        'error-class' => 'has-error',
         'label-class' => 'control-label',
         'before_after_input_wrapper' => 'input-group',
+        'text-error' => 'text-danger',
+        'error-class' => 'has-error',
+
+        /*
+        * --------------------------------------------------------------------------
+        * Form Sections
+        * --------------------------------------------------------------------------
+        */
+
+        'sections' => [
+            'column-base' => 'col-md-',
+            'row-class' => 'row',
+            'full-size-column' => 'col-md-12',
+            'header-spacing' => 'mt-2 mb-2',
+        ],
 
         /*
          * --------------------------------------------------------------------------
@@ -24,7 +38,7 @@ return [
         */
 
         'orientation' => 'vertical',
-        'label-column' => 'col-md-2 col-form-label',
+        'label-column' => 'col-md-2 col-form-label pt-0',
         'input-column' => 'col-md-10',
     ]
 

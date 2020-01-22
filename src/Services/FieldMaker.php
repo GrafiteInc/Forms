@@ -124,14 +124,14 @@ class FieldMaker
         $fieldString = $before.$field.$after;
 
         if ($this->orientation === 'horizontal') {
-            $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label');
+            $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label pt-0');
             $inputColumn = config('form-maker.form.input-column', 'col-md-10');
 
             $label = $this->label($column, $columnConfig, $labelColumn, $errors);
 
             if (in_array($columnConfig['type'], $this->specialSelect)) {
                 $legend = $columnConfig['legend'] ?? $columnConfig['label'];
-                $label = "<legend class=\"{$labelColumn} pt-0\">{$legend}</legend>";
+                $label = "<legend class=\"{$labelColumn}\">{$legend}</legend>";
             }
 
             $fieldString = "<div class=\"{$inputColumn}\">{$fieldString}</div>";
@@ -197,6 +197,8 @@ class FieldMaker
 
     public function getFieldErrors($column)
     {
+        $textError = config('form-maker.form.text-error', 'text-danger');
+
         $errors = [];
 
         if (session()->isStarted()) {
@@ -205,7 +207,7 @@ class FieldMaker
 
         if (!is_null($errors) && count($errors) > 0) {
             $message = implode(' ', $errors->get($column));
-            return "<div><p class=\"text-danger\">{$message}</p></div>";
+            return "<div><p class=\"{$textError}\">{$message}</p></div>";
         }
 
         return '';
