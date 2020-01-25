@@ -114,9 +114,14 @@ class HtmlForm extends Form
      */
     protected function formButtonsAndClose()
     {
-        $flexAlignment = (isset($this->buttons['cancel'])) ? 'between' : 'end';
+        $rowAlignment = config('form-maker.form.sections.row-alignment-end', 'd-flex justify-content-end');
 
-        $lastRowInForm = '<div class="row"><div class="col-md-12 d-flex justify-content-'.$flexAlignment.'">';
+        if (isset($this->buttons['cancel']))  {
+            $rowAlignment = config('form-maker.form.sections.row-alignment-between', 'd-flex justify-content-between');
+        }
+
+        $lastRowInForm = '<div class="'.config('form-maker.form.sections.row', 'row').'">
+            <div class="'.config('form-maker.form.sections.full-size-column', 'col-md-12').' '.$rowAlignment.'">';
 
         if (isset($this->buttons['cancel'])) {
             $lastRowInForm .= '<a class="'.$this->buttonClasses['cancel']
@@ -125,12 +130,12 @@ class HtmlForm extends Form
 
         if (!is_null($this->submitMethod)) {
             $lastRowInForm .= $this->field->button($this->buttons['submit'], [
-                'class' => 'btn btn-primary',
+                'class' => $this->buttonClasses['submit'],
                 'onclick' => "{$this->submitMethod}(event)"
             ]);
         } else {
             $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
-                'class' => 'btn btn-primary'
+                'class' => $this->buttonClasses['submit']
             ]);
         }
 
