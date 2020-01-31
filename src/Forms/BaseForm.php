@@ -59,12 +59,16 @@ class BaseForm extends HtmlForm
      *
      * @return \Grafite\FormMaker\Forms\BaseForm
      */
-    public function setRoute($name, $parameters = [], $absolute = true)
+    public function setRoute($name, $parameters = [])
     {
-        $this->route = [
-            $name,
-            $parameters
-        ];
+        if (is_array($parameters)) {
+            $this->route = array_merge([ $name ], $parameters);
+        } else {
+            $this->route = [
+                $name,
+                $parameters
+            ];
+        }
 
         return $this;
     }
