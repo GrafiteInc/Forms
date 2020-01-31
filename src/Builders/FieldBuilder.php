@@ -54,6 +54,11 @@ class FieldBuilder
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
+        if (isset($options['value']) && is_null($value)) {
+            $value = $options['value'];
+            unset($options['value']);
+        }
+
         return '<input '.$this->attributes($options).' name="'.$name.'" type="'.$type.'" value="'.e($value).'">';
     }
 
@@ -197,7 +202,7 @@ class FieldBuilder
      * Make a select.
      *
      * @param string $name
-     * @param mixed $value
+     * @param mixed $selected
      * @param array $options
      *
      * @return string
@@ -205,6 +210,10 @@ class FieldBuilder
     public function makeSelect($name, $selected, $options)
     {
         $selectOptions = '';
+
+        if (isset($options['value']) && is_null($selected)) {
+            $selected = $options['value'];
+        }
 
         if (isset($options['attributes']['multiple'])) {
             $name = $name.'[]';

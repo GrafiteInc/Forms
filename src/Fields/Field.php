@@ -90,6 +90,7 @@ class Field
                 'legend' => $options['legend'] ?? null,
                 'label' => $options['label'] ?? null,
                 'model' => $options['model'] ?? null,
+                'value' => $options['value'] ?? null,
                 'null_value' => $options['null_value'] ?? false,
                 'null_label' => $options['null_label'] ?? 'None',
                 'model_options' => [
