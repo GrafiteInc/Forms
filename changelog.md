@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.4.0] - 2020-01-31
+
+### Added
+- Ability to set values of Fields
+
+### Fixed
+- More bootstrap dependency removal
+
 ## [v2.3.1] - 2020-01-25
 
 ### Fixed
