@@ -10,6 +10,7 @@ return [
 
     'form' => [
         'group-class' => 'form-group',
+        'input-class' => 'form-control',
         'label-class' => 'control-label',
         'before_after_input_wrapper' => 'input-group',
         'text-error' => 'text-danger',

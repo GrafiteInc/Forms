@@ -58,7 +58,7 @@ class FieldMaker
         $fieldGroup = config('form-maker.form.group-class', 'form-group');
 
         if ($this->orientation === 'horizontal') {
-            $fieldGroup = $fieldGroup.' row';
+            $fieldGroup = $fieldGroup.' '.config('form-maker.form.sections.row-class', 'row');
         }
 
         $value = $this->getOldValue($column);
@@ -248,7 +248,7 @@ class FieldMaker
     private function parseOptions($name, $options)
     {
         $default = [
-            'class' => 'form-control',
+            'class' => config('form-maker.form.input-class', 'form-control'),
             'id' => ucwords(str_replace('_', ' ', $name)),
         ];
 
