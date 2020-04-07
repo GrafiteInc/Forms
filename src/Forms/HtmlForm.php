@@ -14,6 +14,20 @@ class HtmlForm extends Form
     public $orientation;
 
     /**
+     * The form class
+     *
+     * @var string
+     */
+    public $formClass = 'form';
+
+    /**
+     * The form delete class
+     *
+     * @var string
+     */
+    public $formDeleteClass = 'form-inline';
+
+    /**
      * Number of columns for the form
      *
      * @var integer

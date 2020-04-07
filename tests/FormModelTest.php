@@ -15,6 +15,9 @@ class UserForm extends ModelForm
         'submit' => 'Save'
     ];
 
+    public $formClass = 'formy-informer';
+    public $formDeleteClass = 'formy-deleter';
+
     public function fields()
     {
         return [
@@ -49,6 +52,8 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('http://localhost/users', $form);
         $this->assertStringContainsString('method="POST"', $form);
 
+        $this->assertStringContainsString('class="formy-informer"', $form);
+
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input  class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
@@ -68,6 +73,8 @@ class FormModelTest extends TestCase
         $user = new User();
 
         $form = $this->form->delete($user);
+
+        $this->assertStringContainsString('class="formy-deleter"', $form);
 
         $this->assertStringContainsString('http://localhost/users/3', $form);
         $this->assertStringContainsString('DELETE', $form);

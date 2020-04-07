@@ -123,6 +123,7 @@ class ModelForm extends HtmlForm
                 $this->routes['create']
             ],
             'files' => $this->hasFiles,
+            'class' => $this->formClass
         ]);
 
         $fields = $this->parseFields($this->fields());
@@ -144,10 +145,8 @@ class ModelForm extends HtmlForm
      */
     public function edit($model)
     {
-        $formClass = 'form';
-
         if ($this->orientation == 'horizontal') {
-            $formClass = 'form-horizontal';
+            $this->formClass = 'form-horizontal';
         }
 
         $this->html = $this->model($model, [
@@ -156,7 +155,7 @@ class ModelForm extends HtmlForm
             ],
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
-            'class' => $formClass,
+            'class' => $this->formClass,
         ]);
 
         $fields = $this->parseFields($this->fields());
@@ -183,7 +182,7 @@ class ModelForm extends HtmlForm
                 $this->routes['delete'], $model->id
             ],
             'method' => $this->methods['delete'],
-            'class' => 'form-inline'
+            'class' => $this->formDeleteClass,
         ]);
 
         $options = [

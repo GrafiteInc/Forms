@@ -80,17 +80,15 @@ class BaseForm extends HtmlForm
      */
     public function make()
     {
-        $formClass = 'form';
-
         if ($this->orientation == 'horizontal') {
-            $formClass = 'form-horizontal';
+            $this->formClass = 'form-horizontal';
         }
 
         $this->html = $this->open([
             'route' => $this->route,
             'method' => $this->method,
             'files' => $this->hasFiles,
-            'class' => $formClass,
+            'class' => $this->formClass,
         ]);
 
         $fields = $this->parseFields($this->fields());
