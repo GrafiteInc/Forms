@@ -21,9 +21,20 @@ class UserForm extends ModelForm
     public function fields()
     {
         return [
-            Name::make('name'),
+            Name::make('name', [
+                'value' => $this->getSpecialName()
+            ]),
             Email::make('email'),
         ];
+    }
+
+    public function getSpecialName()
+    {
+        if ($this->hasInstance()) {
+            return $this->instance->name.' - jedi master';
+        }
+
+        return null;
     }
 }
 

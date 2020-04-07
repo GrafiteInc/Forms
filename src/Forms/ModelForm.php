@@ -18,6 +18,13 @@ class ModelForm extends HtmlForm
     public $model;
 
     /**
+     * Model instance
+     *
+     * @var \Illuminate\Database\Eloquent\Model|null
+     */
+    public $instance = null;
+
+    /**
      * The database connection
      *
      * @var string
@@ -149,9 +156,11 @@ class ModelForm extends HtmlForm
             $this->formClass = 'form-horizontal';
         }
 
-        $this->html = $this->model($model, [
+        $this->instance = $model;
+
+        $this->html = $this->model($this->instance, [
             'route' => [
-                $this->routes['update'], $model->id
+                $this->routes['update'], $this->instance->id
             ],
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
@@ -163,7 +172,7 @@ class ModelForm extends HtmlForm
         $this->html .= $this->builder
             ->setConnection($this->connection)
             ->setColumns($this->columns)
-            ->fromObject($model, $fields);
+            ->fromObject($this->instance, $fields);
 
         $this->html .= $this->formButtonsAndClose();
 
@@ -177,9 +186,11 @@ class ModelForm extends HtmlForm
      */
     public function delete($model)
     {
-        $this->html = $this->model($model, [
+        $this->instance = $model;
+
+        $this->html = $this->model($this->instance, [
             'route' => [
-                $this->routes['delete'], $model->id
+                $this->routes['delete'], $this->instance->id
             ],
             'method' => $this->methods['delete'],
             'class' => $this->formDeleteClass,
@@ -206,6 +217,11 @@ class ModelForm extends HtmlForm
         $this->html .= $this->close();
 
         return $this;
+    }
+
+    public function hasInstance()
+    {
+        return !is_null($this->instance);
     }
 
     public function factoryFields()
