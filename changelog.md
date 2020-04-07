@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.4.4] - 2020-04-07
+
+### Added
+- Ability to access the model instance in a model form
+
 ## [v2.4.3] - 2020-04-07
 
 ### Added
