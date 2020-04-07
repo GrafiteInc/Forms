@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.4.3] - 2020-04-07
+
+### Added
+- The ability to set the form class as a property
+
 ## [v2.4.2] - 2020-03-04
 
 ### Added
