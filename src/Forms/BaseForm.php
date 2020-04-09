@@ -32,11 +32,6 @@ class BaseForm extends HtmlForm
         $this->url = app(UrlGenerator::class);
         $this->field = app(FieldBuilder::class);
         $this->session = session();
-        $this->fields = $this->fields();
-
-        if (empty($this->fields)) {
-            throw new Exception("Invalid fields", 1);
-        }
 
         $this->builder = app(FormMaker::class);
 
@@ -47,8 +42,6 @@ class BaseForm extends HtmlForm
         if (!is_null($this->orientation)) {
             $this->builder->setOrientation($this->orientation);
         }
-
-        $this->builder->setSections($this->setSections());
     }
 
     /**
@@ -83,6 +76,8 @@ class BaseForm extends HtmlForm
         if ($this->orientation == 'horizontal') {
             $this->formClass = 'form-horizontal';
         }
+
+        $this->builder->setSections($this->setSections());
 
         $this->html = $this->open([
             'route' => $this->route,

@@ -86,11 +86,6 @@ class ModelForm extends HtmlForm
         $this->url = app(UrlGenerator::class);
         $this->session = session();
         $this->field = app(FieldBuilder::class);
-        $this->fields = $this->fields();
-
-        if (empty($this->fields)) {
-            throw new Exception("Invalid fields", 1);
-        }
 
         if (is_null($this->routePrefix)) {
             throw new Exception("Route Prefix is required, for example: users", 1);
@@ -111,8 +106,6 @@ class ModelForm extends HtmlForm
             $this->builder->setOrientation($this->orientation);
         }
 
-        $this->builder->setSections($this->setSections());
-
         foreach ($this->routes as $key => $route) {
             $this->routes[$key] = "{$this->routePrefix}{$route}";
         }
@@ -125,6 +118,8 @@ class ModelForm extends HtmlForm
      */
     public function create()
     {
+        $this->builder->setSections($this->setSections());
+
         $this->html = $this->open([
             'route' => [
                 $this->routes['create']
@@ -152,11 +147,13 @@ class ModelForm extends HtmlForm
      */
     public function edit($model)
     {
+        $this->setInstance($model);
+
+        $this->builder->setSections($this->setSections());
+
         if ($this->orientation == 'horizontal') {
             $this->formClass = 'form-horizontal';
         }
-
-        $this->instance = $model;
 
         $this->html = $this->model($this->instance, [
             'route' => [
@@ -186,7 +183,9 @@ class ModelForm extends HtmlForm
      */
     public function delete($model)
     {
-        $this->instance = $model;
+        $this->setInstance($model);
+
+        $this->builder->setSections($this->setSections());
 
         $this->html = $this->model($this->instance, [
             'route' => [
@@ -224,11 +223,23 @@ class ModelForm extends HtmlForm
         return !is_null($this->instance);
     }
 
+    public function setInstance($model)
+    {
+        $this->instance = $model;
+
+        return $this;
+    }
+
+    public function getInstance()
+    {
+        return $this->instance;
+    }
+
     public function factoryFields()
     {
         $factory = '';
 
-        foreach ($this->fields as $settings) {
+        foreach ($this->fields() as $settings) {
             $field = array_keys($settings)[0];
             if (!is_null($settings[$field]['factory'])) {
                 $factory .= "\x20\x20\x20\x20\x20\x20\x20\x20'{$field}' => \$faker->{$settings[$field]['factory']},\n";
