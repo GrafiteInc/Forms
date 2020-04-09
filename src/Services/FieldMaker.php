@@ -142,7 +142,12 @@ class FieldMaker
 
     public function label($column, $columnConfig, $class = null, $errors)
     {
-        $label = ucfirst($column);
+        $label = Str::title($column);
+        $label = str_replace('_', ' ', $label);
+
+        if (Str::contains($label, '[')) {
+            $label = $this->getNestedFieldLabel($label)[0];
+        }
 
         if (is_null($class)) {
             $class = config('form-maker.form.label-class', 'control-label');
@@ -260,5 +265,12 @@ class FieldMaker
     private function stripArrayHandles($column)
     {
         return str_replace('[]', '', ucfirst($column));
+    }
+
+    private function getNestedFieldLabel($label)
+    {
+        preg_match_all("/\[([^\]]*)\]/", $label, $matches);
+
+        return $matches[1];
     }
 }

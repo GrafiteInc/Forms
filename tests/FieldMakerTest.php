@@ -157,7 +157,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('meta[created_at]', $config['meta[created_at]'], $entry);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Meta[created_at]">Meta[created_at]</label><input  class="form-control" id="Meta[created At]" name="meta[created_at]" type="text" value="1999-01-01"></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Meta[created_at]">Created At</label><input  class="form-control" id="Meta[created At]" name="meta[created_at]" type="text" value="1999-01-01"></div>', $field);
     }
 
     public function testCreateSpecialString()
