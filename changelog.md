@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.4.5] - 2020-04-09
+
+### Changed
+- Location of field validaiton
+- Improved model instance access
+
+### Fixed
+- Issue with attribute 'value' as array
+
 ## [v2.4.4] - 2020-04-07
 
 ### Added
