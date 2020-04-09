@@ -282,7 +282,14 @@ class FieldBuilder
 
         $fieldWrapper = "<div class=\"{$formClass}\">";
 
-        $fieldLabel = "<label class=\"form-check-label\">{$options['label']}</label>";
+        $label = Str::title($name);
+        $label = str_replace('_', ' ', $label);
+
+        if (Str::contains($label, '[')) {
+            $label = $this->getNestedFieldLabel($label)[0];
+        }
+
+        $fieldLabel = "<label class=\"form-check-label\">{$label}</label>";
 
         return $fieldWrapper.$field.$fieldLabel.'</div>';
     }
@@ -407,6 +414,13 @@ class FieldBuilder
         }
 
         return '';
+    }
+
+    private function getNestedFieldLabel($label)
+    {
+        preg_match_all("/\[([^\]]*)\]/", $label, $matches);
+
+        return $matches[1];
     }
 
     /**
