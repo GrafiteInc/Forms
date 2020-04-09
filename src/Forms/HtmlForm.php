@@ -68,6 +68,13 @@ class HtmlForm extends Form
     protected $html;
 
     /**
+     * Html string of rendered fields
+     *
+     * @var string
+     */
+    protected $renderedFields;
+
+    /**
      * Message for delete confirmation
      *
      * @var string
@@ -216,6 +223,18 @@ class HtmlForm extends Form
         }
 
         return $fields;
+    }
+
+    /**
+     * Set the html to the rendered fields
+     *
+     * @return void
+     */
+    public function renderedFields()
+    {
+        $this->html = $this->renderedFields;
+
+        return $this;
     }
 
     /**

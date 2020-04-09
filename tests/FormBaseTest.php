@@ -44,4 +44,14 @@ class FormBaseTest extends TestCase
 
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input  class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
     }
+
+    public function testMakeRenderedFields()
+    {
+        $form = $this->form->make()->renderedFields();
+
+        $this->assertStringNotContainsString('http://localhost/user/security', $form);
+        $this->assertStringNotContainsString('method="POST"', $form);
+
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input  class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
+    }
 }

@@ -88,9 +88,11 @@ class BaseForm extends HtmlForm
 
         $fields = $this->parseFields($this->fields());
 
-        $this->html .= $this->builder
+        $this->renderedFields = $this->builder
             ->setColumns($this->columns)
             ->fromFields($fields);
+
+        $this->html .= $this->renderedFields;
 
         $this->html .= $this->formButtonsAndClose();
 
