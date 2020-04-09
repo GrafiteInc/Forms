@@ -2,6 +2,7 @@
 
 namespace Grafite\FormMaker\Forms;
 
+use Exception;
 use Grafite\FormMaker\Forms\Form;
 
 class HtmlForm extends Form
@@ -204,6 +205,10 @@ class HtmlForm extends Form
     protected function parseFields($formFields)
     {
         $fields = [];
+
+        if (empty($formFields)) {
+            throw new Exception("Invalid fields", 1);
+        }
 
         foreach ($formFields as $config) {
             $key = array_key_first($config);
