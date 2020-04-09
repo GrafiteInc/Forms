@@ -282,9 +282,12 @@ class FieldBuilder
 
         $fieldWrapper = "<div class=\"{$formClass}\">";
 
-        $label = Str::title($name);
-        $label = str_replace('_', ' ', $label);
+        $label = $options['label'];
+        if (empty($label)) {
+            $label = Str::title($name);
+        }
 
+        $label = str_replace('_', ' ', $label);
         if (Str::contains($label, '[')) {
             $label = $this->getNestedFieldLabel($label)[0];
         }
