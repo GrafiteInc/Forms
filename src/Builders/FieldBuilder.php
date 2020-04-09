@@ -210,8 +210,13 @@ class FieldBuilder
     public function makeSelect($name, $selected, $options)
     {
         $selectOptions = '';
+        unset($options['attributes']['value']);
 
         if (isset($options['value']) && is_null($selected)) {
+            $selected = $options['value'];
+        }
+
+        if (isset($options['value']) && !is_null($selected)) {
             $selected = $options['value'];
         }
 
