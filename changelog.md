@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.5.0] - 2020-04-09
+
+### Added
+- Method for accessing rendered fields without buttons and form wrappers
+
+### Fixed
+- Issue with no label on checkboxes
+
 ## [v2.4.6] - 2020-04-09
 
 ### Changed
