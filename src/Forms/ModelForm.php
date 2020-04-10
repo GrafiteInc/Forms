@@ -130,12 +130,12 @@ class ModelForm extends HtmlForm
 
         $fields = $this->parseFields($this->fields());
 
-        $this->renderedFeilds = $this->builder
+        $this->renderedFields = $this->builder
             ->setConnection($this->connection)
             ->setColumns($this->columns)
             ->fromTable($this->modelClass->getTable(), $fields);
 
-        $this->html .= $this->renderedFeilds;
+        $this->html .= $this->renderedFields;
 
         $this->html .= $this->formButtonsAndClose();
 

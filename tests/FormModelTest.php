@@ -91,7 +91,7 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('DELETE', $form);
     }
 
-    public function testRenderedFields()
+    public function testRenderedFieldsForEdit()
     {
         $user = new User();
 
@@ -99,6 +99,16 @@ class FormModelTest extends TestCase
 
         $this->assertStringNotContainsString('http://localhost/users/3', $form);
         $this->assertStringNotContainsString('PUT', $form);
+
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input  class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
+    }
+
+    public function testRenderedFieldsForCreate()
+    {
+        $form = $this->form->create()->renderedFields();
+
+        $this->assertStringNotContainsString('http://localhost/users', $form);
+        $this->assertStringNotContainsString('POST', $form);
 
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input  class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
