@@ -32,7 +32,7 @@ class MakeFormFactoryCommand extends Command
         $form = app($form);
         $fields = $form->factoryFields();
 
-        $fileName = ucfirst($form->model).'Factory.php';
+        $fileName = ucfirst($form->model) . 'Factory.php';
 
         if (!is_dir(base_path('database'))) {
             mkdir(base_path('database'));
@@ -42,18 +42,18 @@ class MakeFormFactoryCommand extends Command
             mkdir(base_path('database/factories/'));
         }
 
-        $file = base_path('database/factories/'.$fileName);
-        $stub = __DIR__.'/stubs/factory.php';
+        $file = base_path('database/factories/' . $fileName);
+        $stub = __DIR__ . '/stubs/factory.php';
 
         $contents = file_get_contents($stub);
 
-        $contents = str_replace('DummyClass', get_class($form->modelClass).'::class', $contents);
+        $contents = str_replace('DummyClass', get_class($form->modelClass) . '::class', $contents);
         $contents = str_replace('DummyFields', $fields, $contents);
 
         if (!file_exists($file)) {
-            file_put_contents(base_path('database/factories/'.$fileName), $contents);
+            file_put_contents(base_path('database/factories/' . $fileName), $contents);
         }
 
-        $this->info('You now have a factory for '.$form->model);
+        $this->info('You now have a factory for ' . $form->model);
     }
 }

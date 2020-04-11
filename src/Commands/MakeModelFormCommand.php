@@ -49,7 +49,6 @@ class MakeModelFormCommand extends BaseCommand
         return $this->replaceNamespace($stub, $name)
             ->replaceOtherVariables($stub, ['DummyModel', 'DummyPrefix'], [$this->modelName, Str::plural(strtolower($this->routePrefix))])
             ->replaceClass($stub, $name);
-
     }
 
     /**

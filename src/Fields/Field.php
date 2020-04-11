@@ -153,8 +153,8 @@ class Field
         }
 
         if (isset($options[$key])) {
-            return '<div class="input-group-'.$class.'">
-                        <span class="input-group-text">'.$options[$key].'</span>
+            return '<div class="input-group-' . $class . '">
+                        <span class="input-group-text">' . $options[$key] . '</span>
                     </div>';
         }
 

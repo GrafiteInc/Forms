@@ -257,18 +257,18 @@ class FormMaker
         $fullSizeColumn = config('form-maker.sections.full-size-column', 'col-md-12');
         $headerSpacing = config('form-maker.sections.header-spacing', 'mt-2 mb-2');
 
-        $class = $columnBase.(12 / $columns);
+        $class = $columnBase . (12 / $columns);
 
         if (!is_null($label)) {
-            $newFormBuild[] = '<div class="'.$rowClass.'">';
-            $newFormBuild[] = '<div class="'.$fullSizeColumn.'"><h4 class="'.$headerSpacing.'">'.$label.'</h4><hr></div>';
+            $newFormBuild[] = '<div class="' . $rowClass . '">';
+            $newFormBuild[] = '<div class="' . $fullSizeColumn . '"><h4 class="' . $headerSpacing . '">' . $label . '</h4><hr></div>';
             $newFormBuild[] = '</div>';
         }
 
         foreach ($formChunks as $chunk) {
-            $newFormBuild[] = '<div class="'.$rowClass.'">';
+            $newFormBuild[] = '<div class="' . $rowClass . '">';
             foreach ($chunk as $element) {
-                $newFormBuild[] = '<div class="'.$class.'">';
+                $newFormBuild[] = '<div class="' . $class . '">';
                 $newFormBuild[] = $element;
                 $newFormBuild[] = '</div>';
             }
@@ -306,8 +306,6 @@ class FormMaker
         }
 
         return implode("", $formSections);
-
-
     }
 
     /**
@@ -331,7 +329,7 @@ class FormMaker
         foreach ($tableColumns as $column) {
             if (!in_array($column, $badColumns)) {
                 $type = DB::connection($this->connection)
-                    ->getDoctrineColumn(DB::connection($this->connection)->getTablePrefix().$table, $column)
+                    ->getDoctrineColumn(DB::connection($this->connection)->getTablePrefix() . $table, $column)
                     ->getType()->getName();
                 $tableTypeColumns[$column]['type'] = $type;
             }

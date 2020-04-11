@@ -58,7 +58,7 @@ class FieldMaker
         $fieldGroup = config('form-maker.form.group-class', 'form-group');
 
         if ($this->orientation === 'horizontal') {
-            $fieldGroup = $fieldGroup.' '.config('form-maker.form.sections.row-class', 'row');
+            $fieldGroup = $fieldGroup . ' ' . config('form-maker.form.sections.row-class', 'row');
         }
 
         $value = $this->getOldValue($column);
@@ -81,7 +81,7 @@ class FieldMaker
         }
 
         if (in_array($columnConfig['type'], $this->special)) {
-            $method = 'make'.ucfirst(Str::camel($columnConfig['type']));
+            $method = 'make' . ucfirst(Str::camel($columnConfig['type']));
             $field = $this->builder->$method(
                 $column,
                 $value,
@@ -96,7 +96,8 @@ class FieldMaker
                 'label',
                 'field',
                 'errors',
-                'options'))->render();
+                'options'
+            ))->render();
         }
 
         if (in_array($columnConfig['type'], $this->specialSelect)) {
@@ -121,7 +122,7 @@ class FieldMaker
         $before = $this->before($columnConfig);
         $after = $this->after($columnConfig);
 
-        $fieldString = $before.$field.$after;
+        $fieldString = $before . $field . $after;
 
         if ($this->orientation === 'horizontal') {
             $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label pt-0');
@@ -158,7 +159,7 @@ class FieldMaker
         }
 
         if (!empty($errors)) {
-            $class = $class.' '.config('form-maker.form.error-class', 'has-error');
+            $class = $class . ' ' . config('form-maker.form.error-class', 'has-error');
         }
 
         $id = $columnConfig['attributes']['id'] ?? $this->stripArrayHandles($column);
@@ -224,7 +225,7 @@ class FieldMaker
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
             $class = config('form-maker.form.before_after_input_wrapper', 'input-group');
-            $prefix = '<div class="'.$class.'">'.$columnConfig['before'];
+            $prefix = '<div class="' . $class . '">' . $columnConfig['before'];
         }
 
         return $prefix;
@@ -235,7 +236,7 @@ class FieldMaker
         $postfix = '';
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
-            $postfix = $columnConfig['after'].'</div>';
+            $postfix = $columnConfig['after'] . '</div>';
         }
 
         return $postfix;

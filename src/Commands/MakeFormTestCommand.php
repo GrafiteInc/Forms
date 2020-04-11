@@ -32,7 +32,7 @@ class MakeFormTestCommand extends Command
         $form = app($form);
         $fields = $form->factoryFields();
 
-        $fileName = ucfirst($form->model).'Test.php';
+        $fileName = ucfirst($form->model) . 'Test.php';
 
         if (!is_dir(base_path('tests'))) {
             mkdir(base_path('tests'));
@@ -42,12 +42,12 @@ class MakeFormTestCommand extends Command
             mkdir(base_path('tests/Feature/'));
         }
 
-        $file = base_path('tests/Feature/'.$fileName);
-        $stub = __DIR__.'/stubs/test.php';
+        $file = base_path('tests/Feature/' . $fileName);
+        $stub = __DIR__ . '/stubs/test.php';
 
         $contents = file_get_contents($stub);
 
-        $contents = str_replace('DummyTest', ucfirst($form->model).'Test', $contents);
+        $contents = str_replace('DummyTest', ucfirst($form->model) . 'Test', $contents);
         $contents = str_replace('DummyModel', get_class($form->modelClass), $contents);
         $contents = str_replace('DummyRoutePrefix', $form->routePrefix, $contents);
         $contents = str_replace('DummyRouteCreate', $form->routes['create'], $contents);
@@ -55,9 +55,9 @@ class MakeFormTestCommand extends Command
         $contents = str_replace('DummyRouteDelete', $form->routes['delete'], $contents);
 
         if (!file_exists($file)) {
-            file_put_contents(base_path('tests/Feature/'.$fileName), $contents);
+            file_put_contents(base_path('tests/Feature/' . $fileName), $contents);
         }
 
-        $this->info('You now have a test for '.$form->model);
+        $this->info('You now have a test for ' . $form->model);
     }
 }

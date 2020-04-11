@@ -1,8 +1,8 @@
 <?php
 
-use Grafite\FormMaker\Fields\Password;
-use Illuminate\Support\Facades\Route;
 use Grafite\FormMaker\Forms\BaseForm;
+use Illuminate\Support\Facades\Route;
+use Grafite\FormMaker\Fields\Password;
 
 class UserSecurityForm extends BaseForm
 {

@@ -24,14 +24,6 @@ class TestCase extends Orchestra\Testbench\TestCase
         ];
     }
 
-    protected function getPackageAliases($app)
-    {
-        return [
-            'FormMaker' => \Grafite\FormMaker\Facades\FormMaker::class,
-            'InputMaker' => \Grafite\FormMaker\Facades\InputMaker::class,
-        ];
-    }
-
     public function setUp(): void
     {
         parent::setUp();
