@@ -98,11 +98,11 @@ class Form
         $this->html = $this->open([
             'route' => $route,
             'method' => $method,
-            'class' => 'form d-inline'
+            'class' => config('form-maker.form.inline-class', 'form d-inline')
         ]);
 
         $options = array_merge([
-            'class' => 'btn btn-primary'
+            'class' => config('form-maker.buttons.submit', 'btn btn-primary')
         ], $options);
 
         if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {
@@ -271,9 +271,7 @@ class Form
 
         if (isset($options['route'])) {
             return $this->getRouteAction($options['route']);
-        }
-
-        elseif (isset($options['action'])) {
+        } elseif (isset($options['action'])) {
             return $this->getControllerAction($options['action']);
         }
 

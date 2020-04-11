@@ -29,6 +29,8 @@ class BaseForm extends HtmlForm
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->url = app(UrlGenerator::class);
         $this->field = app(FieldBuilder::class);
         $this->session = session();
@@ -74,7 +76,9 @@ class BaseForm extends HtmlForm
     public function make()
     {
         if ($this->orientation == 'horizontal') {
-            $this->formClass = 'form-horizontal';
+            if ($this->formClass === config('form-maker.form.horizontal-class')) {
+                $this->formClass = config('form-maker.form.horizontal-class', 'form-horizontal');
+            }
         }
 
         $this->builder->setSections($this->setSections());

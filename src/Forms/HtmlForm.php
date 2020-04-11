@@ -19,14 +19,14 @@ class HtmlForm extends Form
      *
      * @var string
      */
-    public $formClass = 'form';
+    public $formClass;
 
     /**
      * The form delete class
      *
      * @var string
      */
-    public $formDeleteClass = 'form-inline';
+    public $formDeleteClass;
 
     /**
      * Number of columns for the form
@@ -120,13 +120,23 @@ class HtmlForm extends Form
      * @var array
      */
     public $buttonClasses = [
-        'submit' => 'btn btn-primary',
-        'cancel' => 'btn btn-secondary',
+        'submit' => null,
+        'cancel' => null,
     ];
 
     public function __construct()
     {
         parent::__construct();
+
+        $defaultButtonClasses = [
+            'submit' => config('form-maker.buttons.submit', 'btn btn-primary'),
+            'cancel' => config('form-maker.buttons.cancel', 'btn btn-secondary'),
+        ];
+
+        $this->buttonClasses = array_merge($defaultButtonClasses, $this->buttonClasses);
+
+        $this->formClass = $this->formClass ?? config('form-maker.form.class', 'form');
+        $this->formDeleteClass = $this->formDeleteClass ?? config('form-maker.form.delete-class', 'form-inline');
     }
 
     /**
@@ -138,16 +148,19 @@ class HtmlForm extends Form
     {
         $rowAlignment = config('form-maker.form.sections.row-alignment-end', 'd-flex justify-content-end');
 
-        if (isset($this->buttons['cancel']))  {
+        if (isset($this->buttons['cancel'])) {
             $rowAlignment = config('form-maker.form.sections.row-alignment-between', 'd-flex justify-content-between');
         }
 
-        $lastRowInForm = '<div class="'.config('form-maker.form.sections.row', 'row').'">
-            <div class="'.config('form-maker.form.sections.full-size-column', 'col-md-12').' '.$rowAlignment.'">';
+        $formRow = config('form-maker.form.sections.row', 'row');
+        $formFullSizeColumn = config('form-maker.form.sections.full-size-column', 'col-md-12');
+
+        $lastRowInForm = '<div class="' . $formRow . '">
+            <div class="' . $formFullSizeColumn . ' ' . $rowAlignment . '">';
 
         if (isset($this->buttons['cancel'])) {
-            $lastRowInForm .= '<a class="'.$this->buttonClasses['cancel']
-                .'" href="'.url($this->buttonLinks['cancel']).'">'.$this->buttons['cancel'].'</a>';
+            $lastRowInForm .= '<a class="' . $this->buttonClasses['cancel']
+                . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
         }
 
         if (!is_null($this->submitMethod)) {
@@ -161,7 +174,7 @@ class HtmlForm extends Form
             ]);
         }
 
-        $lastRowInForm .= '</div></div>'.$this->close();
+        $lastRowInForm .= '</div></div>' . $this->close();
 
         return $lastRowInForm;
     }

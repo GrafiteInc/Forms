@@ -59,7 +59,7 @@ class FieldBuilder
             unset($options['value']);
         }
 
-        return '<input '.$this->attributes($options).' name="'.$name.'" type="'.$type.'" value="'.e($value).'">';
+        return '<input ' . $this->attributes($options) . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
     }
 
     /**
@@ -78,7 +78,7 @@ class FieldBuilder
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
-        return '<'.$type.' '.$this->attributes($options).' name="'.$name.'" value="'.e($value).'"></'.$type.'>';
+        return '<' . $type . ' ' . $this->attributes($options) . ' name="' . $name . '" value="' . e($value) . '"></' . $type . '>';
     }
 
     /**
@@ -142,14 +142,21 @@ class FieldBuilder
     public function makeCustomFile($name, $value, $options)
     {
         if (isset($options['multiple'])) {
-            $name = $name.'[]';
+            $name = $name . '[]';
         }
 
         unset($options['class']);
 
-        $label = '<label class="custom-file-label" for="'.$options['attributes']['id'].'">Choose file</label>';
+        $label = '<label class="custom-file-label" for="' . $options['attributes']['id'] . '">Choose file</label>';
+        $customFileClass = config('form-maker.forms.custom-file-input-class', 'custom-file-input');
+        $customFileWrapperClass = config('form-maker.forms.custom-file-wrapper-class', 'custom-file');
+        $attributes = $this->attributes($options['attributes']);
 
-        return '<div class="custom-file"><input '.$this->attributes($options['attributes']).' class="custom-file-input" type="file" name="'.$name.'">'.$label.'</div>';
+        $input = '<div class="' . $customFileWrapperClass . '">';
+        $input .= '<input ' . $attributes . ' class="' . $customFileClass . '" type="file" name="' . $name . '">';
+        $input .= $label . '</div>';
+
+        return $input;
     }
 
     /**
@@ -163,7 +170,9 @@ class FieldBuilder
      */
     public function makeTextarea($name, $value, $options)
     {
-        return '<textarea '.$this->attributes($options['attributes']).' name="'.$name.'">'.e($value).'</textarea>';
+        $attributes = $this->attributes($options['attributes']);
+
+        return '<textarea ' . $attributes . ' name="' . $name . '">' . e($value) . '</textarea>';
     }
 
     /**
@@ -221,7 +230,7 @@ class FieldBuilder
         }
 
         if (isset($options['attributes']['multiple'])) {
-            $name = $name.'[]';
+            $name = $name . '[]';
         }
 
         if (isset($options['null_value']) && $options['null_value']) {
@@ -233,7 +242,8 @@ class FieldBuilder
         foreach ($options['options'] as $key => $value) {
             $selectedValue = '';
 
-            if (isset($options['attributes']['multiple'])
+            if (
+                isset($options['attributes']['multiple'])
                 && (is_object($selected) || is_array($selected))
             ) {
                 if (in_array($value, collect($selected)->toArray())) {
@@ -245,10 +255,12 @@ class FieldBuilder
                 $selectedValue = 'selected';
             }
 
-            $selectOptions .= '<option value="'.$value.'" '.$selectedValue.'>'.$key.'</option>';
+            $selectOptions .= '<option value="' . $value . '" ' . $selectedValue . '>' . $key . '</option>';
         }
 
-        return '<select '.$this->attributes($options['attributes']).' name="'.$name.'">'.$selectOptions.'</select>';
+        $attributes = $this->attributes($options['attributes']);
+
+        return '<select ' . $attributes . ' name="' . $name . '">' . $selectOptions . '</select>';
     }
 
     /**
@@ -262,7 +274,7 @@ class FieldBuilder
      */
     public function makeCheckInput($name, $value, $options)
     {
-        $options['attributes']['class'] = 'form-check-input';
+        $options['attributes']['class'] = config('form-maker.form.check-input-class', 'form-check-input');
 
         if (Str::contains($options['type'], '-inline')) {
             $options['check-inline'] = true;
@@ -274,10 +286,10 @@ class FieldBuilder
 
         $field = $this->makeCheckbox($name, $value, $options);
 
-        $formClass = 'form-check';
+        $formClass = config('form-maker.form.check-class', 'form-check');
 
         if (isset($options['check-inline'])) {
-            $formClass = 'form-check form-check-inline';
+            $formClass = config('form-maker.form.check-inline-class', 'form-check form-check-inline');
         }
 
         $fieldWrapper = "<div class=\"{$formClass}\">";
@@ -292,9 +304,11 @@ class FieldBuilder
             $label = $this->getNestedFieldLabel($label)[0];
         }
 
-        $fieldLabel = "<label class=\"form-check-label\">{$label}</label>";
+        $labelClass = config('form-maker.form.label-check-class', 'form-check-label');
 
-        return $fieldWrapper.$field.$fieldLabel.'</div>';
+        $fieldLabel = "<label class=\"{$labelClass}\">{$label}</label>";
+
+        return $fieldWrapper . $field . $fieldLabel . '</div>';
     }
 
     /**
@@ -309,8 +323,9 @@ class FieldBuilder
     public function makeCheckbox($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
+        $attributes = $this->attributes($options['attributes']);
 
-        return '<input '.$this->attributes($options['attributes']).' type="checkbox" name="'.$name.'" '.$checked.'>';
+        return '<input ' . $attributes . ' type="checkbox" name="' . $name . '" ' . $checked . '>';
     }
 
     /**
@@ -325,8 +340,9 @@ class FieldBuilder
     public function makeRadio($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
+        $attributes = $this->attributes($options['attributes']);
 
-        return '<input '.$this->attributes($options['attributes']).' type="radio" name="'.$name.'" '.$checked.'>';
+        return '<input ' . $attributes . ' type="radio" name="' . $name . '" ' . $checked . '>';
     }
 
     /**

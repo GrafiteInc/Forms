@@ -83,6 +83,8 @@ class ModelForm extends HtmlForm
      */
     public function __construct()
     {
+        parent::__construct();
+
         $this->url = app(UrlGenerator::class);
         $this->session = session();
         $this->field = app(FieldBuilder::class);
@@ -120,6 +122,12 @@ class ModelForm extends HtmlForm
     {
         $this->builder->setSections($this->setSections());
 
+        if ($this->orientation == 'horizontal') {
+            if ($this->formClass === config('form-maker.form.horizontal-class')) {
+                $this->formClass = config('form-maker.form.horizontal-class', 'form-horizontal');
+            }
+        }
+
         $this->html = $this->open([
             'route' => [
                 $this->routes['create']
@@ -154,7 +162,9 @@ class ModelForm extends HtmlForm
         $this->builder->setSections($this->setSections());
 
         if ($this->orientation == 'horizontal') {
-            $this->formClass = 'form-horizontal';
+            if ($this->formClass === config('form-maker.form.horizontal-class')) {
+                $this->formClass = config('form-maker.form.horizontal-class', 'form-horizontal');
+            }
         }
 
         $this->html = $this->model($this->instance, [
