@@ -147,9 +147,11 @@ class FieldBuilder
 
         unset($options['class']);
 
-        $label = '<label class="custom-file-label" for="' . $options['attributes']['id'] . '">Choose file</label>';
+        $fileLabel = config('form-maker.forms.custom-file-label', 'custom-file-label');
         $customFileClass = config('form-maker.forms.custom-file-input-class', 'custom-file-input');
         $customFileWrapperClass = config('form-maker.forms.custom-file-wrapper-class', 'custom-file');
+
+        $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">Choose file</label>';
         $attributes = $this->attributes($options['attributes']);
 
         $input = '<div class="' . $customFileWrapperClass . '">';

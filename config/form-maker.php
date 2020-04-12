@@ -29,6 +29,7 @@ return [
 
         'check-input-class' => 'form-check-input',
         'check-inline-class' => 'form-check form-check-inline',
+        'custom-file-label' => 'custom-file-label',
         'custom-file-input-class' => 'custom-file-input',
         'custom-file-wrapper-class' => 'custom-file',
 
