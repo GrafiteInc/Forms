@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.6.0] - 2020-04-12
+
+### Added
+- Config options for all remaining classes
+
+### Changed
+- Code formating is now PSR12
+
+### Fixed
+- Issue with custom form classes and horizontal
+
 ## [v2.5.1] - 2020-04-10
 
 ### Fixed
