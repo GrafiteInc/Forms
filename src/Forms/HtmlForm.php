@@ -121,6 +121,7 @@ class HtmlForm extends Form
      */
     public $buttonClasses = [
         'submit' => null,
+        'delete' => null,
         'cancel' => null,
     ];
 
@@ -128,12 +129,13 @@ class HtmlForm extends Form
     {
         parent::__construct();
 
-        $defaultButtonClasses = [
-            'submit' => config('form-maker.buttons.submit', 'btn btn-primary'),
-            'cancel' => config('form-maker.buttons.cancel', 'btn btn-secondary'),
+        $buttonClasses = [
+            'submit' => $this->buttonClasses['submit'] ?? config('form-maker.buttons.submit', 'btn btn-primary'),
+            'delete' => $this->buttonClasses['delete'] ?? config('form-maker.buttons.delete', 'btn btn-danger'),
+            'cancel' => $this->buttonClasses['cancel'] ?? config('form-maker.buttons.cancel', 'btn btn-secondary'),
         ];
 
-        $this->buttonClasses = array_merge($defaultButtonClasses, $this->buttonClasses);
+        $this->buttonClasses = $buttonClasses;
 
         $this->formClass = $this->formClass ?? config('form-maker.form.class', 'form');
         $this->formDeleteClass = $this->formDeleteClass ?? config('form-maker.form.delete-class', 'form-inline');

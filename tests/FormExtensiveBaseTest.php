@@ -36,10 +36,11 @@ class UserSampleCreateForm extends BaseForm
     ];
 
     public $buttonClasses = [
-        'submit' => 'superman'
+        'submit' => 'superman',
     ];
 
     public $formClass = 'batman-horizontal';
+
     public $orientation = 'horizontal';
 
     public function fields()

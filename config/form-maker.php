@@ -10,6 +10,7 @@ return [
 
     'buttons' => [
         'submit' => 'btn btn-primary',
+        'delete' => 'btn btn-danger',
         'cancel' => 'btn btn-secondary',
     ],
 

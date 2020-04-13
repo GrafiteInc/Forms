@@ -61,17 +61,6 @@ class ModelForm extends HtmlForm
     ];
 
     /**
-     * Form button classes
-     *
-     * @var array
-     */
-    public $buttonClasses = [
-        'submit' => 'btn btn-primary',
-        'cancel' => 'btn btn-secondary',
-        'delete' => 'btn btn-danger',
-    ];
-
-    /**
      * The field builder
      *
      * @var \Grafite\FormMaker\Builders\FieldBuilder

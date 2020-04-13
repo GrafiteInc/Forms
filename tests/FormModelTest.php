@@ -15,8 +15,14 @@ class UserForm extends ModelForm
         'submit' => 'Save'
     ];
 
+    public $buttonClasses = [
+        'delete' => 'deleter-button',
+        'submit' => 'submit-button',
+    ];
+
     public $formClass = 'formy-informer';
     public $formDeleteClass = 'formy-deleter';
+
 
     public function fields()
     {
@@ -77,6 +83,7 @@ class FormModelTest extends TestCase
 
         $this->assertStringContainsString('http://localhost/users/3', $form);
         $this->assertStringContainsString('PUT', $form);
+        $this->assertStringContainsString('class="submit-button', $form);
     }
 
     public function testDelete()
@@ -89,6 +96,7 @@ class FormModelTest extends TestCase
 
         $this->assertStringContainsString('http://localhost/users/3', $form);
         $this->assertStringContainsString('DELETE', $form);
+        $this->assertStringContainsString('class="deleter-button', $form);
     }
 
     public function testRenderedFieldsForEdit()

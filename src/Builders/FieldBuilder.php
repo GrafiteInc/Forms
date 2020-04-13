@@ -297,7 +297,8 @@ class FieldBuilder
         $fieldWrapper = "<div class=\"{$formClass}\">";
 
         $label = $options['label'];
-        if (empty($label)) {
+
+        if (!isset($options['label']) || $label === '') {
             $label = Str::title($name);
         }
 
