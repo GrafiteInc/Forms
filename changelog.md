@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.6.1] - 2020-04-13
+
+### Fixed
+- Issue with missing default button class
+- Issue with default classes
+- Issue with false labels
+
 ## [v2.6.0] - 2020-04-12
 
 ### Added
