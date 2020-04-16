@@ -4,7 +4,7 @@ namespace Grafite\FormMaker\Fields;
 
 use Grafite\FormMaker\Fields\Field;
 
-class Textarea extends Field
+class TextArea extends Field
 {
     protected static function getType()
     {
