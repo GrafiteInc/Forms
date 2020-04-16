@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.6.2] - 2020-04-16
+
+### Fixed
+- Issue with improper case
+
 ## [v2.6.1] - 2020-04-13
 
 ### Fixed
