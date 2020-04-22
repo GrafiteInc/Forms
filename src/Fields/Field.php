@@ -104,6 +104,11 @@ class Field
                 'view' => static::getView() ?? null,
                 'attributes' => static::parseAttributes($options) ?? [],
                 'factory' => static::getFactory(),
+                'assets' => [
+                    'js' => static::js(ucfirst($name), $options) ?? null,
+                    'scripts' => static::scripts($options) ?? null,
+                    'stylesheets' => static::stylesheets($options) ?? null,
+                ]
             ]
         ];
     }
@@ -168,6 +173,21 @@ class Field
      * @return mixed
      */
     protected static function getView()
+    {
+        return null;
+    }
+
+    protected static function stylesheets($options)
+    {
+        return [];
+    }
+
+    protected static function scripts($options)
+    {
+        return [];
+    }
+
+    protected static function js($id, $options)
     {
         return null;
     }

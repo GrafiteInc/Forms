@@ -5,6 +5,7 @@ namespace Grafite\FormMaker\Services;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
 use Grafite\FormMaker\Services\FieldMaker;
+use Grafite\FormMaker\Services\FormAssets;
 
 /**
  * FormMaker helper to make table and object form mapping easy.
@@ -24,6 +25,7 @@ class FormMaker
     public function __construct()
     {
         $this->fieldMaker = app(FieldMaker::class);
+        $this->formAssets = app(FormAssets::class);
         $this->connection = config('database.default');
 
         if (is_null($this->orientation)) {
@@ -102,6 +104,8 @@ class FormMaker
                 $column = $columnConfig;
             }
 
+            $this->setAssets($columnConfig);
+
             $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
 
@@ -125,6 +129,8 @@ class FormMaker
                 $column = array_key_first($columnConfig);
                 $columnConfig = $columnConfig[$column];
             }
+
+            $this->setAssets($columnConfig);
 
             $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
@@ -158,6 +164,8 @@ class FormMaker
                     'type' => 'hidden'
                 ];
             }
+
+            $this->setAssets($columnConfig);
 
             $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig, $object);
         }
@@ -207,6 +215,21 @@ class FormMaker
                 return $this->buildColumnForm($formBuild, null);
             default:
                 return implode("", $formBuild);
+        }
+    }
+
+    /**
+     * Set the assets of the form for render
+     *
+     * @param array $columnConfig
+     * @return void
+     */
+    public function setAssets($columnConfig)
+    {
+        if (isset($columnConfig['assets'])) {
+            $this->formAssets->addJs($columnConfig['assets']['js'] ?? '');
+            $this->formAssets->addScripts($columnConfig['assets']['scripts'] ?? []);
+            $this->formAssets->addStylesheets($columnConfig['assets']['stylesheets'] ?? []);
         }
     }
 
