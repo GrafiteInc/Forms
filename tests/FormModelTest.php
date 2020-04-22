@@ -2,6 +2,7 @@
 
 use Grafite\FormMaker\Fields\Name;
 use Grafite\FormMaker\Fields\Email;
+use Grafite\FormMaker\Fields\Quill;
 use Illuminate\Support\Facades\Route;
 use Grafite\FormMaker\Forms\ModelForm;
 
@@ -23,7 +24,6 @@ class UserForm extends ModelForm
     public $formClass = 'formy-informer';
     public $formDeleteClass = 'formy-deleter';
 
-
     public function fields()
     {
         return [
@@ -31,6 +31,7 @@ class UserForm extends ModelForm
                 'value' => $this->getSpecialName()
             ]),
             Email::make('email'),
+            Quill::make('history')
         ];
     }
 
