@@ -196,15 +196,15 @@ class FormMaker
             case 1:
                 return implode("", $formBuild);
             case 2:
-                return $this->buildBootstrapColumnForm($formBuild, 2);
+                return $this->buildColumnForm($formBuild, 2);
             case 3:
-                return $this->buildBootstrapColumnForm($formBuild, 3);
+                return $this->buildColumnForm($formBuild, 3);
             case 4:
-                return $this->buildBootstrapColumnForm($formBuild, 4);
+                return $this->buildColumnForm($formBuild, 4);
             case 6:
-                return $this->buildBootstrapColumnForm($formBuild, 6);
+                return $this->buildColumnForm($formBuild, 6);
             case 'sections':
-                return $this->buildBootstrapColumnForm($formBuild, null);
+                return $this->buildColumnForm($formBuild, null);
             default:
                 return implode("", $formBuild);
         }
@@ -285,7 +285,7 @@ class FormMaker
      * @param  int $columns
      * @return string
      */
-    private function buildBootstrapColumnForm($formBuild, $columns)
+    private function buildColumnForm($formBuild, $columns)
     {
         $formSections = [];
 
