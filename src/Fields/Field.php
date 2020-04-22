@@ -146,15 +146,16 @@ class Field
      */
     protected static function getWrappers($options, $key)
     {
-        $class = 'append';
+        $groupTextClass = config('formmaker.form.input-group-text', 'input-group-text');
+        $class = config('formmaker.form.input-group-after', 'input-group-append');
 
         if ($key === 'before') {
-            $class = 'prepend';
+            $class = config('formmaker.form.input-group-before', 'input-group-prepend');
         }
 
         if (isset($options[$key])) {
-            return '<div class="input-group-' . $class . '">
-                        <span class="input-group-text">' . $options[$key] . '</span>
+            return '<div class="' . $class . '">
+                        <span class="' . $groupTextClass . '">' . $options[$key] . '</span>
                     </div>';
         }
 

@@ -34,6 +34,10 @@ return [
         'custom-file-input-class' => 'custom-file-input',
         'custom-file-wrapper-class' => 'custom-file',
 
+        'input-group-text' => 'input-group-text',
+        'input-group-before' => 'input-group-prepend',
+        'input-group-after' => 'input-group-append',
+
         /*
         * --------------------------------------------------------------------------
         * Form Sections
