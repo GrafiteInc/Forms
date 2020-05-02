@@ -42,10 +42,10 @@ class Quill extends Field
         $placeholder = $options['placeholder'] ?? '';
 
         return <<<EOT
-        new Quill('#$id', {
-            theme: '$theme',
-            placeholder: '$placeholder'
-        });
-        EOT;
+new Quill('#$id', {
+    theme: '$theme',
+    placeholder: '$placeholder'
+});
+EOT;
     }
 }

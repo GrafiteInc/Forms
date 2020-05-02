@@ -51,11 +51,11 @@ class Code extends Field
         $theme = $options['theme'] ?? 'default';
 
         return <<<EOT
-            CodeMirror.fromTextArea(document.getElementById("$id"), {
-                lineNumbers: true,
-                mode: '$mode',
-                theme: '$theme',
-            });
-        EOT;
+CodeMirror.fromTextArea(document.getElementById("$id"), {
+    lineNumbers: true,
+    mode: '$mode',
+    theme: '$theme',
+});
+EOT;
     }
 }
