@@ -255,7 +255,7 @@ class FieldMaker
     {
         $default = [
             'class' => config('form-maker.form.input-class', 'form-control'),
-            'id' => ucwords(str_replace('_', ' ', $name)),
+            'id' => ucfirst($name),
         ];
 
         $options['attributes'] = array_merge($default, $options['attributes'] ?? []);

@@ -93,6 +93,6 @@ class FormExtensiveBaseTest extends TestCase
         $this->assertStringContainsString('<div class="form-group row"><label class="col-md-2 col-form-label pt-0" for="Name">Name</label>', $form);
         $this->assertStringContainsString('<div class="col-md-10"><input  class="form-control" id="Name" name="name" type="text" value="">', $form);
         $this->assertStringContainsString('<legend class="col-md-2 col-form-label pt-0"></legend><div class="col-md-10"><div class="form-check">', $form);
-        $this->assertStringContainsString('<input  class="form-check-input" id="Is Cool" type="checkbox" name="is_cool" ><label class="form-check-label">Is Cool</label>', $form);
+        $this->assertStringContainsString('<input  class="form-check-input" id="Is_cool" type="checkbox" name="is_cool" ><label class="form-check-label">Is Cool</label>', $form);
     }
 }
