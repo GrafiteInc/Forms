@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.9.0] - 2020-05-06
+
+### Added
+- New datepicker field
+
 ## [v2.8.0] - 2020-05-06
 
 ### Added
