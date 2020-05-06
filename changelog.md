@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.8.0] - 2020-05-06
+
+### Added
+- Custom styles for fields
+- Slug Field
+- Tags Field
+- Bootstrap Select Fields
+- Bootstrap Toggle Field
+
+### Fixed
+- Issue with IDs having spaces
+
 ## [v2.7.1] - 2020-05-02
 
 ### Fixed
