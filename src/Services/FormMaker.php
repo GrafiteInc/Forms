@@ -228,6 +228,7 @@ class FormMaker
     {
         if (isset($columnConfig['assets'])) {
             $this->formAssets->addJs($columnConfig['assets']['js'] ?? '');
+            $this->formAssets->addStyles($columnConfig['assets']['styles'] ?? '');
             $this->formAssets->addScripts($columnConfig['assets']['scripts'] ?? []);
             $this->formAssets->addStylesheets($columnConfig['assets']['stylesheets'] ?? []);
         }

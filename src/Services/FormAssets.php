@@ -8,6 +8,8 @@ class FormAssets
 
     public $scripts = [];
 
+    public $styles = [];
+
     public $js = [];
 
     /**
@@ -21,8 +23,11 @@ class FormAssets
 
         $output .= collect($this->stylesheets)->unique()->implode("\n");
         $output .= collect($this->scripts)->unique()->implode("\n");
-        $js = collect($this->js)->unique()->implode("\n");
 
+        $styles = collect($this->styles)->unique()->implode("\n");
+        $output .= "<style>\n{$styles}\n</style>\n";
+
+        $js = collect($this->js)->unique()->implode("\n");
         $output .= "<script>\n{$js}\n</script>\n";
 
         return $output;
@@ -53,6 +58,21 @@ class FormAssets
     {
         foreach ($scripts as $script) {
             $this->scripts[] = '<script src="'.$script.'"></script>';
+        }
+
+        return $this;
+    }
+
+    /**
+     * Add field Styles code to a form
+     *
+     * @param string $styles
+     * @return self
+     */
+    public function addStyles($styles)
+    {
+        if (!is_null($styles)) {
+            $this->styles[] = $styles;
         }
 
         return $this;

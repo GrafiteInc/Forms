@@ -1,5 +1,6 @@
 <?php
 
+use Grafite\FormMaker\Fields\Tags;
 use Grafite\FormMaker\Fields\Quill;
 use Grafite\FormMaker\Forms\BaseForm;
 use Grafite\FormMaker\Services\FormAssets;
@@ -16,6 +17,7 @@ class UserHistoryForm extends BaseForm
     {
         return [
             Quill::make('history'),
+            Tags::make('qualities'),
         ];
     }
 }
@@ -53,9 +55,10 @@ class FormAssetsTest extends TestCase
     {
         $this->form->make();
 
-        $this->assertEquals(2, count($this->formAssets->stylesheets));
-        $this->assertEquals(1, count($this->formAssets->scripts));
-        $this->assertEquals(1, count($this->formAssets->js));
+        $this->assertEquals(3, count($this->formAssets->stylesheets));
+        $this->assertEquals(2, count($this->formAssets->scripts));
+        $this->assertEquals(2, count($this->formAssets->styles));
+        $this->assertEquals(2, count($this->formAssets->js));
     }
 
     public function testAssetContents()
@@ -67,5 +70,7 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString('script', $assets);
         $this->assertStringContainsString('link', $assets);
         $this->assertStringContainsString('Quill', $assets);
+        $this->assertStringContainsString('--tags-border-color', $assets);
+        $this->assertStringContainsString('Tagify', $assets);
     }
 }

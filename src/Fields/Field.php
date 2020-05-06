@@ -106,6 +106,7 @@ class Field
                 'factory' => static::getFactory(),
                 'assets' => [
                     'js' => static::js(ucfirst($name), $options) ?? null,
+                    'styles' => static::styles(ucfirst($name), $options) ?? null,
                     'scripts' => static::scripts($options) ?? null,
                     'stylesheets' => static::stylesheets($options) ?? null,
                 ]
@@ -180,6 +181,11 @@ class Field
     protected static function stylesheets($options)
     {
         return [];
+    }
+
+    protected static function styles($id, $options)
+    {
+        return null;
     }
 
     protected static function scripts($options)
