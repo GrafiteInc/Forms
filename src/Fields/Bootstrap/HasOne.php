@@ -4,7 +4,7 @@ namespace Grafite\FormMaker\Fields\Bootstrap;
 
 use Grafite\FormMaker\Fields\Field;
 
-class HasMany extends Field
+class HasOne extends Field
 {
     protected static function getType()
     {
