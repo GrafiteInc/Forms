@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.9.1] - 2020-05-08
+
+### Fixed
+- Issue with naming in Bootstrap HasOne
+
 ## [v2.9.0] - 2020-05-06
 
 ### Added
