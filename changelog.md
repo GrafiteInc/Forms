@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.10.0] - 2020-05-12
+
+### Added
+- New field templates
+- New typeahead field
+
+### Changed
+- Minor updates for doc blocks
+
 ## [v2.9.1] - 2020-05-08
 
 ### Fixed
