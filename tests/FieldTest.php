@@ -1,32 +1,33 @@
 <?php
 
-use Grafite\FormMaker\Fields\Checkbox;
-use Grafite\FormMaker\Fields\CheckboxInline;
-use Grafite\FormMaker\Fields\Color;
-use Grafite\FormMaker\Fields\CustomFile;
+use Grafite\FormMaker\Fields\Url;
 use Grafite\FormMaker\Fields\Date;
-use Grafite\FormMaker\Fields\DatetimeLocal;
-use Grafite\FormMaker\Fields\Decimal;
+use Grafite\FormMaker\Fields\File;
+use Grafite\FormMaker\Fields\Text;
+use Grafite\FormMaker\Fields\Time;
+use Grafite\FormMaker\Fields\Week;
+use Grafite\FormMaker\Fields\Color;
 use Grafite\FormMaker\Fields\Email;
 use Grafite\FormMaker\Fields\Field;
-use Grafite\FormMaker\Fields\File;
-use Grafite\FormMaker\Fields\HasMany;
-use Grafite\FormMaker\Fields\HasOne;
-use Grafite\FormMaker\Fields\Hidden;
 use Grafite\FormMaker\Fields\Image;
 use Grafite\FormMaker\Fields\Month;
-use Grafite\FormMaker\Fields\Number;
-use Grafite\FormMaker\Fields\Password;
 use Grafite\FormMaker\Fields\Radio;
-use Grafite\FormMaker\Fields\RadioInline;
 use Grafite\FormMaker\Fields\Range;
+use Grafite\FormMaker\Fields\HasOne;
+use Grafite\FormMaker\Fields\Hidden;
+use Grafite\FormMaker\Fields\Number;
 use Grafite\FormMaker\Fields\Select;
-use Grafite\FormMaker\Fields\Telephone;
-use Grafite\FormMaker\Fields\Text;
+use Grafite\FormMaker\Fields\Decimal;
+use Grafite\FormMaker\Fields\HasMany;
+use Grafite\FormMaker\Fields\Checkbox;
+use Grafite\FormMaker\Fields\Password;
 use Grafite\FormMaker\Fields\TextArea;
-use Grafite\FormMaker\Fields\Time;
-use Grafite\FormMaker\Fields\Url;
-use Grafite\FormMaker\Fields\Week;
+use Grafite\FormMaker\Fields\Telephone;
+use Grafite\FormMaker\Fields\Typeahead;
+use Grafite\FormMaker\Fields\CustomFile;
+use Grafite\FormMaker\Fields\RadioInline;
+use Grafite\FormMaker\Fields\DatetimeLocal;
+use Grafite\FormMaker\Fields\CheckboxInline;
 
 class FieldTest extends TestCase
 {
@@ -260,5 +261,16 @@ class FieldTest extends TestCase
 
         $this->assertEquals('field', array_key_first($field));
         $this->assertEquals('week', $field['field']['type']);
+    }
+
+    public function testTypeahead()
+    {
+        $field = Typeahead::make('names', [
+            'matches' => json_encode(["Alfred", "Jarvis"])
+        ]);
+
+        $this->assertEquals('names', array_key_first($field));
+        $this->assertEquals(json_encode(["Alfred", "Jarvis"]), $field['names']['attributes']['matches']);
+        $this->assertStringContainsString('typeahead__container', $field['names']['template']);
     }
 }
