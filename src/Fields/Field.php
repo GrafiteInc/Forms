@@ -102,6 +102,7 @@ class Field
                 'before' => static::getWrappers($options, 'before'),
                 'after' => static::getWrappers($options, 'after'),
                 'view' => static::getView() ?? null,
+                'template' => static::getTemplate() ?? null,
                 'attributes' => static::parseAttributes($options) ?? [],
                 'factory' => static::getFactory(),
                 'assets' => [
@@ -178,21 +179,58 @@ class Field
         return null;
     }
 
+    /**
+     * Field template string, performs a basic string swap
+     * of name, id, field, label, errors etc
+     *
+     * @return string
+     */
+    protected static function getTemplate()
+    {
+        return null;
+    }
+
+    /**
+     * Field related stylesheets
+     *
+     * @param array $options
+     * @return array
+     */
     protected static function stylesheets($options)
     {
         return [];
     }
 
+    /**
+     * Field related styles
+     *
+     * @param string $id
+     * @param array $options
+     * @return string|null
+     */
     protected static function styles($id, $options)
     {
         return null;
     }
 
+    /**
+     * Field related scripts
+     *
+     * @param array $options
+     * @return array
+     */
     protected static function scripts($options)
     {
         return [];
     }
 
+    /**
+     * Field related JavaScript
+     *
+     * @param string $id
+     * @param array $options
+     * @return string|null
+     */
     protected static function js($id, $options)
     {
         return null;

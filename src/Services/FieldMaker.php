@@ -89,6 +89,21 @@ class FieldMaker
             );
         }
 
+        if (isset($columnConfig['template'])) {
+            $options = $this->parseOptions($column, $columnConfig);
+            $id = $options['attributes']['id'];
+            $name = Str::title($column);
+            $name = str_replace('_', ' ', $name);
+
+            return $this->fieldTemplate($columnConfig['template'], compact(
+                'label',
+                'field',
+                'errors',
+                'id',
+                'name',
+            ));
+        }
+
         if (isset($columnConfig['view'])) {
             $options = $this->parseOptions($column, $columnConfig);
 
@@ -240,6 +255,20 @@ class FieldMaker
         }
 
         return $postfix;
+    }
+
+    private function fieldTemplate($template, $options)
+    {
+        $keys = [];
+        $values = [];
+        $processedTemplate = '';
+
+        foreach ($options as $key => $option) {
+            $keys[] = "{{$key}}";
+            $values[] = $option;
+        }
+
+        return str_replace($keys, $values, $template);
     }
 
     private function getOldValue($column)

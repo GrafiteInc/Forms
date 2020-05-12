@@ -204,7 +204,6 @@ class FieldMakerTest extends TestCase
         $config = HasMany::make('jobs', [
             'model' => Job::class,
             'model_options' => [
-                // 'options' => app(Job::class)->all()->pluck('id', 'name'),
                 'label' => 'name',
                 'value' => 'id',
             ]
