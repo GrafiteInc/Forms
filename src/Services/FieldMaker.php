@@ -90,12 +90,25 @@ class FieldMaker
         }
 
         if (isset($columnConfig['template'])) {
+            $rowClass = config('form-maker.form.group-class', 'form-group');
+            $labelClass = config('form-maker.form.label-class', 'control-label');
+            $fieldClass = '';
+
+            if ($this->orientation === 'horizontal') {
+                $labelClass = config('form-maker.form.label-column', 'col-md-2 col-form-label pt-0');
+                $fieldClass = config('form-maker.form.input-column', 'col-md-10');
+                $rowClass = $rowClass . ' ' . config('form-maker.form.sections.row-class', 'row');
+            }
+
             $options = $this->parseOptions($column, $columnConfig);
             $id = $options['attributes']['id'];
             $name = Str::title($column);
             $name = str_replace('_', ' ', $name);
 
             return $this->fieldTemplate($columnConfig['template'], compact(
+                'rowClass',
+                'labelClass',
+                'fieldClass',
                 'label',
                 'field',
                 'errors',

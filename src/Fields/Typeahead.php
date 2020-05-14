@@ -55,9 +55,9 @@ class Typeahead extends Field
     protected static function getTemplate()
     {
         return <<<EOT
-<div class="form-group row">
-    <label for="{id}" class="col-md-2 col-form-label">{name}</label>
-    <div class="col-md-10">
+<div class="{rowClass}">
+    <label for="{id}" class="{labelClass}">{name}</label>
+    <div class="{fieldClass}">
         <div class="typeahead__container">
             <div class="typeahead__field">
                 <div class="typeahead__query">{field}</div>
