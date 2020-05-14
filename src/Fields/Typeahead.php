@@ -79,11 +79,6 @@ $.typeahead({
     order: "desc",
     source: {
         data: $values
-    },
-    callback: {
-        onInit: function (node) {
-            console.log('Typeahead Initiated on ' + node.selector);
-        }
     }
 });
 EOT;
