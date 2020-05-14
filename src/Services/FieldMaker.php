@@ -115,7 +115,7 @@ class FieldMaker
                 'field',
                 'errors',
                 'id',
-                'name',
+                'name'
             ));
         }
 
