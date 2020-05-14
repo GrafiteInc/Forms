@@ -102,8 +102,10 @@ class FieldMaker
 
             $options = $this->parseOptions($column, $columnConfig);
             $id = $options['attributes']['id'];
+
             $name = Str::title($column);
             $name = str_replace('_', ' ', $name);
+            $name = $options['label'] ?? $name;
 
             return $this->fieldTemplate($columnConfig['template'], compact(
                 'rowClass',
