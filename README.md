@@ -2,7 +2,7 @@
 
 **FormMaker** - An amazing Form generating component for Laravel.
 
-[![Build Status](https://travis-ci.org/GrafiteInc/FormMaker.svg?branch=master)](https://travis-ci.org/GrafiteInc/FormMaker)
+[![Build Status](https://github.com/GrafiteInc/FormMaker/workflows/PHP%20Package%20Tests/badge.svg?branch=master)](https://github.com/GrafiteInc/FormMaker/actions?query=workflow%3A%22PHP+Package+Tests%22)
 [![Maintainability](https://api.codeclimate.com/v1/badges/8c00a046fec32d8b8ac7/maintainability)](https://codeclimate.com/github/GrafiteInc/FormMaker/maintainability)
 [![Packagist](https://img.shields.io/packagist/dt/grafite/formmaker.svg)](https://packagist.org/packages/grafite/formmaker)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/grafite/formmaker)
