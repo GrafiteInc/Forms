@@ -41,10 +41,12 @@ EOT;
         $preview = $options['preview_identifier'] ?? '';
         $asBackgroundImage = $options['preview_as_background_image'] ?? false;
 
-        $method = '$('.$preview.').attr(\'src\', e.target.result);';
+        $method = 'document.querySelector('.$preview.')'
+            .'.setAttribute(\'src\', e.target.result);';
 
         if ($asBackgroundImage) {
-            $method = '$("'.$preview.'").attr(\'style\', "background-image: url("+e.target.result+")");';
+            $method = 'document.querySelector("'.$preview.'")'
+                .'.setAttribute(\'style\', "background-image: url("+e.target.result+")");';
         }
 
         return <<<EOT
