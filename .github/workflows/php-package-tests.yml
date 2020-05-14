@@ -2,14 +2,17 @@ name: PHP Package Tests
 
 on:
   push:
-    branches: [ master ]
+    branches: [ master, develop ]
   pull_request:
-    branches: [ master ]
+    branches: [ master, develop ]
 
 jobs:
   build:
 
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        php-versions: ['7.2', '7.3', '7.4']
 
     steps:
     - uses: actions/checkout@v2
