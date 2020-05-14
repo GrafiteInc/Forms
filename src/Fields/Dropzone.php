@@ -13,9 +13,7 @@ class Dropzone extends Field
 
     protected static function getAttributes()
     {
-        return [
-            'multiple' => true,
-        ];
+        return [];
     }
 
     protected static function getFactory()
@@ -62,10 +60,6 @@ EOT;
         }
 
         return <<<EOT
-.dropzone-wrapper {
-    margin-bottom: 16px;
-}
-
 .dropzone {
     border-radius: 4px;
     border: 1px solid #$borderColor;
@@ -84,7 +78,8 @@ EOT;
 
     protected static function js($id, $options)
     {
-        $multiple = $options['uploadMuliple'] ?? 'false';
+        $onComplete = $options['queue-complete'] ?? 'function () { window.location.reload() }';
+        $multiple = $options['upload-muliple'] ?? 'true';
         $route = $options['route'] ?? '';
         $url = route($route);
         $token = csrf_token();
@@ -97,6 +92,7 @@ new Dropzone("#{$id}DropZone", {
     sending: function(file, xhr, formData) {
         formData.append("_token", "$token");
     },
+    queuecomplete: $onComplete,
 });
 EOT;
     }
