@@ -3,6 +3,19 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.11.0] - 2020-05-14
+
+### Added
+- New Dropzone field
+- New FileWithPreview field
+
+### Changed
+- Refactored Typeahead for more customization
+
+### Fixed
+- Issue with template name variable
+- Issue with wanting no buttons
+
 ## [v2.10.0] - 2020-05-12
 
 ### Added
