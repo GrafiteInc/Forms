@@ -20,7 +20,7 @@ class FileWithPreview extends Field
 
     protected static function getFactory()
     {
-        return 'text(300)';
+        return 'image';
     }
 
     protected static function getTemplate()
