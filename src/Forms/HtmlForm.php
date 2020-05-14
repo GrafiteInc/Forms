@@ -171,9 +171,11 @@ class HtmlForm extends Form
                 'onclick' => "{$this->submitMethod}(event)"
             ]);
         } else {
-            $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
-                'class' => $this->buttonClasses['submit']
-            ]);
+            if (isset($this->buttons['submit'])) {
+                $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
+                    'class' => $this->buttonClasses['submit']
+                ]);
+            }
         }
 
         $lastRowInForm .= '</div></div>' . $this->close();
