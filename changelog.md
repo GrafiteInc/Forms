@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.11.1] - 2020-05-15
+
+### Changed
+- Submits are now buttons instead of inputs
+
 ## [v2.11.0] - 2020-05-14
 
 ### Added
