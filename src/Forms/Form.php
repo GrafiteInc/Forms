@@ -117,7 +117,9 @@ class Form
             ]);
         }
 
-        $this->html .= $this->field->submit($button, $options);
+        $options['type'] = 'submit';
+
+        $this->html .= $this->field->button($button, $options);
 
         $this->html .= $this->close();
 

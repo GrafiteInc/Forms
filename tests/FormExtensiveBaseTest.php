@@ -10,7 +10,7 @@ class UserSampleForm extends BaseForm
     public $route = 'user.sample';
 
     public $buttons = [
-        'submit' => 'Save'
+        'submit' => 'Save <span class="fas fa-save"></span>'
     ];
 
     public $buttonClasses = [
@@ -79,7 +79,7 @@ class FormExtensiveBaseTest extends TestCase
         $this->assertStringContainsString('<form method="POST" action="http://localhost/user/sample" accept-charset="UTF-8" class="batman">', $form);
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label>', $form);
         $this->assertStringContainsString('<input  class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
-        $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><input  class="superman" name="" type="submit" value="Save"></div></div></form>', $form);
+        $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><button class="superman" type="submit">Save <span class="fas fa-save"></span></button></div></div></form>', $form);
     }
 
     public function testMakeWithClassChanges()

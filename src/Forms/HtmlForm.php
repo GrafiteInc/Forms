@@ -172,8 +172,9 @@ class HtmlForm extends Form
             ]);
         } else {
             if (isset($this->buttons['submit'])) {
-                $lastRowInForm .= $this->field->submit($this->buttons['submit'], [
-                    'class' => $this->buttonClasses['submit']
+                $lastRowInForm .= $this->field->button($this->buttons['submit'], [
+                    'class' => $this->buttonClasses['submit'],
+                    'type' => 'submit'
                 ]);
             }
         }
