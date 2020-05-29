@@ -54,6 +54,10 @@ class FieldMaker
 
     public function make(string $column, array $columnConfig, $object = null)
     {
+        if ($columnConfig['type'] === 'html') {
+            return $columnConfig['content'];
+        }
+
         $field = null;
         $fieldGroup = config('form-maker.form.group-class', 'form-group');
 
