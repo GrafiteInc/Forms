@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.12.1] - 2020-06-03
+
+### Added
+- Div and Heading tags for HTML Snippets
+
 ## [v2.12.0] - 2020-05-29
 
 ### Added
