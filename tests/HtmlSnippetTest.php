@@ -1,7 +1,9 @@
 <?php
 
+use Grafite\FormMaker\Html\Div;
 use Grafite\FormMaker\Html\HrTag;
 use Grafite\FormMaker\Html\DivOpen;
+use Grafite\FormMaker\Html\Heading;
 use Grafite\FormMaker\Html\DivClose;
 use Grafite\FormMaker\Html\HtmlSnippet;
 
@@ -45,5 +47,29 @@ class HtmlSnippetTest extends TestCase
 
         $this->assertEquals('html', $snippet[$keys[0]]['type']);
         $this->assertEquals('<hr>', $snippet[$keys[0]]['content']);
+    }
+
+    public function testHeadingTag()
+    {
+        $snippet = Heading::make([
+            'content' => 'Billing Details'
+        ]);
+
+        $keys = array_keys($snippet);
+
+        $this->assertEquals('html', $snippet[$keys[0]]['type']);
+        $this->assertEquals('<h3>Billing Details</h3>', $snippet[$keys[0]]['content']);
+    }
+
+    public function testDivTag()
+    {
+        $snippet = Div::make([
+            'content' => '<p class="foo">Bar</p>'
+        ]);
+
+        $keys = array_keys($snippet);
+
+        $this->assertEquals('html', $snippet[$keys[0]]['type']);
+        $this->assertEquals('<div><p class="foo">Bar</p></div>', $snippet[$keys[0]]['content']);
     }
 }
