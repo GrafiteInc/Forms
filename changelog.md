@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.12.4] - 2020-06-17
+
+### Added
+- Added a callback method to disable forms
+
+### Fixed
+- Missing disabled controls for delete forms
+
 ## [v2.12.3] - 2020-06-17
 
 ### Added
