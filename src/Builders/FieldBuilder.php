@@ -309,7 +309,7 @@ class FieldBuilder
 
         $labelClass = config('form-maker.form.label-check-class', 'form-check-label');
 
-        $fieldLabel = "<label class=\"{$labelClass}\">{$label}</label>";
+        $fieldLabel = "<label class=\"{$labelClass}\" for=\"{$options['attributes']['id']}\">{$label}</label>";
 
         return $fieldWrapper . $field . $fieldLabel . '</div>';
     }
