@@ -162,7 +162,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-check"><input  id="Avatar" class="form-check-input" type="checkbox" name="avatar" ><label class="form-check-label">foo</label></div>', $test);
+        $this->assertEquals('<div class="form-check"><input  id="Avatar" class="form-check-input" type="radio" name="avatar" ><label class="form-check-label" for="Avatar">foo</label></div>', $test);
     }
 
     public function testMakeCheckbox()

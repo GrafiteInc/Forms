@@ -106,7 +106,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('gender[male]', $config['gender[male]'], $object);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><div class="form-check"><input  class="form-check-input" id="Gender[male]" type="checkbox" name="gender[male]" checked><label class="form-check-label">Male</label></div></div>', $field);
+        $this->assertEquals('<div class="form-group"><div class="form-check"><input  class="form-check-input" id="Gender[male]" type="checkbox" name="gender[male]" checked><label class="form-check-label" for="Gender[male]">Male</label></div></div>', $field);
     }
 
     public function testCreateMultipleSelect()
