@@ -22,6 +22,13 @@ class HtmlForm extends Form
     public $formClass;
 
     /**
+     * The form id
+     *
+     * @var string
+     */
+    public $formId;
+
+    /**
      * The form delete class
      *
      * @var string

@@ -88,6 +88,7 @@ class BaseForm extends HtmlForm
             'method' => $this->method,
             'files' => $this->hasFiles,
             'class' => $this->formClass,
+            'id' => $this->formId
         ]);
 
         $fields = $this->parseFields($this->fields());

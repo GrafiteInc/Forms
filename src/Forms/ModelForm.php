@@ -122,7 +122,8 @@ class ModelForm extends HtmlForm
                 $this->routes['create']
             ],
             'files' => $this->hasFiles,
-            'class' => $this->formClass
+            'class' => $this->formClass,
+            'id' => $this->formId
         ]);
 
         $fields = $this->parseFields($this->fields());
@@ -163,6 +164,7 @@ class ModelForm extends HtmlForm
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
             'class' => $this->formClass,
+            'id' => $this->formId
         ]);
 
         $fields = $this->parseFields($this->fields());
@@ -196,6 +198,7 @@ class ModelForm extends HtmlForm
             ],
             'method' => $this->methods['delete'],
             'class' => $this->formDeleteClass,
+            'id' => $this->formId
         ]);
 
         $options = [
