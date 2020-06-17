@@ -219,7 +219,7 @@ class ModelForm extends HtmlForm
 
         $options['type'] = 'submit';
 
-        $this->html .= $this->field->button('Delete', $options);
+        $this->html .= $this->field->button($this->buttons['delete'], $options);
 
         $this->html .= $this->close();
 

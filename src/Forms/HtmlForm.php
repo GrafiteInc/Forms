@@ -109,6 +109,7 @@ class HtmlForm extends Form
      */
     public $buttons = [
         'submit' => 'Submit',
+        'delete' => 'Delete',
         'cancel' => 'Cancel',
     ];
 
@@ -142,7 +143,13 @@ class HtmlForm extends Form
             'cancel' => $this->buttonClasses['cancel'] ?? config('form-maker.buttons.cancel', 'btn btn-secondary'),
         ];
 
+        $buttons = [
+            'submit' => $this->buttons['submit'] ?? 'Submit',
+            'delete' => $this->buttons['delete'] ?? 'Delete',
+        ];
+
         $this->buttonClasses = $buttonClasses;
+        $this->buttons = $buttons;
 
         $this->formClass = $this->formClass ?? config('form-maker.form.class', 'form');
         $this->formDeleteClass = $this->formDeleteClass ?? config('form-maker.form.delete-class', 'form-inline');
