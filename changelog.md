@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.12.3] - 2020-06-17
+
+### Added
+- Ability to disable a form
+
 ## [v2.12.2] - 2020-06-17
 
 ### Added
