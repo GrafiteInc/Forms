@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.12.2] - 2020-06-17
+
+### Added
+- Ability to set form ID
+
+### Fixed
+- Issue with custom delete buttons
+
 ## [v2.12.1] - 2020-06-03
 
 ### Added
