@@ -247,6 +247,22 @@ class HtmlForm extends Form
     }
 
     /**
+     * Set a form as disabled to prevent submission, when callback is true.
+     *
+     * @return \Grafite\FormMaker\Forms\ModelForm
+     */
+    public function disabledWhen($callback)
+    {
+        $result = $callback();
+
+        if ($result) {
+            $this->formIsDisabled = true;
+        }
+
+        return $this;
+    }
+
+    /**
      * Set the fields
      *
      * @return \Grafite\FormMaker\Forms\ModelForm

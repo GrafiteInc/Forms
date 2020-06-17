@@ -219,6 +219,10 @@ class ModelForm extends HtmlForm
 
         $options['type'] = 'submit';
 
+        if ($this->formIsDisabled) {
+            $options['disabled'] = 'disabled';
+        }
+
         $this->html .= $this->field->button($this->buttons['delete'], $options);
 
         $this->html .= $this->close();
