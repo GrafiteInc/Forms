@@ -50,6 +50,13 @@ class HtmlForm extends Form
     public $hasFiles = false;
 
     /**
+     * Whether or not the form should be disabled
+     *
+     * @var boolean
+     */
+    public $formIsDisabled = false;
+
+    /**
      * An alternative method to perform the form submission
      *
      * @var string
@@ -174,22 +181,25 @@ class HtmlForm extends Form
         $lastRowInForm = '<div class="' . $formRow . '">
             <div class="' . $formFullSizeColumn . ' ' . $rowAlignment . '">';
 
-        if (isset($this->buttons['cancel'])) {
-            $lastRowInForm .= '<a class="' . $this->buttonClasses['cancel']
-                . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
-        }
+        if (!$this->formIsDisabled) {
 
-        if (!is_null($this->submitMethod)) {
-            $lastRowInForm .= $this->field->button($this->buttons['submit'], [
-                'class' => $this->buttonClasses['submit'],
-                'onclick' => "{$this->submitMethod}(event)"
-            ]);
-        } else {
-            if (isset($this->buttons['submit'])) {
+            if (isset($this->buttons['cancel'])) {
+                $lastRowInForm .= '<a class="' . $this->buttonClasses['cancel']
+                    . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
+            }
+
+            if (!is_null($this->submitMethod)) {
                 $lastRowInForm .= $this->field->button($this->buttons['submit'], [
                     'class' => $this->buttonClasses['submit'],
-                    'type' => 'submit'
+                    'onclick' => "{$this->submitMethod}(event)"
                 ]);
+            } else {
+                if (isset($this->buttons['submit'])) {
+                    $lastRowInForm .= $this->field->button($this->buttons['submit'], [
+                        'class' => $this->buttonClasses['submit'],
+                        'type' => 'submit'
+                    ]);
+                }
             }
         }
 
@@ -225,6 +235,18 @@ class HtmlForm extends Form
     }
 
     /**
+     * Set a form as disabled to prevent submission.
+     *
+     * @return \Grafite\FormMaker\Forms\ModelForm
+     */
+    public function disable()
+    {
+        $this->formIsDisabled = true;
+
+        return $this;
+    }
+
+    /**
      * Set the fields
      *
      * @return \Grafite\FormMaker\Forms\ModelForm
@@ -251,6 +273,10 @@ class HtmlForm extends Form
 
         foreach ($formFields as $config) {
             $key = array_key_first($config);
+            if ($this->formIsDisabled) {
+                $config[$key]['attributes']['disabled'] = 'disabled';
+            }
+
             $fields[$key] = $config[$key];
         }
 

@@ -90,6 +90,18 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('class="submit-button', $form);
     }
 
+    public function testUpdateIsDisabled()
+    {
+        $user = new User();
+
+        $form = $this->form->disable()->edit($user);
+
+        $this->assertStringContainsString('http://localhost/users/3', $form);
+        $this->assertStringContainsString('PUT', $form);
+        $this->assertStringContainsString('disabled="disabled"', $form);
+        $this->assertStringNotContainsString('class="submit-button', $form);
+    }
+
     public function testDelete()
     {
         $user = new User();
