@@ -284,9 +284,9 @@ class FieldBuilder
 
         if (in_array($options['type'], ['radio', 'radio-inline'])) {
             $field = $this->makeRadio($name, $value, $options);
+        } else {
+            $field = $this->makeCheckbox($name, $value, $options);
         }
-
-        $field = $this->makeCheckbox($name, $value, $options);
 
         $formClass = config('form-maker.form.check-class', 'form-check');
 
