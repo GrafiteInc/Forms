@@ -150,7 +150,7 @@ class HtmlForm extends Form
             'cancel' => $this->buttonClasses['cancel'] ?? config('form-maker.buttons.cancel', 'btn btn-secondary'),
         ];
 
-        $submitButton = (collect($this->buttons)) ? 'Submit' : null;
+        $submitButton = (collect($this->buttons)->contains('submit')) ? 'Submit' : null;
         $deleteButton = 'Delete';
 
         $buttons = [
