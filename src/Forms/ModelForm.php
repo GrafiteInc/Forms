@@ -39,12 +39,34 @@ class ModelForm extends HtmlForm
     public $routePrefix;
 
     /**
+     * The number of items you want to paginate by
+     *
+     * @var null|int
+     */
+    public $paginate = null;
+
+    /**
+     * The relationships you want to load with the model
+     *
+     * @var array
+     */
+    public $with = [];
+
+    /**
+     * The items loaded by the index
+     *
+     * @var mixed
+     */
+    public $items;
+
+    /**
      * Form routes
      *
      * @var array
      */
     public $routes = [
         'create' => '.store',
+        'edit' => '.edit',
         'update' => '.update',
         'delete' => '.destroy',
     ];
@@ -230,11 +252,231 @@ class ModelForm extends HtmlForm
         return $this;
     }
 
+    /**
+     * And edit button for a model
+     *
+     * @return string
+     */
+    public function editButton($item)
+    {
+        $editLink = route($this->routes['edit'], [$item]);
+        $buttonClasses = $this->buttonClasses['edit'] ?? 'btn btn-outline-primary btn-sm mr-2';
+
+        $button = "<a class=\"{$buttonClasses}\" href=\"{$editLink}\">";
+            $button .= $this->buttons['edit'] ?? 'Edit';
+        $button .= "</a>";
+
+        return $button;
+    }
+
+    /**
+     * The headers with sort for the model index
+     *
+     * @return string
+     */
+    public function indexHeaders()
+    {
+        $headers = '';
+
+        foreach ($this->parseVisibleFields($this->parseFields($this->fields())) as $header => $data) {
+            $header = $data['label'] ?? $header;
+            $header = ucfirst($header);
+            $order = 'desc';
+
+            if ($data['sortable']) {
+                if (request('order') === 'desc') {
+                    $order = 'asc';
+                }
+
+                if (request('order') === 'asc') {
+                    $order = 'desc';
+                }
+
+                $sortLink = url()->current() . '?sort_by=' . strtolower($header) . '&order=' . $order;
+                $icon = config('form-maker.html.sortable-icon', '&#8597;');
+
+                $header = "<a href=\"{$sortLink}\">{$header} {$icon}</a>";
+            }
+
+            $headers .= "<th>{$header}</th>";
+        }
+
+        $headers .= config('form-maker.html.table-actions-header', '<th class="text-right">Actions</th>');
+
+        return $headers;
+    }
+
+    /**
+     * The index body for the model
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return string
+     */
+    public function indexBody($query = null)
+    {
+        $fields = $this->parseVisibleFields($this->parseFields($this->fields()));
+        $sortBy = array_keys($fields)[0];
+        $query = $query;
+
+        if (is_null($query)) {
+            $query = app($this->model);
+        }
+
+        if (!is_null($this->paginate)) {
+            $this->items = $query
+                ->with($this->with)
+                ->orderBy(request('sort_by', $sortBy), request('order', 'asc'))
+                ->paginate($this->paginate);
+        } else {
+            $this->items = $query
+                ->with($this->with)
+                ->orderBy(request('sort_by', $sortBy), request('order', 'asc'))
+                ->get();
+        }
+
+        $rows = '';
+
+        foreach ($this->items as $item) {
+            $deleteButton = $this->confirm($this->confirmMessage, $this->confirmMethod)->delete($item);
+            $editButton = $this->editButton($item);
+
+            $rows .= "<tr>";
+                foreach ($fields as $field => $data) {
+                    $rows .= "<td>{$item->$field}</td>";
+                }
+
+                $rows .= "<td>";
+                    $rows .=" <div class=\"btn-toolbar justify-content-end\">";
+                        $rows .= $editButton;
+                        $rows .= $deleteButton;
+                    $rows .= "</div>";
+                $rows .= "</td>";
+            $rows .= "</tr>";
+        }
+
+        return $rows;
+    }
+
+    /**
+     *  A basic search form for the Form
+     *
+     * @param string $route
+     * @param string $placeholder
+     * @return string
+     */
+    public function search($route, $placeholder = 'Search', $submitValue = 'Search', $method = 'post')
+    {
+        $form = $this->open([
+            'route' => $route,
+            'method' => $method,
+            'class' => config('form-maker.form.search-class', 'form-inline')
+        ]);
+
+        $form .= '<div class="' .config('form-maker.form.before_after_input_wrapper', 'input-group'). '">';
+            $form .= $this->field->makeInput('text', 'search', request('search'), [
+                'placeholder' => $placeholder,
+                'class' => config('form-maker.form.input-class', 'form-control')
+            ]);
+            $form .= '<div class="'.config('form-maker.form.input-group-after', 'input-group-append').'">';
+                $form .= $this->field->button($submitValue, [
+                    'type' => 'submit',
+                    'class' => config('form-maker.buttons.submit', 'btn btn-primary')
+                ]);
+            $form .= '</div>';
+        $form .= '</div>';
+
+        $form .= $this->close();
+
+        return $form;
+    }
+
+    /**
+     * The items paginated string of the items
+     *
+     * @return string
+     */
+    public function paginated()
+    {
+        return $this->items->__toString();
+    }
+
+    /**
+     * Parse the fields for visible ones
+     *
+     * @param array $fields
+     * @return void
+     */
+    public function parseVisibleFields($fields)
+    {
+        return collect($fields)->filter(function ($field) {
+            return $field['visible'];
+        })->toArray();
+    }
+
+    /**
+     * The index method for the model
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return void
+     */
+    public function index($query = null)
+    {
+        $indexHeaders = $this->indexHeaders();
+        $indexBody = $this->indexBody($query);
+        $paginated = '';
+
+        if (!is_null($this->paginate)) {
+            $paginated = $this->paginated();
+        }
+
+        $spacing = config('form-maker.html.pagination', 'd-flex justify-content-center mt-4 mb-0');
+        $tableClass = config('form-maker.html.table', 'table table-borderless m-0 p-0');
+        $tableHeadClass = config('form-maker.html.table-head', 'thead');
+
+        $this->html = <<<EOT
+<table class="{$tableClass}">
+    <thead class="{$tableHeadClass}">
+        <tr>
+            $indexHeaders
+        </tr>
+    </thead>
+    <tbody>
+        $indexBody
+    </tbody>
+</table>
+
+<div class="{$spacing}">{$paginated}</div>
+EOT;
+
+        return $this;
+    }
+
+    /**
+     * Convert the items from the index to JSON
+     *
+     * @return void
+     */
+    public function toJson()
+    {
+        return $this->items->toJson();
+    }
+
+    /**
+     * Check if a model instance is set
+     *
+     * @return boolean
+     */
     public function hasInstance()
     {
         return !is_null($this->instance);
     }
 
+    /**
+     * Set the model instance for a Form
+     *
+     * @param \Illuminate\Database\Eloquent\Model $model
+     * @return self
+     */
     public function setInstance($model)
     {
         $this->instance = $model;
@@ -242,11 +484,21 @@ class ModelForm extends HtmlForm
         return $this;
     }
 
+    /**
+     * Get the model instance for the form
+     *
+     * @return mixed
+     */
     public function getInstance()
     {
         return $this->instance;
     }
 
+    /**
+     * Generate the factory for the fields
+     *
+     * @return string
+     */
     public function factoryFields()
     {
         $factory = '';

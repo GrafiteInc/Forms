@@ -116,6 +116,7 @@ class HtmlForm extends Form
      */
     public $buttons = [
         'submit' => 'Submit',
+        'edit' => 'Edit',
         'delete' => 'Delete',
         'cancel' => 'Cancel',
     ];
@@ -136,6 +137,7 @@ class HtmlForm extends Form
      */
     public $buttonClasses = [
         'submit' => null,
+        'edit' => null,
         'delete' => null,
         'cancel' => null,
     ];
@@ -146,6 +148,7 @@ class HtmlForm extends Form
 
         $buttonClasses = [
             'submit' => $this->buttonClasses['submit'] ?? config('form-maker.buttons.submit', 'btn btn-primary'),
+            'edit' => $this->buttonClasses['edit'] ?? config('form-maker.buttons.edit', 'btn btn-outline-primary'),
             'delete' => $this->buttonClasses['delete'] ?? config('form-maker.buttons.delete', 'btn btn-danger'),
             'cancel' => $this->buttonClasses['cancel'] ?? config('form-maker.buttons.cancel', 'btn btn-secondary'),
         ];
@@ -155,6 +158,7 @@ class HtmlForm extends Form
 
         $buttons = [
             'submit' => $this->buttons['submit'] ?? $submitButton,
+            'edit' => $this->buttons['edit'] ?? null,
             'delete' => $this->buttons['delete'] ?? $deleteButton,
         ];
 

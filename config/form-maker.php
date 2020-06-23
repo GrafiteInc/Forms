@@ -10,8 +10,17 @@ return [
 
     'buttons' => [
         'submit' => 'btn btn-primary',
+        'edit' => 'btn btn-outline-primary',
         'delete' => 'btn btn-danger',
         'cancel' => 'btn btn-secondary',
+    ],
+
+    'html' => [
+        'pagination' => 'd-flex justify-content-center mt-4 mb-0',
+        'table' => 'table table-borderless m-0 p-0',
+        'table-head' => 'thead border-bottom',
+        'table-actions-header' => '<th class="text-right">Actions</th>',
+        'sortable-icon' => '<span class="fas fa-fw fa-arrows-alt-v"></span>',
     ],
 
     'form' => [

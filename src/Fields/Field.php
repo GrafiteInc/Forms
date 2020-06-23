@@ -18,6 +18,8 @@ class Field
         'view',
         'attributes',
         'format',
+        'visible',
+        'sortable',
     ];
 
     /**
@@ -86,6 +88,8 @@ class Field
             $name => [
                 'type' => static::getType(),
                 'options' => array_merge(static::getSelectOptions(), $options['options'] ?? []),
+                'visible'  => $options['visible'] ?? true,
+                'sortable'  => $options['sortable'] ?? false,
                 'format' => $options['format'] ?? null,
                 'legend' => $options['legend'] ?? null,
                 'label' => $options['label'] ?? null,
