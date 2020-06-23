@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.13.0] - 2020-06-23
+
+### Added
+- Form index tables and search forms
+
+### Fixed
+- Issue with hidden fields taking visual space
+
 ## [v2.12.8] - 2020-06-19
 
 ### Fixed
