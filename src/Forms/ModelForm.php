@@ -227,7 +227,7 @@ class ModelForm extends HtmlForm
             'class' => $this->buttonClasses['delete'],
         ];
 
-        if (!empty($this->confirmMessage) && is_null($this->confirmMessage)) {
+        if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {
             $options = array_merge($options, [
                 'onclick' => "return confirm('{$this->confirmMessage}')"
             ]);
@@ -337,7 +337,7 @@ class ModelForm extends HtmlForm
         $rows = '';
 
         foreach ($this->items as $item) {
-            $deleteButton = $this->confirm($this->confirmMessage, $this->confirmMethod)->delete($item);
+            $deleteButton = $this->delete($item);
             $editButton = $this->editButton($item);
 
             $rows .= "<tr>";
@@ -404,7 +404,7 @@ class ModelForm extends HtmlForm
      * Parse the fields for visible ones
      *
      * @param array $fields
-     * @return void
+     * @return array
      */
     public function parseVisibleFields($fields)
     {

@@ -16,6 +16,8 @@ class UserFormWithHtml extends ModelForm
 
     public $formId = 'userForm';
 
+    public $confirmMessage = 'Are you sure you want to delete this?';
+
     public $buttons = [
         'submit' => 'Save'
     ];
@@ -79,6 +81,8 @@ class FormModelHtmlTest extends TestCase
         $this->assertStringContainsString('http://localhost?sort_by=name&order=desc', $form);
         $this->assertStringContainsString('<th>Email</th>', $form);
         $this->assertStringContainsString('Batman', $form);
+        $this->assertStringContainsString('confirm', $form);
+        $this->assertStringContainsString('Are you sure you want to delete', $form);
         $this->assertStringContainsString('<a class="btn btn-outline-primary" href="http://localhost/users/1">Edit</a>', $form);
         $this->assertStringContainsString('http://localhost?page=2', $form);
     }
