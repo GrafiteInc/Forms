@@ -281,8 +281,6 @@ class FormMaker
         $fullSizeColumn = config('form-maker.sections.full-size-column', 'col-md-12');
         $headerSpacing = config('form-maker.sections.header-spacing', 'mt-2 mb-2');
 
-        $class = $columnBase . (12 / $columns);
-
         if (!is_null($label)) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
             $newFormBuild[] = '<div class="' . $fullSizeColumn . '"><h4 class="' . $headerSpacing . '">' . $label . '</h4><hr></div>';
@@ -292,6 +290,12 @@ class FormMaker
         foreach ($formChunks as $chunk) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
             foreach ($chunk as $element) {
+                if (Str::contains($element, 'type="hidden"')) {
+                    $class = '';
+                } else {
+                    $class = $columnBase . (12 / $columns);
+                }
+
                 $newFormBuild[] = '<div class="' . $class . '">';
                 $newFormBuild[] = $element;
                 $newFormBuild[] = '</div>';
