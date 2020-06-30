@@ -296,7 +296,13 @@ class ModelForm extends HtmlForm
                     $order = 'desc';
                 }
 
-                $sortLink = url()->current() . '?sort_by=' . strtolower($header) . '&order=' . $order;
+                $sortLink = request()->url() .'?'. http_build_query(array_merge(
+                    request()->all(),
+                    [
+                        'sort_by' => strtolower($header),
+                        'order' => $order,
+                    ]
+                ));
                 $icon = config('form-maker.html.sortable-icon', '&#8597;');
 
                 $header = "<a href=\"{$sortLink}\">{$header} {$icon}</a>";
