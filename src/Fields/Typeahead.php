@@ -60,11 +60,13 @@ class Typeahead extends Field
     <div class="{fieldClass}">
         <div class="typeahead__container">
             <div class="typeahead__field">
-                <div class="typeahead__query">{field}</div>
+                <div class="typeahead__query">
+                    {field}
+                    {errors}
+                </div>
             </div>
         </div>
     </div>
-    {errors}
 </div>
 EOT;
     }
