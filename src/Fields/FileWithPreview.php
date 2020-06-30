@@ -8,7 +8,7 @@ class FileWithPreview extends Field
 {
     protected static function getType()
     {
-        return 'file';
+        return 'custom-file';
     }
 
     protected static function getAttributes()
