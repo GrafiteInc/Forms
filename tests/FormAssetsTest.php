@@ -7,6 +7,8 @@ use Grafite\FormMaker\Services\FormAssets;
 
 class UserHistoryForm extends BaseForm
 {
+    public $withJsValidation = true;
+
     public $route = 'user.history';
 
     public $buttons = [
@@ -58,7 +60,7 @@ class FormAssetsTest extends TestCase
         $this->assertEquals(3, count($this->formAssets->stylesheets));
         $this->assertEquals(2, count($this->formAssets->scripts));
         $this->assertEquals(2, count($this->formAssets->styles));
-        $this->assertEquals(2, count($this->formAssets->js));
+        $this->assertEquals(3, count($this->formAssets->js));
     }
 
     public function testAssetContents()
@@ -72,5 +74,16 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString('Quill', $assets);
         $this->assertStringContainsString('--tags-border-color', $assets);
         $this->assertStringContainsString('Tagify', $assets);
+    }
+
+    public function testAssetDefaultContents()
+    {
+        $this->form->make();
+
+        $assets = $this->formAssets->render();
+
+        $this->assertStringContainsString('document.getElementsByClassName', $assets);
+        $this->assertStringContainsString('.addEventListener', $assets);
+        $this->assertStringContainsString('_fields', $assets);
     }
 }

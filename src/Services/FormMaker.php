@@ -19,6 +19,8 @@ class FormMaker
 
     protected $orientation;
 
+    protected $withJsValidation = false;
+
     protected $fieldMaker;
 
     public $connection;
@@ -83,6 +85,18 @@ class FormMaker
     }
 
     /**
+     * Set if the form uses js validation
+     *
+     * @param bool $withJsValidation
+     */
+    public function setJsValidation($withJsValidation)
+    {
+        $this->withJsValidation = $withJsValidation;
+
+        return $this;
+    }
+
+    /**
      * Generate a form from a table.
      *
      * @param string $table Table name
@@ -110,6 +124,8 @@ class FormMaker
             $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
 
+        $this->defaultJs();
+
         return $this->buildUsingColumns($fieldCollection);
     }
 
@@ -135,6 +151,8 @@ class FormMaker
 
             $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
         }
+
+        $this->defaultJs();
 
         return $this->buildUsingColumns($fieldCollection);
     }
@@ -170,6 +188,8 @@ class FormMaker
 
             $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig, $object);
         }
+
+        $this->defaultJs();
 
         return $this->buildUsingColumns($fieldCollection);
     }
@@ -232,6 +252,40 @@ class FormMaker
             $this->formAssets->addStyles($columnConfig['assets']['styles'] ?? '');
             $this->formAssets->addScripts($columnConfig['assets']['scripts'] ?? []);
             $this->formAssets->addStylesheets($columnConfig['assets']['stylesheets'] ?? []);
+        }
+    }
+
+    /**
+     * The default JS for form validation
+     *
+     * @return string
+     */
+    public function defaultJs()
+    {
+        $formValidationClass = config('form-maker.form.invalid-input-class', 'is-invalid');
+
+$formValidation = <<<EOT
+(function () {
+    let _fields = document.getElementsByClassName('{$formValidationClass}');
+
+    for (let i = 0; i < _fields.length; i++) {
+        _fields[i].addEventListener("keyup", function (e) {
+            if (this.value.length > 0) {
+                this.classList.remove('{$formValidationClass}');
+            }
+        });
+
+        _fields[i].addEventListener("onfocusout", function (e) {
+            if (this.value.length > 0) {
+                this.classList.remove('{$formValidationClass}');
+            }
+        });
+    }
+}());
+EOT;
+
+        if ($this->withJsValidation) {
+            $this->formAssets->addJs($formValidation);
         }
     }
 

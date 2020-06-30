@@ -115,8 +115,12 @@ class ModelForm extends HtmlForm
             $this->buttonLinks['cancel'] = url()->current();
         }
 
-        if (!is_null($this->orientation)) {
+        if (! is_null($this->orientation)) {
             $this->builder->setOrientation($this->orientation);
+        }
+
+        if (! is_null($this->withJsValidation)) {
+            $this->builder->setJsValidation($this->withJsValidation);
         }
 
         foreach ($this->routes as $key => $route) {

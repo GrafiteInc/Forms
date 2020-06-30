@@ -15,6 +15,13 @@ class HtmlForm extends Form
     public $orientation;
 
     /**
+     * The form validation
+     *
+     * @var string
+     */
+    public $withJsValidation = false;
+
+    /**
      * The form class
      *
      * @var string
