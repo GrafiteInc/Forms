@@ -141,8 +141,11 @@ class FieldBuilder
      */
     public function makeCustomFile($name, $value, $options)
     {
-        if (isset($options['multiple'])) {
+        $labelText = $options['label'] ?? 'Choose file';
+
+        if (isset($options['multiple']) || isset($options['attributes']['multiple'])) {
             $name = $name . '[]';
+            $labelText = ($labelText === 'Choose file') ? 'Choose files' : $labelText;
         }
 
         unset($options['class']);
@@ -151,7 +154,7 @@ class FieldBuilder
         $customFileClass = config('form-maker.forms.custom-file-input-class', 'custom-file-input');
         $customFileWrapperClass = config('form-maker.forms.custom-file-wrapper-class', 'custom-file');
 
-        $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">Choose file</label>';
+        $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
         $options['attributes']['class'] = $options['attributes']['class'] .' '. $customFileClass;
 
         $attributes = $this->attributes($options['attributes']);

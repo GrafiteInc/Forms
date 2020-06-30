@@ -70,11 +70,12 @@ class FieldBuilderTest extends TestCase
             'attributes' => [
                 'id' => 'Avatar',
                 'class' => 'foo-class'
-            ]
+            ],
+            'multiple' => true,
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="custom-file"><input  id="Avatar" class="foo-class custom-file-input" type="file" name="avatar"><label class="custom-file-label" for="Avatar">Choose file</label></div>', $test);
+        $this->assertEquals('<div class="custom-file"><input  id="Avatar" class="foo-class custom-file-input" type="file" name="avatar[]"><label class="custom-file-label" for="Avatar">Choose files</label></div>', $test);
     }
 
     public function testMakeTextarea()
