@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.14.0] - 2020-06-30
+
+### Added
+- New default JS injection for form validation
+
+### Fixed
+- Issues with input errors due to default classes
+- Issues with invalid field layouts
+
 ## [v2.13.2] - 2020-06-24
 
 ### Fixed
