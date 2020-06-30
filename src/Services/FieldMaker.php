@@ -181,9 +181,10 @@ class FieldMaker
             }
 
             $fieldString = "<div class=\"{$inputColumn}\">{$fieldString}{$errors}</div>";
+            $errors = null;
         }
 
-        return $this->wrapField($fieldGroup, $label, $fieldString);
+        return $this->wrapField($fieldGroup, $label, $fieldString, $errors);
     }
 
     public function label($column, $columnConfig, $class = null, $errors)
@@ -212,13 +213,13 @@ class FieldMaker
         return "<label class=\"{$class}\" for=\"{$id}\">{$label}</label>";
     }
 
-    public function wrapField($fieldGroup, $label, $fieldString)
+    public function wrapField($fieldGroup, $label, $fieldString, $errors)
     {
         if (Str::contains($fieldString, 'hidden')) {
             return $fieldString;
         }
 
-        return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}</div>";
+        return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}{$errors}</div>";
     }
 
     public function getObjectValue($object, $name)
