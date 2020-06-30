@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.14.2] - 2020-06-30
+
+### Fixed
+- Issue with search index listings
+
 ## [v2.14.1] - 2020-06-30
 
 ### Fixed
