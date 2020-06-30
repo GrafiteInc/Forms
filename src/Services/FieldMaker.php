@@ -73,6 +73,17 @@ class FieldMaker
 
         $errors = $this->getFieldErrors($column, $object);
 
+        if (! empty($errors)) {
+            $currentClass = $columnConfig['attributes']['class'] ?? ' ';
+
+            $columnConfig['attributes']['class'] =
+                $currentClass
+                . ' '
+                . config('form-maker.form.input-class', 'form-control')
+                . ' '
+                . config('form-maker.form.invalid-input-class', 'is-invalid');
+        }
+
         $label = $this->label($column, $columnConfig, null, $errors);
 
         if (in_array($columnConfig['type'], $this->standard)) {
@@ -169,10 +180,10 @@ class FieldMaker
                 $label = "<legend class=\"{$labelColumn}\">{$legend}</legend>";
             }
 
-            $fieldString = "<div class=\"{$inputColumn}\">{$fieldString}</div>";
+            $fieldString = "<div class=\"{$inputColumn}\">{$fieldString}{$errors}</div>";
         }
 
-        return $this->wrapField($fieldGroup, $label, $fieldString, $errors);
+        return $this->wrapField($fieldGroup, $label, $fieldString);
     }
 
     public function label($column, $columnConfig, $class = null, $errors)
@@ -201,13 +212,13 @@ class FieldMaker
         return "<label class=\"{$class}\" for=\"{$id}\">{$label}</label>";
     }
 
-    public function wrapField($fieldGroup, $label, $fieldString, $errors)
+    public function wrapField($fieldGroup, $label, $fieldString)
     {
         if (Str::contains($fieldString, 'hidden')) {
             return $fieldString;
         }
 
-        return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}</div>{$errors}";
+        return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}</div>";
     }
 
     public function getObjectValue($object, $name)
@@ -237,7 +248,7 @@ class FieldMaker
 
     public function getFieldErrors($column)
     {
-        $textError = config('form-maker.form.text-error', 'text-danger');
+        $class = config('form-maker.form.invalid-feedback', 'invalid-feedback');
 
         $errors = [];
 
@@ -245,9 +256,9 @@ class FieldMaker
             $errors = session('errors');
         }
 
-        if (!is_null($errors) && count($errors) > 0) {
+        if (!is_null($errors) && count($errors) > 0 && $errors->get($column)) {
             $message = implode(' ', $errors->get($column));
-            return "<div><p class=\"{$textError}\">{$message}</p></div>";
+            return "<div class=\"{$class}\">{$message}</div>";
         }
 
         return '';

@@ -33,7 +33,6 @@ return [
         'label-class' => 'control-label',
         'label-check-class' => 'form-check-label',
         'before_after_input_wrapper' => 'input-group',
-        'text-error' => 'text-danger',
         'error-class' => 'has-error',
         'invalid-input-class' => 'is-invalid',
         'invalid-feedback' => 'invalid-feedback',
