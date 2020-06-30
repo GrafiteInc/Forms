@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v2.14.3] - 2020-06-30
+
+### Changed
+- FileWithPreview is now a custom-file because it looks better
+
+### Fixed
+- Issue with class attribute on custom file
+
 ## [v2.14.2] - 2020-06-30
 
 ### Fixed
