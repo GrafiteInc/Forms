@@ -13,9 +13,7 @@ class CustomFile extends Field
 
     protected static function getOptions()
     {
-        return [
-            'before' => 'Upload',
-        ];
+        return [];
     }
 
     protected static function getFactory()
