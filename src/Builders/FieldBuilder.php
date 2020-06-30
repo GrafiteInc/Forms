@@ -152,10 +152,12 @@ class FieldBuilder
         $customFileWrapperClass = config('form-maker.forms.custom-file-wrapper-class', 'custom-file');
 
         $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">Choose file</label>';
+        $options['attributes']['class'] = $options['attributes']['class'] .' '. $customFileClass;
+
         $attributes = $this->attributes($options['attributes']);
 
         $input = '<div class="' . $customFileWrapperClass . '">';
-        $input .= '<input ' . $attributes . ' class="' . $customFileClass . '" type="file" name="' . $name . '">';
+        $input .= '<input ' . $attributes . ' type="file" name="' . $name . '">';
         $input .= $label . '</div>';
 
         return $input;
