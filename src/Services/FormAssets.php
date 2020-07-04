@@ -2,6 +2,9 @@
 
 namespace Grafite\FormMaker\Services;
 
+use MatthiasMullie\Minify\JS;
+use MatthiasMullie\Minify\CSS;
+
 class FormAssets
 {
     public $stylesheets = [];
@@ -25,9 +28,13 @@ class FormAssets
         $output .= collect($this->scripts)->unique()->implode("\n");
 
         $styles = collect($this->styles)->unique()->implode("\n");
+        $minifierCSS = new CSS();
+        $styles = $minifierCSS->add($styles)->minify();
         $output .= "<style>\n{$styles}\n</style>\n";
 
         $js = collect($this->js)->unique()->implode("\n");
+        $minifierJS = new JS();
+        $js = $minifierJS->add($js)->minify();
         $output .= "<script>\n{$js}\n</script>\n";
 
         return $output;
