@@ -14,14 +14,15 @@ The FormMaker package lets you generate forms as well as fields with standard ma
 
 ## Requirements
 
-1. PHP 7.2+
+1. PHP 7.3+
 2. OpenSSL
 
 ## Compatibility and Support
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| ^5.8.x - 7.x | 2.x | yes |
+| ^7.x | 3.x | yes |
+| ^5.8.x - 7.x | 2.x | no |
 | 5.4.x - 5.8.x | 1.3.x | no |
 | 5.4.x | 1.1.x | no |
 | 5.3.x | 1.0.x | no |
