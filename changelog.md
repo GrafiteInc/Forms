@@ -3,6 +3,17 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v3.0.0] - 2020-07-04
+
+### Added
+- Blade components
+- Attachments Field
+- Form asset minification
+
+### Changed
+- PHP ^7.3 required
+- Now requires Illuminate views 7+
+
 ## [v2.14.4] - 2020-06-30
 
 ### Fixed
