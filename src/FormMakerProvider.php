@@ -2,10 +2,12 @@
 
 namespace Grafite\FormMaker;
 
-use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 use Grafite\FormMaker\Services\FormAssets;
+use Grafite\FormMaker\Components\FormMaker;
 use Grafite\FormMaker\Commands\MakeFieldCommand;
+use Grafite\FormMaker\Components\FormMakerAction;
+use Grafite\FormMaker\Components\FormMakerSearch;
 use Grafite\FormMaker\Commands\MakeBaseFormCommand;
 use Grafite\FormMaker\Commands\MakeFormTestCommand;
 use Grafite\FormMaker\Commands\MakeModelFormCommand;
@@ -27,6 +29,10 @@ class FormMakerProvider extends ServiceProvider
         $this->app['blade.compiler']->directive('formMaker', function () {
             return "<?php echo app('" . FormAssets::class . "')->render(); ?>";
         });
+
+        $this->app['blade.compiler']->component('fm', FormMaker::class);
+        $this->app['blade.compiler']->component('fm-action', FormMakerAction::class);
+        $this->app['blade.compiler']->component('fm-search', FormMakerSearch::class);
 
         /*
         |--------------------------------------------------------------------------
