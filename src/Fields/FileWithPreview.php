@@ -14,7 +14,7 @@ class FileWithPreview extends Field
     protected static function getAttributes()
     {
         return [
-            'onChange' => 'window.FormMaker_previewFileUpload(this);'
+            'onChange' => 'FormMaker_previewFileUpload(this);'
         ];
     }
 
@@ -41,16 +41,16 @@ EOT;
         $preview = $options['preview_identifier'] ?? '';
         $asBackgroundImage = $options['preview_as_background_image'] ?? false;
 
-        $method = 'document.querySelector(' . $preview . ')'
-            . '.setAttribute(\'src\', e.target.result);';
+        $method = 'document.querySelector('.$preview.')'
+            .'.setAttribute(\'src\', e.target.result);';
 
         if ($asBackgroundImage) {
-            $method = 'document.querySelector("' . $preview . '")'
-                . '.setAttribute(\'style\', "background-image: url("+e.target.result+")");';
+            $method = 'document.querySelector("'.$preview.'")'
+                .'.setAttribute(\'style\', "background-image: url("+e.target.result+")");';
         }
 
         return <<<EOT
-window.FormMaker_previewFileUpload = function (input) {
+function FormMaker_previewFileUpload (input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
