@@ -52,6 +52,13 @@ class Form
     public $confirmMethod;
 
     /**
+     * A payload for the form
+     *
+     * @var array
+     */
+    public $payload;
+
+    /**
      * The reserved form open attributes.
      *
      * @var array
@@ -91,7 +98,7 @@ class Form
      * @param string $method
      * @param string $route
      * @param string $button
-     * @return void
+     * @return self
      */
     public function action($method, $route, $button = 'Send', $options = [])
     {
@@ -119,9 +126,28 @@ class Form
 
         $options['type'] = 'submit';
 
+        if (! empty($this->payload)) {
+            foreach ($this->payload as $key => $value) {
+                $this->html .= $this->field->makeInput('hidden', $key, $value);
+            }
+        }
+
         $this->html .= $this->field->button($button, $options);
 
         $this->html .= $this->close();
+
+        return $this;
+    }
+
+    /**
+     * Set the payload of an action form
+     *
+     * @param array $values
+     * @return self
+     */
+    public function payload($values)
+    {
+        $this->payload = $values;
 
         return $this;
     }
@@ -132,7 +158,7 @@ class Form
      * @param string $message
      * @param string $method
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return self
      */
     public function confirm($message, $method = null)
     {
