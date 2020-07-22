@@ -15,7 +15,8 @@ class UserForm extends ModelForm
     public $formId = 'userForm';
 
     public $buttons = [
-        'submit' => 'Save'
+        'submit' => 'Save',
+        'cancel' => 'Cancel'
     ];
 
     public $buttonClasses = [
@@ -74,6 +75,9 @@ class FormModelTest extends TestCase
 
         $this->assertStringContainsString('class="formy-informer"', $form);
         $this->assertStringContainsString('id="userForm"', $form);
+
+        $this->assertStringContainsString('Save', $form);
+        $this->assertStringContainsString('Cancel', $form);
 
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label><input  class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input  class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
