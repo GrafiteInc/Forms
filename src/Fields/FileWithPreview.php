@@ -14,7 +14,7 @@ class FileWithPreview extends Field
     protected static function getAttributes()
     {
         return [
-            'onChange' => 'FormMaker_previewFileUpload(this);'
+            'onChange' => 'window.FormMaker_previewFileUpload(this);'
         ];
     }
 
@@ -50,7 +50,7 @@ EOT;
         }
 
         return <<<EOT
-function FormMaker_previewFileUpload (input) {
+window.FormMaker_previewFileUpload = function (input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {

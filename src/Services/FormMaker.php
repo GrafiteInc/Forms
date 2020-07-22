@@ -265,23 +265,21 @@ class FormMaker
         $formValidationClass = config('form-maker.form.invalid-input-class', 'is-invalid');
 
         $formValidation = <<<EOT
-(function () {
-    let _fields = document.getElementsByClassName('{$formValidationClass}');
+let _fields = document.getElementsByClassName('{$formValidationClass}');
 
-    for (let i = 0; i < _fields.length; i++) {
-        _fields[i].addEventListener("keyup", function (e) {
-            if (this.value.length > 0) {
-                this.classList.remove('{$formValidationClass}');
-            }
-        });
+for (let i = 0; i < _fields.length; i++) {
+    _fields[i].addEventListener("keyup", function (e) {
+        if (this.value.length > 0) {
+            this.classList.remove('{$formValidationClass}');
+        }
+    });
 
-        _fields[i].addEventListener("onfocusout", function (e) {
-            if (this.value.length > 0) {
-                this.classList.remove('{$formValidationClass}');
-            }
-        });
-    }
-}());
+    _fields[i].addEventListener("onfocusout", function (e) {
+        if (this.value.length > 0) {
+            this.classList.remove('{$formValidationClass}');
+        }
+    });
+}
 EOT;
 
         if ($this->withJsValidation) {
