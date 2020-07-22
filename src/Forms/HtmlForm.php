@@ -166,6 +166,7 @@ class HtmlForm extends Form
         $buttons = [
             'submit' => $this->buttons['submit'] ?? $submitButton,
             'edit' => $this->buttons['edit'] ?? null,
+            'cancel' => $this->buttons['cancel'] ?? null,
             'delete' => $this->buttons['delete'] ?? $deleteButton,
         ];
 
