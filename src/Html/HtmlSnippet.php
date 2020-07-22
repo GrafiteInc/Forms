@@ -20,7 +20,7 @@ class HtmlSnippet
 
         throw_if(is_null($content), new Exception('Content cannot be null'));
 
-        $name = 'html-snippet-'.Str::uuid();
+        $name = 'html-snippet-' . Str::uuid();
 
         return [
             $name => [

@@ -64,7 +64,7 @@ class FormAssets
     public function addScripts($scripts)
     {
         foreach ($scripts as $script) {
-            $this->scripts[] = '<script src="'.$script.'"></script>';
+            $this->scripts[] = '<script src="' . $script . '"></script>';
         }
 
         return $this;

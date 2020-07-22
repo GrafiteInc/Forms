@@ -155,7 +155,7 @@ class FieldBuilder
         $customFileWrapperClass = config('form-maker.forms.custom-file-wrapper-class', 'custom-file');
 
         $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
-        $options['attributes']['class'] = $options['attributes']['class'] .' '. $customFileClass;
+        $options['attributes']['class'] = $options['attributes']['class'] . ' ' . $customFileClass;
 
         $attributes = $this->attributes($options['attributes']);
 

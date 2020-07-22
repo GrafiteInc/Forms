@@ -264,7 +264,7 @@ class FormMaker
     {
         $formValidationClass = config('form-maker.form.invalid-input-class', 'is-invalid');
 
-$formValidation = <<<EOT
+        $formValidation = <<<EOT
 (function () {
     let _fields = document.getElementsByClassName('{$formValidationClass}');
 

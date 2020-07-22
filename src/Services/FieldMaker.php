@@ -2,7 +2,6 @@
 
 namespace Grafite\FormMaker\Services;
 
-use Exception;
 use Illuminate\Support\Str;
 use Grafite\FormMaker\Builders\FieldBuilder;
 

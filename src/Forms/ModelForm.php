@@ -296,7 +296,7 @@ class ModelForm extends HtmlForm
                     $order = 'desc';
                 }
 
-                $sortLink = request()->url() .'?'. http_build_query(array_merge(
+                $sortLink = request()->url() . '?' . http_build_query(array_merge(
                     request()->all(),
                     [
                         'sort_by' => strtolower($header),
@@ -351,12 +351,12 @@ class ModelForm extends HtmlForm
             $editButton = $this->editButton($item);
 
             $rows .= "<tr>";
-                foreach ($fields as $field => $data) {
-                    $rows .= "<td>{$item->$field}</td>";
-                }
+            foreach ($fields as $field => $data) {
+                $rows .= "<td>{$item->$field}</td>";
+            }
 
                 $rows .= "<td>";
-                    $rows .=" <div class=\"btn-toolbar justify-content-end\">";
+                    $rows .= " <div class=\"btn-toolbar justify-content-end\">";
                         $rows .= $editButton;
                         $rows .= $deleteButton;
                     $rows .= "</div>";
@@ -382,12 +382,12 @@ class ModelForm extends HtmlForm
             'class' => config('form-maker.form.search-class', 'form-inline')
         ]);
 
-        $form .= '<div class="' .config('form-maker.form.before_after_input_wrapper', 'input-group'). '">';
+        $form .= '<div class="' . config('form-maker.form.before_after_input_wrapper', 'input-group') . '">';
             $form .= $this->field->makeInput('text', 'search', request('search'), [
                 'placeholder' => $placeholder,
                 'class' => config('form-maker.form.input-class', 'form-control')
             ]);
-            $form .= '<div class="'.config('form-maker.form.input-group-after', 'input-group-append').'">';
+            $form .= '<div class="' . config('form-maker.form.input-group-after', 'input-group-append') . '">';
                 $form .= $this->field->button($submitValue, [
                     'type' => 'submit',
                     'class' => config('form-maker.buttons.submit', 'btn btn-primary')

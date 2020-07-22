@@ -196,7 +196,6 @@ class HtmlForm extends Form
             <div class="' . $formFullSizeColumn . ' ' . $rowAlignment . '">';
 
         if (!$this->formIsDisabled) {
-
             if (isset($this->buttons['cancel'])) {
                 $lastRowInForm .= '<a class="' . $this->buttonClasses['cancel']
                     . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
