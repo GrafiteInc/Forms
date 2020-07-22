@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v3.1.0] - 2020-07-22
+
+### Added
+- Payload for action forms
+
+### Changed
+- License information
+
+### Fixed
+- Issue with jsVaidation breaking file uploads
+- Issue with cancel button not showing up
+
 ## [v3.0.0] - 2020-07-04
 
 ### Added
