@@ -321,13 +321,16 @@ EOT;
      */
     private function buildSection($fields, $columns, $label = null)
     {
+        $formChunks = [];
         $newFormBuild = [];
 
         if (is_null($columns)) {
             $columns = count($fields);
         }
 
-        $formChunks = array_chunk($fields, $columns);
+        if (! empty($fields)) {
+            $formChunks = array_chunk($fields, $columns);
+        }
 
         $columnBase = config('form-maker.sections.column-base', 'col-md-');
         $rowClass = config('form-maker.sections.row-class', 'row');
@@ -380,7 +383,9 @@ EOT;
             $inputs = [];
 
             foreach ($fields as $field) {
-                $inputs[] = $formBuild[$field];
+                if (isset($formBuild[$field])) {
+                    $inputs[] = $formBuild[$field];
+                }
             }
 
             $formSections[] = $this->buildSection($inputs, $columns, $label);
