@@ -3,10 +3,10 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
-## [v3.1.2] - 2020-07-29
+## [v3.1.1] - 2020-07-22
 
 ### Fixed
-- Issue with fields not available but listed in sections breaking things
+- Issue with form action component missing payload option
 
 ## [v3.1.0] - 2020-07-22
 

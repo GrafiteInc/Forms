@@ -28,6 +28,7 @@ class FormMakerAction extends Component
     public function __construct(
         $route,
         $content = "",
+        $payload = [],
         $method = "post",
         $options = [],
         $confirm = false,
@@ -37,6 +38,7 @@ class FormMakerAction extends Component
         $this->route = $route;
         $this->method = $method;
         $this->content = $content;
+        $this->payload = $payload;
         $this->options = $options;
         $this->confirm = $confirm;
         $this->confirmMessage = $confirmMessage;
@@ -56,6 +58,7 @@ class FormMakerAction extends Component
             $form->confirm($this->confirmMessage, $this->confirmMethod);
         }
 
-        return (string) $form->action($this->method, $this->route, $this->content, $this->options);
+        return (string) $form->payload($this->payload)
+            ->action($this->method, $this->route, $this->content, $this->options);
     }
 }
