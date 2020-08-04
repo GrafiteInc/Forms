@@ -324,6 +324,19 @@ EOT;
         $formChunks = [];
         $newFormBuild = [];
 
+        // We move all hidden fields to the bottom to not interfere
+        // with the layout of columns.
+        $fields = collect($fields)->sortBy(function ($element) {
+            if (
+                Str::contains($element, 'type="hidden"')
+                && ! Str::contains($element, 'label')
+            ) {
+                    return 4;
+                }
+
+            return 1;
+        })->toArray();
+
         if (is_null($columns)) {
             $columns = count($fields);
         }
@@ -346,7 +359,10 @@ EOT;
         foreach ($formChunks as $chunk) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
             foreach ($chunk as $element) {
-                if (Str::contains($element, 'type="hidden"')) {
+                if (
+                    Str::contains($element, 'type="hidden"')
+                    && ! Str::contains($element, 'label')
+                ) {
                     $class = '';
                 } else {
                     $class = $columnBase . (12 / $columns);
