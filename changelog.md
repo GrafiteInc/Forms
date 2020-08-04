@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v3.1.3] - 2020-08-04
+
+### Changed
+- Now forcing hidden fields to the end of a form to improve layouts.
+
+### Fixed
+- Issue with hidden fields breaking layouts
+- Issues with Quill Field
+
 ## [v3.1.2] - 2020-07-29
 
 ### Fixed
