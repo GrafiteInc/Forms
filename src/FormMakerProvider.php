@@ -32,6 +32,7 @@ class FormMakerProvider extends ServiceProvider
 
         $this->app['blade.compiler']->component('fm', FormMaker::class);
         $this->app['blade.compiler']->component('fm-action', FormMakerAction::class);
+        $this->app['blade.compiler']->component('fm-delete', FormMakerDelete::class);
         $this->app['blade.compiler']->component('fm-search', FormMakerSearch::class);
 
         /*
