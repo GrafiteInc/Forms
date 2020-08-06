@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v3.1.4] - 2020-08-06
+
+### Fixed
+- Issue with use statement for Delete forms
+
 ## [v3.1.3] - 2020-08-04
 
 ### Changed
