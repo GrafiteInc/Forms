@@ -7,6 +7,7 @@ use Grafite\FormMaker\Services\FormAssets;
 use Grafite\FormMaker\Components\FormMaker;
 use Grafite\FormMaker\Commands\MakeFieldCommand;
 use Grafite\FormMaker\Components\FormMakerAction;
+use Grafite\FormMaker\Components\FormMakerDelete;
 use Grafite\FormMaker\Components\FormMakerSearch;
 use Grafite\FormMaker\Commands\MakeBaseFormCommand;
 use Grafite\FormMaker\Commands\MakeFormTestCommand;
