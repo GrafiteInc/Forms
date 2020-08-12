@@ -102,7 +102,7 @@ datepicker("#$id", {
   formatter: (input, date, instance) => {
       input.value = moment(date).format("$format");
   }
-})
+});
 EOT;
     }
 }
