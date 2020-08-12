@@ -132,6 +132,16 @@ class Field
     }
 
     /**
+     * Add the field's custom options to the default list
+     *
+     * @return array
+     */
+    protected static function getFieldOptions()
+    {
+        return array_merge(self::FIELD_OPTIONS, static::fieldOptions());
+    }
+
+    /**
      * Parse attributes for defaults
      *
      * @param array $options
@@ -140,7 +150,7 @@ class Field
      */
     protected static function parseAttributes($options)
     {
-        foreach (self::FIELD_OPTIONS as $option) {
+        foreach (self::getFieldOptions() as $option) {
             unset($options[$option]);
         }
 
@@ -171,6 +181,16 @@ class Field
         }
 
         return null;
+    }
+
+    /**
+     * Extra options for a field we don't need as attributes
+     *
+     * @return array
+     */
+    protected static function fieldOptions()
+    {
+        return [];
     }
 
     /**
