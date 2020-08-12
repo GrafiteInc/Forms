@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v3.1.5] - 2020-08-12
+
+### Added
+- Ability to set field options that will not be treated as attributes
+
+### Fixed
+- Issue with Quill not updating and toolbar issues
+
 ## [v3.1.4] - 2020-08-06
 
 ### Fixed
