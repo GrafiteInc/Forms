@@ -3,7 +3,7 @@
 namespace App\Http\Forms\Fields;
 
 use Exception;
-use Grafite\FormMaker\Fields\Field;
+use Grafite\Forms\Fields\Field;
 
 class FilePond extends Field
 {

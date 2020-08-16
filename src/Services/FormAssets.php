@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafite\FormMaker\Services;
+namespace Grafite\Forms\Services;
 
 use MatthiasMullie\Minify\JS;
 use MatthiasMullie\Minify\CSS;

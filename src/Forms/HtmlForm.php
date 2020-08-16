@@ -1,9 +1,9 @@
 <?php
 
-namespace Grafite\FormMaker\Forms;
+namespace Grafite\Forms\Forms;
 
 use Exception;
-use Grafite\FormMaker\Forms\Form;
+use Grafite\Forms\Forms\Form;
 
 class HtmlForm extends Form
 {
@@ -112,7 +112,7 @@ class HtmlForm extends Form
     /**
      * The field builder
      *
-     * @var \Grafite\FormMaker\Builders\FieldBuilder
+     * @var \Grafite\Forms\Builders\FieldBuilder
      */
     protected $builder;
 
@@ -238,7 +238,7 @@ class HtmlForm extends Form
      * @param string $message
      * @param string $method
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\ModelForm
      */
     public function confirm($message, $method = null)
     {
@@ -251,7 +251,7 @@ class HtmlForm extends Form
     /**
      * Set a form as disabled to prevent submission.
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\ModelForm
      */
     public function disable()
     {
@@ -263,7 +263,7 @@ class HtmlForm extends Form
     /**
      * Set a form as disabled to prevent submission, when callback is true.
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\ModelForm
      */
     public function disabledWhen($callback)
     {
@@ -279,7 +279,7 @@ class HtmlForm extends Form
     /**
      * Set the fields
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\ModelForm
      */
     public function fields()
     {

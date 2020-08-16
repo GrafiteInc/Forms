@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafite\FormMaker\Html;
+namespace Grafite\Forms\Html;
 
 use Exception;
 use Illuminate\Support\Str;

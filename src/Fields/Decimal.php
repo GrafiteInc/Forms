@@ -1,8 +1,8 @@
 <?php
 
-namespace Grafite\FormMaker\Fields;
+namespace Grafite\Forms\Fields;
 
-use Grafite\FormMaker\Fields\Field;
+use Grafite\Forms\Fields\Field;
 
 class Decimal extends Field
 {

@@ -1,8 +1,8 @@
 <?php
 
-namespace Grafite\FormMaker\Fields;
+namespace Grafite\Forms\Fields;
 
-use Grafite\FormMaker\Fields\Field;
+use Grafite\Forms\Fields\Field;
 
 class Quill extends Field
 {
@@ -121,7 +121,12 @@ EOT;
 
     protected static function js($id, $options)
     {
-        $route = route($options['upload_route'] ?? 'upload.image');
+        $route = request()->url();
+
+        if (isset($options['upload_route'])) {
+            $route = route($options['upload_route']);
+        }
+
         $theme = $options['quill_theme'] ?? 'snow';
         $placeholder = $options['placeholder'] ?? '';
         $toolbars = $options['toolbars'] ?? [

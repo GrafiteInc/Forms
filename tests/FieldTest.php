@@ -1,33 +1,33 @@
 <?php
 
-use Grafite\FormMaker\Fields\Url;
-use Grafite\FormMaker\Fields\Date;
-use Grafite\FormMaker\Fields\File;
-use Grafite\FormMaker\Fields\Text;
-use Grafite\FormMaker\Fields\Time;
-use Grafite\FormMaker\Fields\Week;
-use Grafite\FormMaker\Fields\Color;
-use Grafite\FormMaker\Fields\Email;
-use Grafite\FormMaker\Fields\Field;
-use Grafite\FormMaker\Fields\Image;
-use Grafite\FormMaker\Fields\Month;
-use Grafite\FormMaker\Fields\Radio;
-use Grafite\FormMaker\Fields\Range;
-use Grafite\FormMaker\Fields\HasOne;
-use Grafite\FormMaker\Fields\Hidden;
-use Grafite\FormMaker\Fields\Number;
-use Grafite\FormMaker\Fields\Select;
-use Grafite\FormMaker\Fields\Decimal;
-use Grafite\FormMaker\Fields\HasMany;
-use Grafite\FormMaker\Fields\Checkbox;
-use Grafite\FormMaker\Fields\Password;
-use Grafite\FormMaker\Fields\TextArea;
-use Grafite\FormMaker\Fields\Telephone;
-use Grafite\FormMaker\Fields\Typeahead;
-use Grafite\FormMaker\Fields\CustomFile;
-use Grafite\FormMaker\Fields\RadioInline;
-use Grafite\FormMaker\Fields\DatetimeLocal;
-use Grafite\FormMaker\Fields\CheckboxInline;
+use Grafite\Forms\Fields\Url;
+use Grafite\Forms\Fields\Date;
+use Grafite\Forms\Fields\File;
+use Grafite\Forms\Fields\Text;
+use Grafite\Forms\Fields\Time;
+use Grafite\Forms\Fields\Week;
+use Grafite\Forms\Fields\Color;
+use Grafite\Forms\Fields\Email;
+use Grafite\Forms\Fields\Field;
+use Grafite\Forms\Fields\Image;
+use Grafite\Forms\Fields\Month;
+use Grafite\Forms\Fields\Radio;
+use Grafite\Forms\Fields\Range;
+use Grafite\Forms\Fields\HasOne;
+use Grafite\Forms\Fields\Hidden;
+use Grafite\Forms\Fields\Number;
+use Grafite\Forms\Fields\Select;
+use Grafite\Forms\Fields\Decimal;
+use Grafite\Forms\Fields\HasMany;
+use Grafite\Forms\Fields\Checkbox;
+use Grafite\Forms\Fields\Password;
+use Grafite\Forms\Fields\TextArea;
+use Grafite\Forms\Fields\Telephone;
+use Grafite\Forms\Fields\Typeahead;
+use Grafite\Forms\Fields\CustomFile;
+use Grafite\Forms\Fields\RadioInline;
+use Grafite\Forms\Fields\DatetimeLocal;
+use Grafite\Forms\Fields\CheckboxInline;
 
 class FieldTest extends TestCase
 {

@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Grafite\FormMaker\Fields\Field;
+use Grafite\Forms\Fields\Field;
 
 class DummyClass extends Field
 {

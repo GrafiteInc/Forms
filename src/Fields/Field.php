@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafite\FormMaker\Fields;
+namespace Grafite\Forms\Fields;
 
 class Field
 {

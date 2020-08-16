@@ -1,12 +1,12 @@
 <?php
 
-namespace Grafite\FormMaker\Services;
+namespace Grafite\Forms\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Grafite\FormMaker\Services\FieldMaker;
-use Grafite\FormMaker\Services\FormAssets;
+use Grafite\Forms\Services\FieldMaker;
+use Grafite\Forms\Services\FormAssets;
 
 /**
  * FormMaker helper to make table and object form mapping easy.

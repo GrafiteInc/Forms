@@ -1,8 +1,8 @@
 <?php
 
-use Grafite\FormMaker\Fields\Password;
+use Grafite\Forms\Fields\Password;
 use Illuminate\Support\Facades\Route;
-use Grafite\FormMaker\Forms\BaseForm;
+use Grafite\Forms\Forms\BaseForm;
 
 class UserSecurityAjaxForm extends BaseForm
 {

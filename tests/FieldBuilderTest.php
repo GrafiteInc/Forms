@@ -1,6 +1,6 @@
 <?php
 
-use Grafite\FormMaker\Builders\FieldBuilder;
+use Grafite\Forms\Builders\FieldBuilder;
 
 class FieldBuilderTest extends TestCase
 {

@@ -1,9 +1,9 @@
 <?php
 
-use Grafite\FormMaker\Fields\Text;
-use Grafite\FormMaker\Forms\BaseForm;
+use Grafite\Forms\Fields\Text;
+use Grafite\Forms\Forms\BaseForm;
 use Illuminate\Support\Facades\Route;
-use Grafite\FormMaker\Fields\Checkbox;
+use Grafite\Forms\Fields\Checkbox;
 
 class UserSampleForm extends BaseForm
 {

@@ -1,10 +1,10 @@
 <?php
 
-use Grafite\FormMaker\Forms\Form;
-use Grafite\FormMaker\Fields\Text;
-use Grafite\FormMaker\Fields\Email;
+use Grafite\Forms\Forms\Form;
+use Grafite\Forms\Fields\Text;
+use Grafite\Forms\Fields\Email;
 use Illuminate\Support\Facades\Route;
-use Grafite\FormMaker\Forms\ModelForm;
+use Grafite\Forms\Forms\ModelForm;
 
 class FormTest extends TestCase
 {

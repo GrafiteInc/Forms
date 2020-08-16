@@ -1,11 +1,11 @@
 <?php
 
-namespace Grafite\FormMaker\Forms;
+namespace Grafite\Forms\Forms;
 
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Illuminate\Routing\UrlGenerator;
-use Grafite\FormMaker\Builders\FieldBuilder;
+use Grafite\Forms\Builders\FieldBuilder;
 
 class Form
 {

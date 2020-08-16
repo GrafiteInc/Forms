@@ -1,9 +1,9 @@
 <?php
 
-use Grafite\FormMaker\Fields\Tags;
-use Grafite\FormMaker\Fields\Quill;
-use Grafite\FormMaker\Forms\BaseForm;
-use Grafite\FormMaker\Services\FormAssets;
+use Grafite\Forms\Fields\Tags;
+use Grafite\Forms\Fields\Quill;
+use Grafite\Forms\Forms\BaseForm;
+use Grafite\Forms\Services\FormAssets;
 
 class UserHistoryForm extends BaseForm
 {

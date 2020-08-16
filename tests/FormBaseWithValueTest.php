@@ -1,9 +1,9 @@
 <?php
 
-use Grafite\FormMaker\Fields\Email;
-use Grafite\FormMaker\Forms\BaseForm;
+use Grafite\Forms\Fields\Email;
+use Grafite\Forms\Forms\BaseForm;
 use Illuminate\Support\Facades\Route;
-use Grafite\FormMaker\Fields\Password;
+use Grafite\Forms\Fields\Password;
 
 class UserWithValueForm extends BaseForm
 {

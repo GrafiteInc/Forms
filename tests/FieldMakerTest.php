@@ -1,14 +1,14 @@
 <?php
 
-use Grafite\FormMaker\Fields\Text;
-use Grafite\FormMaker\Fields\HasOne;
-use Grafite\FormMaker\Fields\Number;
-use Grafite\FormMaker\Fields\Select;
-use Grafite\FormMaker\Fields\HasMany;
-use Grafite\FormMaker\Fields\Checkbox;
-use Grafite\FormMaker\Fields\TextArea;
+use Grafite\Forms\Fields\Text;
+use Grafite\Forms\Fields\HasOne;
+use Grafite\Forms\Fields\Number;
+use Grafite\Forms\Fields\Select;
+use Grafite\Forms\Fields\HasMany;
+use Grafite\Forms\Fields\Checkbox;
+use Grafite\Forms\Fields\TextArea;
 use Illuminate\Database\Eloquent\Model;
-use Grafite\FormMaker\Services\FieldMaker;
+use Grafite\Forms\Services\FieldMaker;
 
 class User extends Model
 {

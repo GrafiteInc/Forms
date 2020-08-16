@@ -1,12 +1,12 @@
 <?php
 
-namespace Grafite\FormMaker\Forms;
+namespace Grafite\Forms\Forms;
 
 use Exception;
 use Illuminate\Routing\UrlGenerator;
-use Grafite\FormMaker\Forms\HtmlForm;
-use Grafite\FormMaker\Services\FormMaker;
-use Grafite\FormMaker\Builders\FieldBuilder;
+use Grafite\Forms\Forms\HtmlForm;
+use Grafite\Forms\Services\FormMaker;
+use Grafite\Forms\Builders\FieldBuilder;
 
 class BaseForm extends HtmlForm
 {
@@ -56,7 +56,7 @@ class BaseForm extends HtmlForm
      * @param string $name
      * @param array $parameters
      *
-     * @return \Grafite\FormMaker\Forms\BaseForm
+     * @return \Grafite\Forms\Forms\BaseForm
      */
     public function setRoute($name, $parameters = [])
     {
@@ -75,7 +75,7 @@ class BaseForm extends HtmlForm
     /**
      * Create a form
      *
-     * @return \Grafite\FormMaker\Forms\BaseForm
+     * @return \Grafite\Forms\Forms\BaseForm
      */
     public function make()
     {

@@ -1,9 +1,9 @@
 <?php
 
-use Grafite\FormMaker\Fields\Name;
-use Grafite\FormMaker\Fields\Email;
+use Grafite\Forms\Fields\Name;
+use Grafite\Forms\Fields\Email;
 use Illuminate\Support\Facades\Route;
-use Grafite\FormMaker\Forms\ModelForm;
+use Grafite\Forms\Forms\ModelForm;
 use Illuminate\Foundation\Auth\User;
 
 class UserFormWithHtml extends ModelForm

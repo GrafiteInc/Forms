@@ -1,12 +1,12 @@
 <?php
 
-namespace Grafite\FormMaker\Forms;
+namespace Grafite\Forms\Forms;
 
 use Exception;
 use Illuminate\Routing\UrlGenerator;
-use Grafite\FormMaker\Forms\HtmlForm;
-use Grafite\FormMaker\Services\FormMaker;
-use Grafite\FormMaker\Builders\FieldBuilder;
+use Grafite\Forms\Forms\HtmlForm;
+use Grafite\Forms\Services\FormMaker;
+use Grafite\Forms\Builders\FieldBuilder;
 
 class ModelForm extends HtmlForm
 {
@@ -85,7 +85,7 @@ class ModelForm extends HtmlForm
     /**
      * The field builder
      *
-     * @var \Grafite\FormMaker\Builders\FieldBuilder
+     * @var \Grafite\Forms\Builders\FieldBuilder
      */
     protected $builder;
 
@@ -131,7 +131,7 @@ class ModelForm extends HtmlForm
     /**
      * A create form for a model
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\ModelForm
      */
     public function create()
     {
@@ -169,7 +169,7 @@ class ModelForm extends HtmlForm
     /**
      * The edit form for a model
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\ModelForm
      */
     public function edit($model)
     {
@@ -210,7 +210,7 @@ class ModelForm extends HtmlForm
     /**
      * A delete form for a model
      *
-     * @return \Grafite\FormMaker\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\ModelForm
      */
     public function delete($model)
     {

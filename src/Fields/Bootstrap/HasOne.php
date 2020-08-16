@@ -1,8 +1,8 @@
 <?php
 
-namespace Grafite\FormMaker\Fields\Bootstrap;
+namespace Grafite\Forms\Fields\Bootstrap;
 
-use Grafite\FormMaker\Fields\Field;
+use Grafite\Forms\Fields\Field;
 
 class HasOne extends Field
 {

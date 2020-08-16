@@ -1,10 +1,10 @@
 <?php
 
-use Grafite\FormMaker\Fields\Name;
-use Grafite\FormMaker\Fields\Email;
-use Grafite\FormMaker\Fields\Quill;
+use Grafite\Forms\Fields\Name;
+use Grafite\Forms\Fields\Email;
+use Grafite\Forms\Fields\Quill;
 use Illuminate\Support\Facades\Route;
-use Grafite\FormMaker\Forms\ModelForm;
+use Grafite\Forms\Forms\ModelForm;
 
 class UserForm extends ModelForm
 {
@@ -34,7 +34,11 @@ class UserForm extends ModelForm
                 'value' => $this->getSpecialName()
             ]),
             Email::make('email'),
-            Quill::make('history')
+            Quill::make('history', [
+                'toolbars' => [
+                    'basic',
+                ]
+            ])
         ];
     }
 

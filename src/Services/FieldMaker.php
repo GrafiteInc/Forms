@@ -1,9 +1,9 @@
 <?php
 
-namespace Grafite\FormMaker\Services;
+namespace Grafite\Forms\Services;
 
 use Illuminate\Support\Str;
-use Grafite\FormMaker\Builders\FieldBuilder;
+use Grafite\Forms\Builders\FieldBuilder;
 
 class FieldMaker
 {

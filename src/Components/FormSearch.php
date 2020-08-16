@@ -1,10 +1,10 @@
 <?php
 
-namespace Grafite\FormMaker\Components;
+namespace Grafite\Forms\Components;
 
 use Illuminate\View\Component;
 
-class FormMakerSearch extends Component
+class FormSearch extends Component
 {
     public $index;
 

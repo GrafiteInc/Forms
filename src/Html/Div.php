@@ -1,8 +1,8 @@
 <?php
 
-namespace Grafite\FormMaker\Html;
+namespace Grafite\Forms\Html;
 
-use Grafite\FormMaker\Html\HtmlSnippet;
+use Grafite\Forms\Html\HtmlSnippet;
 
 class Div extends HtmlSnippet
 {

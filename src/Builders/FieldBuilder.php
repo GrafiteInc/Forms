@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafite\FormMaker\Builders;
+namespace Grafite\Forms\Builders;
 
 use DateTime;
 use Illuminate\Support\Str;

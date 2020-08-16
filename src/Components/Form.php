@@ -1,10 +1,10 @@
 <?php
 
-namespace Grafite\FormMaker\Components;
+namespace Grafite\Forms\Components;
 
 use Illuminate\View\Component;
 
-class FormMaker extends Component
+class Form extends Component
 {
     public $content;
 

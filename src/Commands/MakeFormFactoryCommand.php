@@ -1,6 +1,6 @@
 <?php
 
-namespace Grafite\FormMaker\Commands;
+namespace Grafite\Forms\Commands;
 
 use Illuminate\Console\Command;
 

@@ -1,24 +1,20 @@
 <?php
 
-namespace Grafite\FormMaker\Components;
+namespace Grafite\Forms\Components;
 
 use Illuminate\View\Component;
 
-class FormMakerAction extends Component
+class FormDelete extends Component
 {
-    public $route;
-
-    public $method;
-
-    public $content;
-
-    public $options;
-
     public $confirm;
 
     public $confirmMessage;
 
     public $confirmMethod;
+
+    public $form;
+
+    public $item;
 
     /**
      * Create a new component instance.
@@ -26,20 +22,14 @@ class FormMakerAction extends Component
      * @return void
      */
     public function __construct(
-        $route,
-        $content = "",
-        $payload = [],
-        $method = "post",
-        $options = [],
+        $form,
+        $item,
         $confirm = false,
-        $confirmMessage = "Are you sure you want to complete this action?",
+        $confirmMessage = "Are you sure you want to delete this item?",
         $confirmMethod = "confirm"
     ) {
-        $this->route = $route;
-        $this->method = $method;
-        $this->content = $content;
-        $this->payload = $payload;
-        $this->options = $options;
+        $this->item = $item;
+        $this->form = $form;
         $this->confirm = $confirm;
         $this->confirmMessage = $confirmMessage;
         $this->confirmMethod = $confirmMethod;
@@ -52,13 +42,12 @@ class FormMakerAction extends Component
      */
     public function render()
     {
-        $form = form();
+        $form = app($this->form);
 
         if ($this->confirm) {
             $form->confirm($this->confirmMessage, $this->confirmMethod);
         }
 
-        return (string) $form->payload($this->payload)
-            ->action($this->method, $this->route, $this->content, $this->options);
+        return (string) $form->delete($this->item);
     }
 }

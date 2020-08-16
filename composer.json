@@ -1,7 +1,13 @@
 {
-    "name": "grafite/formmaker",
-    "description": "A remarkably magical form and input maker tool for Laravel.",
+    "name": "grafite/forms",
+    "description": "A remarkably magical form package for Laravel.",
     "license": "MIT",
+    "keywords": [
+        "Laravel",
+        "Forms",
+        "Laravel Forms",
+        "LaravelCollective HTML"
+    ],
     "authors": [
         {
             "name": "Matt Lantz",
@@ -24,7 +30,7 @@
     },
     "autoload": {
         "psr-4": {
-            "Grafite\\FormMaker\\": "src/"
+            "Grafite\\Forms\\": "src/"
         },
         "files": [
           "src/Helpers/form.php"
@@ -38,7 +44,7 @@
     "extra": {
         "laravel": {
             "providers": [
-                "Grafite\\FormMaker\\FormMakerProvider"
+                "Grafite\\Forms\\FormsProvider"
             ]
         }
     },

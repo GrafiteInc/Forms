@@ -1,11 +1,11 @@
 <?php
 
-use Grafite\FormMaker\Html\Div;
-use Grafite\FormMaker\Html\HrTag;
-use Grafite\FormMaker\Html\DivOpen;
-use Grafite\FormMaker\Html\Heading;
-use Grafite\FormMaker\Html\DivClose;
-use Grafite\FormMaker\Html\HtmlSnippet;
+use Grafite\Forms\Html\Div;
+use Grafite\Forms\Html\HrTag;
+use Grafite\Forms\Html\DivOpen;
+use Grafite\Forms\Html\Heading;
+use Grafite\Forms\Html\DivClose;
+use Grafite\Forms\Html\HtmlSnippet;
 
 class HtmlSnippetTest extends TestCase
 {

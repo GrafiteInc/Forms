@@ -2,7 +2,7 @@
 
 namespace DummyNamespace;
 
-use Grafite\FormMaker\Forms\ModelForm;
+use Grafite\Forms\Forms\ModelForm;
 
 class DummyClass extends ModelForm
 {

@@ -2,7 +2,7 @@
 
 namespace App\Http\Forms\Fields;
 
-use Grafite\FormMaker\Fields\Field;
+use Grafite\Forms\Fields\Field;
 
 class Attachments extends Field
 {

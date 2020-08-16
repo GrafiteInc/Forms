@@ -1,9 +1,9 @@
 <?php
 
-use Grafite\FormMaker\Fields\Text;
-use Grafite\FormMaker\Fields\TextArea;
+use Grafite\Forms\Fields\Text;
+use Grafite\Forms\Fields\TextArea;
 use Illuminate\Database\Eloquent\Model;
-use Grafite\FormMaker\Services\FormMaker;
+use Grafite\Forms\Services\FormMaker;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Entry extends Model
