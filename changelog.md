@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.0.0] - 2020-08-16
+
+### Changed
+- Renamed to Forms
+
+### Fixed
+- Issue with Quill and images
+
 ## [v3.1.5] - 2020-08-12
 
 ### Added
