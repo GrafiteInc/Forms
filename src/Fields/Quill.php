@@ -121,7 +121,7 @@ EOT;
 
     protected static function js($id, $options)
     {
-        $route = request()->url();
+        $route = null;
 
         if (isset($options['upload_route'])) {
             $route = route($options['upload_route']);
@@ -144,6 +144,10 @@ EOT;
         $toolbars = collect($toolbars);
 
         throw_if ($toolbars->isEmpty(), new \Exception('You cannot have an empty toolbar.'));
+
+        if (is_null($route) && $toolbars->contains('image')) {
+            throw new \Exception("You need to set an `upload_route` for handling image uploads to Quill.", 1);
+        }
 
         $basic = ($toolbars->contains('basic')) ? "['bold', 'italic', 'underline', 'strike', { 'align': [] }, 'link']," : '';
         $extra = ($toolbars->contains('extra')) ? "['blockquote', 'code-block']," : '';

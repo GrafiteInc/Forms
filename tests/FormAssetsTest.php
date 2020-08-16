@@ -18,7 +18,11 @@ class UserHistoryForm extends BaseForm
     public function fields()
     {
         return [
-            Quill::make('history'),
+            Quill::make('history', [
+                'toolbars' => [
+                    'basic'
+                ]
+            ]),
             Tags::make('qualities'),
         ];
     }
