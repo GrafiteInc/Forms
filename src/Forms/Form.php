@@ -105,11 +105,11 @@ class Form
         $this->html = $this->open([
             'route' => $route,
             'method' => $method,
-            'class' => config('form-maker.form.inline-class', 'form d-inline')
+            'class' => config('forms.form.inline-class', 'form d-inline')
         ]);
 
         $options = array_merge([
-            'class' => config('form-maker.buttons.submit', 'btn btn-primary')
+            'class' => config('forms.buttons.submit', 'btn btn-primary')
         ], $options);
 
         if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {

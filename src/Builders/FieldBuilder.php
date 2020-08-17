@@ -150,9 +150,9 @@ class FieldBuilder
 
         unset($options['class']);
 
-        $fileLabel = config('form-maker.forms.custom-file-label', 'custom-file-label');
-        $customFileClass = config('form-maker.forms.custom-file-input-class', 'custom-file-input');
-        $customFileWrapperClass = config('form-maker.forms.custom-file-wrapper-class', 'custom-file');
+        $fileLabel = config('forms.forms.custom-file-label', 'custom-file-label');
+        $customFileClass = config('forms.forms.custom-file-input-class', 'custom-file-input');
+        $customFileWrapperClass = config('forms.forms.custom-file-wrapper-class', 'custom-file');
 
         $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
         $options['attributes']['class'] = $options['attributes']['class'] . ' ' . $customFileClass;
@@ -281,7 +281,7 @@ class FieldBuilder
      */
     public function makeCheckInput($name, $value, $options)
     {
-        $options['attributes']['class'] = config('form-maker.form.check-input-class', 'form-check-input');
+        $options['attributes']['class'] = config('forms.form.check-input-class', 'form-check-input');
 
         if (Str::contains($options['type'], '-inline')) {
             $options['check-inline'] = true;
@@ -293,10 +293,10 @@ class FieldBuilder
             $field = $this->makeCheckbox($name, $value, $options);
         }
 
-        $formClass = config('form-maker.form.check-class', 'form-check');
+        $formClass = config('forms.form.check-class', 'form-check');
 
         if (isset($options['check-inline'])) {
-            $formClass = config('form-maker.form.check-inline-class', 'form-check form-check-inline');
+            $formClass = config('forms.form.check-inline-class', 'form-check form-check-inline');
         }
 
         $fieldWrapper = "<div class=\"{$formClass}\">";
@@ -312,7 +312,7 @@ class FieldBuilder
             $label = $this->getNestedFieldLabel($label)[0];
         }
 
-        $labelClass = config('form-maker.form.label-check-class', 'form-check-label');
+        $labelClass = config('forms.form.label-check-class', 'form-check-label');
 
         $fieldLabel = "<label class=\"{$labelClass}\" for=\"{$options['attributes']['id']}\">{$label}</label>";
 

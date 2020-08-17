@@ -154,10 +154,10 @@ class HtmlForm extends Form
         parent::__construct();
 
         $buttonClasses = [
-            'submit' => $this->buttonClasses['submit'] ?? config('form-maker.buttons.submit', 'btn btn-primary'),
-            'edit' => $this->buttonClasses['edit'] ?? config('form-maker.buttons.edit', 'btn btn-outline-primary'),
-            'delete' => $this->buttonClasses['delete'] ?? config('form-maker.buttons.delete', 'btn btn-danger'),
-            'cancel' => $this->buttonClasses['cancel'] ?? config('form-maker.buttons.cancel', 'btn btn-secondary'),
+            'submit' => $this->buttonClasses['submit'] ?? config('forms.buttons.submit', 'btn btn-primary'),
+            'edit' => $this->buttonClasses['edit'] ?? config('forms.buttons.edit', 'btn btn-outline-primary'),
+            'delete' => $this->buttonClasses['delete'] ?? config('forms.buttons.delete', 'btn btn-danger'),
+            'cancel' => $this->buttonClasses['cancel'] ?? config('forms.buttons.cancel', 'btn btn-secondary'),
         ];
 
         $submitButton = (collect($this->buttons)->contains('submit')) ? 'Submit' : null;
@@ -173,8 +173,8 @@ class HtmlForm extends Form
         $this->buttonClasses = $buttonClasses;
         $this->buttons = $buttons;
 
-        $this->formClass = $this->formClass ?? config('form-maker.form.class', 'form');
-        $this->formDeleteClass = $this->formDeleteClass ?? config('form-maker.form.delete-class', 'form-inline');
+        $this->formClass = $this->formClass ?? config('forms.form.class', 'form');
+        $this->formDeleteClass = $this->formDeleteClass ?? config('forms.form.delete-class', 'form-inline');
     }
 
     /**
@@ -184,14 +184,14 @@ class HtmlForm extends Form
      */
     protected function formButtonsAndClose()
     {
-        $rowAlignment = config('form-maker.form.sections.row-alignment-end', 'd-flex justify-content-end');
+        $rowAlignment = config('forms.form.sections.row-alignment-end', 'd-flex justify-content-end');
 
         if (isset($this->buttons['cancel'])) {
-            $rowAlignment = config('form-maker.form.sections.row-alignment-between', 'd-flex justify-content-between');
+            $rowAlignment = config('forms.form.sections.row-alignment-between', 'd-flex justify-content-between');
         }
 
-        $formRow = config('form-maker.form.sections.row', 'row');
-        $formFullSizeColumn = config('form-maker.form.sections.full-size-column', 'col-md-12');
+        $formRow = config('forms.form.sections.row', 'row');
+        $formFullSizeColumn = config('forms.form.sections.full-size-column', 'col-md-12');
 
         $lastRowInForm = '<div class="' . $formRow . '">
             <div class="' . $formFullSizeColumn . ' ' . $rowAlignment . '">';

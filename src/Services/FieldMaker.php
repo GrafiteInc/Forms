@@ -58,10 +58,10 @@ class FieldMaker
         }
 
         $field = null;
-        $fieldGroup = config('form-maker.form.group-class', 'form-group');
+        $fieldGroup = config('forms.form.group-class', 'form-group');
 
         if ($this->orientation === 'horizontal') {
-            $fieldGroup = $fieldGroup . ' ' . config('form-maker.form.sections.row-class', 'row');
+            $fieldGroup = $fieldGroup . ' ' . config('forms.form.sections.row-class', 'row');
         }
 
         $value = $this->getOldValue($column);
@@ -78,9 +78,9 @@ class FieldMaker
             $columnConfig['attributes']['class'] =
                 $currentClass
                 . ' '
-                . config('form-maker.form.input-class', 'form-control')
+                . config('forms.form.input-class', 'form-control')
                 . ' '
-                . config('form-maker.form.invalid-input-class', 'is-invalid');
+                . config('forms.form.invalid-input-class', 'is-invalid');
         }
 
         $label = $this->label($column, $columnConfig, null, $errors);
@@ -104,14 +104,14 @@ class FieldMaker
         }
 
         if (isset($columnConfig['template'])) {
-            $rowClass = config('form-maker.form.group-class', 'form-group');
-            $labelClass = config('form-maker.form.label-class', 'control-label');
+            $rowClass = config('forms.form.group-class', 'form-group');
+            $labelClass = config('forms.form.label-class', 'control-label');
             $fieldClass = '';
 
             if ($this->orientation === 'horizontal') {
-                $labelClass = config('form-maker.form.label-column', 'col-md-2 col-form-label pt-0');
-                $fieldClass = config('form-maker.form.input-column', 'col-md-10');
-                $rowClass = $rowClass . ' ' . config('form-maker.form.sections.row-class', 'row');
+                $labelClass = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
+                $fieldClass = config('forms.form.input-column', 'col-md-10');
+                $rowClass = $rowClass . ' ' . config('forms.form.sections.row-class', 'row');
             }
 
             $options = $this->parseOptions($column, $columnConfig);
@@ -169,8 +169,8 @@ class FieldMaker
         $fieldString = $before . $field . $after;
 
         if ($this->orientation === 'horizontal') {
-            $labelColumn = config('form-maker.form.label-column', 'col-md-2 col-form-label pt-0');
-            $inputColumn = config('form-maker.form.input-column', 'col-md-10');
+            $labelColumn = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
+            $inputColumn = config('forms.form.input-column', 'col-md-10');
 
             $label = $this->label($column, $columnConfig, $labelColumn, $errors);
 
@@ -196,7 +196,7 @@ class FieldMaker
         }
 
         if (is_null($class)) {
-            $class = config('form-maker.form.label-class', 'control-label');
+            $class = config('forms.form.label-class', 'control-label');
         }
 
         if (isset($columnConfig['label'])) {
@@ -204,7 +204,7 @@ class FieldMaker
         }
 
         if (!empty($errors)) {
-            $class = $class . ' ' . config('form-maker.form.error-class', 'has-error');
+            $class = $class . ' ' . config('forms.form.error-class', 'has-error');
         }
 
         $id = $columnConfig['attributes']['id'] ?? $this->stripArrayHandles($column);
@@ -248,7 +248,7 @@ class FieldMaker
 
     public function getFieldErrors($column)
     {
-        $class = config('form-maker.form.invalid-feedback', 'invalid-feedback');
+        $class = config('forms.form.invalid-feedback', 'invalid-feedback');
 
         $errors = [];
 
@@ -269,7 +269,7 @@ class FieldMaker
         $prefix = '';
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
-            $class = config('form-maker.form.before_after_input_wrapper', 'input-group');
+            $class = config('forms.form.before_after_input_wrapper', 'input-group');
             $prefix = '<div class="' . $class . '">' . $columnConfig['before'];
         }
 
@@ -313,7 +313,7 @@ class FieldMaker
     private function parseOptions($name, $options)
     {
         $default = [
-            'class' => config('form-maker.form.input-class', 'form-control'),
+            'class' => config('forms.form.input-class', 'form-control'),
             'id' => ucfirst($name),
         ];
 

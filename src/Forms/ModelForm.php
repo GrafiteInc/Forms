@@ -138,8 +138,8 @@ class ModelForm extends HtmlForm
         $this->builder->setSections($this->setSections());
 
         if ($this->orientation == 'horizontal') {
-            if ($this->formClass === config('form-maker.form.horizontal-class')) {
-                $this->formClass = config('form-maker.form.horizontal-class', 'form-horizontal');
+            if ($this->formClass === config('forms.form.horizontal-class')) {
+                $this->formClass = config('forms.form.horizontal-class', 'form-horizontal');
             }
         }
 
@@ -178,8 +178,8 @@ class ModelForm extends HtmlForm
         $this->builder->setSections($this->setSections());
 
         if ($this->orientation == 'horizontal') {
-            if ($this->formClass === config('form-maker.form.horizontal-class')) {
-                $this->formClass = config('form-maker.form.horizontal-class', 'form-horizontal');
+            if ($this->formClass === config('forms.form.horizontal-class')) {
+                $this->formClass = config('forms.form.horizontal-class', 'form-horizontal');
             }
         }
 
@@ -303,7 +303,7 @@ class ModelForm extends HtmlForm
                         'order' => $order,
                     ]
                 ));
-                $icon = config('form-maker.html.sortable-icon', '&#8597;');
+                $icon = config('forms.html.sortable-icon', '&#8597;');
 
                 $header = "<a href=\"{$sortLink}\">{$header} {$icon}</a>";
             }
@@ -311,7 +311,7 @@ class ModelForm extends HtmlForm
             $headers .= "<th>{$header}</th>";
         }
 
-        $headers .= config('form-maker.html.table-actions-header', '<th class="text-right">Actions</th>');
+        $headers .= config('forms.html.table-actions-header', '<th class="text-right">Actions</th>');
 
         return $headers;
     }
@@ -379,18 +379,18 @@ class ModelForm extends HtmlForm
         $form = $this->open([
             'route' => $route,
             'method' => $method,
-            'class' => config('form-maker.form.search-class', 'form-inline')
+            'class' => config('forms.form.search-class', 'form-inline')
         ]);
 
-        $form .= '<div class="' . config('form-maker.form.before_after_input_wrapper', 'input-group') . '">';
+        $form .= '<div class="' . config('forms.form.before_after_input_wrapper', 'input-group') . '">';
             $form .= $this->field->makeInput('text', 'search', request('search'), [
                 'placeholder' => $placeholder,
-                'class' => config('form-maker.form.input-class', 'form-control')
+                'class' => config('forms.form.input-class', 'form-control')
             ]);
-            $form .= '<div class="' . config('form-maker.form.input-group-after', 'input-group-append') . '">';
+            $form .= '<div class="' . config('forms.form.input-group-after', 'input-group-append') . '">';
                 $form .= $this->field->button($submitValue, [
                     'type' => 'submit',
-                    'class' => config('form-maker.buttons.submit', 'btn btn-primary')
+                    'class' => config('forms.buttons.submit', 'btn btn-primary')
                 ]);
             $form .= '</div>';
         $form .= '</div>';
@@ -439,9 +439,9 @@ class ModelForm extends HtmlForm
             $paginated = $this->paginated();
         }
 
-        $spacing = config('form-maker.html.pagination', 'd-flex justify-content-center mt-4 mb-0');
-        $tableClass = config('form-maker.html.table', 'table table-borderless m-0 p-0');
-        $tableHeadClass = config('form-maker.html.table-head', 'thead');
+        $spacing = config('forms.html.pagination', 'd-flex justify-content-center mt-4 mb-0');
+        $tableClass = config('forms.html.table', 'table table-borderless m-0 p-0');
+        $tableHeadClass = config('forms.html.table-head', 'thead');
 
         $this->html = <<<EOT
 <table class="{$tableClass}">

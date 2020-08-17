@@ -80,8 +80,8 @@ class BaseForm extends HtmlForm
     public function make()
     {
         if ($this->orientation == 'horizontal') {
-            if ($this->formClass === config('form-maker.form.horizontal-class')) {
-                $this->formClass = config('form-maker.form.horizontal-class', 'form-horizontal');
+            if ($this->formClass === config('forms.form.horizontal-class')) {
+                $this->formClass = config('forms.form.horizontal-class', 'form-horizontal');
             }
         }
 

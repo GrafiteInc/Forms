@@ -32,7 +32,7 @@ class FormMaker
         $this->connection = config('database.default');
 
         if (is_null($this->orientation)) {
-            $this->orientation = config('form-maker.form.orientation', 'vertical');
+            $this->orientation = config('forms.form.orientation', 'vertical');
         }
     }
 
@@ -262,7 +262,7 @@ class FormMaker
      */
     public function defaultJs()
     {
-        $formValidationClass = config('form-maker.form.invalid-input-class', 'is-invalid');
+        $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
 
         $formValidation = <<<EOT
 let _fields = document.getElementsByClassName('{$formValidationClass}');
@@ -345,10 +345,10 @@ EOT;
             $formChunks = array_chunk($fields, $columns);
         }
 
-        $columnBase = config('form-maker.sections.column-base', 'col-md-');
-        $rowClass = config('form-maker.sections.row-class', 'row');
-        $fullSizeColumn = config('form-maker.sections.full-size-column', 'col-md-12');
-        $headerSpacing = config('form-maker.sections.header-spacing', 'mt-2 mb-2');
+        $columnBase = config('forms.sections.column-base', 'col-md-');
+        $rowClass = config('forms.sections.row-class', 'row');
+        $fullSizeColumn = config('forms.sections.full-size-column', 'col-md-12');
+        $headerSpacing = config('forms.sections.header-spacing', 'mt-2 mb-2');
 
         if (!is_null($label)) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
