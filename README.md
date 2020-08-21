@@ -58,13 +58,13 @@ The package was renamed in version 3 to 4. This means that the following would n
 
 `@formMaker` -> `@forms`
 
-`<x-f></x-f>` -> `<x-fm></x-fm>`
+`<x-fm></x-fm>` -> `<x-f></x-f>`
 
-`<x-f-action></x-f-action>` -> `<x-fm-action></x-fm-action>`
+`<x-fm-action></x-fm-action>` -> `<x-f-action></x-f-action>`
 
-`<x-f-delete></x-f-delete>` -> `<x-fm-delete></x-fm-delete>`
+`<x-fm-delete></x-fm-delete>` -> `<x-f-delete></x-f-delete>`
 
-`<x-f-search></x-f-search>` -> `<x-fm-search></x-fm-search>`
+`<x-fm-search></x-fm-search>` -> `<x-f-search></x-f-search>`
 
 ## License
 Forms is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
