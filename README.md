@@ -53,11 +53,17 @@ php artisan vendor:publish --provider="Grafite\Forms\FormsProvider"
 The package was renamed in version 3 to 4. This means that the following would need to be changed on your code base:
 
 `form-maker.php` -> `forms.php`
+
 `Grafite\FormMaker` -> `Grafite\Forms`
+
 `@formMaker` -> `@forms`
+
 `<x-f></x-f>` -> `<x-fm></x-fm>`
+
 `<x-f-action></x-f-action>` -> `<x-fm-action></x-fm-action>`
+
 `<x-f-delete></x-f-delete>` -> `<x-fm-delete></x-fm-delete>`
+
 `<x-f-search></x-f-search>` -> `<x-fm-search></x-fm-search>`
 
 ## License
