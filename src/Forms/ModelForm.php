@@ -123,6 +123,10 @@ class ModelForm extends HtmlForm
             $this->builder->setJsValidation($this->withJsValidation);
         }
 
+        if (! is_null($this->scripts())) {
+            $this->builder->setFormJs($this->scripts());
+        }
+
         foreach ($this->routes as $key => $route) {
             $this->routes[$key] = "{$this->routePrefix}{$route}";
         }

@@ -26,6 +26,11 @@ class UserHistoryForm extends BaseForm
             Tags::make('qualities'),
         ];
     }
+
+    public function scripts()
+    {
+        return "console.log('hello world')";
+    }
 }
 
 class FormAssetsTest extends TestCase
@@ -57,6 +62,15 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString('History', $form);
     }
 
+    public function testMakeFormScripts()
+    {
+        $this->form->make();
+
+        $assets = $this->formAssets->render();
+
+        $this->assertStringContainsString("console.log('hello world')", $assets);
+    }
+
     public function testAssetCounts()
     {
         $this->form->make();
@@ -64,7 +78,7 @@ class FormAssetsTest extends TestCase
         $this->assertEquals(3, count($this->formAssets->stylesheets));
         $this->assertEquals(2, count($this->formAssets->scripts));
         $this->assertEquals(2, count($this->formAssets->styles));
-        $this->assertEquals(3, count($this->formAssets->js));
+        $this->assertEquals(4, count($this->formAssets->js));
     }
 
     public function testAssetContents()

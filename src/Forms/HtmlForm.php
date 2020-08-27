@@ -326,6 +326,16 @@ class HtmlForm extends Form
     }
 
     /**
+     * Scripts for the Form
+     *
+     * @return mixed
+     */
+    public function scripts()
+    {
+        return null;
+    }
+
+    /**
      * Output html as string
      *
      * @return string

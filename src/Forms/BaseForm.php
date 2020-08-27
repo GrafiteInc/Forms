@@ -48,6 +48,10 @@ class BaseForm extends HtmlForm
         if (! is_null($this->withJsValidation)) {
             $this->builder->setJsValidation($this->withJsValidation);
         }
+
+        if (! is_null($this->scripts())) {
+            $this->builder->setFormJs($this->scripts());
+        }
     }
 
     /**

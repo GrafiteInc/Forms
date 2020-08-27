@@ -255,6 +255,11 @@ class FormMaker
         }
     }
 
+    public function setFormJs($scripts)
+    {
+        $this->formAssets->addJs($scripts);
+    }
+
     /**
      * The default JS for form validation
      *
