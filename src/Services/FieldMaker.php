@@ -76,16 +76,7 @@ class FieldMaker
 
         $errors = $this->getFieldErrors($column, $object);
 
-        if (! empty($errors)) {
-            $currentClass = $columnConfig['attributes']['class'] ?? ' ';
-
-            $columnConfig['attributes']['class'] =
-                $currentClass
-                . ' '
-                . config('forms.form.input-class', 'form-control')
-                . ' '
-                . config('forms.form.invalid-input-class', 'is-invalid');
-        }
+        $this->setClassIfErrors($columnConfig, $errors);
 
         $label = $this->label($column, $columnConfig, null, $errors);
 
@@ -192,19 +183,10 @@ class FieldMaker
 
     public function label($column, $columnConfig, $class = null, $errors)
     {
-        $label = Str::title($column);
-        $label = str_replace('_', ' ', $label);
-
-        if (Str::contains($label, '[')) {
-            $label = $this->getNestedFieldLabel($label)[0];
-        }
+        $label = $this->getLabel($column, $columnConfig);
 
         if (is_null($class)) {
             $class = config('forms.form.label-class', 'control-label');
-        }
-
-        if (isset($columnConfig['label'])) {
-            $label = $columnConfig['label'];
         }
 
         if (!empty($errors)) {
@@ -248,6 +230,22 @@ class FieldMaker
         }
 
         return '';
+    }
+
+    public function getLabel($column, $columnConfig)
+    {
+        $label = Str::title($column);
+        $label = str_replace('_', ' ', $label);
+
+        if (Str::contains($label, '[')) {
+            $label = $this->getNestedFieldLabel($label)[0];
+        }
+
+        if (isset($columnConfig['label'])) {
+            $label = $columnConfig['label'];
+        }
+
+        return $label;
     }
 
     public function getFieldErrors($column)
@@ -336,5 +334,20 @@ class FieldMaker
         preg_match_all("/\[([^\]]*)\]/", $label, $matches);
 
         return $matches[1];
+    }
+
+    private function setClassIfErrors($columnConfig, $errors)
+    {
+        if (! empty($errors)) {
+            $currentClass = $columnConfig['attributes']['class'] ?? ' ';
+
+            $columnConfig['attributes']['class'] = $currentClass
+                . ' '
+                . config('forms.form.input-class', 'form-control')
+                . ' '
+                . config('forms.form.invalid-input-class', 'is-invalid');
+        }
+
+        return null;
     }
 }
