@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.1.1] - 2020-08-31
+
+### Fixed
+- Issue with datepicker updates
+- Issue with old request being lost to empty object fields
+
 ## [v4.1.0] - 2020-08-27
 
 ### Added
