@@ -66,8 +66,12 @@ class FieldMaker
 
         $value = $this->getOldValue($column);
 
-        if (!is_null($object)) {
-            $value = $this->getObjectValue($object, $column);
+        if (! is_null($object)) {
+            $objectValue = $this->getObjectValue($object, $column);
+
+            if (! empty($objectValue)) {
+                $value = $objectValue;
+            }
         }
 
         $errors = $this->getFieldErrors($column, $object);
