@@ -7,9 +7,12 @@ use Illuminate\Routing\UrlGenerator;
 use Grafite\Forms\Forms\HtmlForm;
 use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Builders\FieldBuilder;
+use Grafite\Forms\Forms\Traits\VueComponent;
 
 class ModelForm extends HtmlForm
 {
+    use VueComponent;
+
     /**
      * Model class
      *

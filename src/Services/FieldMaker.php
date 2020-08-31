@@ -51,6 +51,40 @@ class FieldMaker
         $this->builder = $fieldBuilder;
     }
 
+    public function forVue($column, $columnConfig, $object)
+    {
+        $errors = $this->getFieldErrors($column, $object);
+
+         $this->setClassIfErrors($columnConfig, $errors);
+
+        $options = $this->parseOptions($column, $columnConfig);
+
+        $id = $options['attributes']['id'];
+
+        $name = Str::title($column);
+        $name = str_replace('_', ' ', $name);
+        $name = $options['label'] ?? $name;
+
+        // $fi = config('forms.form.sections.full-size-column', 'col-md-12');
+
+        if ($this->orientation === 'horizontal') {
+            $labelColumn = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
+            $inputColumn = config('forms.form.input-column', 'col-md-10');
+        }
+
+        return array_merge($columnConfig, [
+            'key' => $column,
+            'name' => $name,
+            'id' => $id,
+            'label_class' => config('forms.form.label-class'),
+            // 'label_column' => $labelColumn,
+            // 'input_column' => $inputColumn,
+            'class' => $options['attributes']['class'],
+            'group_class' => config('forms.form.group-class', 'form-group'),
+            'label' => $this->getLabel($column, $columnConfig)
+        ]);
+    }
+
     public function make(string $column, array $columnConfig, $object = null)
     {
         if ($columnConfig['type'] === 'html') {
