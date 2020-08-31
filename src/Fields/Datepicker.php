@@ -94,14 +94,19 @@ EOT;
     {
         $startDay = $options['start-day'] ?? 1;
         $format = $options['format'] ?? 'YYYY-MM-DD';
+        $event = $options['event'] ?? 'keydown';
 
         return <<<EOT
-datepicker("#$id", {
+var _{$id}Datepicker = datepicker("#$id", {
   startDay: $startDay,
   dateSelected: moment(document.getElementById("$id").value).toDate(),
   formatter: (input, date, instance) => {
       input.value = moment(date).format("$format");
   }
+});
+document.getElementById("$id").addEventListener('{$event}', function () {
+    let date = moment(this.value).toDate();
+    _{$id}Datepicker.setDate(date, true);
 });
 EOT;
     }
