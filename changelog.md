@@ -5,6 +5,9 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [v4.1.3] - 2020-09-17
 
+### Fixed
+- Issue with 0 values in forms
+
 ## [v4.1.2] - 2020-09-17
 
 ### Fixed
