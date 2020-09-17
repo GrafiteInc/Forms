@@ -350,10 +350,10 @@ EOT;
             $formChunks = array_chunk($fields, $columns);
         }
 
-        $columnBase = config('forms.sections.column-base', 'col-md-');
-        $rowClass = config('forms.sections.row-class', 'row');
-        $fullSizeColumn = config('forms.sections.full-size-column', 'col-md-12');
-        $headerSpacing = config('forms.sections.header-spacing', 'mt-2 mb-2');
+        $columnBase = config('forms.form.sections.column-base', 'col-md-');
+        $rowClass = config('forms.form.sections.row-class', 'row');
+        $fullSizeColumn = config('forms.form.sections.full-size-column', 'col-md-12');
+        $headerSpacing = config('forms.form.sections.header-spacing', 'mt-2 mb-2');
 
         if (!is_null($label)) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
