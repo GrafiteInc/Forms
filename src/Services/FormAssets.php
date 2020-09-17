@@ -39,7 +39,12 @@ class FormAssets
             $minifierJS = new JS();
             $js = $minifierJS->add($js)->minify();
         }
-        $output .= "<script>\n{$js}\n</script>\n";
+
+        $output .= "<script>\n
+        {$js}
+            Livewire.hook('message.processed', (el, component) => {
+                {$js}
+            })\n</script>\n";
 
         return $output;
     }

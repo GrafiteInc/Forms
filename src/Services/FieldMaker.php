@@ -11,6 +11,8 @@ class FieldMaker
 
     public $orientation;
 
+    public $errorBag;
+
     protected $standard = [
         'hidden',
         'text',
@@ -49,6 +51,13 @@ class FieldMaker
     public function __construct(FieldBuilder $fieldBuilder)
     {
         $this->builder = $fieldBuilder;
+    }
+
+    public function setErrorBag($bag)
+    {
+        $this->errorBag = $bag;
+
+        return $this;
     }
 
     public function make(string $column, array $columnConfig, $object = null)
@@ -258,8 +267,15 @@ class FieldMaker
             $errors = session('errors');
         }
 
+        if (! is_null($this->errorBag)) {
+            $errors = $this->errorBag;
+            $column = 'data.'.$column;
+        }
+
         if (!is_null($errors) && count($errors) > 0 && $errors->get($column)) {
             $message = implode(' ', $errors->get($column));
+            $message = str_replace('data.', '', $message);
+
             return "<div class=\"{$class}\">{$message}</div>";
         }
 

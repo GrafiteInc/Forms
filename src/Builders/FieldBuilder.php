@@ -59,7 +59,7 @@ class FieldBuilder
             unset($options['value']);
         }
 
-        return '<input ' . $this->attributes($options) . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
+        return '<input wire:model="data.'.$name.'" ' . $this->attributes($options) . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
     }
 
     /**

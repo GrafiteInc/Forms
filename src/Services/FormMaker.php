@@ -25,6 +25,8 @@ class FormMaker
 
     public $connection;
 
+    public $errorBag;
+
     public function __construct()
     {
         $this->fieldMaker = app(FieldMaker::class);
@@ -44,6 +46,13 @@ class FormMaker
     public function setConnection($connection)
     {
         $this->connection = $connection;
+
+        return $this;
+    }
+
+    public function setErrorBag($bag)
+    {
+        $this->errorBag = $bag;
 
         return $this;
     }
@@ -121,7 +130,9 @@ class FormMaker
 
             $this->setAssets($columnConfig);
 
-            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
+            $fieldCollection[$column] = $this->fieldMaker
+                ->setErrorBag($this->errorBag)
+                ->make($column, $columnConfig);
         }
 
         $this->defaultJs();
@@ -149,7 +160,9 @@ class FormMaker
 
             $this->setAssets($columnConfig);
 
-            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
+            $fieldCollection[$column] = $this->fieldMaker
+                ->setErrorBag($this->errorBag)
+                ->make($column, $columnConfig);
         }
 
         $this->defaultJs();
@@ -186,7 +199,9 @@ class FormMaker
 
             $this->setAssets($columnConfig);
 
-            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig, $object);
+            $fieldCollection[$column] = $this->fieldMaker
+                ->setErrorBag($this->errorBag)
+                ->make($column, $columnConfig, $object);
         }
 
         $this->defaultJs();
