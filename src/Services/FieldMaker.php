@@ -69,7 +69,7 @@ class FieldMaker
         if (! is_null($object)) {
             $objectValue = $this->getObjectValue($object, $column);
 
-            if (! empty($objectValue)) {
+            if (isset($objectValue)) {
                 $value = $objectValue;
             }
         }
