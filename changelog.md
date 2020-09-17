@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.1.4] - 2020-09-17
+
+### Added
+- HTML Span snippet
+- Ability to set keys for HTML snippets
+
+### Fixed
+- Issue with section row classes
+
 ## [v4.1.3] - 2020-09-17
 
 ### Fixed
