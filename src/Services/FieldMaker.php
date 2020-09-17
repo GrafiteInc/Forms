@@ -76,7 +76,7 @@ class FieldMaker
 
         $errors = $this->getFieldErrors($column, $object);
 
-        $this->setClassIfErrors($columnConfig, $errors);
+        $columnConfig = $this->setClassIfErrors($columnConfig, $errors);
 
         $label = $this->label($column, $columnConfig, null, $errors);
 
@@ -348,6 +348,6 @@ class FieldMaker
                 . config('forms.form.invalid-input-class', 'is-invalid');
         }
 
-        return null;
+        return $columnConfig;
     }
 }
