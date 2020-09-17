@@ -12,7 +12,7 @@ class HtmlSnippet
         return null;
     }
 
-    public static function make($content = null)
+    public static function make($content = null, $name = null)
     {
         if (is_array($content) || is_null($content)) {
             $content = static::content($content);
@@ -20,7 +20,9 @@ class HtmlSnippet
 
         throw_if(is_null($content), new Exception('Content cannot be null'));
 
-        $name = 'html-snippet-' . Str::uuid();
+        if (is_null($name)) {
+            $name = 'html-snippet-' . Str::uuid();
+        }
 
         return [
             $name => [
