@@ -27,6 +27,8 @@ class FormMaker
 
     public $errorBag;
 
+    public $withLivewire = false;
+
     public function __construct()
     {
         $this->fieldMaker = app(FieldMaker::class);
@@ -65,6 +67,18 @@ class FormMaker
     public function setColumns($columns)
     {
         $this->columns = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Set if the form is using livewire
+     *
+     * @param bool $livewire
+     */
+    public function setLivewire($livewire)
+    {
+        $this->withLivewire = $livewire;
 
         return $this;
     }
@@ -301,6 +315,10 @@ for (let i = 0; i < _fields.length; i++) {
     });
 }
 EOT;
+
+        if ($this->withLivewire) {
+            $this->formAssets->setLivewire($this->withLivewire);
+        }
 
         if ($this->withJsValidation) {
             $this->formAssets->addJs($formValidation);

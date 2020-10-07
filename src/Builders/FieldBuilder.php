@@ -59,7 +59,9 @@ class FieldBuilder
             unset($options['value']);
         }
 
-        return '<input wire:model="data.'.$name.'" ' . $this->attributes($options) . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
+        $attributes = $this->attributes($options) . ' ' . $this->livewireAttribute($name);
+
+        return '<input ' . $attributes . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
     }
 
     /**
@@ -78,7 +80,9 @@ class FieldBuilder
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
-        return '<' . $type . ' ' . $this->attributes($options) . ' name="' . $name . '" value="' . e($value) . '"></' . $type . '>';
+        $attributes = $this->attributes($options) . ' ' . $this->livewireAttribute($name);
+
+        return '<' . $type . ' ' . $attributes . ' name="' . $name . '" value="' . e($value) . '"></' . $type . '>';
     }
 
     /**
@@ -157,7 +161,7 @@ class FieldBuilder
         $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
         $options['attributes']['class'] = $options['attributes']['class'] . ' ' . $customFileClass;
 
-        $attributes = $this->attributes($options['attributes']);
+        $attributes = $this->attributes($options['attributes']) . ' ' . $this->livewireAttribute($name);
 
         $input = '<div class="' . $customFileWrapperClass . '">';
         $input .= '<input ' . $attributes . ' type="file" name="' . $name . '">';
@@ -177,7 +181,7 @@ class FieldBuilder
      */
     public function makeTextarea($name, $value, $options)
     {
-        $attributes = $this->attributes($options['attributes']);
+        $attributes = $this->attributes($options['attributes']) . ' ' . $this->livewireAttribute($name);
 
         return '<textarea ' . $attributes . ' name="' . $name . '">' . e($value) . '</textarea>';
     }
@@ -265,7 +269,7 @@ class FieldBuilder
             $selectOptions .= '<option value="' . $value . '" ' . $selectedValue . '>' . $key . '</option>';
         }
 
-        $attributes = $this->attributes($options['attributes']);
+        $attributes = $this->attributes($options['attributes']) . ' ' . $this->livewireAttribute($name);
 
         return '<select ' . $attributes . ' name="' . $name . '">' . $selectOptions . '</select>';
     }
@@ -331,7 +335,7 @@ class FieldBuilder
     public function makeCheckbox($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
-        $attributes = $this->attributes($options['attributes']);
+        $attributes = $this->attributes($options['attributes']) . ' ' . $this->livewireAttribute($name);
 
         return '<input ' . $attributes . ' type="checkbox" name="' . $name . '" ' . $checked . '>';
     }
@@ -348,7 +352,7 @@ class FieldBuilder
     public function makeRadio($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
-        $attributes = $this->attributes($options['attributes']);
+        $attributes = $this->attributes($options['attributes']) . ' ' . $this->livewireAttribute($name);
 
         return '<input ' . $attributes . ' type="radio" name="' . $name . '" ' . $checked . '>';
     }
@@ -441,6 +445,11 @@ class FieldBuilder
         }
 
         return '';
+    }
+
+    public function livewireAttribute($name)
+    {
+        return "wire:model=\"data.{$name}\"";
     }
 
     private function getNestedFieldLabel($label)

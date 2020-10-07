@@ -91,18 +91,26 @@ class BaseForm extends HtmlForm
 
         $this->builder->setSections($this->setSections());
 
-        $this->html = $this->open([
+        $options = [
             'route' => $this->route,
             'method' => $this->method,
             'files' => $this->hasFiles,
             'class' => $this->formClass,
             'id' => $this->formId
-        ]);
+        ];
+
+        if ($this->withLivewire) {
+            $options['wire:submit.prevent'] = 'submit';
+        }
+
+        $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());
 
         $this->renderedFields = $this->builder
             ->setColumns($this->columns)
+            ->setLivewire($this->withLivewire)
+            ->setErrorBag($this->errorBag)
             ->fromFields($fields);
 
         $this->html .= $this->renderedFields;

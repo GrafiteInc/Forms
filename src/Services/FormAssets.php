@@ -15,6 +15,8 @@ class FormAssets
 
     public $js = [];
 
+    public $withLivewire = false;
+
     /**
      * Render the form assets
      *
@@ -35,16 +37,21 @@ class FormAssets
         $output .= "<style>\n{$styles}\n</style>\n";
 
         $js = collect($this->js)->unique()->implode("\n");
+
         if (app()->environment('production')) {
             $minifierJS = new JS();
             $js = $minifierJS->add($js)->minify();
         }
 
-        $output .= "<script>\n
-        {$js}
-            Livewire.hook('message.processed', (el, component) => {
+        $livewire = '';
+
+        if ($this->withLivewire) {
+            $livewire = "Livewire.hook('message.processed', (el, component) => {
                 {$js}
-            })\n</script>\n";
+            })";
+        }
+
+        $output .= "<script>\n{$js}\n{$livewire}\n</script>\n";
 
         return $output;
     }
@@ -105,6 +112,19 @@ class FormAssets
         if (!is_null($js)) {
             $this->js[] = $js;
         }
+
+        return $this;
+    }
+
+    /**
+     * Set if the assets should handle livewire
+     *
+     * @param bool $livewire
+     * @return self
+     */
+    public function setLivewire($livewire)
+    {
+        $this->withLivewire = $livewire;
 
         return $this;
     }

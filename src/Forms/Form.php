@@ -17,6 +17,20 @@ class Form
     public $session;
 
     /**
+     * The error bag
+     *
+     * @var mixed
+     */
+    public $errorBag;
+
+    /**
+     * If the form should be livewire based or not
+     *
+     * @var bool
+     */
+    public $withLivewire = false;
+
+    /**
      * The model to be bound
      *
      * @var mixed
@@ -181,11 +195,17 @@ class Form
     {
         $method = Arr::get($options, 'method', 'post');
 
-        $attributes['method'] = $this->getMethod($method);
-        $attributes['action'] = $this->getAction($options);
-        $attributes['accept-charset'] = 'UTF-8';
+        if (! $this->withLivewire) {
+            $attributes['method'] = $this->getMethod($method);
+            $attributes['action'] = $this->getAction($options);
+        }
 
-        $append = $this->getAppendage($method);
+        $attributes['accept-charset'] = 'UTF-8';
+        $append = '';
+
+        if (! $this->withLivewire) {
+            $append = $this->getAppendage($method);
+        }
 
         if (isset($options['files']) && $options['files']) {
             $options['enctype'] = 'multipart/form-data';
@@ -321,6 +341,19 @@ class Form
         $this->model = $model;
 
         return $this->open($options);
+    }
+
+    /**
+     * Set the error bag
+     *
+     * @param [type] $bag
+     * @return void
+     */
+    public function setErrorBag($bag)
+    {
+        $this->errorBag = $bag;
+
+        return $this;
     }
 
     /**
