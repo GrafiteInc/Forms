@@ -110,6 +110,7 @@ class BaseForm extends HtmlForm
         $this->renderedFields = $this->builder
             ->setColumns($this->columns)
             ->setLivewire($this->withLivewire)
+            ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
             ->fromFields($fields);
 

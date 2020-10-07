@@ -3,15 +3,24 @@
 namespace Grafite\Forms\Services;
 
 use Illuminate\Support\Str;
+use Grafite\Forms\Traits\HasErrorBag;
+use Grafite\Forms\Traits\HasLivewire;
 use Grafite\Forms\Builders\FieldBuilder;
 
 class FieldMaker
 {
+    use HasLivewire;
+    use HasErrorBag;
+
     protected $builder;
 
     public $orientation;
 
     public $errorBag;
+
+    public $withLivewire;
+
+    public $livewireOnKeydown;
 
     protected $standard = [
         'hidden',
@@ -53,15 +62,12 @@ class FieldMaker
         $this->builder = $fieldBuilder;
     }
 
-    public function setErrorBag($bag)
-    {
-        $this->errorBag = $bag;
-
-        return $this;
-    }
-
     public function make(string $column, array $columnConfig, $object = null)
     {
+        $this->builder
+            ->setLivewire($this->withLivewire)
+            ->setLivewireOnKeydown($this->livewireOnKeydown);
+
         if ($columnConfig['type'] === 'html') {
             return $columnConfig['content'];
         }

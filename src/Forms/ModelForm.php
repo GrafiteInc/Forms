@@ -83,9 +83,9 @@ class ModelForm extends HtmlForm
     ];
 
     /**
-     * The field builder
+     * The form builder
      *
-     * @var \Grafite\Forms\Builders\FieldBuilder
+     * @var \Grafite\Forms\Services\FormMaker
      */
     protected $builder;
 
@@ -168,6 +168,7 @@ class ModelForm extends HtmlForm
             ->setConnection($this->connection)
             ->setColumns($this->columns)
             ->setLivewire($this->withLivewire)
+            ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
             ->fromTable($this->modelClass->getTable(), $fields);
 
@@ -217,6 +218,7 @@ class ModelForm extends HtmlForm
             ->setConnection($this->connection)
             ->setColumns($this->columns)
             ->setLivewire($this->withLivewire)
+            ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
             ->fromObject($this->instance, $fields);
 

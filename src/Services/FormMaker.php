@@ -4,15 +4,20 @@ namespace Grafite\Forms\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use Grafite\Forms\Traits\HasLivewire;
+use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Services\FieldMaker;
 use Grafite\Forms\Services\FormAssets;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * FormMaker helper to make table and object form mapping easy.
  */
 class FormMaker
 {
+    use HasLivewire;
+    use HasErrorBag;
+
     protected $columns = 1;
 
     protected $sections = [];
@@ -28,6 +33,8 @@ class FormMaker
     public $errorBag;
 
     public $withLivewire = false;
+
+    public $livewireOnKeydown = false;
 
     public function __construct()
     {
@@ -52,13 +59,6 @@ class FormMaker
         return $this;
     }
 
-    public function setErrorBag($bag)
-    {
-        $this->errorBag = $bag;
-
-        return $this;
-    }
-
     /**
      * Set the columns of the form
      *
@@ -67,18 +67,6 @@ class FormMaker
     public function setColumns($columns)
     {
         $this->columns = $columns;
-
-        return $this;
-    }
-
-    /**
-     * Set if the form is using livewire
-     *
-     * @param bool $livewire
-     */
-    public function setLivewire($livewire)
-    {
-        $this->withLivewire = $livewire;
 
         return $this;
     }
@@ -146,6 +134,8 @@ class FormMaker
 
             $fieldCollection[$column] = $this->fieldMaker
                 ->setErrorBag($this->errorBag)
+                ->setLivewire($this->withLivewire)
+                ->setLivewireOnKeydown($this->livewireOnKeydown)
                 ->make($column, $columnConfig);
         }
 
@@ -176,6 +166,8 @@ class FormMaker
 
             $fieldCollection[$column] = $this->fieldMaker
                 ->setErrorBag($this->errorBag)
+                ->setLivewire($this->withLivewire)
+                ->setLivewireOnKeydown($this->livewireOnKeydown)
                 ->make($column, $columnConfig);
         }
 
@@ -215,6 +207,8 @@ class FormMaker
 
             $fieldCollection[$column] = $this->fieldMaker
                 ->setErrorBag($this->errorBag)
+                ->setLivewire($this->withLivewire)
+                ->setLivewireOnKeydown($this->livewireOnKeydown)
                 ->make($column, $columnConfig, $object);
         }
 
