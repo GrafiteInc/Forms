@@ -4,9 +4,12 @@ namespace Grafite\Forms\Services;
 
 use MatthiasMullie\Minify\JS;
 use MatthiasMullie\Minify\CSS;
+use Grafite\Forms\Traits\HasLivewire;
 
 class FormAssets
 {
+    use HasLivewire;
+
     public $stylesheets = [];
 
     public $scripts = [];
@@ -14,6 +17,10 @@ class FormAssets
     public $styles = [];
 
     public $js = [];
+
+    public $withLivewire = false;
+
+    public $livewireOnKeydown = false;
 
     /**
      * Render the form assets
@@ -35,11 +42,21 @@ class FormAssets
         $output .= "<style>\n{$styles}\n</style>\n";
 
         $js = collect($this->js)->unique()->implode("\n");
+
         if (app()->environment('production')) {
             $minifierJS = new JS();
             $js = $minifierJS->add($js)->minify();
         }
-        $output .= "<script>\n{$js}\n</script>\n";
+
+        $livewire = '';
+
+        if ($this->withLivewire) {
+            $livewire = "Livewire.hook('message.processed', (el, component) => {
+                {$js}
+            })";
+        }
+
+        $output .= "<script>\n{$js}\n{$livewire}\n</script>\n";
 
         return $output;
     }

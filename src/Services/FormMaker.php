@@ -4,15 +4,20 @@ namespace Grafite\Forms\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Schema;
+use Grafite\Forms\Traits\HasLivewire;
+use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Services\FieldMaker;
 use Grafite\Forms\Services\FormAssets;
+use Illuminate\Support\Facades\Schema;
 
 /**
  * FormMaker helper to make table and object form mapping easy.
  */
 class FormMaker
 {
+    use HasLivewire;
+    use HasErrorBag;
+
     protected $columns = 1;
 
     protected $sections = [];
@@ -24,6 +29,12 @@ class FormMaker
     protected $fieldMaker;
 
     public $connection;
+
+    public $errorBag;
+
+    public $withLivewire = false;
+
+    public $livewireOnKeydown = false;
 
     public function __construct()
     {
@@ -121,7 +132,11 @@ class FormMaker
 
             $this->setAssets($columnConfig);
 
-            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
+            $fieldCollection[$column] = $this->fieldMaker
+                ->setErrorBag($this->errorBag)
+                ->setLivewire($this->withLivewire)
+                ->setLivewireOnKeydown($this->livewireOnKeydown)
+                ->make($column, $columnConfig);
         }
 
         $this->defaultJs();
@@ -149,7 +164,11 @@ class FormMaker
 
             $this->setAssets($columnConfig);
 
-            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig);
+            $fieldCollection[$column] = $this->fieldMaker
+                ->setErrorBag($this->errorBag)
+                ->setLivewire($this->withLivewire)
+                ->setLivewireOnKeydown($this->livewireOnKeydown)
+                ->make($column, $columnConfig);
         }
 
         $this->defaultJs();
@@ -186,7 +205,11 @@ class FormMaker
 
             $this->setAssets($columnConfig);
 
-            $fieldCollection[$column] = $this->fieldMaker->make($column, $columnConfig, $object);
+            $fieldCollection[$column] = $this->fieldMaker
+                ->setErrorBag($this->errorBag)
+                ->setLivewire($this->withLivewire)
+                ->setLivewireOnKeydown($this->livewireOnKeydown)
+                ->make($column, $columnConfig, $object);
         }
 
         $this->defaultJs();
@@ -286,6 +309,10 @@ for (let i = 0; i < _fields.length; i++) {
     });
 }
 EOT;
+
+        if ($this->withLivewire) {
+            $this->formAssets->setLivewire($this->withLivewire);
+        }
 
         if ($this->withJsValidation) {
             $this->formAssets->addJs($formValidation);

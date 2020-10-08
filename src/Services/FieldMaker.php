@@ -3,13 +3,24 @@
 namespace Grafite\Forms\Services;
 
 use Illuminate\Support\Str;
+use Grafite\Forms\Traits\HasErrorBag;
+use Grafite\Forms\Traits\HasLivewire;
 use Grafite\Forms\Builders\FieldBuilder;
 
 class FieldMaker
 {
+    use HasLivewire;
+    use HasErrorBag;
+
     protected $builder;
 
     public $orientation;
+
+    public $errorBag;
+
+    public $withLivewire;
+
+    public $livewireOnKeydown;
 
     protected $standard = [
         'hidden',
@@ -53,6 +64,10 @@ class FieldMaker
 
     public function make(string $column, array $columnConfig, $object = null)
     {
+        $this->builder
+            ->setLivewire($this->withLivewire)
+            ->setLivewireOnKeydown($this->livewireOnKeydown);
+
         if ($columnConfig['type'] === 'html') {
             return $columnConfig['content'];
         }
@@ -258,8 +273,15 @@ class FieldMaker
             $errors = session('errors');
         }
 
+        if (! is_null($this->errorBag)) {
+            $errors = $this->errorBag;
+            $column = 'data.'.$column;
+        }
+
         if (!is_null($errors) && count($errors) > 0 && $errors->get($column)) {
             $message = implode(' ', $errors->get($column));
+            $message = str_replace('data.', '', $message);
+
             return "<div class=\"{$class}\">{$message}</div>";
         }
 

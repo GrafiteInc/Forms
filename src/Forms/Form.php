@@ -5,16 +5,40 @@ namespace Grafite\Forms\Forms;
 use Illuminate\Support\Arr;
 use Illuminate\Support\HtmlString;
 use Illuminate\Routing\UrlGenerator;
+use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Builders\FieldBuilder;
 
 class Form
 {
+    use HasErrorBag;
+
     /**
      * Laravel session
      *
      * @var Session
      */
     public $session;
+
+    /**
+     * The error bag
+     *
+     * @var mixed
+     */
+    public $errorBag;
+
+    /**
+     * If the form should be livewire based or not
+     *
+     * @var bool
+     */
+    public $withLivewire = false;
+
+    /**
+     * If the form should submit on keydown
+     *
+     * @var bool
+     */
+    public $livewireOnKeydown = false;
 
     /**
      * The model to be bound
@@ -181,11 +205,17 @@ class Form
     {
         $method = Arr::get($options, 'method', 'post');
 
-        $attributes['method'] = $this->getMethod($method);
-        $attributes['action'] = $this->getAction($options);
-        $attributes['accept-charset'] = 'UTF-8';
+        if (! $this->withLivewire) {
+            $attributes['method'] = $this->getMethod($method);
+            $attributes['action'] = $this->getAction($options);
+        }
 
-        $append = $this->getAppendage($method);
+        $attributes['accept-charset'] = 'UTF-8';
+        $append = '';
+
+        if (! $this->withLivewire) {
+            $append = $this->getAppendage($method);
+        }
 
         if (isset($options['files']) && $options['files']) {
             $options['enctype'] = 'multipart/form-data';

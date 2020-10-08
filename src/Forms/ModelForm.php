@@ -83,9 +83,9 @@ class ModelForm extends HtmlForm
     ];
 
     /**
-     * The field builder
+     * The form builder
      *
-     * @var \Grafite\Forms\Builders\FieldBuilder
+     * @var \Grafite\Forms\Services\FormMaker
      */
     protected $builder;
 
@@ -147,20 +147,29 @@ class ModelForm extends HtmlForm
             }
         }
 
-        $this->html = $this->open([
+        $options = [
             'route' => [
                 $this->routes['create']
             ],
             'files' => $this->hasFiles,
             'class' => $this->formClass,
             'id' => $this->formId
-        ]);
+        ];
+
+        if ($this->withLivewire) {
+            $options['wire:submit.prevent'] = 'submit';
+        }
+
+        $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());
 
         $this->renderedFields = $this->builder
             ->setConnection($this->connection)
             ->setColumns($this->columns)
+            ->setLivewire($this->withLivewire)
+            ->setLivewireOnKeydown($this->livewireOnKeydown)
+            ->setErrorBag($this->errorBag)
             ->fromTable($this->modelClass->getTable(), $fields);
 
         $this->html .= $this->renderedFields;
@@ -187,21 +196,30 @@ class ModelForm extends HtmlForm
             }
         }
 
-        $this->html = $this->model($this->instance, [
+        $options = [
             'route' => [
                 $this->routes['update'], $this->instance->id
             ],
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
             'class' => $this->formClass,
-            'id' => $this->formId
-        ]);
+            'id' => $this->formId,
+        ];
+
+        if ($this->withLivewire) {
+            $options['wire:submit.prevent'] = 'submit';
+        }
+
+        $this->html = $this->model($this->instance, $options);
 
         $fields = $this->parseFields($this->fields());
 
         $this->renderedFields = $this->builder
             ->setConnection($this->connection)
             ->setColumns($this->columns)
+            ->setLivewire($this->withLivewire)
+            ->setLivewireOnKeydown($this->livewireOnKeydown)
+            ->setErrorBag($this->errorBag)
             ->fromObject($this->instance, $fields);
 
         $this->html .= $this->renderedFields;
