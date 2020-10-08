@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.2.0] - 2020-10-08
+
+### Added
+- Support for Livewire
+
 ## [v4.1.4] - 2020-09-17
 
 ### Added
