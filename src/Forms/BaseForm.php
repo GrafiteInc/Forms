@@ -48,10 +48,6 @@ class BaseForm extends HtmlForm
         if (! is_null($this->withJsValidation)) {
             $this->builder->setJsValidation($this->withJsValidation);
         }
-
-        if (! is_null($this->scripts())) {
-            $this->builder->setFormJs($this->scripts());
-        }
     }
 
     /**
@@ -112,6 +108,7 @@ class BaseForm extends HtmlForm
             ->setLivewire($this->withLivewire)
             ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
+            ->setFormJs($this->scripts())
             ->fromFields($fields);
 
         $this->html .= $this->renderedFields;

@@ -280,7 +280,11 @@ class FormMaker
 
     public function setFormJs($scripts)
     {
-        $this->formAssets->addJs($scripts);
+        if (! is_null($scripts)) {
+            $this->formAssets->addJs($scripts);
+        }
+
+        return $this;
     }
 
     /**
