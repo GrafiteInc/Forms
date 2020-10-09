@@ -19,7 +19,7 @@ class Div extends HtmlSnippet
             $content = $options['content'];
         }
 
-        throw_if(empty($content), 'You cannot have an empty heading');
+        throw_if(empty($content), 'You cannot have an empty div');
 
         return "<div{$class}>{$content}</div>";
     }

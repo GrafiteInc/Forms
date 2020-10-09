@@ -19,7 +19,7 @@ class Span extends HtmlSnippet
             $content = $options['content'];
         }
 
-        throw_if(empty($content), 'You cannot have an empty heading');
+        throw_if(empty($content), 'You cannot have an empty span');
 
         return "<span{$class}>{$content}</span>";
     }
