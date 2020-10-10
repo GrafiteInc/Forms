@@ -8,12 +8,8 @@ class DivOpen extends HtmlSnippet
 {
     public static function content($options = [])
     {
-        $class = '';
+        $attributes = self::attributes($options);
 
-        if (isset($options['class'])) {
-            $class = " class=\"{$options['class']}\"";
-        }
-
-        return "<div{$class}>";
+        return "<div{$attributes}>";
     }
 }

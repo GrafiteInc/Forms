@@ -8,12 +8,9 @@ class Span extends HtmlSnippet
 {
     public static function content($options = [])
     {
-        $class = '';
         $content = '';
 
-        if (isset($options['class'])) {
-            $class = " class=\"{$options['class']}\"";
-        }
+        $attributes = self::attributes($options);
 
         if (isset($options['content'])) {
             $content = $options['content'];
@@ -21,6 +18,6 @@ class Span extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty span');
 
-        return "<span{$class}>{$content}</span>";
+        return "<span{$attributes}>{$content}</span>";
     }
 }

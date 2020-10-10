@@ -12,9 +12,7 @@ class Heading extends HtmlSnippet
         $content = '';
         $level = 3;
 
-        if (isset($options['class'])) {
-            $class = " class=\"{$options['class']}\"";
-        }
+        $attributes = self::attributes($options);
 
         if (isset($options['content'])) {
             $content = $options['content'];
@@ -26,6 +24,6 @@ class Heading extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty heading');
 
-        return "<h{$level}{$class}>{$content}</h{$level}>";
+        return "<h{$level}{$attributes}>{$content}</h{$level}>";
     }
 }

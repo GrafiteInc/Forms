@@ -8,12 +8,8 @@ class HrTag extends HtmlSnippet
 {
     public static function content($options = [])
     {
-        $class = '';
+        $attributes = self::attributes($options);
 
-        if (isset($options['class'])) {
-            $class = " class=\"{$options['class']}\"";
-        }
-
-        return "<hr{$class}>";
+        return "<hr{$attributes}>";
     }
 }
