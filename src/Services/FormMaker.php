@@ -218,6 +218,22 @@ class FormMaker
     }
 
     /**
+     * In cases where data is unknown
+     *
+     * @param array $fields
+     * @param array|object $data
+     * @return string
+     */
+    public function fromFieldsOrObject($fields, $data)
+    {
+        if (! is_null($data)) {
+            return $this->fromObject($data, $fields);
+        }
+
+        return $this->fromFields($fields);
+    }
+
+    /**
      * Cleanup the ID and TimeStamp columns.
      *
      * @param array $columns
@@ -278,6 +294,12 @@ class FormMaker
         }
     }
 
+    /**
+     * Set the form JavaScript
+     *
+     * @param array $scripts
+     * @return self
+     */
     public function setFormJs($scripts)
     {
         if (! is_null($scripts)) {
@@ -476,6 +498,12 @@ EOT;
         return $tableTypeColumns;
     }
 
+    /**
+     * A list of normalized types
+     *
+     * @param string $type
+     * @return string
+     */
     public function getNormalizedType($type)
     {
         $columnTypes = [

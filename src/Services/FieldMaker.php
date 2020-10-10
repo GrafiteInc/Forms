@@ -73,10 +73,14 @@ class FieldMaker
         }
 
         $field = null;
-        $fieldGroup = config('forms.form.group-class', 'form-group');
+        $fieldGroup = '';
 
-        if ($this->orientation === 'horizontal') {
-            $fieldGroup = $fieldGroup . ' ' . config('forms.form.sections.row-class', 'row');
+        if (! isset($columnConfig['wrapper']) || $columnConfig['wrapper']) {
+            $fieldGroup = config('forms.form.group-class', 'form-group');
+
+            if ($this->orientation === 'horizontal') {
+                $fieldGroup = $fieldGroup . ' ' . config('forms.form.sections.row-class', 'row');
+            }
         }
 
         $value = $this->getOldValue($column);

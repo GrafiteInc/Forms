@@ -20,6 +20,7 @@ class Field
         'format',
         'visible',
         'sortable',
+        'wrapper',
     ];
 
     /**
@@ -89,6 +90,7 @@ class Field
                 'type' => static::getType(),
                 'options' => array_merge(static::getSelectOptions(), $options['options'] ?? []),
                 'visible'  => $options['visible'] ?? true,
+                'wrapper'  => $options['wrapper'] ?? true,
                 'sortable'  => $options['sortable'] ?? false,
                 'format' => $options['format'] ?? null,
                 'legend' => $options['legend'] ?? null,
