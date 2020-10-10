@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.2.2] - 2020-10-10
+
+### Added
+- Attribute support for HtmlSnippets
+- LivewireForm for more simple integraton
+
+### Fixed
+- Issue with label false respect
+
 ## [v4.2.1] - 2020-10-09
 
 ### Fixed
