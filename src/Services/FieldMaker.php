@@ -214,6 +214,10 @@ class FieldMaker
 
         $id = $columnConfig['attributes']['id'] ?? $this->stripArrayHandles($column);
 
+        if (empty($label)) {
+            return '';
+        }
+
         return "<label class=\"{$class}\" for=\"{$id}\">{$label}</label>";
     }
 
