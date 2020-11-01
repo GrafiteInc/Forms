@@ -236,6 +236,10 @@ document.getElementById('{$id}_Editor').firstChild.innerHTML = document.getEleme
 {$id}_Quill.on('editor-change', function () {
     document.getElementById('{$id}').value = document.getElementById('{$id}_Editor').firstChild.innerHTML;
 });
+
+if (document.getElementById('{$id}').disabled) {
+    {$id}_Quill.enable(false)
+}
 EOT;
     }
 }
