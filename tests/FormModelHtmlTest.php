@@ -2,9 +2,36 @@
 
 use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Fields\Email;
-use Illuminate\Support\Facades\Route;
+use Grafite\Forms\Traits\HasForm;
 use Grafite\Forms\Forms\ModelForm;
 use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Route;
+use Illuminate\Database\Eloquent\Model;
+
+class CarForm extends ModelForm
+{
+    public $model = Car::class;
+
+    public $routePrefix = 'cars';
+
+    public function fields()
+    {
+        return [
+            Name::make('name', [
+                'visible' => true,
+                'sortable' => true,
+            ]),
+            Email::make('email')
+        ];
+    }
+}
+
+class Car extends Model
+{
+    use HasForm;
+
+    public $form = CarForm::class;
+}
 
 class UserFormWithHtml extends ModelForm
 {
@@ -59,6 +86,13 @@ class FormModelHtmlTest extends TestCase
         Route::put('users/{id}')->name('users.update');
         Route::delete('users/{id}')->name('users.destroy');
 
+        Route::post('cars')->name('cars.store');
+        Route::post('cars/search')->name('cars.search');
+        Route::get('cars')->name('cars.index');
+        Route::get('cars/{id}')->name('cars.edit');
+        Route::put('cars/{id}')->name('cars.update');
+        Route::delete('cars/{id}')->name('cars.destroy');
+
         $user = new User;
         $user->name = 'Batman';
         $user->email = 'bruce@wayne.com';
@@ -72,6 +106,13 @@ class FormModelHtmlTest extends TestCase
         $user->save();
 
         $this->form = app(UserFormWithHtml::class);
+    }
+
+    public function testCarForm()
+    {
+        $form = (new Car)->form()->create();
+
+        $this->assertStringContainsString('<label class="control-label" for="Name">Name</label>', $form);
     }
 
     public function testIndex()

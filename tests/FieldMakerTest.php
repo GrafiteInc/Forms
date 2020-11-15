@@ -5,10 +5,11 @@ use Grafite\Forms\Fields\HasOne;
 use Grafite\Forms\Fields\Number;
 use Grafite\Forms\Fields\Select;
 use Grafite\Forms\Fields\HasMany;
+use Grafite\Forms\Traits\HasForm;
 use Grafite\Forms\Fields\Checkbox;
 use Grafite\Forms\Fields\TextArea;
-use Illuminate\Database\Eloquent\Model;
 use Grafite\Forms\Services\FieldMaker;
+use Illuminate\Database\Eloquent\Model;
 
 class User extends Model
 {

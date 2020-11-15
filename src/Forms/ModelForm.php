@@ -181,9 +181,11 @@ class ModelForm extends HtmlForm
      *
      * @return \Grafite\Forms\Forms\ModelForm
      */
-    public function edit($model)
+    public function edit($model = null)
     {
-        $this->setInstance($model);
+        if (! is_null($model)) {
+            $this->setInstance($model);
+        }
 
         $this->builder->setSections($this->setSections());
 
@@ -232,9 +234,11 @@ class ModelForm extends HtmlForm
      *
      * @return \Grafite\Forms\Forms\ModelForm
      */
-    public function delete($model)
+    public function delete($model = null)
     {
-        $this->setInstance($model);
+        if (! is_null($model)) {
+            $this->setInstance($model);
+        }
 
         $this->builder->setSections($this->setSections());
 
@@ -281,9 +285,14 @@ class ModelForm extends HtmlForm
      *
      * @return string
      */
-    public function editButton($item)
+    public function editButton($item = null)
     {
-        $editLink = route($this->routes['edit'], [$item]);
+        if (! is_null($item)) {
+            $editLink = route($this->routes['edit'], [$item]);
+        } else {
+            $editLink = route($this->routes['edit'], [$this->getInstance()->id]);
+        }
+
         $buttonClasses = $this->buttonClasses['edit'] ?? 'btn btn-outline-primary btn-sm mr-2';
 
         $button = "<a class=\"{$buttonClasses}\" href=\"{$editLink}\">";
