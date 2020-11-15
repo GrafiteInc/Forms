@@ -95,6 +95,7 @@ EOT;
         $startDay = $options['start-day'] ?? 1;
         $format = $options['format'] ?? 'YYYY-MM-DD';
         $event = $options['event'] ?? 'keydown';
+        $wait = $options['wait'] ?? 350;
 
         return <<<EOT
 var _{$id}Datepicker = datepicker("#$id", {
@@ -104,10 +105,28 @@ var _{$id}Datepicker = datepicker("#$id", {
       input.value = moment(date).format("$format");
   }
 });
-document.getElementById("$id").addEventListener('{$event}', function () {
-    let date = moment(this.value).toDate();
+
+const {$id}_datepicker_debounce = (func, wait) => {
+    let timeout;
+
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+};
+
+const {$id}_debounce = {$id}_datepicker_debounce(function() {
+    _{$id}Datepicker.hide();
+	let date = moment(document.getElementById("$id").value).toDate();
     _{$id}Datepicker.setDate(date, true);
-});
+}, {$wait});
+
+document.getElementById("$id").addEventListener('{$event}', {$id}_debounce);
 EOT;
     }
 }
