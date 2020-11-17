@@ -312,6 +312,23 @@ class Form
         return $this->url->route($options);
     }
 
+
+    /**
+     * Get the action for an "action" option.
+     *
+     * @param  array|string $options
+     *
+     * @return string
+     */
+    protected function getControllerAction($options)
+    {
+        if (is_array($options)) {
+            return $this->url->action($options[0], array_slice($options, 1));
+        }
+
+        return $this->url->action($options);
+    }
+
     /**
      * Get the form action from the options.
      *
