@@ -21,6 +21,7 @@ class Field
         'visible',
         'sortable',
         'wrapper',
+        'table-class',
     ];
 
     /**
@@ -99,6 +100,7 @@ class Field
                 'value' => $options['value'] ?? null,
                 'null_value' => $options['null_value'] ?? false,
                 'null_label' => $options['null_label'] ?? 'None',
+                'table-class' => $options['table-class'] ?? null,
                 'model_options' => [
                     'label' => $options['model_options']['label'] ?? 'name',
                     'value' => $options['model_options']['value'] ?? 'id',

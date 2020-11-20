@@ -4,7 +4,6 @@ namespace Grafite\Forms\Forms;
 
 use Exception;
 use Illuminate\Routing\UrlGenerator;
-use Grafite\Forms\Forms\HtmlForm;
 use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Builders\FieldBuilder;
 
@@ -101,7 +100,7 @@ class ModelForm extends HtmlForm
         $this->field = app(FieldBuilder::class);
 
         if (is_null($this->routePrefix)) {
-            throw new Exception("Route Prefix is required, for example: users", 1);
+            throw new Exception('Route Prefix is required, for example: users', 1);
         }
 
         if (is_null($this->connection)) {
@@ -145,11 +144,11 @@ class ModelForm extends HtmlForm
 
         $options = [
             'route' => [
-                $this->routes['create']
+                $this->routes['create'],
             ],
             'files' => $this->hasFiles,
             'class' => $this->formClass,
-            'id' => $this->formId
+            'id' => $this->formId,
         ];
 
         if ($this->withLivewire) {
@@ -197,7 +196,7 @@ class ModelForm extends HtmlForm
 
         $options = [
             'route' => [
-                $this->routes['update'], $this->instance->id
+                $this->routes['update'], $this->instance->id,
             ],
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
@@ -244,26 +243,26 @@ class ModelForm extends HtmlForm
 
         $this->html = $this->model($this->instance, [
             'route' => [
-                $this->routes['delete'], $this->instance->id
+                $this->routes['delete'], $this->instance->id,
             ],
             'method' => $this->methods['delete'],
             'class' => $this->formDeleteClass,
-            'id' => $this->formId
+            'id' => $this->formId,
         ]);
 
         $options = [
             'class' => $this->buttonClasses['delete'],
         ];
 
-        if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {
+        if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
             $options = array_merge($options, [
-                'onclick' => "return confirm('{$this->confirmMessage}')"
+                'onclick' => "return confirm('{$this->confirmMessage}')",
             ]);
         }
 
-        if (!empty($this->confirmMessage) && !is_null($this->confirmMethod)) {
+        if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
             $options = array_merge($options, [
-                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')"
+                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')",
             ]);
         }
 
@@ -296,8 +295,8 @@ class ModelForm extends HtmlForm
         $buttonClasses = $this->buttonClasses['edit'] ?? 'btn btn-outline-primary btn-sm mr-2';
 
         $button = "<a class=\"{$buttonClasses}\" href=\"{$editLink}\">";
-            $button .= $this->buttons['edit'] ?? 'Edit';
-        $button .= "</a>";
+        $button .= $this->buttons['edit'] ?? 'Edit';
+        $button .= '</a>';
 
         return $button;
     }
@@ -337,7 +336,13 @@ class ModelForm extends HtmlForm
                 $header = "<a href=\"{$sortLink}\">{$header} {$icon}</a>";
             }
 
-            $headers .= "<th>{$header}</th>";
+            $class = '';
+
+            if (! is_null($data['table-class'])) {
+                $class = " class=\"{$data['table-class']}\"";
+            }
+
+            $headers .= "<th{$class}>{$header}</th>";
         }
 
         $headers .= config('forms.html.table-actions-header', '<th class="text-right">Actions</th>');
@@ -361,7 +366,7 @@ class ModelForm extends HtmlForm
             $query = app($this->model);
         }
 
-        if (!is_null($this->paginate)) {
+        if (! is_null($this->paginate)) {
             $this->items = $query
                 ->with($this->with)
                 ->orderBy(request('sort_by', $sortBy), request('order', 'asc'))
@@ -379,18 +384,25 @@ class ModelForm extends HtmlForm
             $deleteButton = $this->delete($item);
             $editButton = $this->editButton($item);
 
-            $rows .= "<tr>";
+            $rows .= '<tr>';
+
             foreach ($fields as $field => $data) {
-                $rows .= "<td>{$item->$field}</td>";
+                $class = '';
+
+                if (! is_null($data['table-class'])) {
+                    $class = " class=\"{$data['table-class']}\"";
+                }
+
+                $rows .= "<td{$class}>{$item->$field}</td>";
             }
 
-                $rows .= "<td>";
-                    $rows .= " <div class=\"btn-toolbar justify-content-end\">";
-                        $rows .= $editButton;
-                        $rows .= $deleteButton;
-                    $rows .= "</div>";
-                $rows .= "</td>";
-            $rows .= "</tr>";
+            $rows .= '<td>';
+            $rows .= ' <div class="btn-toolbar justify-content-end">';
+            $rows .= $editButton;
+            $rows .= $deleteButton;
+            $rows .= '</div>';
+            $rows .= '</td>';
+            $rows .= '</tr>';
         }
 
         return $rows;
@@ -408,20 +420,20 @@ class ModelForm extends HtmlForm
         $form = $this->open([
             'route' => $route,
             'method' => $method,
-            'class' => config('forms.form.search-class', 'form-inline')
+            'class' => config('forms.form.search-class', 'form-inline'),
         ]);
 
         $form .= '<div class="' . config('forms.form.before_after_input_wrapper', 'input-group') . '">';
-            $form .= $this->field->makeInput('text', 'search', request('search'), [
-                'placeholder' => $placeholder,
-                'class' => config('forms.form.input-class', 'form-control')
-            ]);
-            $form .= '<div class="' . config('forms.form.input-group-after', 'input-group-append') . '">';
-                $form .= $this->field->button($submitValue, [
-                    'type' => 'submit',
-                    'class' => config('forms.buttons.submit', 'btn btn-primary')
-                ]);
-            $form .= '</div>';
+        $form .= $this->field->makeInput('text', 'search', request('search'), [
+            'placeholder' => $placeholder,
+            'class' => config('forms.form.input-class', 'form-control'),
+        ]);
+        $form .= '<div class="' . config('forms.form.input-group-after', 'input-group-append') . '">';
+        $form .= $this->field->button($submitValue, [
+            'type' => 'submit',
+            'class' => config('forms.buttons.submit', 'btn btn-primary'),
+        ]);
+        $form .= '</div>';
         $form .= '</div>';
 
         $form .= $this->close();
@@ -464,7 +476,7 @@ class ModelForm extends HtmlForm
         $indexBody = $this->indexBody($query);
         $paginated = '';
 
-        if (!is_null($this->paginate)) {
+        if (! is_null($this->paginate)) {
             $paginated = $this->paginated();
         }
 
@@ -476,11 +488,11 @@ class ModelForm extends HtmlForm
 <table class="{$tableClass}">
     <thead class="{$tableHeadClass}">
         <tr>
-            $indexHeaders
+            ${indexHeaders}
         </tr>
     </thead>
     <tbody>
-        $indexBody
+        ${indexBody}
     </tbody>
 </table>
 
@@ -507,7 +519,7 @@ EOT;
      */
     public function hasInstance()
     {
-        return !is_null($this->instance);
+        return ! is_null($this->instance);
     }
 
     /**
@@ -544,7 +556,8 @@ EOT;
 
         foreach ($this->fields() as $settings) {
             $field = array_keys($settings)[0];
-            if (!is_null($settings[$field]['factory'])) {
+
+            if (! is_null($settings[$field]['factory'])) {
                 $factory .= "\x20\x20\x20\x20\x20\x20\x20\x20'{$field}' => \$faker->{$settings[$field]['factory']},\n";
             }
         }
