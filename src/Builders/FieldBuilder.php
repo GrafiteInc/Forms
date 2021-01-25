@@ -243,11 +243,11 @@ class FieldBuilder
             $selected = $options['value'];
         }
 
-        if (isset($options['value']) && !is_null($selected)) {
+        if (isset($options['value']) && ! is_null($selected)) {
             $selected = $options['value'];
         }
 
-        if (isset($options['attributes']['multiple'])) {
+        if (isset($options['attributes']['multiple']) && $options['attributes']['multiple']) {
             $name = $name . '[]';
         }
 
@@ -314,11 +314,12 @@ class FieldBuilder
 
         $label = $options['label'];
 
-        if (!isset($options['label']) || $label === '') {
+        if (! isset($options['label']) || $label === '') {
             $label = Str::title($name);
         }
 
         $label = str_replace('_', ' ', $label);
+
         if (Str::contains($label, '[')) {
             $label = $this->getNestedFieldLabel($label)[0];
         }
@@ -378,7 +379,7 @@ class FieldBuilder
         $method = 'all';
         $class = $options['model'];
 
-        if (!is_object($class)) {
+        if (! is_object($class)) {
             $class = app()->make($options['model']);
         }
 
@@ -386,7 +387,7 @@ class FieldBuilder
             $method = $options['model_options']['method'];
         }
 
-        if (!isset($options['model_options']['params'])) {
+        if (! isset($options['model_options']['params'])) {
             $items = $class->$method();
         }
 
@@ -439,7 +440,7 @@ class FieldBuilder
             }
         }
 
-        if (is_bool($value) && !$value) {
+        if (is_bool($value) && ! $value) {
             return '';
         }
 
@@ -460,6 +461,7 @@ class FieldBuilder
 
         if ($this->withLivewire) {
             $livewireAttributes .= " wire:model=\"data.{$name}\"";
+
             if ($this->livewireOnKeydown) {
                 $livewireAttributes .= ' wire:keydown.debounce.500ms="submit"';
             }
