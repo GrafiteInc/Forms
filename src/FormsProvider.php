@@ -2,13 +2,14 @@
 
 namespace Grafite\Forms;
 
-use Illuminate\Support\ServiceProvider;
-use Grafite\Forms\Services\FormAssets;
 use Grafite\Forms\Components\Form;
-use Grafite\Forms\Commands\MakeFieldCommand;
+use Grafite\Forms\Services\FormAssets;
+use Grafite\Forms\Components\FormModal;
+use Illuminate\Support\ServiceProvider;
 use Grafite\Forms\Components\FormAction;
 use Grafite\Forms\Components\FormDelete;
 use Grafite\Forms\Components\FormSearch;
+use Grafite\Forms\Commands\MakeFieldCommand;
 use Grafite\Forms\Commands\MakeBaseFormCommand;
 use Grafite\Forms\Commands\MakeFormTestCommand;
 use Grafite\Forms\Commands\MakeModelFormCommand;
@@ -33,6 +34,7 @@ class FormsProvider extends ServiceProvider
 
         $this->app['blade.compiler']->component('f', Form::class);
         $this->app['blade.compiler']->component('f-action', FormAction::class);
+        $this->app['blade.compiler']->component('f-modal', FormModal::class);
         $this->app['blade.compiler']->component('f-delete', FormDelete::class);
         $this->app['blade.compiler']->component('f-search', FormSearch::class);
 

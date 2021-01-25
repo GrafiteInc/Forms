@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Forms;
 
 use Illuminate\Support\Arr;
+use Illuminate\Support\Str;
 use Illuminate\Support\HtmlString;
 use Illuminate\Routing\UrlGenerator;
 use Grafite\Forms\Traits\HasErrorBag;
@@ -83,6 +84,34 @@ class Form
     public $payload;
 
     /**
+     * An ID for the form
+     *
+     * @var string|null
+     */
+    public $formId = null;
+
+    /**
+     * Modal message
+     *
+     * @var string|null
+     */
+    public $message = null;
+
+    /**
+     * Content for a trigger button
+     *
+     * @var string|null
+     */
+    public $triggerContent = null;
+
+    /**
+     * Class for the trigger button
+     *
+     * @var string|null
+     */
+    public $triggerClass = null;
+
+    /**
      * The reserved form open attributes.
      *
      * @var array
@@ -92,7 +121,7 @@ class Form
         'url',
         'route',
         'action',
-        'files'
+        'files',
     ];
 
     /**
@@ -103,7 +132,7 @@ class Form
     protected $spoofedMethods = [
         'DELETE',
         'PATCH',
-        'PUT'
+        'PUT',
     ];
 
     /**
@@ -124,27 +153,27 @@ class Form
      * @param string $button
      * @return self
      */
-    public function action($method, $route, $button = 'Send', $options = [])
+    public function action($method, $route, $button = 'Send', $options = [], $asModal = false)
     {
         $this->html = $this->open([
             'route' => $route,
             'method' => $method,
-            'class' => config('forms.form.inline-class', 'form d-inline')
+            'class' => config('forms.form.inline-class', 'form d-inline'),
         ]);
 
         $options = array_merge([
-            'class' => config('forms.buttons.submit', 'btn btn-primary')
+            'class' => config('forms.buttons.submit', 'btn btn-primary'),
         ], $options);
 
-        if (!empty($this->confirmMessage) && is_null($this->confirmMethod)) {
+        if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
             $options = array_merge($options, [
-                'onclick' => "return confirm('{$this->confirmMessage}')"
+                'onclick' => "return confirm('{$this->confirmMessage}')",
             ]);
         }
 
-        if (!empty($this->confirmMessage) && !is_null($this->confirmMethod)) {
+        if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
             $options = array_merge($options, [
-                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')"
+                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')",
             ]);
         }
 
@@ -160,7 +189,25 @@ class Form
 
         $this->html .= $this->close();
 
+        if ($asModal) {
+            $this->html = $this->asModal();
+        }
+
         return $this;
+    }
+
+    /**
+     * Get the Form ID
+     *
+     * @return string
+     */
+    public function getFormId()
+    {
+        if (! is_null($this->formId)) {
+            return $this->formId;
+        }
+
+        return Str::random(10);
     }
 
     /**
@@ -263,7 +310,7 @@ class Form
      */
     protected function getAppendage($method)
     {
-        list($method, $appendage) = [strtoupper($method), ''];
+        [$method, $appendage] = [strtoupper($method), ''];
 
         if (in_array($method, $this->spoofedMethods)) {
             $appendage .= $this->field->makeInput('hidden', '_method', $method);
@@ -311,7 +358,6 @@ class Form
 
         return $this->url->route($options);
     }
-
 
     /**
      * Get the action for an "action" option.
@@ -410,6 +456,64 @@ class Form
         $method = strtoupper($method);
 
         return $method !== 'GET' ? 'POST' : $method;
+    }
+
+    /**
+     * Set the values for the modal trigger
+     *
+     * @param string $content
+     * @param string $class
+     * @param string $message
+     *
+     * @return self
+     */
+    public function setModal($content, $class, $message)
+    {
+        $this->triggerContent = $content;
+        $this->triggerClass = $class;
+        $this->message = $message;
+
+        return $this;
+    }
+
+    /**
+     * Create the form as a modal
+     *
+     * @return string
+     */
+    public function asModal($triggerContent = null, $triggerClass = null, $message = null)
+    {
+        $title = $this->modalTitle ?? 'Confirmation';
+        $modalId = $this->getFormId() . '_Modal';
+        $form = $this->html;
+        $message = $this->message ?? $message;
+        $triggerContent = $this->triggerContent ?? $triggerContent;
+        $triggerClass = $this->triggerClass ?? $triggerClass;
+
+        return <<<Modal
+            <div id="${modalId}" class="modal fade" tabindex="-1" role="dialog">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title">${title}</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ${message}
+                            ${form}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button
+                onclick="$('#${modalId}').modal('show')"
+                class="${triggerClass}"
+            >
+                ${triggerContent}
+            </button>
+Modal;
     }
 
     /**
