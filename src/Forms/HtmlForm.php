@@ -17,7 +17,7 @@ class HtmlForm extends Form
     /**
      * The form validation
      *
-     * @var string
+     * @var boolean
      */
     public $withJsValidation = false;
 
@@ -279,7 +279,7 @@ class HtmlForm extends Form
     /**
      * Set the fields
      *
-     * @return \Grafite\Forms\Forms\ModelForm
+     * @return array
      */
     public function fields()
     {
@@ -316,7 +316,7 @@ class HtmlForm extends Form
     /**
      * Set the html to the rendered fields
      *
-     * @return void
+     * @return self
      */
     public function renderedFields()
     {

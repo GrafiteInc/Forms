@@ -12,7 +12,7 @@ class ModelForm extends HtmlForm
     /**
      * Model class
      *
-     * @var \Illuminate\Database\Eloquent\Model
+     * @var string
      */
     public $model;
 
@@ -468,7 +468,7 @@ class ModelForm extends HtmlForm
      * The index method for the model
      *
      * @param \Illuminate\Database\Eloquent\Builder $query
-     * @return void
+     * @return string
      */
     public function index($query = null)
     {
@@ -505,7 +505,7 @@ EOT;
     /**
      * Convert the items from the index to JSON
      *
-     * @return void
+     * @return string
      */
     public function toJson()
     {

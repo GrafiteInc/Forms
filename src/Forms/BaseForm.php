@@ -54,7 +54,7 @@ class BaseForm extends HtmlForm
      * Set the route
      *
      * @param string $name
-     * @param array $parameters
+     * @param mixed $parameters
      *
      * @return \Grafite\Forms\Forms\BaseForm
      */
