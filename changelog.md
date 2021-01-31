@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.3.4] - 2021-01-31
+
+### Fixed
+- Issue with single value array in select input
+
 ## [v4.3.3] - 2021-01-25
 
 ### Added
