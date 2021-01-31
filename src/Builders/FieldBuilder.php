@@ -269,6 +269,15 @@ class FieldBuilder
                 }
             }
 
+            if (
+                ! isset($options['attributes']['multiple'])
+                && is_array($selected)
+            ) {
+                if (in_array($value, $selected)) {
+                    $selectedValue = 'selected';
+                }
+            }
+
             if ($selected === $value) {
                 $selectedValue = 'selected';
             }
