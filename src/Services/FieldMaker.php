@@ -200,7 +200,7 @@ class FieldMaker
         return $this->wrapField($fieldGroup, $label, $fieldString, $errors);
     }
 
-    public function label($column, $columnConfig, $class = null, $errors)
+    public function label($column, $columnConfig, $class, $errors)
     {
         $label = $this->getLabel($column, $columnConfig);
 

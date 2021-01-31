@@ -419,7 +419,7 @@ class FieldBuilder
         // without specifying the ID tag which we're checking
         // the select values from - we need to set the values
         // to an array of IDs.
-        if (method_exists($value, 'toArray')) {
+        if (! is_null($value) && method_exists($value, 'toArray')) {
             $parsedValues = [];
             $optionValue = $options['model_options']['value'];
 
