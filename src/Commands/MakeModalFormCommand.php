@@ -2,7 +2,7 @@
 
 namespace Grafite\Forms\Commands;
 
-class MakeBaseFormCommand extends BaseCommand
+class MakeModalFormCommand extends BaseCommand
 {
     /**
      * The console command name.
