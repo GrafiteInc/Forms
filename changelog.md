@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.3.7] - 2021-01-31
+
+### Fixed
+- Issue with some doc block types
+
 ## [v4.3.6] - 2021-01-31
 
 ### Fixed
