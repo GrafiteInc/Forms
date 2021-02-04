@@ -154,7 +154,10 @@ class FieldBuilder
     {
         $labelText = $options['label'] ?? 'Choose file';
 
-        if (isset($options['multiple']) || isset($options['attributes']['multiple'])) {
+        if (
+            (isset($options['multiple']) && $options['multiple']) ||
+            (isset($options['attributes']['multiple']) && $options['attributes']['multiple'])
+        ) {
             $name = $name . '[]';
             $labelText = ($labelText === 'Choose file') ? 'Choose files' : $labelText;
         }
