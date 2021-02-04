@@ -14,7 +14,8 @@ class Attachments extends Field
     protected static function getOptions()
     {
         return [
-            'multiple' => true
+            'name' => 'attachments[]',
+            'class' => 'attachments',
         ];
     }
 
@@ -43,9 +44,13 @@ EOT;
     protected static function js($id, $options)
     {
         return <<<EOT
-let _listAttachments = function (attachments, element) {
-    element.html("");
-    let filesElement = $('<ul/>').addClass('list-group list-group-flush');
+var _attachments = [];
+let _listAttachments = function (attachments) {
+    let _list = document.querySelector('.attachments-list');
+        _list.innerHTML = "";
+    let filesElement = document.createElement('ul');
+        filesElement.className = 'list-group list-group-flush';
+
     for (let i = 0; i < attachments.length; i++) {
         let attachment = attachments[i];
 
@@ -62,28 +67,70 @@ let _listAttachments = function (attachments, element) {
             }
 
             fileSize = Math.round(fileSize*10) / 10 + sizes[sizeIndex];
+            let _name = file.name.substring(0, 30);
 
-            fileElement = $('<li/>').addClass('list-group-item')
-                .append($('<span>').text(file.name))
-                .append($('<span class="badge badge-primary float-right">').text(fileSize));
+            if (file.name.length > 30) {
+                _name = _name + '...';
+            }
 
-            filesElement.append(fileElement);
+            let nameSpan = document.createElement('span');
+                nameSpan.innerText = _name;
+
+            let fileSizeBadge = document.createElement('span');
+                fileSizeBadge.innerText = fileSize;
+                fileSizeBadge.className = 'badge badge-primary float-right';
+
+            let deleteIcon = document.createElement('span');
+                deleteIcon.className = 'fas fa-trash';
+            let deleteButton = document.createElement('button');
+                deleteButton.className = 'btn btn-sm float-right btn-outline-danger mr--20 ml-2';
+                deleteButton.appendChild(deleteIcon);
+                deleteButton.addEventListener('click', event => {
+                    event.preventDefault();
+                    document.getElementById(attachment.getAttribute('id')).remove();
+                    attachments.splice(i, 1);
+                    _listAttachments(attachments);
+                });
+
+            let fileElement = document.createElement('li');
+                fileElement.classList.add('list-group-item');
+                fileElement.appendChild(nameSpan);
+                fileElement.appendChild(deleteButton);
+                fileElement.appendChild(fileSizeBadge);
+
+            filesElement.appendChild(fileElement);
         }
     }
 
-    $(element).append(filesElement);
+    document.querySelector('.attachments-list').appendChild(filesElement);
 }
 
-$('#{$id}').bind('change', function () {
-    let attachments = [];
-    let filename = $(this).val();
+_setAttachmentBindings = function () {
+    document.getElementById('{$id}').addEventListener('change', function () {
+        let filename = this.value;
+        this.setAttribute('id', 'attachment_' + _attachments.length);
+        this.setAttribute('style', 'display: none;');
+        let _inputContainer = document.querySelector('.custom-file');
 
-    if (filename !== '') {
-        attachments.push(this);
-    }
+        let _inputField = document.createElement('input');
+            _inputField.setAttribute('type', 'file');
+            _inputField.setAttribute('id', '{$id}');
+            _inputField.setAttribute('name', 'attachments[]');
+            _inputField.setAttribute('class', 'form-control custom-file-input attachments');
 
-    _listAttachments(attachments, $('.attachments-list'));
-});
+        _inputContainer.appendChild(_inputField);
+
+        if (filename !== '') {
+            _attachments.push(this);
+        }
+
+        _listAttachments(_attachments);
+
+        _setAttachmentBindings();
+    });
+}
+
+_setAttachmentBindings();
 EOT;
     }
 }
