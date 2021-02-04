@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.3.8] - 2021-02-04
+
+### Changed
+- Dropped jQuery for attachments
+- Enabled multiple file locations for attachments
+
+### Fixed
+- Issue with multiple files
+
 ## [v4.3.7] - 2021-01-31
 
 ### Fixed
