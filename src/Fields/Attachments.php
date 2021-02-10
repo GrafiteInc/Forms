@@ -44,8 +44,8 @@ EOT;
     protected static function js($id, $options)
     {
         return <<<EOT
-var _attachments = [];
-let _listAttachments = function (attachments) {
+var Forms_attachments = [];
+let Forms_listAttachments = function (attachments) {
     let _list = document.querySelector('.attachments-list');
         _list.innerHTML = "";
     let filesElement = document.createElement('ul');
@@ -89,7 +89,7 @@ let _listAttachments = function (attachments) {
                     event.preventDefault();
                     document.getElementById(attachment.getAttribute('id')).remove();
                     attachments.splice(i, 1);
-                    _listAttachments(attachments);
+                    Forms_listAttachments(attachments);
                 });
 
             let fileElement = document.createElement('li');
@@ -105,10 +105,10 @@ let _listAttachments = function (attachments) {
     document.querySelector('.attachments-list').appendChild(filesElement);
 }
 
-_setAttachmentBindings = function () {
+let Forms_setAttachmentBindings = function () {
     document.getElementById('{$id}').addEventListener('change', function () {
         let filename = this.value;
-        this.setAttribute('id', 'attachment_' + _attachments.length);
+        this.setAttribute('id', 'attachment_' + Forms_attachments.length);
         this.setAttribute('style', 'display: none;');
         let _inputContainer = document.querySelector('.custom-file');
 
@@ -121,16 +121,16 @@ _setAttachmentBindings = function () {
         _inputContainer.appendChild(_inputField);
 
         if (filename !== '') {
-            _attachments.push(this);
+            Forms_attachments.push(this);
         }
 
-        _listAttachments(_attachments);
+        Forms_listAttachments(Forms_attachments);
 
-        _setAttachmentBindings();
+        Forms_setAttachmentBindings();
     });
 }
 
-_setAttachmentBindings();
+Forms_setAttachmentBindings();
 EOT;
     }
 }
