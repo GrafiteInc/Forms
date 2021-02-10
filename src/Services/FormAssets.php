@@ -4,12 +4,9 @@ namespace Grafite\Forms\Services;
 
 use MatthiasMullie\Minify\JS;
 use MatthiasMullie\Minify\CSS;
-use Grafite\Forms\Traits\HasLivewire;
 
 class FormAssets
 {
-    use HasLivewire;
-
     public $stylesheets = [];
 
     public $scripts = [];
@@ -17,10 +14,6 @@ class FormAssets
     public $styles = [];
 
     public $js = [];
-
-    public $withLivewire = false;
-
-    public $livewireOnKeydown = false;
 
     /**
      * Render the form assets
@@ -35,6 +28,7 @@ class FormAssets
         $output .= collect($this->scripts)->unique()->implode("\n");
 
         $styles = collect($this->styles)->unique()->implode("\n");
+
         if (app()->environment('production')) {
             $minifierCSS = new CSS();
             $styles = $minifierCSS->add($styles)->minify();
@@ -48,15 +42,9 @@ class FormAssets
             $js = $minifierJS->add($js)->minify();
         }
 
-        $livewire = '';
+        $function = "let FormsJS = () => { {$js} }";
 
-        if ($this->withLivewire) {
-            $livewire = "Livewire.hook('message.processed', (el, component) => {
-                {$js}
-            })";
-        }
-
-        $output .= "<script>\n{$js}\n{$livewire}\n</script>\n";
+        $output .= "<script>\n{$function}\nFormsJS();\n</script>\n";
 
         return $output;
     }
@@ -99,7 +87,7 @@ class FormAssets
      */
     public function addStyles($styles)
     {
-        if (!is_null($styles)) {
+        if (! is_null($styles)) {
             $this->styles[] = $styles;
         }
 
@@ -114,7 +102,7 @@ class FormAssets
      */
     public function addJs($js)
     {
-        if (!is_null($js)) {
+        if (! is_null($js)) {
             $this->js[] = $js;
         }
 

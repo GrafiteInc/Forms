@@ -475,7 +475,7 @@ class FieldBuilder
             $livewireAttributes .= " wire:model=\"data.{$name}\"";
 
             if ($this->livewireOnKeydown) {
-                $livewireAttributes .= ' wire:keydown.debounce.500ms="submit"';
+                $livewireAttributes .= ' wire:keydown.debounce.1000ms="submit"';
             }
         }
 
