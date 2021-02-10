@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.3.9] - 2021-02-10
+
+### Changed
+- Better Livewire support
+- Better JS structure
+
 ## [v4.3.8] - 2021-02-04
 
 ### Changed
