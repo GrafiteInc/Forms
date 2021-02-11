@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.3.10] - 2021-02-11
+
+### Fixed
+- Issue with livewire
+
 ## [v4.3.9] - 2021-02-10
 
 ### Changed
