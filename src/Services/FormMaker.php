@@ -336,10 +336,6 @@ for (let i = 0; i < _fields.length; i++) {
 }
 EOT;
 
-        if ($this->withLivewire) {
-            $this->formAssets->setLivewire($this->withLivewire);
-        }
-
         if ($this->withJsValidation) {
             $this->formAssets->addJs($formValidation);
         }
@@ -389,8 +385,8 @@ EOT;
                 Str::contains($element, 'type="hidden"')
                 && ! Str::contains($element, 'label')
             ) {
-                    return 4;
-                }
+                return 4;
+            }
 
             return 1;
         })->toArray();
