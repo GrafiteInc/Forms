@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.4.0] - 2021-02-15
+
+### Added
+- New Editor field
+- Field parsers
+
+### Fixed
+- Issue with Quill
+- Naming issue with ttachments
+
 ## [v4.3.10] - 2021-02-11
 
 ### Fixed
