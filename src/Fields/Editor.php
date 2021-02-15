@@ -81,14 +81,24 @@ EOT;
 
     protected static function js($id, $options)
     {
-        $fileUploadRoute = $options['fileUploadRoute'];
-        $placeholder = $options['placeholder'];
+        $route = route($options['upload_route']);
+        $placeholder = $options['placeholder'] ?? 'Let`s write an awesome story!';
+
+        if (is_null($route)) {
+            throw new \Exception('You need to set an `upload_route` for handling image uploads to EditorJs.', 1);
+        }
 
         return <<<EOT
+let _Editor_{$id}_value = document.getElementById('{$id}').value;
+
+if (_Editor_{$id}_value == '') {
+    _Editor_{$id}_value = "null";
+}
+
 const editor_{$id} = new EditorJS({
     holder: 'Editor_{$id}',
     placeholder: '{$placeholder}',
-    data: JSON.parse(document.getElementById('{$id}').value),
+    data: JSON.parse(_Editor_{$id}_value),
     tools: {
         header: Header,
         delimiter: Delimiter,
@@ -101,7 +111,6 @@ const editor_{$id} = new EditorJS({
             inlineToolbar: true,
         },
         embed: Embed,
-        code: CodeTool,
         image: {
             class: ImageTool,
             config: {
@@ -109,7 +118,7 @@ const editor_{$id} = new EditorJS({
                     "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
                 },
                 endpoints: {
-                    byFile: '{$fileUploadRoute}',
+                    byFile: '{$route}',
                 }
             }
         },
@@ -119,6 +128,7 @@ const editor_{$id} = new EditorJS({
         checklist: Checklist,
         marker: Marker,
         inlineCode: InlineCode,
+        code: CodeTool,
     },
 });
 
