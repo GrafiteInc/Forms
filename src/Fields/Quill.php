@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Quill extends Field
 {
     protected static function fieldOptions()
@@ -23,7 +21,7 @@ class Quill extends Field
     protected static function getAttributes()
     {
         return [
-            'style' => 'height: 200px;'
+            'style' => 'height: 200px;',
         ];
     }
 
@@ -35,8 +33,8 @@ class Quill extends Field
     protected static function stylesheets($options)
     {
         return [
-            "//cdn.quilljs.com/1.3.6/quill.bubble.css",
-            "//cdn.quilljs.com/1.3.6/quill.snow.css",
+            '//cdn.quilljs.com/1.3.6/quill.bubble.css',
+            '//cdn.quilljs.com/1.3.6/quill.snow.css',
         ];
     }
 
@@ -143,10 +141,10 @@ EOT;
 
         $toolbars = collect($toolbars);
 
-        throw_if ($toolbars->isEmpty(), new \Exception('You cannot have an empty toolbar.'));
+        throw_if($toolbars->isEmpty(), new \Exception('You cannot have an empty toolbar.'));
 
         if (is_null($route) && $toolbars->contains('image')) {
-            throw new \Exception("You need to set an `upload_route` for handling image uploads to Quill.", 1);
+            throw new \Exception('You need to set an `upload_route` for handling image uploads to Quill.', 1);
         }
 
         $basic = ($toolbars->contains('basic')) ? "['bold', 'italic', 'underline', 'strike', { 'align': [] }, 'link']," : '';
@@ -178,16 +176,16 @@ EOT;
                     }
 
                     const _{$id}FileFormData = new FormData();
-                    _{$id}FileFormData.append('file', files[0]);
+                    _{$id}FileFormData.append('image', files[0]);
 
                     this.quill.enable(false);
 
                     window.axios
-                        .post('$route', _{$id}FileFormData)
+                        .post('${route}', _{$id}FileFormData)
                         .then(response => {
                             this.quill.enable(true);
                             let range = this.quill.getSelection(true);
-                            this.quill.editor.insertEmbed(range.index, 'image', response.data.data.path);
+                            this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
                             this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
                             _{$id}FileInput.value = '';
                         })
@@ -225,8 +223,8 @@ var _editor_{$id}_toolbarOptions = {
 };
 
 var {$id}_Quill = new Quill('#{$id}_Editor', {
-    theme: '$theme',
-    placeholder: '$placeholder',
+    theme: '${theme}',
+    placeholder: '${placeholder}',
     modules: {
         toolbar: _editor_{$id}_toolbarOptions
     }
