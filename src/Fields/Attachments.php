@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Forms\Fields;
+namespace Grafite\Forms\Fields;
 
 use Grafite\Forms\Fields\Field;
 
