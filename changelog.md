@@ -11,7 +11,7 @@ This project adheres to [Semantic Versioning](http://semver.org/).
 
 ### Fixed
 - Issue with Quill
-- Naming issue with ttachments
+- Naming issue with attachments
 
 ## [v4.3.10] - 2021-02-11
 
