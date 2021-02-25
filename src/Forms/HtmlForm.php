@@ -170,8 +170,8 @@ class HtmlForm extends Form
             'delete' => $this->buttons['delete'] ?? $deleteButton,
         ];
 
-        $this->buttonClasses = $buttonClasses;
-        $this->buttons = $buttons;
+        $this->buttonClasses = array_merge($buttonClasses, $this->getExtraButtonClasses());
+        $this->buttons = array_merge($buttons, $this->getExtraButtons());
 
         $this->formClass = $this->formClass ?? config('forms.form.class', 'form');
         $this->formDeleteClass = $this->formDeleteClass ?? config('forms.form.delete-class', 'form-inline');
@@ -192,11 +192,18 @@ class HtmlForm extends Form
 
         $formRow = config('forms.form.sections.row', 'row');
         $formFullSizeColumn = config('forms.form.sections.full-size-column', 'col-md-12');
+        $formButtonRow = config('forms.form.sections.button-row', 'row');
+        $formButtonColumn = config('forms.form.sections.button-column', 'col-md-12');
 
         $lastRowInForm = '<div class="' . $formRow . '">
             <div class="' . $formFullSizeColumn . ' ' . $rowAlignment . '">';
 
         if (!$this->formIsDisabled) {
+            foreach ($this->getExtraButtons() as $button => $buttonText) {
+                $lastRowInForm .= '<a class="' . $this->buttonClasses[$button]
+                    . '" href="' . url($this->buttonLinks[$button]) . '">' . $this->buttons[$button] . '</a>';
+            }
+
             if (isset($this->buttons['cancel'])) {
                 $lastRowInForm .= '<a class="' . $this->buttonClasses['cancel']
                     . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
@@ -284,6 +291,30 @@ class HtmlForm extends Form
     public function fields()
     {
         return [];
+    }
+
+    /**
+     * Get custom buttons
+     *
+     * @return array
+     */
+    public function getExtraButtons()
+    {
+        return collect($this->buttons)->filter(function ($buttonText, $button) {
+            return ! in_array($button, ['cancel', 'submit', 'delete', 'edit']);
+        })->toArray();
+    }
+
+    /**
+     * Get custom button classes
+     *
+     * @return array
+     */
+    public function getExtraButtonClasses()
+    {
+        return collect($this->buttonClasses)->filter(function ($buttonText, $button) {
+            return ! in_array($button, ['cancel', 'submit', 'delete', 'edit']);
+        })->toArray();
     }
 
     /**

@@ -64,6 +64,10 @@ return [
             'header-spacing' => 'mt-2 mb-2',
             'row-alignment-between' => 'd-flex justify-content-between',
             'row-alignment-end' => 'd-flex justify-content-end',
+            'button-row' => 'row',
+            'button-column' => 'col-md-12',
+        ],
+
         ],
 
         /*
