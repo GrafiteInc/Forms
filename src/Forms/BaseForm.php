@@ -38,7 +38,7 @@ class BaseForm extends HtmlForm
         $this->builder = app(FormMaker::class);
 
         if (is_null($this->buttonLinks['cancel'])) {
-            $this->buttonLinks['cancel'] = url()->current();
+            $this->buttonLinks['cancel'] = request()->fullUrl();
         }
 
         if (! is_null($this->orientation)) {
