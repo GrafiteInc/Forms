@@ -68,6 +68,9 @@ return [
             'button-column' => 'col-md-12',
         ],
 
+        'cards' => [
+            'card-body' => 'card-body',
+            'card-footer' => 'card-footer',
         ],
 
         /*

@@ -8,6 +8,20 @@ use Grafite\Forms\Forms\Form;
 class HtmlForm extends Form
 {
     /**
+     * Simple wrapper for cards
+     *
+     * @var boolean
+     */
+    public $isCardForm = false;
+
+    /**
+     * Disable buttons after submit
+     *
+     * @var boolean
+     */
+    public $disableOnSubmit = false;
+
+    /**
      * The form orientation
      *
      * @var string
@@ -190,13 +204,18 @@ class HtmlForm extends Form
             $rowAlignment = config('forms.form.sections.row-alignment-between', 'd-flex justify-content-between');
         }
 
-        $formRow = config('forms.form.sections.row', 'row');
-        $formFullSizeColumn = config('forms.form.sections.full-size-column', 'col-md-12');
+        $lastRowInForm = '';
+
+        if ($this->isCardForm) {
+            $cardFooter = config('forms.form.cards.card-footer', 'card-footer');
+            $lastRowInForm .= "<div class=\"{$cardFooter}\">";
+        }
+
         $formButtonRow = config('forms.form.sections.button-row', 'row');
         $formButtonColumn = config('forms.form.sections.button-column', 'col-md-12');
 
-        $lastRowInForm = '<div class="' . $formRow . '">
-            <div class="' . $formFullSizeColumn . ' ' . $rowAlignment . '">';
+        $lastRowInForm .= '<div class="' . $formButtonRow . '">
+            <div class="' . $formButtonColumn . ' ' . $rowAlignment . '">';
 
         if (!$this->formIsDisabled) {
             foreach ($this->getExtraButtons() as $button => $buttonText) {
@@ -209,6 +228,13 @@ class HtmlForm extends Form
                     . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
             }
 
+            $onSubmit = null;
+
+            if ($this->disableOnSubmit) {
+                $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> '.$this->buttons['submit'];
+                $onSubmit = 'this.innerHTML = \''.$processing.'\'; this.disabled = true; this.form.submit();';
+            }
+
             if (!is_null($this->submitMethod)) {
                 $lastRowInForm .= $this->field->button($this->buttons['submit'], [
                     'class' => $this->buttonClasses['submit'],
@@ -218,13 +244,18 @@ class HtmlForm extends Form
                 if (isset($this->buttons['submit'])) {
                     $lastRowInForm .= $this->field->button($this->buttons['submit'], [
                         'class' => $this->buttonClasses['submit'],
-                        'type' => 'submit'
+                        'type' => 'submit',
+                        'onclick' => $onSubmit,
                     ]);
                 }
             }
         }
 
         $lastRowInForm .= '</div></div>' . $this->close();
+
+        if ($this->isCardForm) {
+            $lastRowInForm .= "</div>";
+        }
 
         return $lastRowInForm;
     }

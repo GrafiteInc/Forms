@@ -168,7 +168,16 @@ class ModelForm extends HtmlForm
             ->setFormJs($this->scripts())
             ->fromTable($this->modelClass->getTable(), $fields);
 
+        if ($this->isCardForm) {
+            $cardBody = config('forms.form.cards.card-body', 'card-body');
+            $this->html .= "<div class=\"{$cardBody}\">";
+        }
+
         $this->html .= $this->renderedFields;
+
+        if ($this->isCardForm) {
+            $this->html .= "</div>";
+        }
 
         $this->html .= $this->formButtonsAndClose();
 
@@ -221,7 +230,16 @@ class ModelForm extends HtmlForm
             ->setFormJs($this->scripts())
             ->fromObject($this->instance, $fields);
 
+        if ($this->isCardForm) {
+            $cardBody = config('forms.form.cards.card-body', 'card-body');
+            $this->html .= "<div class=\"{$cardBody}\">";
+        }
+
         $this->html .= $this->renderedFields;
+
+        if ($this->isCardForm) {
+            $this->html .= "</div>";
+        }
 
         $this->html .= $this->formButtonsAndClose();
 
