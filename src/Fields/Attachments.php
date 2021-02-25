@@ -16,6 +16,8 @@ class Attachments extends Field
         return [
             'name' => 'attachments[]',
             'class' => 'attachments',
+            'deleteButton' => 'btn btn-sm float-right btn-outline-danger mr--20 ml-2',
+            'inputClass' => 'form-control custom-file-input attachments',
         ];
     }
 
@@ -43,13 +45,20 @@ EOT;
 
     protected static function js($id, $options)
     {
+        $listGroup = config('forms.html.list-group', 'list-group list-group-flush');
+        $listGroupItem = config('forms.html.list-group-item', 'list-group-item');
+        $badge = config('forms.html.badge-tag', 'badge badge-primary float-right');
+
+        $deleteButton = $options['deleteButton'];
+        $inputClass = $options['inputClass'];
+
         return <<<EOT
 var Forms_attachments = [];
 let Forms_listAttachments = function (attachments) {
     let _list = document.querySelector('.attachments-list');
         _list.innerHTML = "";
     let filesElement = document.createElement('ul');
-        filesElement.className = 'list-group list-group-flush';
+        filesElement.className = '{$listGroup}';
 
     for (let i = 0; i < attachments.length; i++) {
         let attachment = attachments[i];
@@ -78,12 +87,12 @@ let Forms_listAttachments = function (attachments) {
 
             let fileSizeBadge = document.createElement('span');
                 fileSizeBadge.innerText = fileSize;
-                fileSizeBadge.className = 'badge badge-primary float-right';
+                fileSizeBadge.className = '{$badge}';
 
             let deleteIcon = document.createElement('span');
                 deleteIcon.className = 'fas fa-trash';
             let deleteButton = document.createElement('button');
-                deleteButton.className = 'btn btn-sm float-right btn-outline-danger mr--20 ml-2';
+                deleteButton.className = '{$deleteButton}';
                 deleteButton.appendChild(deleteIcon);
                 deleteButton.addEventListener('click', event => {
                     event.preventDefault();
@@ -93,7 +102,7 @@ let Forms_listAttachments = function (attachments) {
                 });
 
             let fileElement = document.createElement('li');
-                fileElement.classList.add('list-group-item');
+                fileElement.classList.add('{$listGroupItem}');
                 fileElement.appendChild(nameSpan);
                 fileElement.appendChild(deleteButton);
                 fileElement.appendChild(fileSizeBadge);
@@ -116,7 +125,7 @@ let Forms_setAttachmentBindings = function () {
             _inputField.setAttribute('type', 'file');
             _inputField.setAttribute('id', '{$id}');
             _inputField.setAttribute('name', 'attachments[]');
-            _inputField.setAttribute('class', 'form-control custom-file-input attachments');
+            _inputField.setAttribute('class', '{$inputClass}');
 
         _inputContainer.appendChild(_inputField);
 

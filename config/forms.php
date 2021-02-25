@@ -21,6 +21,9 @@ return [
         'table-head' => 'thead border-bottom',
         'table-actions-header' => '<th class="text-right">Actions</th>',
         'sortable-icon' => '<span class="fas fa-fw fa-arrows-alt-v"></span>',
+        'list-group' => 'list-group list-group-flush',
+        'list-group-item' => 'list-group-item',
+        'badge-tag' => 'badge badge-primary float-right',
     ],
 
     'form' => [
