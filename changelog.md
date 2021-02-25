@@ -3,6 +3,16 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.5.0] - 2021-02-25
+
+### Added
+- Animation for disable on submit
+- Card form wrapper
+- Custom buttons at form footer
+
+### Fixed
+- Issue with url refresh
+
 ## [v4.4.2] - 2021-02-23
 
 ### Fixed
