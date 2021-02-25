@@ -206,18 +206,18 @@ class HtmlForm extends Form
 
         $lastRowInForm = '';
 
-        if ($this->isCardForm) {
-            $cardFooter = config('forms.form.cards.card-footer', 'card-footer');
-            $lastRowInForm .= "<div class=\"{$cardFooter}\">";
-        }
-
         $formButtonRow = config('forms.form.sections.button-row', 'row');
         $formButtonColumn = config('forms.form.sections.button-column', 'col-md-12');
 
-        $lastRowInForm .= '<div class="' . $formButtonRow . '">
+        if (!$this->formIsDisabled) {
+            if ($this->isCardForm) {
+                $cardFooter = config('forms.form.cards.card-footer', 'card-footer');
+                $lastRowInForm .= "<div class=\"{$cardFooter}\">";
+            }
+
+            $lastRowInForm .= '<div class="' . $formButtonRow . '">
             <div class="' . $formButtonColumn . ' ' . $rowAlignment . '">';
 
-        if (!$this->formIsDisabled) {
             foreach ($this->getExtraButtons() as $button => $buttonText) {
                 $lastRowInForm .= '<a class="' . $this->buttonClasses[$button]
                     . '" href="' . url($this->buttonLinks[$button]) . '">' . $this->buttons[$button] . '</a>';
@@ -249,13 +249,17 @@ class HtmlForm extends Form
                     ]);
                 }
             }
+
+            $lastRowInForm .= '</div></div>';
+
+            if ($this->isCardForm) {
+                $lastRowInForm .= "</div>";
+            }
         }
 
-        $lastRowInForm .= '</div></div>' . $this->close();
+        $lastRowInForm .= $this->close();
 
-        if ($this->isCardForm) {
-            $lastRowInForm .= "</div>";
-        }
+
 
         return $lastRowInForm;
     }
