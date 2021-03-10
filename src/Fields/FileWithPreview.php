@@ -41,7 +41,7 @@ EOT;
         $preview = $options['preview_identifier'] ?? '';
         $asBackgroundImage = $options['preview_as_background_image'] ?? false;
 
-        $method = 'document.querySelector('.$preview.')'
+        $method = 'document.querySelector("' . $preview . '")'
             .'.setAttribute(\'src\', e.target.result);';
 
         if ($asBackgroundImage) {
