@@ -31,38 +31,43 @@ class Toggled extends Field
     protected static function js($id, $options)
     {
         return <<<EOT
-            [...document.getElementsByClassName('form-check')].forEach((item) => {
-                let node = document.createElement("span");
-                    node.classList.add('slider');
-                    node.classList.add('round');
-                item.appendChild(node);
+        let {$id}_checkbox = document.getElementById('{$id}').parentNode;
+        let {$id}_toggle = document.createElement("span");
+            {$id}_toggle.classList.add('{$id}_slider');
+            {$id}_toggle.classList.add('slider');
+            {$id}_toggle.classList.add('round');
+        {$id}_checkbox.appendChild({$id}_toggle);
 
-                item.addEventListener('click', () => {
-                    item.querySelector('.form-check-input').click()
-                });
-            });
+        {$id}_checkbox.addEventListener('click', () => {
+            {$id}_checkbox.querySelector('.form-check-input').click()
+        });
 EOT;
     }
 
     protected static function styles($id, $options)
     {
-        $color = $options['color'] ?? 'blue';
+        $color = $options['color'] ?? 'var(--primary)';
 
         return <<<EOT
-            .form-check {
-                position: relative;
+            .form-check .${id}_slider {
+                position: absolute;
                 display: inline-block;
                 width: 60px;
                 height: 34px;
             }
 
-            .form-check input {
+            .form-check-label[for="{$id}"]:not(:empty) {
+                margin-left: 70px;
+                line-height: 34px;
+            }
+
+            .form-check #${id} {
                 opacity: 0;
                 width: 0;
                 height: 0;
             }
 
-            .slider {
+            .${id}_slider {
                 position: absolute;
                 cursor: pointer;
                 top: 0;
@@ -70,11 +75,10 @@ EOT;
                 right: 0;
                 bottom: 0;
                 background-color: #ccc;
-                -webkit-transition: .4s;
                 transition: .4s;
             }
 
-            .slider:before {
+            .${id}_slider:before {
                 position: absolute;
                 content: "";
                 height: 26px;
@@ -82,25 +86,21 @@ EOT;
                 left: 4px;
                 bottom: 4px;
                 background-color: white;
-                -webkit-transition: .4s;
-                transition: .4s;
+                transition: .2s;
             }
 
-            input:checked + label + .slider {
+            #${id}:checked + label + .${id}_slider{
                 background-color: {$color};
             }
 
-            input:focus + label + .slider {
+            #${id}:focus + label + .${id}_slider{
                 box-shadow: 0 0 1px {$color};
             }
 
-            input:checked + label + .slider:before {
-                -webkit-transform: translateX(26px);
-                -ms-transform: translateX(26px);
+             #${id}:checked + label + .${id}_slider:before{
                 transform: translateX(26px);
             }
 
-            /* Rounded sliders */
             .slider.round {
                 border-radius: 34px;
             }
