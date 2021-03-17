@@ -77,7 +77,7 @@ EOT;
 
         return <<<EOT
 $.typeahead({
-    input: '.typeahead',
+    input: '#${id}',
     order: "desc",
     source: {
         data: $values
