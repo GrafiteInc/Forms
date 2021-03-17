@@ -24,14 +24,14 @@ class Tags extends Field
     protected static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.css'
+            '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.css',
         ];
     }
 
     protected static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.min.js'
+            '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.min.js',
         ];
     }
 
@@ -42,16 +42,20 @@ class Tags extends Field
 
         return <<<EOT
 .tagify {
-    --tags-border-color: $defaultBorder;
-    --tags-focus-border-color: $focusBorder;
+    --tags-border-color: ${defaultBorder};
+    --tags-focus-border-color: ${focusBorder};
 }
 EOT;
     }
 
     protected static function js($id, $options)
     {
+        $list = $options['list'] ?? '[]';
+
         return <<<EOT
-new Tagify (document.getElementById('$id'));
+new Tagify (document.getElementById('${id}'), {
+    whitelist: {$list}
+});
 EOT;
     }
 }
