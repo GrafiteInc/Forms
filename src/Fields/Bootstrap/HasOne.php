@@ -39,10 +39,10 @@ class HasOne extends Field
 
     protected static function js($id, $options)
     {
-        $btn = $options['btn'] ?? 'btn-primary';
+        $btn = $options['btn'] ?? 'btn-outline-primary';
 
         return <<<EOT
-$('.selectpicker').selectpicker({
+$('#${id}').selectpicker({
     style: "{$btn}",
 }).parent().css({
     display: "block",
