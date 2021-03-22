@@ -38,6 +38,13 @@ class ModelForm extends HtmlForm
     public $routePrefix;
 
     /**
+     * The route parameters often just an ID or MODEL but sometimes an array of values.
+     *
+     * @var array
+     */
+    public $routeParameters = ['id'];
+
+    /**
      * The number of items you want to paginate by
      *
      * @var null|int
@@ -176,7 +183,7 @@ class ModelForm extends HtmlForm
         $this->html .= $this->renderedFields;
 
         if ($this->isCardForm) {
-            $this->html .= "</div>";
+            $this->html .= '</div>';
         }
 
         $this->html .= $this->formButtonsAndClose();
@@ -204,9 +211,7 @@ class ModelForm extends HtmlForm
         }
 
         $options = [
-            'route' => [
-                $this->routes['update'], $this->instance->id,
-            ],
+            'route' => array_merge([$this->routes['update']], $this->getRouteParameters()),
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
             'class' => $this->formClass,
@@ -238,7 +243,7 @@ class ModelForm extends HtmlForm
         $this->html .= $this->renderedFields;
 
         if ($this->isCardForm) {
-            $this->html .= "</div>";
+            $this->html .= '</div>';
         }
 
         $this->html .= $this->formButtonsAndClose();
@@ -260,9 +265,7 @@ class ModelForm extends HtmlForm
         $this->builder->setSections($this->setSections());
 
         $this->html = $this->model($this->instance, [
-            'route' => [
-                $this->routes['delete'], $this->instance->id,
-            ],
+            'route' => array_merge([$this->routes['delete']], $this->getRouteParameters()),
             'method' => $this->methods['delete'],
             'class' => $this->formDeleteClass,
             'id' => $this->formId,
@@ -581,5 +584,16 @@ EOT;
         }
 
         return $factory;
+    }
+
+    public function getRouteParameters()
+    {
+        $parameters = [];
+
+        foreach ($this->routeParameters as $key) {
+            $parameters[] = $this->instance->$key;
+        }
+
+        return $parameters;
     }
 }
