@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.5.8] - 2021-03-23
+
+### Added
+- Ability to change form options in the moment
+
 ## [v4.5.7] - 2021-03-22
 
 ### Fixed
