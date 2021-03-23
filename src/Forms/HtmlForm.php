@@ -319,6 +319,21 @@ class HtmlForm extends Form
     }
 
     /**
+     * Set the form options
+     *
+     * @param array $values
+     * @return self
+     */
+    public function setOptions($values)
+    {
+        foreach ($values as $key => $value) {
+            $this->$key = $value;
+        }
+
+        return $this;
+    }
+
+    /**
      * Set the fields
      *
      * @return array
