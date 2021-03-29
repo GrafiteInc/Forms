@@ -45,6 +45,13 @@ class ModelForm extends HtmlForm
     public $routeParameters = ['id'];
 
     /**
+     * The route parameter values
+     *
+     * @var array
+     */
+    public $routeParameterValues = [];
+
+    /**
      * The number of items you want to paginate by
      *
      * @var null|int
@@ -150,9 +157,7 @@ class ModelForm extends HtmlForm
         }
 
         $options = [
-            'route' => [
-                $this->routes['create'],
-            ],
+            'route' => array_merge([$this->routes['create']], $this->routeParameterValues),
             'files' => $this->hasFiles,
             'class' => $this->formClass,
             'id' => $this->formId,
@@ -204,6 +209,8 @@ class ModelForm extends HtmlForm
 
         $this->builder->setSections($this->setSections());
 
+        $this->setRouteParameterValues();
+
         if ($this->orientation == 'horizontal') {
             if ($this->formClass === config('forms.form.horizontal-class')) {
                 $this->formClass = config('forms.form.horizontal-class', 'form-horizontal');
@@ -211,7 +218,7 @@ class ModelForm extends HtmlForm
         }
 
         $options = [
-            'route' => array_merge([$this->routes['update']], $this->getRouteParameters()),
+            'route' => array_merge([$this->routes['update']], $this->routeParameterValues),
             'method' => $this->methods['update'],
             'files' => $this->hasFiles,
             'class' => $this->formClass,
@@ -264,8 +271,10 @@ class ModelForm extends HtmlForm
 
         $this->builder->setSections($this->setSections());
 
+        $this->setRouteParameterValues();
+
         $this->html = $this->model($this->instance, [
-            'route' => array_merge([$this->routes['delete']], $this->getRouteParameters()),
+            'route' => array_merge([$this->routes['delete']], $this->routeParameterValues),
             'method' => $this->methods['delete'],
             'class' => $this->formDeleteClass,
             'id' => $this->formId,
@@ -308,10 +317,12 @@ class ModelForm extends HtmlForm
     public function editButton($item = null)
     {
         if (! is_null($item)) {
-            $editLink = route($this->routes['edit'], [$item]);
-        } else {
-            $editLink = route($this->routes['edit'], [$this->getInstance()->id]);
+            $this->setInstance($item);
         }
+
+        $this->setRouteParameterValues();
+
+        $editLink = route($this->routes['edit'], $this->routeParameterValues);
 
         $buttonClasses = $this->buttonClasses['edit'] ?? 'btn btn-outline-primary btn-sm mr-2';
 
@@ -586,14 +597,16 @@ EOT;
         return $factory;
     }
 
-    public function getRouteParameters()
+    public function setRouteParameterValues($values = [])
     {
-        $parameters = [];
+        $this->routeParameterValues = $values;
 
-        foreach ($this->routeParameters as $key) {
-            $parameters[] = $this->instance->$key;
+        if (empty($values)) {
+            foreach ($this->routeParameters as $key) {
+                $this->routeParameterValues[] = $this->instance->$key;
+            }
         }
 
-        return $parameters;
+        return $this;
     }
 }
