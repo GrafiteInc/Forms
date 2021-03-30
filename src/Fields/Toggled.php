@@ -37,6 +37,7 @@ class Toggled extends Field
             {$id}_toggle.classList.add('slider');
             {$id}_toggle.classList.add('round');
         {$id}_checkbox.appendChild({$id}_toggle);
+        {$id}_checkbox.classList.add('d-inline-block');
 
         {$id}_checkbox.addEventListener('click', () => {
             {$id}_checkbox.querySelector('.form-check-input').click()
