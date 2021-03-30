@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.6.0] - 2021-03-30
+
+### Added
+- Timezone and Country fields
+
+### Changed
+- Datepicker now supports ranges
+
+### Fixed
+- Issue with suggestion box size
+- Issue with toggle select outside of toggle
+
 ## [v4.5.9] - 2021-03-29
 
 ### Fixed
