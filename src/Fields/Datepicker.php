@@ -26,7 +26,7 @@ class Datepicker extends Field
     protected static function stylesheets($options)
     {
         return [
-            "//unpkg.com/js-datepicker/dist/datepicker.min.css",
+            '//unpkg.com/js-datepicker/dist/datepicker.min.css',
         ];
     }
 
@@ -62,30 +62,30 @@ class Datepicker extends Field
 
         return <<<EOT
 .qs-datepicker-container {
-    color: $numberColor;
-    background-color: $background;
+    color: ${numberColor};
+    background-color: ${background};
 }
 .qs-datepicker .qs-controls {
-    background-color: $header;
-    color: $color;
+    background-color: ${header};
+    color: ${color};
     height: 35px;
 }
 .qs-datepicker .qs-square {
     height: 32px;
 }
 .qs-datepicker .qs-square.qs-active {
-    background-color: $highlight;
-    color: $color;
+    background-color: ${highlight};
+    color: ${color};
 }
 .qs-datepicker .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover {
-    background-color: $highlight;
-    color: $color;
+    background-color: ${highlight};
+    color: ${color};
 }
 .qs-datepicker .qs-arrow.qs-left:after {
-    border-right-color: $color;
+    border-right-color: ${color};
 }
 .qs-datepicker .qs-arrow.qs-right:after {
-    border-left-color: $color;
+    border-left-color: ${color};
 }
 EOT;
     }
@@ -96,13 +96,15 @@ EOT;
         $format = $options['format'] ?? 'YYYY-MM-DD';
         $event = $options['event'] ?? 'keydown';
         $wait = $options['wait'] ?? 350;
+        $identity = $options['identity'] ?? $id;
 
         return <<<EOT
-var _{$id}Datepicker = datepicker("#$id", {
-  startDay: $startDay,
-  dateSelected: moment(document.getElementById("$id").value).toDate(),
+var _{$id}Datepicker = datepicker("#${id}", {
+  startDay: ${startDay},
+  id: "${identity}",
+  dateSelected: moment(document.getElementById("${id}").value).toDate(),
   formatter: (input, date, instance) => {
-      input.value = moment(date).format("$format");
+      input.value = moment(date).format("${format}");
   }
 });
 
@@ -122,11 +124,11 @@ const {$id}_datepicker_debounce = (func, wait) => {
 
 const {$id}_debounce = {$id}_datepicker_debounce(function() {
     _{$id}Datepicker.hide();
-	let date = moment(document.getElementById("$id").value).toDate();
+	let date = moment(document.getElementById("${id}").value).toDate();
     _{$id}Datepicker.setDate(date, true);
 }, {$wait});
 
-document.getElementById("$id").addEventListener('{$event}', {$id}_debounce);
+document.getElementById("${id}").addEventListener('{$event}', {$id}_debounce);
 EOT;
     }
 }
