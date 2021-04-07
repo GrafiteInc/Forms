@@ -34,7 +34,7 @@ class Datepicker extends Field
     {
         return [
             '//unpkg.com/js-datepicker',
-            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.25.3/moment.min.js',
+            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js',
         ];
     }
 
@@ -102,7 +102,7 @@ EOT;
 var _{$id}Datepicker = datepicker("#${id}", {
   startDay: ${startDay},
   id: "${identity}",
-  dateSelected: moment(document.getElementById("${id}").value).toDate(),
+  dateSelected: moment(document.getElementById("${id}").value, "${format}").toDate(),
   formatter: (input, date, instance) => {
       input.value = moment(date).format("${format}");
   }
@@ -124,7 +124,7 @@ const {$id}_datepicker_debounce = (func, wait) => {
 
 const {$id}_debounce = {$id}_datepicker_debounce(function() {
     _{$id}Datepicker.hide();
-	let date = moment(document.getElementById("${id}").value).toDate();
+	let date = moment(document.getElementById("${id}").value, "${format}").toDate();
     _{$id}Datepicker.setDate(date, true);
 }, {$wait});
 
