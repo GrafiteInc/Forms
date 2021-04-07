@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.6.1] - 2021-04-07
+
+### Fixed
+- Issue with date formats for datepicker
+
 ## [v4.6.0] - 2021-03-30
 
 ### Added
