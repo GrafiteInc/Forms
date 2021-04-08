@@ -96,6 +96,17 @@ class ModelForm extends HtmlForm
     ];
 
     /**
+     * Form submit methods
+     *
+     * @var array
+     */
+    public $submitMethods = [
+        'create' => null,
+        'update' => null,
+        'delete' => null,
+    ];
+
+    /**
      * The form builder
      *
      * @var \Grafite\Forms\Services\FormMaker
@@ -149,6 +160,7 @@ class ModelForm extends HtmlForm
     public function create()
     {
         $this->builder->setSections($this->setSections());
+        $this->submitMethod = $this->submitMethods['create'] ?? null;
 
         if ($this->orientation == 'horizontal') {
             if ($this->formClass === config('forms.form.horizontal-class')) {
@@ -208,6 +220,7 @@ class ModelForm extends HtmlForm
         }
 
         $this->builder->setSections($this->setSections());
+        $this->submitMethod = $this->submitMethods['update'] ?? null;
 
         $this->setRouteParameterValues();
 
@@ -270,6 +283,7 @@ class ModelForm extends HtmlForm
         }
 
         $this->builder->setSections($this->setSections());
+        $this->submitMethod = $this->submitMethods['delete'] ?? null;
 
         $this->setRouteParameterValues();
 
