@@ -6,6 +6,7 @@ use Illuminate\Support\Arr;
 use Illuminate\Support\Str;
 use Illuminate\Support\HtmlString;
 use Illuminate\Routing\UrlGenerator;
+use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Builders\FieldBuilder;
 
