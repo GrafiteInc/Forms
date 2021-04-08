@@ -16,6 +16,7 @@ class HasMany extends Field
         return [
             'class' => 'selectpicker',
             'multiple' => true,
+            'data-size' => 8,
         ];
     }
 
@@ -41,12 +42,10 @@ class HasMany extends Field
     protected static function js($id, $options)
     {
         $btn = $options['btn'] ?? 'btn-outline-primary';
-        $size = $options['size'] ?? 8;
 
         return <<<EOT
 $('#${id}').selectpicker({
-    style: "{$btn}",
-    size: "{$size}"
+    style: "{$btn}"
 }).parent().css({
     display: "block",
     width: "100%"

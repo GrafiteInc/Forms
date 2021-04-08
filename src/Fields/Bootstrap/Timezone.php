@@ -168,6 +168,7 @@ class Timezone extends Field
             'class' => 'selectpicker w-100 form-control',
             'data-live-search' => 'true',
             'multiple' => false,
+            'data-size' => 8,
         ];
     }
 
@@ -193,12 +194,10 @@ class Timezone extends Field
     protected static function js($id, $options)
     {
         $btn = $options['btn'] ?? 'btn-outline-primary';
-        $size = $options['size'] ?? 8;
 
         return <<<EOT
 $('#${id}').selectpicker({
-    style: "{$btn}",
-    size: "{$size}"
+    style: "{$btn}"
 }).parent().css({
     display: "block",
     width: "100%"

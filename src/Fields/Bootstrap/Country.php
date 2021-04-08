@@ -266,6 +266,7 @@ class Country extends Field
             'multiple' => false,
             'null_label' => 'Please select a country',
             'null_value' => null,
+            'data-size' => 8,
         ];
     }
 
@@ -291,12 +292,10 @@ class Country extends Field
     protected static function js($id, $options)
     {
         $btn = $options['btn'] ?? 'btn-outline-primary';
-        $size = $options['size'] ?? 8;
 
         return <<<EOT
 $('#${id}').selectpicker({
-    style: "{$btn}",
-    size: "{$size}"
+    style: "{$btn}"
 }).parent().css({
     display: "block",
     width: "100%"
