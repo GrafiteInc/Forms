@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.7.0] - 2021-04-08
+
+### Added
+- New single field rendering
+- Custom submit methods per action
+
+### Fixed
+- Issue with selectpicker sizes
+
 ## [v4.6.1] - 2021-04-07
 
 ### Fixed
