@@ -517,6 +517,21 @@ Modal;
     }
 
     /**
+     * Render a single field
+     *
+     * @param string $field
+     * @param string $name
+     * @param array $options
+     * @return string
+     */
+    public function makeField($field, $name, $options)
+    {
+        return app(FormMaker::class)->fromFields([
+            app($field)->make($name, $options),
+        ]);
+    }
+
+    /**
      * Transform the string to an Html serializable object
      *
      * cloned from LaravelCollective/html
