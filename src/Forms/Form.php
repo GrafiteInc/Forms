@@ -525,7 +525,7 @@ Modal;
      * @param array $options
      * @return string
      */
-    public function makeField($field, $name, $options)
+    public function makeField($field, $name, $options = [])
     {
         return app(FormMaker::class)->fromFields([
             app($field)->make($name, $options),
