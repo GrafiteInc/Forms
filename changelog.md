@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.7.2] - 2021-04-12
+
+### Added
+- disableOnSubmit to action and modal forms
+
 ## [v4.7.1] - 2021-04-08
 
 ### Fixed
