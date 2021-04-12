@@ -33,7 +33,8 @@ class FormAction extends Component
         $options = [],
         $confirm = false,
         $confirmMessage = "Are you sure you want to complete this action?",
-        $confirmMethod = "confirm"
+        $confirmMethod = "confirm",
+        $disableOnSubmit = false
     ) {
         $this->route = $route;
         $this->method = $method;
@@ -43,6 +44,7 @@ class FormAction extends Component
         $this->confirm = $confirm;
         $this->confirmMessage = $confirmMessage;
         $this->confirmMethod = $confirmMethod;
+        $this->disableOnSubmit = $disableOnSubmit;
     }
 
     /**
@@ -59,6 +61,6 @@ class FormAction extends Component
         }
 
         return (string) $form->payload($this->payload)
-            ->action($this->method, $this->route, $this->content, $this->options);
+            ->action($this->method, $this->route, $this->content, $this->options, false, $this->disableOnSubmit);
     }
 }

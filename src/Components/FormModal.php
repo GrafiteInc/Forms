@@ -25,7 +25,8 @@ class FormModal extends Component
         $payload = [],
         $options = [],
         $triggerContent = 'Trigger',
-        $triggerClass = null
+        $triggerClass = null,
+        $disableOnSubmit = false
     ) {
         $this->route = $route;
         $this->method = $method;
@@ -35,6 +36,7 @@ class FormModal extends Component
         $this->options = $options;
         $this->triggerContent = $triggerContent;
         $this->triggerClass = $triggerClass;
+        $this->disableOnSubmit = $disableOnSubmit;
     }
 
     /**
@@ -48,6 +50,6 @@ class FormModal extends Component
 
         return (string) $form->payload($this->payload)
             ->setModal($this->triggerContent, $this->triggerClass, $this->message)
-            ->action($this->method, $this->route, $this->content, $this->options, true);
+            ->action($this->method, $this->route, $this->content, $this->options, true, $this->disableOnSubmit);
     }
 }

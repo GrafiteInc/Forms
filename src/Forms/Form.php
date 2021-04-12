@@ -154,7 +154,7 @@ class Form
      * @param string $button
      * @return self
      */
-    public function action($method, $route, $button = 'Send', $options = [], $asModal = false)
+    public function action($method, $route, $button = 'Send', $options = [], $asModal = false, $disableOnSubmit = false)
     {
         $this->html = $this->open([
             'route' => $route,
@@ -175,6 +175,14 @@ class Form
         if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
             $options = array_merge($options, [
                 'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')",
+            ]);
+        }
+
+        if ($disableOnSubmit && is_null($this->confirmMethod)) {
+            $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> '.$button;
+            $onSubmit = 'this.innerHTML = \''.$processing.'\'; this.disabled = true; this.form.submit();';
+            $options = array_merge($options, [
+                'onclick' => $onSubmit,
             ]);
         }
 
