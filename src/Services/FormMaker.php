@@ -4,8 +4,8 @@ namespace Grafite\Forms\Services;
 
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
-use Grafite\Forms\Traits\HasLivewire;
 use Grafite\Forms\Traits\HasErrorBag;
+use Grafite\Forms\Traits\HasLivewire;
 use Grafite\Forms\Services\FieldMaker;
 use Grafite\Forms\Services\FormAssets;
 use Illuminate\Support\Facades\Schema;
@@ -199,7 +199,7 @@ class FormMaker
 
             if ($column === 'id') {
                 $columnConfig = [
-                    'type' => 'hidden'
+                    'type' => 'hidden',
                 ];
             }
 
@@ -242,10 +242,7 @@ class FormMaker
      */
     public function cleanupIdAndTimeStamps($columns)
     {
-        unset($columns['id']);
-        unset($columns['created_at']);
-        unset($columns['updated_at']);
-        unset($columns['deleted_at']);
+        unset($columns['id'], $columns['created_at'], $columns['updated_at'], $columns['deleted_at']);
 
         return $columns;
     }
@@ -262,19 +259,28 @@ class FormMaker
     {
         switch ($this->columns) {
             case 1:
-                return implode("", $formBuild);
+                return implode('', $formBuild);
+
             case 2:
                 return $this->buildColumnForm($formBuild, 2);
+
             case 3:
                 return $this->buildColumnForm($formBuild, 3);
+
             case 4:
                 return $this->buildColumnForm($formBuild, 4);
+
             case 6:
                 return $this->buildColumnForm($formBuild, 6);
+
             case 'sections':
                 return $this->buildColumnForm($formBuild, null);
+
+            case 'steps':
+                return $this->buildColumnForm($formBuild, null, true);
+
             default:
-                return implode("", $formBuild);
+                return implode('', $formBuild);
         }
     }
 
@@ -376,7 +382,7 @@ EOT;
 
         foreach ($tableColumns as $column => $value) {
             $fields[$column] = [
-                'type' => $this->getNormalizedType($value['type'])
+                'type' => $this->getNormalizedType($value['type']),
             ];
         }
 
@@ -479,7 +485,7 @@ EOT;
             $formSections[] = $this->buildSection($inputs, $columns, $label);
         }
 
-        return implode("", $formSections);
+        return implode('', $formSections);
     }
 
     /**
@@ -501,7 +507,7 @@ EOT;
         }
 
         foreach ($tableColumns as $column) {
-            if (!in_array($column, $badColumns)) {
+            if (! in_array($column, $badColumns)) {
                 $type = DB::connection($this->connection)
                     ->getDoctrineColumn(DB::connection($this->connection)->getTablePrefix() . $table, $column)
                     ->getType()->getName();

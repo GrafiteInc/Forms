@@ -209,7 +209,7 @@ class HtmlForm extends Form
         $formButtonRow = config('forms.form.sections.button-row', 'row');
         $formButtonColumn = config('forms.form.sections.button-column', 'col-md-12');
 
-        if (!$this->formIsDisabled) {
+        if (! $this->formIsDisabled) {
             if ($this->isCardForm) {
                 $cardFooter = config('forms.form.cards.card-footer', 'card-footer');
                 $lastRowInForm .= "<div class=\"{$cardFooter}\">";
@@ -231,14 +231,14 @@ class HtmlForm extends Form
             $onSubmit = null;
 
             if ($this->disableOnSubmit) {
-                $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> '.$this->buttons['submit'];
-                $onSubmit = 'this.innerHTML = \''.$processing.'\'; this.disabled = true; this.form.submit();';
+                $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> ' . $this->buttons['submit'];
+                $onSubmit = 'this.innerHTML = \'' . $processing . '\'; this.disabled = true; this.form.submit();';
             }
 
             if (!is_null($this->submitMethod)) {
                 $lastRowInForm .= $this->field->button($this->buttons['submit'], [
                     'class' => $this->buttonClasses['submit'],
-                    'onclick' => "{$this->submitMethod}(event)"
+                    'onclick' => "{$this->submitMethod}(event)",
                 ]);
             } else {
                 if (isset($this->buttons['submit'])) {
@@ -253,13 +253,11 @@ class HtmlForm extends Form
             $lastRowInForm .= '</div></div>';
 
             if ($this->isCardForm) {
-                $lastRowInForm .= "</div>";
+                $lastRowInForm .= '</div>';
             }
         }
 
         $lastRowInForm .= $this->close();
-
-
 
         return $lastRowInForm;
     }
@@ -379,11 +377,12 @@ class HtmlForm extends Form
         $fields = [];
 
         if (empty($formFields)) {
-            throw new Exception("Invalid fields", 1);
+            throw new Exception('Invalid fields', 1);
         }
 
         foreach ($formFields as $config) {
             $key = array_key_first($config);
+
             if ($this->formIsDisabled) {
                 $config[$key]['attributes']['disabled'] = 'disabled';
             }
@@ -412,6 +411,16 @@ class HtmlForm extends Form
      * @return mixed
      */
     public function scripts()
+    {
+        return null;
+    }
+
+    /**
+     * Styles for the Form
+     *
+     * @return mixed
+     */
+    public function styles()
     {
         return null;
     }
