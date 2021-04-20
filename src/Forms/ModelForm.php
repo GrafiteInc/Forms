@@ -190,6 +190,7 @@ class ModelForm extends HtmlForm
             ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
             ->setFormJs($this->scripts())
+            ->setFormStyles($this->styles())
             ->fromTable($this->modelClass->getTable(), $fields);
 
         if ($this->isCardForm) {
@@ -253,6 +254,7 @@ class ModelForm extends HtmlForm
             ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
             ->setFormJs($this->scripts())
+            ->setFormStyles($this->styles())
             ->fromObject($this->instance, $fields);
 
         if ($this->isCardForm) {

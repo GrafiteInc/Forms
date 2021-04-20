@@ -2,8 +2,8 @@
 
 namespace Grafite\Forms\Forms;
 
-use Illuminate\Routing\UrlGenerator;
 use Grafite\Forms\Forms\HtmlForm;
+use Illuminate\Routing\UrlGenerator;
 use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Builders\FieldBuilder;
 
@@ -60,7 +60,7 @@ class LivewireForm extends HtmlForm
             'files' => $this->hasFiles,
             'class' => $this->formClass,
             'id' => $this->formId,
-            'wire:submit.prevent' => $this->method
+            'wire:submit.prevent' => $this->method,
         ];
 
         $this->html = $this->open($options);
@@ -73,6 +73,7 @@ class LivewireForm extends HtmlForm
             ->setLivewireOnKeydown($this->onKeydown)
             ->setErrorBag($this->errorBag)
             ->setFormJs($this->scripts())
+            ->setFormStyles($this->styles())
             ->fromFieldsOrObject($fields, $this->data);
 
         $this->html .= $this->renderedFields;

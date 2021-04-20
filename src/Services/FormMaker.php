@@ -310,6 +310,21 @@ class FormMaker
     }
 
     /**
+     * Set the form styles
+     *
+     * @param string $styles
+     * @return self
+     */
+    public function setFormStyles($styles)
+    {
+        if (! is_null($styles)) {
+            $this->formAssets->addStyles($styles);
+        }
+
+        return $this;
+    }
+
+    /**
      * The default JS for form validation
      *
      * @return string

@@ -121,6 +121,7 @@ class ModalForm extends HtmlForm
             ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
             ->setFormJs($this->scripts())
+            ->setFormStyles($this->styles())
             ->fromFields($fields);
 
         $this->html .= $this->renderedFields;
