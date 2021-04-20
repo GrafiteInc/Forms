@@ -397,7 +397,7 @@ EOT;
      * @param string $label
      * @return string
      */
-    private function buildSection($fields, $columns, $label = null)
+    private function buildSection($fields, $columns, $label = null, $isStepped = false, $step = 1)
     {
         $formChunks = [];
         $newFormBuild = [];
@@ -428,7 +428,11 @@ EOT;
         $fullSizeColumn = config('forms.form.sections.full-size-column', 'col-md-12');
         $headerSpacing = config('forms.form.sections.header-spacing', 'mt-2 mb-2');
 
-        if (!is_null($label)) {
+        if ($isStepped) {
+            $newFormBuild[] = '<div data-step="' . $step . '" class="form_step">';
+        }
+
+        if (! is_null($label)) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
             $newFormBuild[] = '<div class="' . $fullSizeColumn . '"><h4 class="' . $headerSpacing . '">' . $label . '</h4><hr></div>';
             $newFormBuild[] = '</div>';
@@ -436,6 +440,7 @@ EOT;
 
         foreach ($formChunks as $chunk) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
+
             foreach ($chunk as $element) {
                 if (
                     Str::contains($element, 'type="hidden"')
@@ -453,7 +458,11 @@ EOT;
             $newFormBuild[] = '</div>';
         }
 
-        return implode("", $newFormBuild);
+        if ($isStepped) {
+            $newFormBuild[] = '</div>';
+        }
+
+        return implode('', $newFormBuild);
     }
 
     /**
@@ -461,14 +470,18 @@ EOT;
      *
      * @param  array $formBuild
      * @param  int $columns
+     * @param  bool $isStepped
      * @return string
      */
-    private function buildColumnForm($formBuild, $columns)
+    private function buildColumnForm($formBuild, $columns, $isStepped = false)
     {
         $formSections = [];
+        $step = 0;
 
         foreach ($this->sections as $section => $fields) {
+            $step++;
             $label = null;
+            $columns = count($fields);
 
             if (is_string($section)) {
                 $label = $section;
@@ -477,12 +490,18 @@ EOT;
             $inputs = [];
 
             foreach ($fields as $field) {
-                if (isset($formBuild[$field])) {
+                if (! is_array($field) && isset($formBuild[$field])) {
                     $inputs[] = $formBuild[$field];
+                }
+
+                if (is_array($field)) {
+                    foreach ($field as $inputField) {
+                        $inputs[] = $formBuild[$inputField];
+                    }
                 }
             }
 
-            $formSections[] = $this->buildSection($inputs, $columns, $label);
+            $formSections[] = $this->buildSection($inputs, $columns, $label, $isStepped, $step);
         }
 
         return implode('', $formSections);

@@ -3,7 +3,6 @@
 namespace Grafite\Forms\Forms;
 
 use Exception;
-use Grafite\Forms\Forms\Form;
 
 class HtmlForm extends Form
 {
@@ -172,16 +171,22 @@ class HtmlForm extends Form
             'edit' => $this->buttonClasses['edit'] ?? config('forms.buttons.edit', 'btn btn-outline-primary'),
             'delete' => $this->buttonClasses['delete'] ?? config('forms.buttons.delete', 'btn btn-danger'),
             'cancel' => $this->buttonClasses['cancel'] ?? config('forms.buttons.cancel', 'btn btn-secondary'),
+            'next' => $this->buttonClasses['next'] ?? config('forms.buttons.next', 'btn btn-outline-primary'),
+            'previous' => $this->buttonClasses['previous'] ?? config('forms.buttons.previous', 'btn btn-outline-secondary'),
         ];
 
         $submitButton = (collect($this->buttons)->contains('submit')) ? 'Submit' : null;
         $deleteButton = 'Delete';
+        $nextButton = 'Next';
+        $previousButton = 'Previous';
 
         $buttons = [
             'submit' => $this->buttons['submit'] ?? $submitButton,
             'edit' => $this->buttons['edit'] ?? null,
             'cancel' => $this->buttons['cancel'] ?? null,
             'delete' => $this->buttons['delete'] ?? $deleteButton,
+            'next' => $this->buttons['next'] ?? $nextButton,
+            'previous' => $this->buttons['previous'] ?? $previousButton,
         ];
 
         $this->buttonClasses = array_merge($buttonClasses, $this->getExtraButtonClasses());
@@ -200,7 +205,7 @@ class HtmlForm extends Form
     {
         $rowAlignment = config('forms.form.sections.row-alignment-end', 'd-flex justify-content-end');
 
-        if (isset($this->buttons['cancel'])) {
+        if (isset($this->buttons['cancel']) || $this->columns === 'steps') {
             $rowAlignment = config('forms.form.sections.row-alignment-between', 'd-flex justify-content-between');
         }
 
@@ -235,7 +240,18 @@ class HtmlForm extends Form
                 $onSubmit = 'this.innerHTML = \'' . $processing . '\'; this.disabled = true; this.form.submit();';
             }
 
-            if (!is_null($this->submitMethod)) {
+            if ($this->columns === 'steps') {
+                $lastRowInForm .= $this->field->button($this->buttons['previous'], [
+                    'class' => $this->buttonClasses['previous'] . ' form-previous-btn',
+                    'onclick' => 'window.Form_previous_step()',
+                ]);
+                $lastRowInForm .= $this->field->button($this->buttons['next'], [
+                    'class' => $this->buttonClasses['next'] . ' form-next-btn',
+                    'onclick' => 'window.Form_next_step()',
+                ]);
+            }
+
+            if (! is_null($this->submitMethod)) {
                 $lastRowInForm .= $this->field->button($this->buttons['submit'], [
                     'class' => $this->buttonClasses['submit'],
                     'onclick' => "{$this->submitMethod}(event)",
@@ -268,6 +284,16 @@ class HtmlForm extends Form
      * @return array
      */
     public function setSections()
+    {
+        return [array_keys($this->parseFields($this->fields()))];
+    }
+
+    /**
+     * Set the form steps
+     *
+     * @return array
+     */
+    public function steps()
     {
         return [array_keys($this->parseFields($this->fields()))];
     }
@@ -349,7 +375,7 @@ class HtmlForm extends Form
     public function getExtraButtons()
     {
         return collect($this->buttons)->filter(function ($buttonText, $button) {
-            return ! in_array($button, ['cancel', 'submit', 'delete', 'edit']);
+            return ! in_array($button, ['cancel', 'submit', 'delete', 'edit', 'next', 'previous']);
         })->toArray();
     }
 
@@ -361,7 +387,7 @@ class HtmlForm extends Form
     public function getExtraButtonClasses()
     {
         return collect($this->buttonClasses)->filter(function ($buttonText, $button) {
-            return ! in_array($button, ['cancel', 'submit', 'delete', 'edit']);
+            return ! in_array($button, ['cancel', 'submit', 'delete', 'edit', 'next', 'previous']);
         })->toArray();
     }
 
