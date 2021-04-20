@@ -156,8 +156,9 @@ class WizardForm extends HtmlForm
         $html = '<div class="form-progress-bar">';
 
         foreach (array_keys($this->steps()) as $key => $title) {
+            $htmlTitle = (is_numeric($title)) ? '' : 'title="' . $title. '"';
             $html .= '<div class="form-step">';
-            $html .= '<span title="' . $title . '" class="form-bullet" data-bullet="' . $key . '">' . ($key + 1) . '</span>';
+            $html .= '<span '.$htmlTitle.' class="form-bullet" data-bullet="' . $key . '">' . ($key + 1) . '</span>';
             $html .= '</div>';
         }
         $html .= '</div>';

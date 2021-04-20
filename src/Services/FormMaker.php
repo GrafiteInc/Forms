@@ -481,7 +481,10 @@ EOT;
         foreach ($this->sections as $section => $fields) {
             $step++;
             $label = null;
-            $columns = count($fields);
+
+            if (is_null($columns)) {
+                $columns = count($fields);
+            }
 
             if (is_string($section)) {
                 $label = $section;

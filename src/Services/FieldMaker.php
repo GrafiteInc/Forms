@@ -208,7 +208,7 @@ class FieldMaker
             $class = config('forms.form.label-class', 'control-label');
         }
 
-        if (!empty($errors)) {
+        if (! empty($errors)) {
             $class = $class . ' ' . config('forms.form.error-class', 'has-error');
         }
 
@@ -242,7 +242,7 @@ class FieldMaker
             $final = $object;
 
             foreach ($nested as $property) {
-                if (!empty($property) && isset($final->{$property})) {
+                if (! empty($property) && isset($final->{$property})) {
                     $final = $final->{$property};
                 } elseif (is_object($final) && is_null($final->{$property})) {
                     $final = '';
@@ -275,7 +275,7 @@ class FieldMaker
     {
         $class = config('forms.form.invalid-feedback', 'invalid-feedback');
 
-        $errors = [];
+        $errors = collect([]);
 
         if (session()->isStarted()) {
             $errors = session('errors');
@@ -283,10 +283,14 @@ class FieldMaker
 
         if (! is_null($this->errorBag)) {
             $errors = $this->errorBag;
-            $column = 'data.'.$column;
+            $column = 'data.' . $column;
         }
 
-        if (!is_null($errors) && count($errors) > 0 && $errors->get($column)) {
+        if (! is_object($errors)) {
+            $errors = collect($errors);
+        }
+
+        if (! is_null($errors) && count($errors) > 0 && $errors->get($column)) {
             $message = implode(' ', $errors->get($column));
             $message = str_replace('data.', '', $message);
 
