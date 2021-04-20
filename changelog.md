@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.8.1] - 2021-04-20
+
+### Fixed
+- Issue with wizard titles
+- Issue with error feedback
+
 ## [v4.8.0] - 2021-04-20
 
 ### Added
