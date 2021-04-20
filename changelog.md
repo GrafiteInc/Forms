@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.8.0] - 2021-04-20
+
+### Added
+- New wizard based forms
+- Custom styles for forms
+
+### Fixed
+- Issue with nesting column sections
+
 ## [v4.7.2] - 2021-04-12
 
 ### Added
