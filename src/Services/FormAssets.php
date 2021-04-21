@@ -26,8 +26,6 @@ class FormAssets
 
         if (in_array($type, ['all', 'styles'])) {
             $output .= collect($this->stylesheets)->unique()->implode("\n");
-            $output .= collect($this->scripts)->unique()->implode("\n");
-
             $styles = collect($this->styles)->unique()->implode("\n");
 
             if (app()->environment('production')) {
@@ -38,6 +36,7 @@ class FormAssets
         }
 
         if (in_array($type, ['all', 'scripts'])) {
+            $output .= collect($this->scripts)->unique()->implode("\n");
             $js = collect($this->js)->unique()->implode("\n");
 
             if (app()->environment('production')) {
