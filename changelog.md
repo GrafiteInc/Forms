@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.9.1] - 2021-04-21
+
+### Fixed
+- Issue with script cdn links
+
 ## [v4.9.0] - 2021-04-21
 
 ### Added
