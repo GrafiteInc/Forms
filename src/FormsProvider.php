@@ -14,7 +14,9 @@ use Grafite\Forms\Commands\MakeBaseFormCommand;
 use Grafite\Forms\Commands\MakeFormTestCommand;
 use Grafite\Forms\Commands\MakeModalFormCommand;
 use Grafite\Forms\Commands\MakeModelFormCommand;
+use Grafite\Forms\Commands\MakeWizardFormCommand;
 use Grafite\Forms\Commands\MakeFormFactoryCommand;
+use Grafite\Forms\Commands\MakeLivewireFormCommand;
 
 class FormsProvider extends ServiceProvider
 {
@@ -31,6 +33,14 @@ class FormsProvider extends ServiceProvider
 
         $this->app['blade.compiler']->directive('forms', function () {
             return "<?php echo app('" . FormAssets::class . "')->render(); ?>";
+        });
+
+        $this->app['blade.compiler']->directive('formScripts', function () {
+            return "<?php echo app('" . FormAssets::class . "')->render('scripts'); ?>";
+        });
+
+        $this->app['blade.compiler']->directive('formStyles', function () {
+            return "<?php echo app('" . FormAssets::class . "')->render('styles'); ?>";
         });
 
         $this->app['blade.compiler']->component('f', Form::class);
@@ -50,6 +60,8 @@ class FormsProvider extends ServiceProvider
             MakeModelFormCommand::class,
             MakeModalFormCommand::class,
             MakeBaseFormCommand::class,
+            MakeLivewireFormCommand::class,
+            MakeWizardFormCommand::class,
             MakeFormFactoryCommand::class,
             MakeFormTestCommand::class,
         ]);

@@ -31,6 +31,11 @@ class UserHistoryForm extends BaseForm
     {
         return "console.log('hello world')";
     }
+
+    public function styles()
+    {
+        return ".hello { color: red; }";
+    }
 }
 
 class FormAssetsTest extends TestCase
@@ -62,11 +67,21 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString('History', $form);
     }
 
-    public function testMakeFormScripts()
+    public function testMakeFormScriptsAndStyles()
     {
         $this->form->make();
 
         $assets = $this->formAssets->render();
+
+        $this->assertStringContainsString("console.log('hello world')", $assets);
+        $this->assertStringContainsString(".hello { color: red; }", $assets);
+    }
+
+    public function testMakeFormScripts()
+    {
+        $this->form->make();
+
+        $assets = $this->formAssets->render('scripts');
 
         $this->assertStringContainsString("console.log('hello world')", $assets);
     }
@@ -77,7 +92,7 @@ class FormAssetsTest extends TestCase
 
         $this->assertEquals(3, count($this->formAssets->stylesheets));
         $this->assertEquals(2, count($this->formAssets->scripts));
-        $this->assertEquals(2, count($this->formAssets->styles));
+        $this->assertEquals(3, count($this->formAssets->styles));
         $this->assertEquals(4, count($this->formAssets->js));
     }
 

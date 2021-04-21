@@ -20,31 +20,35 @@ class FormAssets
      *
      * @return string
      */
-    public function render()
+    public function render($type = 'all')
     {
         $output = '';
 
-        $output .= collect($this->stylesheets)->unique()->implode("\n");
-        $output .= collect($this->scripts)->unique()->implode("\n");
+        if (in_array($type, ['all', 'styles'])) {
+            $output .= collect($this->stylesheets)->unique()->implode("\n");
+            $output .= collect($this->scripts)->unique()->implode("\n");
 
-        $styles = collect($this->styles)->unique()->implode("\n");
+            $styles = collect($this->styles)->unique()->implode("\n");
 
-        if (app()->environment('production')) {
-            $minifierCSS = new CSS();
-            $styles = $minifierCSS->add($styles)->minify();
-        }
-        $output .= "<style>\n{$styles}\n</style>\n";
-
-        $js = collect($this->js)->unique()->implode("\n");
-
-        if (app()->environment('production')) {
-            $minifierJS = new JS();
-            $js = $minifierJS->add($js)->minify();
+            if (app()->environment('production')) {
+                $minifierCSS = new CSS();
+                $styles = $minifierCSS->add($styles)->minify();
+            }
+            $output .= "<style>\n{$styles}\n</style>\n";
         }
 
-        $function = "let FormsJS = () => { {$js} }";
+        if (in_array($type, ['all', 'scripts'])) {
+            $js = collect($this->js)->unique()->implode("\n");
 
-        $output .= "<script>\n{$function}\nFormsJS();\n</script>\n";
+            if (app()->environment('production')) {
+                $minifierJS = new JS();
+                $js = $minifierJS->add($js)->minify();
+            }
+
+            $function = "let FormsJS = () => { {$js} }";
+
+            $output .= "<script>\n{$function}\nFormsJS();\n</script>\n";
+        }
 
         return $output;
     }
