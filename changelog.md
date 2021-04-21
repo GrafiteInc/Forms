@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.9.0] - 2021-04-21
+
+### Added
+- More make commands and stubs
+- New separation of assets option
+
+### Changed
+- Improved developer experience
+
 ## [v4.8.1] - 2021-04-20
 
 ### Fixed
