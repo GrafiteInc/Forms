@@ -92,7 +92,7 @@ class FormMaker
      */
     public function setSteps($steps)
     {
-        $this->steps = $steps;
+        $this->steps = array_reverse($steps);
 
         return $this;
     }
