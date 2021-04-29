@@ -22,6 +22,8 @@ class FormMaker
 
     protected $sections = [];
 
+    protected $steps = [];
+
     protected $orientation;
 
     protected $withJsValidation = false;
@@ -79,6 +81,18 @@ class FormMaker
     public function setSections($sections)
     {
         $this->sections = $sections;
+
+        return $this;
+    }
+
+    /**
+     * Set the steps of the form
+     *
+     * @param array $steps
+     */
+    public function setSteps($steps)
+    {
+        $this->steps = $steps;
 
         return $this;
     }
@@ -428,10 +442,6 @@ EOT;
         $fullSizeColumn = config('forms.form.sections.full-size-column', 'col-md-12');
         $headerSpacing = config('forms.form.sections.header-spacing', 'mt-2 mb-2');
 
-        if ($isStepped) {
-            $newFormBuild[] = '<div data-step="' . $step . '" class="form_step">';
-        }
-
         if (! is_null($label)) {
             $newFormBuild[] = '<div class="' . $rowClass . '">';
             $newFormBuild[] = '<div class="' . $fullSizeColumn . '"><h4 class="' . $headerSpacing . '">' . $label . '</h4><hr></div>';
@@ -458,10 +468,6 @@ EOT;
             $newFormBuild[] = '</div>';
         }
 
-        if ($isStepped) {
-            $newFormBuild[] = '</div>';
-        }
-
         return implode('', $newFormBuild);
     }
 
@@ -476,35 +482,43 @@ EOT;
     private function buildColumnForm($formBuild, $columns, $isStepped = false)
     {
         $formSections = [];
-        $step = 0;
 
-        foreach ($this->sections as $section => $fields) {
-            $step++;
-            $label = null;
+        if (! empty($this->sections)) {
+            $this->steps = [$this->sections];
+        }
 
-            if (is_null($columns)) {
-                $columns = count($fields);
+        foreach ($this->steps as $step => $section) {
+            if (count($this->steps) > 1) {
+                $formSections[] = '<div data-step="' . $step . '" class="form_step">';
             }
 
-            if (is_string($section)) {
-                $label = $section;
-            }
+            foreach ($section as $key => $fields) {
+                $label = null;
 
-            $inputs = [];
-
-            foreach ($fields as $field) {
-                if (! is_array($field) && isset($formBuild[$field])) {
-                    $inputs[] = $formBuild[$field];
+                if (is_string($key)) {
+                    $label = $key;
                 }
 
-                if (is_array($field)) {
-                    foreach ($field as $inputField) {
-                        $inputs[] = $formBuild[$inputField];
+                $inputs = [];
+
+                foreach ($fields as $field) {
+                    if (! is_array($field) && isset($formBuild[$field])) {
+                        $inputs[] = $formBuild[$field];
+                    }
+
+                    if (is_array($field)) {
+                        foreach ($field as $inputField) {
+                            $inputs[] = $formBuild[$inputField];
+                        }
                     }
                 }
+
+                $formSections[] = $this->buildSection($inputs, $columns, $label, $isStepped, $step);
             }
 
-            $formSections[] = $this->buildSection($inputs, $columns, $label, $isStepped, $step);
+            if (count($this->steps) > 1) {
+                $formSections[] = '</div>';
+            }
         }
 
         return implode('', $formSections);

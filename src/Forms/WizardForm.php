@@ -106,7 +106,7 @@ class WizardForm extends HtmlForm
             }
         }
 
-        $this->builder->setSections($this->steps());
+        $this->builder->setSteps($this->steps());
 
         $options = [
             'route' => $this->route,
@@ -156,9 +156,9 @@ class WizardForm extends HtmlForm
         $html = '<div class="form-progress-bar">';
 
         foreach (array_keys($this->steps()) as $key => $title) {
-            $htmlTitle = (is_numeric($title)) ? '' : 'title="' . $title. '"';
+            $htmlTitle = (is_numeric($title)) ? '' : 'title="' . $title . '"';
             $html .= '<div class="form-step">';
-            $html .= '<span '.$htmlTitle.' class="form-bullet" data-bullet="' . $key . '">' . ($key + 1) . '</span>';
+            $html .= '<span ' . $htmlTitle . ' class="form-bullet" data-bullet="' . $key . '">' . ($key + 1) . '</span>';
             $html .= '</div>';
         }
         $html .= '</div>';
@@ -309,16 +309,16 @@ EOT;
 
 .form-step-text  {
     margin-bottom: 10px;
-    color: $color;
+    color: ${color};
     display: block;
 }
 
 .form-bullet {
-	border: 1px solid $color;
+	border: 1px solid ${color};
 	height: 24px;
 	width: 24px;
 	border-radius: 100%;
-	color: $color;
+	color: ${color};
 	display: inline-block;
 	position: relative;
 	transition: background-color 500ms;
@@ -328,7 +328,7 @@ EOT;
 
 .form-bullet.completed  {
 	color:  white;
-	background-color: $color;
+	background-color: ${color};
 }
 
 .form-bullet.completed::after {
@@ -338,7 +338,7 @@ EOT;
 	bottom: 10px;
 	height: 1px;
 	width: ${width}px;
-	background-color: $color;
+	background-color: ${color};
 }
 EOT;
     }
