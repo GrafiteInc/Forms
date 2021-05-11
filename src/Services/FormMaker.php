@@ -6,8 +6,6 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\DB;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Traits\HasLivewire;
-use Grafite\Forms\Services\FieldMaker;
-use Grafite\Forms\Services\FormAssets;
 use Illuminate\Support\Facades\Schema;
 
 /**
@@ -92,7 +90,7 @@ class FormMaker
      */
     public function setSteps($steps)
     {
-        $this->steps = array_reverse($steps);
+        $this->steps = $steps;
 
         return $this;
     }
@@ -489,7 +487,7 @@ EOT;
 
         foreach ($this->steps as $step => $section) {
             if (count($this->steps) > 1) {
-                $formSections[] = '<div data-step="' . $step . '" class="form_step">';
+                $formSections[] = '<div data-step="' . ($step + 1) . '" class="form_step">';
             }
 
             foreach ($section as $key => $fields) {
