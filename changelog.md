@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.9.5] - 2021-05-11
+
+### Changed
+- Remove the invalid feedback element on js validation
+
 ## [v4.9.4] - 2021-05-11
 
 ### Fixed
