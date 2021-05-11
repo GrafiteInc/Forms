@@ -359,12 +359,14 @@ window.Forms_validation = function () {
         _fields[i].addEventListener("keyup", function (e) {
             if (this.value.length > 0) {
                 this.classList.remove('{$formValidationClass}');
+                this.nextSibling.remove();
             }
         });
 
         _fields[i].addEventListener("onfocusout", function (e) {
             if (this.value.length > 0) {
                 this.classList.remove('{$formValidationClass}');
+                this.nextSibling.remove();
             }
         });
     }
