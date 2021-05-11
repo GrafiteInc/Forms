@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v4.9.4] - 2021-05-11
+
+### Fixed
+- Issue with wizard form steps
+
 ## [v4.9.3] - 2021-04-29
 
 ### Fixed
