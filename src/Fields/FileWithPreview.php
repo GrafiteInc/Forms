@@ -23,7 +23,7 @@ class FileWithPreview extends Field
         return 'image';
     }
 
-    protected static function getTemplate()
+    protected static function getTemplate($options)
     {
         return <<<EOT
 <div class="{rowClass}">

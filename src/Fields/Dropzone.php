@@ -35,7 +35,7 @@ class Dropzone extends Field
         ];
     }
 
-    protected static function getTemplate()
+    protected static function getTemplate($options)
     {
         return <<<EOT
 <div class="dropzone-wrapper">

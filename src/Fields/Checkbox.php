@@ -11,6 +11,13 @@ class Checkbox extends Field
         return 'checkbox';
     }
 
+    protected static function getOptions()
+    {
+        return [
+            'class' => '',
+        ];
+    }
+
     protected static function getAttributes()
     {
         return [

@@ -22,6 +22,7 @@ class Field
         'sortable',
         'wrapper',
         'table-class',
+        'label-class',
     ];
 
     /**
@@ -110,7 +111,7 @@ class Field
                 'before' => static::getWrappers($options, 'before'),
                 'after' => static::getWrappers($options, 'after'),
                 'view' => static::getView() ?? null,
-                'template' => static::getTemplate() ?? null,
+                'template' => static::getTemplate($options) ?? null,
                 'attributes' => static::parseAttributes($options) ?? [],
                 'factory' => static::getFactory(),
                 'assets' => [
@@ -213,7 +214,7 @@ class Field
      *
      * @return string
      */
-    protected static function getTemplate()
+    protected static function getTemplate($options)
     {
         return null;
     }

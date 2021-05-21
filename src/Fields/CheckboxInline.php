@@ -11,6 +11,13 @@ class CheckboxInline extends Field
         return 'checkbox-inline';
     }
 
+    protected static function getOptions()
+    {
+        return [
+            'class' => '',
+        ];
+    }
+
     protected static function getAttributes()
     {
         return [

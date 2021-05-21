@@ -19,7 +19,7 @@ class Editor extends Field
         return 'string';
     }
 
-    protected static function getTemplate()
+    protected static function getTemplate($options)
     {
         return <<<EOT
         <div class="{rowClass}">

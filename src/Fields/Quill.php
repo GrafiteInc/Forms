@@ -103,7 +103,7 @@ EOT;
         return ['//cdn.quilljs.com/1.3.6/quill.js'];
     }
 
-    protected static function getTemplate()
+    protected static function getTemplate($options)
     {
         return <<<EOT
 <div class="{rowClass}">
