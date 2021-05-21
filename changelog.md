@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v5.0.0] - 2021-05-21
+
+### Added
+- HoneyPot HTML based on the Spatie package
+- New Link HTML
+- New blade components
+- New Password with reveal field
+
+### Changed
+- Breaking change with Field getTemplate parameters
+
+### Fixed
+- Issue with overriding class on checkboxes
+
 ## [v4.9.5] - 2021-05-11
 
 ### Changed
