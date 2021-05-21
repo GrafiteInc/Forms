@@ -3,8 +3,10 @@
 namespace Grafite\Forms;
 
 use Grafite\Forms\Components\Form;
+use Grafite\Forms\Components\FormBase;
 use Grafite\Forms\Services\FormAssets;
 use Grafite\Forms\Components\FormModal;
+use Grafite\Forms\Components\FormModel;
 use Illuminate\Support\ServiceProvider;
 use Grafite\Forms\Components\FormAction;
 use Grafite\Forms\Components\FormDelete;
@@ -44,6 +46,8 @@ class FormsProvider extends ServiceProvider
         });
 
         $this->app['blade.compiler']->component('f', Form::class);
+        $this->app['blade.compiler']->component('f-base', FormBase::class);
+        $this->app['blade.compiler']->component('f-model', FormModel::class);
         $this->app['blade.compiler']->component('f-action', FormAction::class);
         $this->app['blade.compiler']->component('f-modal', FormModal::class);
         $this->app['blade.compiler']->component('f-delete', FormDelete::class);
