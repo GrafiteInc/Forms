@@ -66,7 +66,7 @@ class FieldTest extends TestCase
         $field = CheckboxInline::make('field');
 
         $this->assertEquals('field', array_key_first($field));
-        $this->assertEquals('form-check-input', $field['field']['attributes']['class']);
+        $this->assertEquals('', $field['field']['attributes']['class']);
     }
 
     public function testColor()

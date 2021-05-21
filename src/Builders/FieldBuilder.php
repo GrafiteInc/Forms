@@ -304,7 +304,10 @@ class FieldBuilder
      */
     public function makeCheckInput($name, $value, $options)
     {
-        $options['attributes']['class'] = config('forms.form.check-input-class', 'form-check-input');
+        $customClasses = $options['attributes']['class'] ?? '';
+        $customLabelClasses = $options['attributes']['label-class'] ?? '';
+
+        $options['attributes']['class'] = Str::of(config('forms.form.check-input-class', 'form-check-input') . ' ' . $customClasses)->trim();
 
         if (Str::contains($options['type'], '-inline')) {
             $options['check-inline'] = true;
@@ -336,7 +339,7 @@ class FieldBuilder
             $label = $this->getNestedFieldLabel($label)[0];
         }
 
-        $labelClass = config('forms.form.label-check-class', 'form-check-label');
+        $labelClass = Str::of(config('forms.form.label-check-class', 'form-check-label') . ' ' . $customLabelClasses)->trim();
 
         $fieldLabel = "<label class=\"{$labelClass}\" for=\"{$options['attributes']['id']}\">{$label}</label>";
 
