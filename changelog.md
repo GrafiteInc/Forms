@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v5.0.1] - 2021-05-21
+
+### Fixed
+- Issue with label class
+
 ## [v5.0.0] - 2021-05-21
 
 ### Added
