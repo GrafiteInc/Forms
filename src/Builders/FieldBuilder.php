@@ -305,7 +305,7 @@ class FieldBuilder
     public function makeCheckInput($name, $value, $options)
     {
         $customClasses = $options['attributes']['class'] ?? '';
-        $customLabelClasses = $options['attributes']['label-class'] ?? '';
+        $customLabelClasses = $options['label-class'] ?? '';
 
         $options['attributes']['class'] = Str::of(config('forms.form.check-input-class', 'form-check-input') . ' ' . $customClasses)->trim();
 
