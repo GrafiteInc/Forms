@@ -48,6 +48,7 @@ class Toggle extends Field
         $on = $options['on'] ?? 'On';
         $off = $options['off'] ?? 'Off';
         $size = $options['size'] ?? 'sm';
+        $labelClass = $options['label-class'] ?? 'bootstrap-toggle-label';
 
         return <<<EOT
 $('#$id').bootstrapToggle({
@@ -56,6 +57,7 @@ $('#$id').bootstrapToggle({
     off: "$off",
     size: "$size"
 });
+$('#$id').parent().siblings('label').addClass('$labelClass')
 EOT;
     }
 }
