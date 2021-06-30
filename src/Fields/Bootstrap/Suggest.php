@@ -2,9 +2,9 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
-use Grafite\Forms\Fields\Field;
+use Grafite\Forms\Fields\Bootstrap\Select;
 
-class Suggest extends Field
+class Suggest extends Select
 {
     protected static function getType()
     {
