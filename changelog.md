@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v5.1.1] - 2021-06-30
+
+### Fixed
+- Missed duplicate functions in suggest field
+
 ## [v5.1.0] - 2021-06-30
 
 ### Added
