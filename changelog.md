@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v5.1.0] - 2021-06-30
+
+### Added
+- Option for adding values to selects
+
+### Changed
+- All selects extend the core select class
+
 ## [v5.0.3] - 2021-06-01
 
 ### Fixed
