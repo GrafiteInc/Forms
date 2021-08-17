@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v5.1.2] - 2021-08-17
+
+### Added
+- Some chaining methods for on the fly style changes
+
 ## [v5.1.1] - 2021-06-30
 
 ### Fixed
