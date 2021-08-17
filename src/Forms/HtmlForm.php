@@ -452,6 +452,54 @@ class HtmlForm extends Form
     }
 
     /**
+     * Set the form as a card style.
+     *
+     * @return void
+     */
+    public function asCard()
+    {
+        $this->isCardForm = true;
+
+        return $this;
+    }
+
+    /**
+     * Make the form columns responsive to the field count.
+     *
+     * @return void
+     */
+    public function responsive()
+    {
+        $this->columns = count($this->fields());
+
+        return $this;
+    }
+
+    /**
+     * Set the disable on submit to true.
+     *
+     * @return void
+     */
+    public function disableOnSubmit()
+    {
+        $this->disableOnSubmit = true;
+
+        return $this;
+    }
+
+    /**
+     * Set the orientation to horizontal.
+     *
+     * @return void
+     */
+    public function horizontal()
+    {
+        $this->orientation = 'horizontal';
+
+        return $this;
+    }
+
+    /**
      * Output html as string
      *
      * @return string
