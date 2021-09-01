@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v5.1.3] - 2021-09-01
+
+### Fixed
+- Issue with too many columns in a row
+
 ## [v5.1.2] - 2021-08-17
 
 ### Added
