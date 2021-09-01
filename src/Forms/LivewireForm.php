@@ -69,6 +69,7 @@ class LivewireForm extends HtmlForm
 
         $this->renderedFields = $this->builder
             ->setColumns($this->columns)
+            ->setMaxColumns($this->maxColumns)
             ->setLivewire($this->withLivewire)
             ->setLivewireOnKeydown($this->onKeydown)
             ->setErrorBag($this->errorBag)

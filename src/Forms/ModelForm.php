@@ -186,6 +186,7 @@ class ModelForm extends HtmlForm
         $this->renderedFields = $this->builder
             ->setConnection($this->connection)
             ->setColumns($this->columns)
+            ->setMaxColumns($this->maxColumns)
             ->setLivewire($this->withLivewire)
             ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)
@@ -250,6 +251,7 @@ class ModelForm extends HtmlForm
         $this->renderedFields = $this->builder
             ->setConnection($this->connection)
             ->setColumns($this->columns)
+            ->setMaxColumns($this->maxColumns)
             ->setLivewire($this->withLivewire)
             ->setLivewireOnKeydown($this->livewireOnKeydown)
             ->setErrorBag($this->errorBag)

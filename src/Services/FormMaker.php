@@ -18,6 +18,8 @@ class FormMaker
 
     protected $columns = 1;
 
+    protected $maxColumns = 6;
+
     protected $sections = [];
 
     protected $steps = [];
@@ -67,6 +69,18 @@ class FormMaker
     public function setColumns($columns)
     {
         $this->columns = $columns;
+
+        return $this;
+    }
+
+    /**
+     * Set the columns of the form
+     *
+     * @param int $maxColumns
+     */
+    public function setMaxColumns($maxColumns)
+    {
+        $this->maxColumns = $maxColumns;
 
         return $this;
     }
@@ -431,6 +445,10 @@ EOT;
 
         if (is_null($columns)) {
             $columns = count($fields);
+        }
+
+        if ($columns >= $this->maxColumns) {
+            $columns = $this->maxColumns;
         }
 
         if (! empty($fields)) {

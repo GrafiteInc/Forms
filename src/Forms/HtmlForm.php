@@ -63,6 +63,13 @@ class HtmlForm extends Form
     public $columns = 1;
 
     /**
+     * Maximum columns in a row
+     *
+     * @var integer
+     */
+    public $maxColumns = 6;
+
+    /**
      * Whether or not the form has files
      *
      * @var boolean
