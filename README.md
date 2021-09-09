@@ -14,7 +14,7 @@ The Forms package lets you generate forms as well as fields with standard make c
 
 ## Requirements
 
-1. PHP 7.3+
+1. PHP 7.3+|8.0+
 2. OpenSSL
 
 ## Compatibility and Support
