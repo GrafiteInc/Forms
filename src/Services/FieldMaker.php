@@ -97,7 +97,12 @@ class FieldMaker
 
         $columnConfig = $this->setClassIfErrors($columnConfig, $errors);
 
-        $label = $this->label($column, $columnConfig, null, $errors);
+        $label = $this->label(
+            $column,
+            $columnConfig,
+            $columnConfig['label_class'] ?? null,
+            $errors
+        );
 
         if (in_array($columnConfig['type'], $this->standard)) {
             $field = $this->builder->makeInput(
