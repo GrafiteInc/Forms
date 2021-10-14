@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\View;
 
 class TestCase extends Orchestra\Testbench\TestCase
 {
@@ -15,6 +16,8 @@ class TestCase extends Orchestra\Testbench\TestCase
             'prefix' => '',
         ]);
         $app->make('Illuminate\Contracts\Http\Kernel');
+
+        View::addLocation(__DIR__.'/fixtures/views');
     }
 
     protected function getPackageProviders($app)

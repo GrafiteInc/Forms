@@ -77,10 +77,14 @@ class FieldMaker
 
         if (! isset($columnConfig['wrapper']) || $columnConfig['wrapper']) {
             $fieldGroup = config('forms.form.group-class', 'form-group');
+        }
 
-            if ($this->orientation === 'horizontal') {
-                $fieldGroup = $fieldGroup . ' ' . config('forms.form.sections.row-class', 'row');
-            }
+        if (isset($columnConfig['wrapper']) && is_string($columnConfig['wrapper'])) {
+            $fieldGroup = $columnConfig['wrapper'];
+        }
+
+        if ($this->orientation === 'horizontal') {
+            $fieldGroup = $fieldGroup . ' ' . config('forms.form.sections.row-class', 'row');
         }
 
         $value = $this->getOldValue($column);
@@ -230,6 +234,10 @@ class FieldMaker
     {
         if (Str::contains($fieldString, 'hidden')) {
             return $fieldString;
+        }
+
+        if (! $fieldGroup) {
+            return "{$label}{$fieldString}{$errors}";
         }
 
         return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}{$errors}</div>";
