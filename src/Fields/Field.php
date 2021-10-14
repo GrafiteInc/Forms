@@ -2,6 +2,8 @@
 
 namespace Grafite\Forms\Fields;
 
+use Grafite\Forms\Services\FieldConfigProcessor;
+
 class Field
 {
     const FIELD_OPTIONS = [
@@ -21,8 +23,9 @@ class Field
         'visible',
         'sortable',
         'wrapper',
-        'table-class',
-        'label-class',
+        'table_class',
+        'label_class',
+        'template',
     ];
 
     /**
@@ -87,42 +90,23 @@ class Field
     {
         $options = static::parseOptions($options);
 
-        return [
-            $name => [
-                'type' => static::getType(),
-                'options' => array_merge(static::getSelectOptions(), $options['options'] ?? []),
-                'visible'  => $options['visible'] ?? true,
-                'wrapper'  => $options['wrapper'] ?? true,
-                'sortable'  => $options['sortable'] ?? false,
-                'format' => $options['format'] ?? null,
-                'legend' => $options['legend'] ?? null,
-                'label' => $options['label'] ?? null,
-                'model' => $options['model'] ?? null,
-                'value' => $options['value'] ?? null,
-                'null_value' => $options['null_value'] ?? false,
-                'null_label' => $options['null_label'] ?? 'None',
-                'table-class' => $options['table-class'] ?? null,
-                'label-class' => $options['label-class'] ?? null,
-                'model_options' => [
-                    'label' => $options['model_options']['label'] ?? 'name',
-                    'value' => $options['model_options']['value'] ?? 'id',
-                    'params' => $options['model_options']['params'] ?? null,
-                    'method' => $options['model_options']['method'] ?? 'all',
-                ],
-                'before' => static::getWrappers($options, 'before'),
-                'after' => static::getWrappers($options, 'after'),
-                'view' => static::getView() ?? null,
-                'template' => static::getTemplate($options) ?? null,
-                'attributes' => static::parseAttributes($options) ?? [],
-                'factory' => static::getFactory(),
-                'assets' => [
-                    'js' => static::js(ucfirst($name), $options) ?? null,
-                    'styles' => static::styles(ucfirst($name), $options) ?? null,
-                    'scripts' => static::scripts($options) ?? null,
-                    'stylesheets' => static::stylesheets($options) ?? null,
-                ]
-            ]
+        $options['type'] = static::getType() ?? 'text';
+        $options['options'] = array_merge(static::getSelectOptions(), $options['options'] ?? []);
+        $options['before'] = static::getWrappers($options, 'before');
+        $options['after'] = static::getWrappers($options, 'after');
+        $options['view'] = static::getView() ?? null;
+        $options['template'] = static::getTemplate($options) ?? null;
+        $options['attributes'] = static::parseAttributes($options) ?? [];
+        $options['factory'] = static::getFactory();
+
+        $options['assets'] = [
+            'js' => static::js(ucfirst($name), $options) ?? null,
+            'styles' => static::styles(ucfirst($name), $options) ?? null,
+            'scripts' => static::scripts($options) ?? null,
+            'stylesheets' => static::stylesheets($options) ?? null,
         ];
+
+        return (new FieldConfigProcessor($name, $options));
     }
 
     /**
@@ -173,11 +157,11 @@ class Field
      */
     protected static function getWrappers($options, $key)
     {
-        $groupTextClass = config('formmaker.form.input-group-text', 'input-group-text');
-        $class = config('formmaker.form.input-group-after', 'input-group-append');
+        $groupTextClass = config('forms.form.input-group-text', 'input-group-text');
+        $class = config('forms.form.input-group-after', 'input-group-append');
 
         if ($key === 'before') {
-            $class = config('formmaker.form.input-group-before', 'input-group-prepend');
+            $class = config('forms.form.input-group-before', 'input-group-prepend');
         }
 
         if (isset($options[$key])) {

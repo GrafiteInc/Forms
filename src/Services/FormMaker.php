@@ -182,19 +182,19 @@ class FormMaker
     {
         $fieldCollection = [];
 
-        foreach ($fields as $column => $columnConfig) {
+        foreach ($fields as $column => $fieldConfig) {
             if (is_numeric($column)) {
-                $column = array_key_first($columnConfig);
-                $columnConfig = $columnConfig[$column];
+                $column = $fieldConfig->name;
+                $fieldConfig = $fieldConfig->toArray();
             }
 
-            $this->setAssets($columnConfig);
+            $this->setAssets($fieldConfig);
 
             $fieldCollection[$column] = $this->fieldMaker
                 ->setErrorBag($this->errorBag)
                 ->setLivewire($this->withLivewire)
                 ->setLivewireOnKeydown($this->livewireOnKeydown)
-                ->make($column, $columnConfig);
+                ->make($column, $fieldConfig);
         }
 
         $this->defaultJs();

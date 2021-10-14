@@ -413,14 +413,18 @@ class HtmlForm extends Form
             throw new Exception('Invalid fields', 1);
         }
 
-        foreach ($formFields as $config) {
-            $key = array_key_first($config);
+        foreach ($formFields as $fieldConfig) {
+            $config = $fieldConfig->toArray();
+
+            $key = $fieldConfig->name;
 
             if ($this->formIsDisabled) {
-                $config[$key]['attributes']['disabled'] = 'disabled';
+                $config['attributes']['disabled'] = 'disabled';
             }
 
-            $fields[$key] = $config[$key];
+            unset($config['name']);
+
+            $fields[$key] = $config;
         }
 
         return $fields;

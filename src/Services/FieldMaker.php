@@ -119,7 +119,7 @@ class FieldMaker
 
         if (isset($columnConfig['template'])) {
             $rowClass = config('forms.form.group-class', 'form-group');
-            $labelClass = config('forms.form.label-class', 'control-label');
+            $labelClass = config('forms.form.label_class', 'control-label');
             $fieldClass = '';
 
             if ($this->orientation === 'horizontal') {
@@ -205,7 +205,7 @@ class FieldMaker
         $label = $this->getLabel($column, $columnConfig);
 
         if (is_null($class)) {
-            $class = config('forms.form.label-class', 'control-label');
+            $class = config('forms.form.label_class', 'control-label');
         }
 
         if (! empty($errors)) {

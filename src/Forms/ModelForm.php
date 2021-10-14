@@ -388,8 +388,8 @@ class ModelForm extends HtmlForm
 
             $class = '';
 
-            if (! is_null($data['table-class'])) {
-                $class = " class=\"{$data['table-class']}\"";
+            if (! is_null($data['table_class'])) {
+                $class = " class=\"{$data['table_class']}\"";
             }
 
             $headers .= "<th{$class}>{$header}</th>";
@@ -439,8 +439,8 @@ class ModelForm extends HtmlForm
             foreach ($fields as $field => $data) {
                 $class = '';
 
-                if (! is_null($data['table-class'])) {
-                    $class = " class=\"{$data['table-class']}\"";
+                if (! is_null($data['table_class'])) {
+                    $class = " class=\"{$data['table_class']}\"";
                 }
 
                 $rows .= "<td{$class}>{$item->$field}</td>";
@@ -604,11 +604,12 @@ EOT;
     {
         $factory = '';
 
-        foreach ($this->fields() as $settings) {
-            $field = array_keys($settings)[0];
+        foreach ($this->fields() as $fieldConfig) {
+            $settings = $fieldConfig->toArray();
+            $field = $settings['name'];
 
-            if (! is_null($settings[$field]['factory'])) {
-                $factory .= "\x20\x20\x20\x20\x20\x20\x20\x20'{$field}' => \$faker->{$settings[$field]['factory']},\n";
+            if (! is_null($settings['factory'])) {
+                $factory .= "\x20\x20\x20\x20\x20\x20\x20\x20'{$field}' => \$faker->{$settings['factory']},\n";
             }
         }
 

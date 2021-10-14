@@ -11,65 +11,59 @@ class HtmlSnippetTest extends TestCase
 {
     public function testHtmlSnippet()
     {
-        $snippet = HtmlSnippet::make('<hr>');
+        $snippet = HtmlSnippet::make('<hr>')->toArray();
 
-        $keys = array_keys($snippet);
+        // dd($snippet);
 
-        $this->assertEquals('html', $snippet[$keys[0]]['type']);
-        $this->assertEquals('<hr>', $snippet[$keys[0]]['content']);
+        $this->assertEquals('html', $snippet['type']);
+        $this->assertEquals('<hr>', $snippet['content']);
+
+        // $snippet = HtmlSnippet::make('<hr>');
+
+        // dd((string) $snippet);
     }
 
     public function testDivOpen()
     {
-        $snippet = DivOpen::make(['class' => 'card']);
+        $snippet = DivOpen::make(['class' => 'card'])->toArray();
 
-        $keys = array_keys($snippet);
-
-        $this->assertEquals('html', $snippet[$keys[0]]['type']);
-        $this->assertEquals('<div class="card">', $snippet[$keys[0]]['content']);
+        $this->assertEquals('html', $snippet['type']);
+        $this->assertEquals('<div class="card">', $snippet['content']);
     }
 
     public function testDivClose()
     {
-        $snippet = DivClose::make();
+        $snippet = DivClose::make()->toArray();
 
-        $keys = array_keys($snippet);
-
-        $this->assertEquals('html', $snippet[$keys[0]]['type']);
-        $this->assertEquals('</div>', $snippet[$keys[0]]['content']);
+        $this->assertEquals('html', $snippet['type']);
+        $this->assertEquals('</div>', $snippet['content']);
     }
 
     public function testHrTag()
     {
-        $snippet = HrTag::make();
+        $snippet = HrTag::make()->toArray();
 
-        $keys = array_keys($snippet);
-
-        $this->assertEquals('html', $snippet[$keys[0]]['type']);
-        $this->assertEquals('<hr>', $snippet[$keys[0]]['content']);
+        $this->assertEquals('html', $snippet['type']);
+        $this->assertEquals('<hr>', $snippet['content']);
     }
 
     public function testHeadingTag()
     {
         $snippet = Heading::make([
             'content' => 'Billing Details'
-        ]);
+        ])->toArray();
 
-        $keys = array_keys($snippet);
-
-        $this->assertEquals('html', $snippet[$keys[0]]['type']);
-        $this->assertEquals('<h3>Billing Details</h3>', $snippet[$keys[0]]['content']);
+        $this->assertEquals('html', $snippet['type']);
+        $this->assertEquals('<h3>Billing Details</h3>', $snippet['content']);
     }
 
     public function testDivTag()
     {
         $snippet = Div::make([
             'content' => '<p class="foo">Bar</p>'
-        ]);
+        ])->toArray();
 
-        $keys = array_keys($snippet);
-
-        $this->assertEquals('html', $snippet[$keys[0]]['type']);
-        $this->assertEquals('<div><p class="foo">Bar</p></div>', $snippet[$keys[0]]['content']);
+        $this->assertEquals('html', $snippet['type']);
+        $this->assertEquals('<div><p class="foo">Bar</p></div>', $snippet['content']);
     }
 }

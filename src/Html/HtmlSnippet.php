@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Html;
 
 use Exception;
+use Grafite\Forms\Services\HtmlConfigProcessor;
 use Illuminate\Support\Str;
 
 class HtmlSnippet
@@ -68,11 +69,11 @@ class HtmlSnippet
             $name = 'html-snippet-' . Str::uuid();
         }
 
-        return [
-            $name => [
-                'type' => 'html',
-                'content' => $content,
-            ]
+        $options = [
+            'type' => 'html',
+            'content' => $content,
         ];
+
+        return (new HtmlConfigProcessor($name, $options));
     }
 }
