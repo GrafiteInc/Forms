@@ -292,7 +292,39 @@ EOT;
         $color = $this->progressBarColor ?? '#28a745';
         $numberOfSteps = count($this->steps());
         $size = $numberOfSteps * 100;
-        $width = ($size - ($numberOfSteps * 15)) / $numberOfSteps;
+        $left = 30;
+
+        switch ($numberOfSteps) {
+            case 2:
+                $width = ($size - (2 * $left));
+                break;
+
+            case 3:
+                $width = 100;
+                break;
+
+            case 4:
+                $width = 86;
+                break;
+
+            case 5:
+                $width = 80;
+                break;
+
+            case 6:
+                $width = 77;
+                break;
+
+            case 7:
+                $width = 76;
+                break;
+
+            default:
+                $spacer = 22 / $numberOfSteps;
+                $left = $left + ($spacer / $numberOfSteps);
+                $width = ($size / $numberOfSteps) - ($spacer * $numberOfSteps);
+                break;
+        }
 
         return <<<EOT
 .form-progress-bar  {
@@ -335,7 +367,7 @@ EOT;
 .form-bullet.completed::after {
 	content: '';
 	position: absolute;
-	left: 30px;
+	left: ${left}px;
 	bottom: 10px;
 	height: 1px;
 	width: ${width}px;
