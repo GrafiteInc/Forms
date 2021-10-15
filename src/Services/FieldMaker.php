@@ -45,6 +45,7 @@ class FieldMaker
 
     protected $special = [
         'select',
+        'datalist',
         'custom-file',
         'textarea',
         'relationship',

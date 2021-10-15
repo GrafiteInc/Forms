@@ -8,18 +8,11 @@ class Search extends Field
 {
     protected static function getType()
     {
-        return 'number';
-    }
-
-    protected static function getAttributes()
-    {
-        return [
-            'step' => 'any',
-        ];
+        return 'search';
     }
 
     protected static function getFactory()
     {
-        return 'randomFloat';
+        return 'text(50)';
     }
 }

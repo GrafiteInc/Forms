@@ -69,4 +69,15 @@ class HtmlConfigProcessorTest extends TestCase
 
         $this->assertEquals('<button class="are-you" onclick="window.location.reload();">click Me!</button>', (string) $html);
     }
+
+    public function testOriginal()
+    {
+        $snippet = Link::make([
+                'content' => 'Forgot Password?',
+                'class' => 'd-block mt-3 text-right',
+                'href' => 'foo-bar',
+            ], 'forgot_password');
+
+        $this->assertEquals('<a class="d-block mt-3 text-right" href="foo-bar">Forgot Password?</a>', (string) $snippet);
+    }
 }

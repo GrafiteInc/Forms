@@ -83,9 +83,9 @@ class FieldConfigProcessor
         return app(FieldMaker::class)->make($this->name, $config, $this->instance);
     }
 
-    public function required()
+    public function required($state = true)
     {
-        $this->attributes['required'] = true;
+        $this->attributes['required'] = $state;
 
         return $this;
     }
@@ -217,9 +217,9 @@ class FieldConfigProcessor
         return $this;
     }
 
-    public function sortable()
+    public function sortable($state = true)
     {
-        $this->sortable = true;
+        $this->sortable = $state;
 
         return $this;
     }
@@ -287,19 +287,19 @@ class FieldConfigProcessor
         return $this;
     }
 
-    public function readonly()
+    public function readonly($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'readonly' => true
+            'readonly' => $state
         ]);
 
         return $this;
     }
 
-    public function disabled()
+    public function disabled($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'disabled' => true
+            'disabled' => $state
         ]);
 
         return $this;
@@ -350,10 +350,10 @@ class FieldConfigProcessor
         return $this;
     }
 
-    public function multiple()
+    public function multiple($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'multiple' => true
+            'multiple' => $state
         ]);
 
         return $this;
@@ -368,19 +368,19 @@ class FieldConfigProcessor
         return $this;
     }
 
-    public function autofocus()
+    public function autofocus($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'autofocus' => true
+            'autofocus' => $state
         ]);
 
         return $this;
     }
 
-    public function autocomplete()
+    public function autocomplete($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'autocomplete' => true
+            'autocomplete' => $state
         ]);
 
         return $this;
@@ -432,6 +432,20 @@ class FieldConfigProcessor
     public function instance($value)
     {
         $this->instance = $value;
+
+        return $this;
+    }
+
+    public function option($key, $value)
+    {
+        $this->options[$key] = $value;
+
+        return $this;
+    }
+
+    public function options($array)
+    {
+        $this->options = array_merge($this->options, $array);
 
         return $this;
     }

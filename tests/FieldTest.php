@@ -16,10 +16,12 @@ use Grafite\Forms\Fields\Range;
 use Grafite\Forms\Fields\HasOne;
 use Grafite\Forms\Fields\Hidden;
 use Grafite\Forms\Fields\Number;
+use Grafite\Forms\Fields\Search;
 use Grafite\Forms\Fields\Select;
 use Grafite\Forms\Fields\Decimal;
 use Grafite\Forms\Fields\HasMany;
 use Grafite\Forms\Fields\Checkbox;
+use Grafite\Forms\Fields\Datalist;
 use Grafite\Forms\Fields\Password;
 use Grafite\Forms\Fields\TextArea;
 use Grafite\Forms\Fields\Telephone;
@@ -245,6 +247,24 @@ class FieldTest extends TestCase
         $field = Week::make('field')->toArray();
 
         $this->assertEquals('week', $field['type']);
+    }
+
+    public function testDatalist()
+    {
+        $field = Datalist::make('field')->selectOptions([
+            'Batman',
+            'Superman',
+            'Black Panther',
+        ])->value('Batman');
+
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input type="search"  class="form-control" id="Field" value="Batman" name="field" list="Field-list"><datalist id="Field-list"><option value="Batman"><option value="Superman"><option value="Black Panther"></datalist></div>', (string) $field);
+    }
+
+    public function testSearch()
+    {
+        $field = Search::make('field')->value('Batman');
+
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input  class="form-control" id="Field" name="field" type="search" value="Batman"></div>', (string) $field);
     }
 
     public function testTypeahead()

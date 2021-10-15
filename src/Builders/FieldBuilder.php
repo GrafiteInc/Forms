@@ -294,6 +294,28 @@ class FieldBuilder
     }
 
     /**
+     * Make a datalist.
+     *
+     * @param string $name
+     * @param mixed $selected
+     * @param array $options
+     *
+     * @return string
+     */
+    public function makeDatalist($name, $selected, $options)
+    {
+        $selectOptions = '';
+
+        foreach ($options['options'] as $value) {
+            $selectOptions .= '<option value="' . $value . '">';
+        }
+
+        $attributes = $this->attributes($options['attributes']) . $this->livewireAttribute($name);
+
+        return '<input type="search" ' . $attributes . ' name="' . $name . '" list="'.$options['attributes']['id'].'-list"><datalist id="'.$options['attributes']['id'].'-list">' . $selectOptions . '</datalist>';
+    }
+
+    /**
      * Make a checkbox.
      *
      * @param string $name
