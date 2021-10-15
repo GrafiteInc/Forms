@@ -11,7 +11,7 @@ class HoneyPot extends HtmlSnippet
     {
         $options = [
             'type' => 'html',
-            'content' => (string) self::content(),
+            'content' => null,
         ];
 
         if (is_null($name)) {
@@ -21,7 +21,7 @@ class HoneyPot extends HtmlSnippet
         return (new HtmlConfigProcessor($name, $options));
     }
 
-    public static function content($options = [])
+    public static function render($options = [])
     {
         return view('honeypot::honeypotFormFields');
     }

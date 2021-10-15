@@ -6,11 +6,11 @@ use Grafite\Forms\Html\HtmlSnippet;
 
 class Button extends HtmlSnippet
 {
-    public static function content($options = [])
+    public static function render($options = [])
     {
         $options['class'] = $options['class'] ?? config('forms.buttons.submit');
 
-        $attributes = self::attributes($options);
+        $attributes = self::attributes($options['attributes']);
 
         $content = '';
 
@@ -20,6 +20,6 @@ class Button extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty button');
 
-        return "<button {$attributes}>{$content}</button>";
+        return "<button{$attributes}>{$content}</button>";
     }
 }

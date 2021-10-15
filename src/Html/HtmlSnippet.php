@@ -8,6 +8,8 @@ use Illuminate\Support\Str;
 
 class HtmlSnippet
 {
+    public static $tag;
+
     public static function getHtmlOptions()
     {
         return [
@@ -16,9 +18,9 @@ class HtmlSnippet
         ];
     }
 
-    public static function content($options = [])
+    public static function render($options = [])
     {
-        return [];
+        return '';
     }
 
     public static function attributes($options = [])
@@ -59,20 +61,19 @@ class HtmlSnippet
 
     public static function make($content = null, $name = null)
     {
-        if (is_array($content) || is_null($content)) {
-            $content = static::content($content);
-        }
-
-        throw_if(is_null($content), new Exception('Content cannot be null'));
-
         if (is_null($name)) {
             $name = 'html-snippet-' . Str::uuid();
         }
 
         $options = [
+            'instance' => new static(),
             'type' => 'html',
             'content' => $content,
         ];
+
+        if (is_array($content)) {
+            $options = array_merge($options, $content);
+        }
 
         return (new HtmlConfigProcessor($name, $options));
     }

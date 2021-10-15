@@ -69,7 +69,7 @@ class FieldMaker
             ->setLivewireOnKeydown($this->livewireOnKeydown);
 
         if ($columnConfig['type'] === 'html') {
-            return $columnConfig['content'];
+            return $columnConfig['instance']::render($columnConfig);
         }
 
         $field = null;

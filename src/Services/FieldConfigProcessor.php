@@ -26,6 +26,7 @@ class FieldConfigProcessor
     public $wrapper;
     public $table_class;
     public $label_class;
+    public $instance;
 
     public function __construct($name, $options)
     {
@@ -79,7 +80,7 @@ class FieldConfigProcessor
     {
         $config = $this->toArray();
 
-        return app(FieldMaker::class)->make($this->name, $config);
+        return app(FieldMaker::class)->make($this->name, $config, $this->instance);
     }
 
     public function required()
@@ -155,6 +156,34 @@ class FieldConfigProcessor
     public function model($value)
     {
         $this->model = $value;
+
+        return $this;
+    }
+
+    public function modelMethod($value)
+    {
+        $this->model_options['model_method'] = $value;
+
+        return $this;
+    }
+
+    public function modelParams($value)
+    {
+        $this->model_options['model_params'] = $value;
+
+        return $this;
+    }
+
+    public function modelValue($value)
+    {
+        $this->model_options['model_value'] = $value;
+
+        return $this;
+    }
+
+    public function modelLabel($value)
+    {
+        $this->model_options['model_label'] = $value;
 
         return $this;
     }
@@ -396,6 +425,13 @@ class FieldConfigProcessor
     public function selectOptions($array)
     {
         $this->options = array_merge($this->options, $array);
+
+        return $this;
+    }
+
+    public function instance($value)
+    {
+        $this->instance = $value;
 
         return $this;
     }

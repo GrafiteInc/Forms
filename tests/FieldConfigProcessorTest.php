@@ -2,8 +2,10 @@
 
 use Grafite\Forms\Fields\File;
 use Grafite\Forms\Fields\Text;
-use Grafite\Forms\Fields\Select;
+use Grafite\Forms\Fields\Select ;
 use Grafite\Forms\Fields\Checkbox;
+use Illuminate\Foundation\Auth\User;
+use Illuminate\Support\Facades\Hash;
 
 class FieldConfigProcessorTest extends TestCase
 {
@@ -39,7 +41,7 @@ class FieldConfigProcessorTest extends TestCase
     {
         $field = Text::make('field')->title('user-field');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input  class="form-control" id="Field" title="user-field" name="field" type="text" value=""></div>', (string) $field);
+        $this-> assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input  class="form-control" id="Field" title="user-field" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testStyle()
@@ -292,5 +294,17 @@ class FieldConfigProcessorTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input  class="form-control" id="Field" placeholder="Superman" name="field" type="text" value=""></div>', (string) $field);
     }
 
-    // model
+    public function testModel()
+    {
+        $user = new User();
+        $user->name = 'Bruce';
+        $user->email = 'batman@wayneenterprises.com';
+        $user->password = Hash::make('beatTheJoker');
+
+        $user->save();
+
+        $field = Text::make('name')->instance(User::find(1));
+
+        $this->assertStringContainsString('Bruce', (string) $field);
+    }
 }

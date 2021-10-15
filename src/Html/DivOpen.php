@@ -6,9 +6,9 @@ use Grafite\Forms\Html\HtmlSnippet;
 
 class DivOpen extends HtmlSnippet
 {
-    public static function content($options = [])
+    public static function render($options = [])
     {
-        $attributes = self::attributes($options);
+        $attributes = self::attributes($options['attributes']);
 
         return "<div{$attributes}>";
     }

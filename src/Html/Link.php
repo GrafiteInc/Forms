@@ -4,11 +4,11 @@ namespace Grafite\Forms\Html;
 
 class Link extends HtmlSnippet
 {
-    public static function content($options = [])
+    public static function render($options = [])
     {
         $options['class'] = $options['class'] ?? config('forms.buttons.submit');
 
-        $attributes = self::attributes($options);
+        $attributes = self::attributes($options['attributes']);
 
         $content = '';
 
@@ -18,6 +18,6 @@ class Link extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty button');
 
-        return "<a {$attributes}>{$content}</a>";
+        return "<a{$attributes}>{$content}</a>";
     }
 }

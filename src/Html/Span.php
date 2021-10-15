@@ -6,11 +6,11 @@ use Grafite\Forms\Html\HtmlSnippet;
 
 class Span extends HtmlSnippet
 {
-    public static function content($options = [])
+    public static function render($options = [])
     {
         $content = '';
 
-        $attributes = self::attributes($options);
+        $attributes = self::attributes($options['attributes']);
 
         if (isset($options['content'])) {
             $content = $options['content'];

@@ -13,14 +13,8 @@ class HtmlSnippetTest extends TestCase
     {
         $snippet = HtmlSnippet::make('<hr>')->toArray();
 
-        // dd($snippet);
-
         $this->assertEquals('html', $snippet['type']);
         $this->assertEquals('<hr>', $snippet['content']);
-
-        // $snippet = HtmlSnippet::make('<hr>');
-
-        // dd((string) $snippet);
     }
 
     public function testDivOpen()
@@ -28,7 +22,7 @@ class HtmlSnippetTest extends TestCase
         $snippet = DivOpen::make(['class' => 'card'])->toArray();
 
         $this->assertEquals('html', $snippet['type']);
-        $this->assertEquals('<div class="card">', $snippet['content']);
+        $this->assertEquals('card', $snippet['attributes']['class']);
     }
 
     public function testDivClose()
@@ -36,7 +30,6 @@ class HtmlSnippetTest extends TestCase
         $snippet = DivClose::make()->toArray();
 
         $this->assertEquals('html', $snippet['type']);
-        $this->assertEquals('</div>', $snippet['content']);
     }
 
     public function testHrTag()
@@ -44,7 +37,7 @@ class HtmlSnippetTest extends TestCase
         $snippet = HrTag::make()->toArray();
 
         $this->assertEquals('html', $snippet['type']);
-        $this->assertEquals('<hr>', $snippet['content']);
+        // $this->assertEquals('<hr>', $snippet['content']);
     }
 
     public function testHeadingTag()
@@ -54,7 +47,7 @@ class HtmlSnippetTest extends TestCase
         ])->toArray();
 
         $this->assertEquals('html', $snippet['type']);
-        $this->assertEquals('<h3>Billing Details</h3>', $snippet['content']);
+        $this->assertEquals('Billing Details', $snippet['content']);
     }
 
     public function testDivTag()
@@ -64,6 +57,6 @@ class HtmlSnippetTest extends TestCase
         ])->toArray();
 
         $this->assertEquals('html', $snippet['type']);
-        $this->assertEquals('<div><p class="foo">Bar</p></div>', $snippet['content']);
+        $this->assertEquals('<p class="foo">Bar</p>', $snippet['content']);
     }
 }

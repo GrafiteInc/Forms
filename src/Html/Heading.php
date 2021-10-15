@@ -6,13 +6,12 @@ use Grafite\Forms\Html\HtmlSnippet;
 
 class Heading extends HtmlSnippet
 {
-    public static function content($options = [])
+    public static function render($options = [])
     {
-        $class = '';
         $content = '';
         $level = 3;
 
-        $attributes = self::attributes($options);
+        $attributes = self::attributes($options['attributes']);
 
         if (isset($options['content'])) {
             $content = $options['content'];
