@@ -53,12 +53,6 @@ class FormsProvider extends ServiceProvider
         $this->app['blade.compiler']->component('f-delete', FormDelete::class);
         $this->app['blade.compiler']->component('f-search', FormSearch::class);
 
-        /*
-        |--------------------------------------------------------------------------
-        | Commands
-        |--------------------------------------------------------------------------
-        */
-
         $this->commands([
             MakeFieldCommand::class,
             MakeModelFormCommand::class,

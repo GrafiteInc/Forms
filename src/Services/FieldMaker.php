@@ -74,32 +74,14 @@ class FieldMaker
         }
 
         $field = null;
-        $fieldGroup = '';
-
-        if (! isset($columnConfig['wrapper']) || $columnConfig['wrapper']) {
-            $fieldGroup = config('forms.form.group-class', 'form-group');
-        }
-
-        if (isset($columnConfig['wrapper']) && is_string($columnConfig['wrapper'])) {
-            $fieldGroup = $columnConfig['wrapper'];
-        }
-
-        if ($this->orientation === 'horizontal') {
-            $fieldGroup = $fieldGroup . ' ' . config('forms.form.sections.row-class', 'row');
-        }
-
+        $fieldGroup = $this->getFieldGroup($columnConfig);
         $value = $this->getOldValue($column);
 
         if (! is_null($object)) {
-            $objectValue = $this->getObjectValue($object, $column);
-
-            if (isset($objectValue)) {
-                $value = $objectValue;
-            }
+            $value = $this->getObjectValue($object, $column) ?? $value;
         }
 
         $errors = $this->getFieldErrors($column, $object);
-
         $columnConfig = $this->setClassIfErrors($columnConfig, $errors);
 
         $label = $this->label(
@@ -128,21 +110,12 @@ class FieldMaker
         }
 
         if (isset($columnConfig['template'])) {
-            $rowClass = config('forms.form.group-class', 'form-group');
-            $labelClass = config('forms.form.label_class', 'control-label');
-            $fieldClass = '';
-
-            if ($this->orientation === 'horizontal') {
-                $labelClass = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
-                $fieldClass = config('forms.form.input-column', 'col-md-10');
-                $rowClass = $rowClass . ' ' . config('forms.form.sections.row-class', 'row');
-            }
-
+            $rowClass = ($this->orientation === 'horizontal') ? config('forms.form.group-class', 'form-group') . ' ' . config('forms.form.sections.row-class', 'row') : config('forms.form.group-class', 'form-group');
+            $labelClass = ($this->orientation === 'horizontal') ? config('forms.form.label-column', 'col-md-2 col-form-label pt-0') : config('forms.form.label_class', 'control-label');
+            $fieldClass = ($this->orientation === 'horizontal') ? config('forms.form.input-column', 'col-md-10') : '';
             $options = $this->parseOptions($column, $columnConfig);
             $id = $options['attributes']['id'];
-
-            $name = Str::title($column);
-            $name = str_replace('_', ' ', $name);
+            $name = Str::of($column)->title()->replace('_', ' ');
             $name = $options['label'] ?? $name;
 
             return $this->fieldTemplate($columnConfig['template'], compact(
@@ -337,7 +310,7 @@ class FieldMaker
         return $postfix;
     }
 
-    private function fieldTemplate($template, $options)
+    protected function fieldTemplate($template, $options)
     {
         $keys = [];
         $values = [];
@@ -351,7 +324,7 @@ class FieldMaker
         return str_replace($keys, $values, $template);
     }
 
-    private function getOldValue($column)
+    protected function getOldValue($column)
     {
         if (session()->isStarted()) {
             return request()->old($column);
@@ -360,7 +333,7 @@ class FieldMaker
         return null;
     }
 
-    private function parseOptions($name, $options)
+    protected function parseOptions($name, $options)
     {
         $default = [
             'class' => config('forms.form.input-class', 'form-control'),
@@ -372,19 +345,19 @@ class FieldMaker
         return $options;
     }
 
-    private function stripArrayHandles($column)
+    protected function stripArrayHandles($column)
     {
         return str_replace('[]', '', ucfirst($column));
     }
 
-    private function getNestedFieldLabel($label)
+    protected function getNestedFieldLabel($label)
     {
         preg_match_all("/\[([^\]]*)\]/", $label, $matches);
 
         return $matches[1];
     }
 
-    private function setClassIfErrors($columnConfig, $errors)
+    protected function setClassIfErrors($columnConfig, $errors)
     {
         if (! empty($errors)) {
             $currentClass = $columnConfig['attributes']['class'] ?? ' ';
@@ -397,5 +370,28 @@ class FieldMaker
         }
 
         return $columnConfig;
+    }
+
+    protected function getFieldGroup($columnConfig)
+    {
+        $fieldGroupClass = '';
+
+        if (isset($columnConfig['wrapper'])) {
+            if (! $columnConfig['wrapper']) {
+                return false;
+            }
+
+            $fieldGroupClass = (is_string($columnConfig['wrapper'])) ? $columnConfig['wrapper'] : config('forms.form.group-class', 'form-group');
+        }
+
+        if (! isset($columnConfig['wrapper'])) {
+            $fieldGroupClass = config('forms.form.group-class', 'form-group');
+        }
+
+        if ($this->orientation === 'horizontal') {
+            $fieldGroupClass = $fieldGroupClass . ' ' . config('forms.form.sections.row-class', 'row');
+        }
+
+        return $fieldGroupClass;
     }
 }
