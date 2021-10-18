@@ -220,30 +220,7 @@ class FieldBuilder
         }
 
         foreach ($options['options'] as $key => $value) {
-            $selectedValue = '';
-
-            if (
-                isset($options['attributes']['multiple'])
-                && (is_object($selected) || is_array($selected))
-            ) {
-                if (in_array($value, collect($selected)->toArray())) {
-                    $selectedValue = ' selected';
-                }
-            }
-
-            if (
-                ! isset($options['attributes']['multiple'])
-                && is_array($selected)
-            ) {
-                if (in_array($value, $selected)) {
-                    $selectedValue = ' selected';
-                }
-            }
-
-            if ($selected === $value) {
-                $selectedValue = ' selected';
-            }
-
+            $selectedValue = $this->getOptionSelectedValue($selected, $value, $options);
             $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
         }
 
@@ -448,6 +425,35 @@ class FieldBuilder
         preg_match_all("/\[([^\]]*)\]/", $label, $matches);
 
         return $matches[1];
+    }
+
+    protected function getOptionSelectedValue($selected, $value, $options)
+    {
+        $selectedValue = '';
+
+        if (
+            isset($options['attributes']['multiple'])
+            && (is_object($selected) || is_array($selected))
+        ) {
+            if (in_array($value, collect($selected)->toArray())) {
+                $selectedValue = ' selected';
+            }
+        }
+
+        if (
+            ! isset($options['attributes']['multiple'])
+            && is_array($selected)
+        ) {
+            if (in_array($value, $selected)) {
+                $selectedValue = ' selected';
+            }
+        }
+
+        if ($selected === $value) {
+            $selectedValue = ' selected';
+        }
+
+        return $selectedValue;
     }
 
     /**
