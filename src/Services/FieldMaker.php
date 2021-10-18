@@ -91,67 +91,14 @@ class FieldMaker
             $errors
         );
 
-        if (in_array($columnConfig['type'], $this->standard)) {
-            $field = $this->builder->makeInput(
-                $columnConfig['type'],
-                $column,
-                $value,
-                $this->parseOptions($column, $columnConfig)['attributes']
-            );
-        }
-
-        if (in_array($columnConfig['type'], $this->special)) {
-            $method = 'make' . ucfirst(Str::camel($columnConfig['type']));
-            $field = $this->builder->$method(
-                $column,
-                $value,
-                $this->parseOptions($column, $columnConfig)
-            );
-        }
-
-        if (isset($columnConfig['template'])) {
-            $options = $this->parseOptions($column, $columnConfig);
-
-            return $this->fieldTemplate($columnConfig['template'], [
-                'rowClass' => $this->orientation === 'horizontal' ? config('forms.form.group-class', 'form-group') . ' ' . config('forms.form.sections.row-class', 'row') : config('forms.form.group-class', 'form-group'),
-                'labelClass' => $this->orientation === 'horizontal' ? config('forms.form.label-column', 'col-md-2 col-form-label pt-0') : config('forms.form.label_class', 'control-label'),
-                'fieldClass' => $this->orientation === 'horizontal' ? config('forms.form.input-column', 'col-md-10') : '',
-                'label' => $label,
-                'field' => $field,
-                'errors' => $errors,
-                'id' => $options['attributes']['id'],
-                'name' => $options['label'] ?? Str::of($column)->title()->replace('_', ' ')
-            ]);
-        }
-
-        if (isset($columnConfig['view'])) {
-            $options = $this->parseOptions($column, $columnConfig);
-
-            return view($columnConfig['view'], [
-                'label' => $label,
-                'field' => $field,
-                'errors' => $errors,
-                'options' => $options,
-            ])->render();
-        }
+        $field = $this->makeField($columnConfig, $label, $column, $value, $errors);
 
         if (in_array($columnConfig['type'], $this->specialSelect)) {
             $label = '';
-
-            $field = $this->builder->makeCheckInput(
-                $column,
-                $value,
-                $this->parseOptions($column, $columnConfig)
-            );
         }
 
-        if (is_null($field)) {
-            $field = $this->builder->makeField(
-                $columnConfig['type'],
-                $column,
-                $value,
-                $this->parseOptions($column, $columnConfig)['attributes']
-            );
+        if (isset($columnConfig['template']) || isset($columnConfig['view'])) {
+            return $field;
         }
 
         $before = $this->before($columnConfig);
@@ -385,5 +332,82 @@ class FieldMaker
         }
 
         return $fieldGroupClass;
+    }
+
+    protected function makeField($columnConfig, $label, $column, $value, $errors)
+    {
+        $field = null;
+
+        if (in_array($columnConfig['type'], $this->standard)) {
+            $field = $this->builder->makeInput(
+                $columnConfig['type'],
+                $column,
+                $value,
+                $this->parseOptions($column, $columnConfig)['attributes']
+            );
+        }
+
+        if (in_array($columnConfig['type'], $this->special)) {
+            $method = 'make' . ucfirst(Str::camel($columnConfig['type']));
+            $field = $this->builder->$method(
+                $column,
+                $value,
+                $this->parseOptions($column, $columnConfig)
+            );
+        }
+
+        if (isset($columnConfig['template'])) {
+            $options = $this->parseOptions($column, $columnConfig);
+            $rowClass = config('forms.form.group-class', 'form-group');
+            $labelClass = config('forms.form.label_class', 'control-label');
+            $fieldClass = '';
+
+            if ($this->orientation === 'horizontal') {
+                $rowClass = config('forms.form.group-class', 'form-group') . ' ' . config('forms.form.sections.row-class', 'row');
+                $labelClass = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
+                $fieldClass = config('forms.form.input-column', 'col-md-10');
+            }
+
+            return $this->fieldTemplate($columnConfig['template'], [
+                'rowClass' => $rowClass,
+                'labelClass' => $labelClass,
+                'fieldClass' => $fieldClass,
+                'label' => $label,
+                'field' => $field,
+                'errors' => $errors,
+                'id' => $options['attributes']['id'],
+                'name' => $options['label'] ?? Str::of($column)->title()->replace('_', ' ')
+            ]);
+        }
+
+        if (isset($columnConfig['view'])) {
+            $options = $this->parseOptions($column, $columnConfig);
+
+            return view($columnConfig['view'], [
+                'label' => $label,
+                'field' => $field,
+                'errors' => $errors,
+                'options' => $options,
+            ])->render();
+        }
+
+        if (in_array($columnConfig['type'], $this->specialSelect)) {
+            $field = $this->builder->makeCheckInput(
+                $column,
+                $value,
+                $this->parseOptions($column, $columnConfig)
+            );
+        }
+
+        if (is_null($field)) {
+            $field = $this->builder->makeField(
+                $columnConfig['type'],
+                $column,
+                $value,
+                $this->parseOptions($column, $columnConfig)['attributes']
+            );
+        }
+
+        return $field;
     }
 }
