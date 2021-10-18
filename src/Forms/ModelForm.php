@@ -3,9 +3,6 @@
 namespace Grafite\Forms\Forms;
 
 use Exception;
-use Illuminate\Routing\UrlGenerator;
-use Grafite\Forms\Services\FormMaker;
-use Grafite\Forms\Builders\FieldBuilder;
 use Grafite\Forms\Forms\Concerns\HasIndex;
 
 class ModelForm extends HtmlForm
@@ -116,10 +113,6 @@ class ModelForm extends HtmlForm
     {
         parent::__construct();
 
-        // $this->url = app(UrlGenerator::class);
-        // $this->session = session();
-        // $this->field = app(FieldBuilder::class);
-
         if (is_null($this->routePrefix)) {
             throw new Exception('Route Prefix is required, for example: users', 1);
         }
@@ -129,19 +122,6 @@ class ModelForm extends HtmlForm
         }
 
         $this->modelClass = app($this->model);
-        $this->builder = app(FormMaker::class);
-
-        if (is_null($this->buttonLinks['cancel'])) {
-            $this->buttonLinks['cancel'] = request()->fullUrl();
-        }
-
-        if (! is_null($this->orientation)) {
-            $this->builder->setOrientation($this->orientation);
-        }
-
-        if (! is_null($this->withJsValidation)) {
-            $this->builder->setJsValidation($this->withJsValidation);
-        }
 
         foreach ($this->routes as $key => $route) {
             $this->routes[$key] = "{$this->routePrefix}{$route}";

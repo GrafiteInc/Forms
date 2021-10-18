@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Html;
 
 use Grafite\Forms\Html\HtmlSnippet;
+use Grafite\Forms\Builders\AttributeBuilder;
 
 class Span extends HtmlSnippet
 {
@@ -10,7 +11,7 @@ class Span extends HtmlSnippet
     {
         $content = '';
 
-        $attributes = self::attributes($options['attributes']);
+        $attributes = app(AttributeBuilder::class)->render($options['attributes']);
 
         if (isset($options['content'])) {
             $content = $options['content'];
@@ -18,6 +19,6 @@ class Span extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty span');
 
-        return "<span{$attributes}>{$content}</span>";
+        return "<span {$attributes}>{$content}</span>";
     }
 }

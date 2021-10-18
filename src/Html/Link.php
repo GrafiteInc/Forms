@@ -2,13 +2,16 @@
 
 namespace Grafite\Forms\Html;
 
+use Attribute;
+use Grafite\Forms\Builders\AttributeBuilder;
+
 class Link extends HtmlSnippet
 {
     public static function render($options = [])
     {
         $options['class'] = $options['class'] ?? config('forms.buttons.submit');
 
-        $attributes = self::attributes($options['attributes']);
+        $attributes = app(AttributeBuilder::class)->render($options['attributes']);
 
         $content = '';
 
@@ -18,6 +21,6 @@ class Link extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty button');
 
-        return "<a{$attributes}>{$content}</a>";
+        return "<a {$attributes}>{$content}</a>";
     }
 }

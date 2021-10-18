@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Html;
 
 use Grafite\Forms\Html\HtmlSnippet;
+use Grafite\Forms\Builders\AttributeBuilder;
 
 class Heading extends HtmlSnippet
 {
@@ -11,7 +12,7 @@ class Heading extends HtmlSnippet
         $content = '';
         $level = 3;
 
-        $attributes = self::attributes($options['attributes']);
+        $attributes = app(AttributeBuilder::class)->render($options['attributes']);
 
         if (isset($options['content'])) {
             $content = $options['content'];
@@ -23,6 +24,6 @@ class Heading extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty heading');
 
-        return "<h{$level}{$attributes}>{$content}</h{$level}>";
+        return "<h{$level} {$attributes}>{$content}</h{$level}>";
     }
 }

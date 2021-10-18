@@ -2,10 +2,6 @@
 
 namespace Grafite\Forms\Forms;
 
-use Illuminate\Routing\UrlGenerator;
-use Grafite\Forms\Services\FormMaker;
-use Grafite\Forms\Builders\FieldBuilder;
-
 class ModalForm extends HtmlForm
 {
     /**
@@ -35,32 +31,6 @@ class ModalForm extends HtmlForm
      * @var string|null
      */
     public $triggerClass = null;
-
-    /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        parent::__construct();
-
-        $this->url = app(UrlGenerator::class);
-        $this->field = app(FieldBuilder::class);
-        $this->session = session();
-
-        $this->builder = app(FormMaker::class);
-
-        if (is_null($this->buttonLinks['cancel'])) {
-            $this->buttonLinks['cancel'] = request()->fullUrl();
-        }
-
-        if (! is_null($this->orientation)) {
-            $this->builder->setOrientation($this->orientation);
-        }
-
-        if (! is_null($this->withJsValidation)) {
-            $this->builder->setJsValidation($this->withJsValidation);
-        }
-    }
 
     /**
      * Set the route

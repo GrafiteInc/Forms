@@ -3,6 +3,9 @@
 namespace Grafite\Forms\Forms;
 
 use Exception;
+use Illuminate\Routing\UrlGenerator;
+use Grafite\Forms\Services\FormMaker;
+use Grafite\Forms\Builders\FieldBuilder;
 
 class HtmlForm extends Form
 {
@@ -173,6 +176,20 @@ class HtmlForm extends Form
     {
         parent::__construct();
 
+        $this->url = app(UrlGenerator::class);
+        $this->field = app(FieldBuilder::class);
+        $this->session = session();
+
+        $this->builder = app(FormMaker::class);
+
+        if (! is_null($this->orientation)) {
+            $this->builder->setOrientation($this->orientation);
+        }
+
+        if (! is_null($this->withJsValidation)) {
+            $this->builder->setJsValidation($this->withJsValidation);
+        }
+
         $buttonClasses = [
             'submit' => $this->buttonClasses['submit'] ?? config('forms.buttons.submit', 'btn btn-primary'),
             'edit' => $this->buttonClasses['edit'] ?? config('forms.buttons.edit', 'btn btn-outline-primary'),
@@ -201,6 +218,10 @@ class HtmlForm extends Form
 
         $this->formClass = $this->formClass ?? config('forms.form.class', 'form');
         $this->formDeleteClass = $this->formDeleteClass ?? config('forms.form.delete-class', 'form-inline');
+
+        if (is_null($this->buttonLinks['cancel'])) {
+            $this->buttonLinks['cancel'] = request()->fullUrl();
+        }
     }
 
     /**

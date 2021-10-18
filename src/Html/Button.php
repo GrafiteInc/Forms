@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Html;
 
 use Grafite\Forms\Html\HtmlSnippet;
+use Grafite\Forms\Builders\AttributeBuilder;
 
 class Button extends HtmlSnippet
 {
@@ -10,7 +11,7 @@ class Button extends HtmlSnippet
     {
         $options['class'] = $options['class'] ?? config('forms.buttons.submit');
 
-        $attributes = self::attributes($options['attributes']);
+        $attributes = app(AttributeBuilder::class)->render($options['attributes']);
 
         $content = '';
 
@@ -20,6 +21,6 @@ class Button extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty button');
 
-        return "<button{$attributes}>{$content}</button>";
+        return "<button {$attributes}>{$content}</button>";
     }
 }

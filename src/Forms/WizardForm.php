@@ -2,10 +2,6 @@
 
 namespace Grafite\Forms\Forms;
 
-use Illuminate\Routing\UrlGenerator;
-use Grafite\Forms\Services\FormMaker;
-use Grafite\Forms\Builders\FieldBuilder;
-
 class WizardForm extends HtmlForm
 {
     /**
@@ -50,25 +46,7 @@ class WizardForm extends HtmlForm
     {
         parent::__construct();
 
-        // $this->url = app(UrlGenerator::class);
-        // $this->field = app(FieldBuilder::class);
-        // $this->session = session();
-
-        $this->builder = app(FormMaker::class);
-
-        if (is_null($this->buttonLinks['cancel'])) {
-            $this->buttonLinks['cancel'] = request()->fullUrl();
-        }
-
         $this->buttonClasses['submit'] = 'form-submit-btn ' . config('forms.buttons.submit', 'btn btn-primary');
-
-        if (! is_null($this->orientation)) {
-            $this->builder->setOrientation($this->orientation);
-        }
-
-        if (! is_null($this->withJsValidation)) {
-            $this->builder->setJsValidation($this->withJsValidation);
-        }
     }
 
     /**
