@@ -504,7 +504,7 @@ EOT;
 
             foreach ($section as $key => $fields) {
                 $label = is_string($key) ? $key : null;
-                $inputs[] = $this->getFieldsAsInputs($fields, $formBuild);
+                $inputs = $this->getFieldsAsInputs($fields, $formBuild);
                 $formSections[] = $this->buildSection($inputs, $columns, $label);
             }
 
