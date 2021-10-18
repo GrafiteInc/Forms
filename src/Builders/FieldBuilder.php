@@ -432,10 +432,6 @@ class FieldBuilder
             return ' checked';
         }
 
-        if (is_bool($value) && ! $value) {
-            return '';
-        }
-
         if (Str::contains($name, $value)) {
             return ' checked';
         }

@@ -261,38 +261,7 @@ class HtmlForm extends Form
                     . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
             }
 
-            $onSubmit = null;
-
-            if ($this->disableOnSubmit) {
-                $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> ' . $this->buttons['submit'];
-                $onSubmit = 'this.innerHTML = \'' . $processing . '\'; this.disabled = true; this.form.submit();';
-            }
-
-            if ($this->columns === 'steps') {
-                $lastRowInForm .= $this->field->button($this->buttons['previous'], [
-                    'class' => $this->buttonClasses['previous'] . ' form-previous-btn',
-                    'onclick' => 'window.Form_previous_step()',
-                ]);
-                $lastRowInForm .= $this->field->button($this->buttons['next'], [
-                    'class' => $this->buttonClasses['next'] . ' form-next-btn',
-                    'onclick' => 'window.Form_next_step()',
-                ]);
-            }
-
-            if (! is_null($this->submitMethod)) {
-                $lastRowInForm .= $this->field->button($this->buttons['submit'], [
-                    'class' => $this->buttonClasses['submit'],
-                    'onclick' => "{$this->submitMethod}(event)",
-                ]);
-            } else {
-                if (isset($this->buttons['submit'])) {
-                    $lastRowInForm .= $this->field->button($this->buttons['submit'], [
-                        'class' => $this->buttonClasses['submit'],
-                        'type' => 'submit',
-                        'onclick' => $onSubmit,
-                    ]);
-                }
-            }
+            $lastRowInForm .= $this->formSubmitHtml();
 
             $lastRowInForm .= '</div></div>';
 
@@ -449,6 +418,41 @@ class HtmlForm extends Form
         }
 
         return $fields;
+    }
+
+    protected function formSubmitHtml()
+    {
+        $html = '';
+        $onSubmit = null;
+
+        if ($this->disableOnSubmit) {
+            $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> ' . $this->buttons['submit'];
+            $onSubmit = 'this.innerHTML = \'' . $processing . '\'; this.disabled = true; this.form.submit();';
+        }
+
+        if ($this->columns === 'steps') {
+            $html .= $this->field->button($this->buttons['previous'], [
+                'class' => $this->buttonClasses['previous'] . ' form-previous-btn',
+                'onclick' => 'window.Form_previous_step()',
+            ]);
+            $html .= $this->field->button($this->buttons['next'], [
+                'class' => $this->buttonClasses['next'] . ' form-next-btn',
+                'onclick' => 'window.Form_next_step()',
+            ]);
+        }
+
+        $submitMethod = is_null($this->submitMethod) ? $onSubmit : "{$this->submitMethod}(event)";
+        $submitType = is_null($this->submitMethod) ? 'submit' : 'button';
+
+        if (isset($this->buttons['submit'])) {
+            $html .= $this->field->button($this->buttons['submit'], [
+                'class' => $this->buttonClasses['submit'],
+                'type' => $submitType,
+                'onclick' => $submitMethod,
+            ]);
+        }
+
+        return $html;
     }
 
     /**

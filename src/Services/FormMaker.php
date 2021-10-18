@@ -443,13 +443,7 @@ EOT;
             return 1;
         })->toArray();
 
-        if (is_null($columns)) {
-            $columns = count($fields);
-        }
-
-        if ($columns >= $this->maxColumns) {
-            $columns = $this->maxColumns;
-        }
+        $columns = $this->getColumns($columns, $fields);
 
         if (! empty($fields)) {
             $formChunks = array_chunk($fields, $columns);
@@ -470,12 +464,9 @@ EOT;
             $newFormBuild[] = '<div class="' . $rowClass . '">';
 
             foreach ($chunk as $element) {
-                if (
-                    Str::contains($element, 'type="hidden"')
-                    && ! Str::contains($element, 'label')
-                ) {
-                    $class = '';
-                } else {
+                $class = '';
+
+                if (! Str::contains($element, 'type="hidden"') && Str::contains($element, 'label')) {
                     $class = $columnBase . (12 / $columns);
                 }
 
@@ -483,6 +474,7 @@ EOT;
                 $newFormBuild[] = $element;
                 $newFormBuild[] = '</div>';
             }
+
             $newFormBuild[] = '</div>';
         }
 
@@ -511,26 +503,8 @@ EOT;
             }
 
             foreach ($section as $key => $fields) {
-                $label = null;
-
-                if (is_string($key)) {
-                    $label = $key;
-                }
-
-                $inputs = [];
-
-                foreach ($fields as $field) {
-                    if (! is_array($field) && isset($formBuild[$field])) {
-                        $inputs[] = $formBuild[$field];
-                    }
-
-                    if (is_array($field)) {
-                        foreach ($field as $inputField) {
-                            $inputs[] = $formBuild[$inputField];
-                        }
-                    }
-                }
-
+                $label = is_string($key) ? $key : null;
+                $inputs[] = $this->getFieldsAsInputs($fields, $formBuild);
                 $formSections[] = $this->buildSection($inputs, $columns, $label);
             }
 
@@ -598,5 +572,37 @@ EOT;
         ];
 
         return $columnTypes[$type];
+    }
+
+    protected function getColumns($columns, $fields)
+    {
+        if (is_null($columns)) {
+            $columns = count($fields);
+        }
+
+        if ($columns >= $this->maxColumns) {
+            $columns = $this->maxColumns;
+        }
+
+        return $columns;
+    }
+
+    protected function getFieldsAsInputs($fields, $formBuild)
+    {
+        $inputs = [];
+
+        foreach ($fields as $field) {
+            if (! is_array($field) && isset($formBuild[$field])) {
+                $inputs[] = $formBuild[$field];
+            }
+
+            if (is_array($field)) {
+                foreach ($field as $inputField) {
+                    $inputs[] = $formBuild[$inputField];
+                }
+            }
+        }
+
+        return $inputs;
     }
 }

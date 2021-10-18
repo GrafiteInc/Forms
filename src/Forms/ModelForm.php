@@ -274,17 +274,7 @@ class ModelForm extends HtmlForm
             'class' => $this->buttonClasses['delete'],
         ];
 
-        if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
-            $options = array_merge($options, [
-                'onclick' => "return confirm('{$this->confirmMessage}')",
-            ]);
-        }
-
-        if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
-            $options = array_merge($options, [
-                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')",
-            ]);
-        }
+        $options['onclick'] = $this->getConfirmationOption($options);
 
         $options['type'] = 'submit';
 
@@ -444,5 +434,20 @@ class ModelForm extends HtmlForm
         }
 
         return $this;
+    }
+
+    protected function getConfirmationOption($options)
+    {
+        $onclick = false;
+
+        if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
+            $onclick = "return confirm('{$this->confirmMessage}')";
+        }
+
+        if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
+            $onclick = "{$this->confirmMethod}(event, '{$this->confirmMessage}')";
+        }
+
+        return $onclick;
     }
 }
