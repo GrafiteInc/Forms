@@ -1,10 +1,9 @@
 <?php
 
-use Grafite\Forms\Forms\Form;
-use Grafite\Forms\Fields\Text;
-use Grafite\Forms\Fields\Email;
-use Illuminate\Support\Facades\Route;
-use Grafite\Forms\Forms\ModelForm;
+
+namespace Tests\Unit;
+
+use Tests\TestCase;
 
 class FormHelperTest extends TestCase
 {

@@ -48,10 +48,8 @@ class LivewireForm extends HtmlForm
             $this->livewireOnKeydown = true;
         }
 
-        if ($this->orientation == 'horizontal') {
-            if ($this->formClass === config('forms.form.horizontal-class')) {
-                $this->formClass = config('forms.form.horizontal-class', 'form-horizontal');
-            }
+        if ($this->orientation === 'horizontal') {
+            $this->formClass = $this->formClass ?? config('forms.form.horizontal-class', 'form-horizontal');
         }
 
         $this->builder->setSections($this->setSections());

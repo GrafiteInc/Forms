@@ -1,12 +1,16 @@
 <?php
 
+namespace Tests\Unit;
+
+use Tests\TestCase;
+
 class MakeModalFormCommandTest extends TestCase
 {
     public function setUp(): void
     {
         parent::setUp();
 
-        $this->path = __DIR__.'/../vendor/orchestra/testbench-core/laravel/app/Http/Forms/UserCreateForm.php';
+        $this->path = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/app/Http/Forms/UserCreateForm.php';
 
         @unlink($this->path);
 

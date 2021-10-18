@@ -23,8 +23,6 @@ class HtmlConvertor
             }
         }
 
-        $html = implode($result);
-
-        return $html;
+        return implode($result);
     }
 }

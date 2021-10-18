@@ -25,6 +25,6 @@ class MakeModalFormCommand extends BaseCommand
          */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/modal-form.php';
+        return __DIR__ . '/stubs/modal-form.stub';
     }
 }

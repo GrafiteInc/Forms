@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests\Unit;
+
+use Tests\TestCase;
 use Grafite\Forms\Html\Div;
 use Grafite\Forms\Html\HrTag;
 use Grafite\Forms\Html\DivOpen;

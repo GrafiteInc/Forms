@@ -32,7 +32,7 @@ class MakeFieldCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/field.php';
+        return __DIR__ . '/stubs/field.stub';
     }
 
     /**

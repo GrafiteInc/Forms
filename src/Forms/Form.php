@@ -9,6 +9,7 @@ use Illuminate\Routing\UrlGenerator;
 use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Builders\FieldBuilder;
+use Grafite\Forms\Builders\AttributeBuilder;
 
 class Form
 {
@@ -259,6 +260,7 @@ class Form
      */
     public function open($options)
     {
+        $attributes = [];
         $method = Arr::get($options, 'method', 'post');
 
         if (! $this->withLivewire) {
@@ -279,9 +281,9 @@ class Form
 
         $attributes = array_merge($attributes, Arr::except($options, $this->reserved));
 
-        $attributes = $this->field->attributes($attributes);
+        $attributes = app(AttributeBuilder::class)->render($attributes);
 
-        return $this->toHtmlString('<form' . $attributes . '>' . $append);
+        return $this->toHtmlString('<form ' . $attributes . '>' . $append);
     }
 
     /**
@@ -399,9 +401,11 @@ class Form
             return $this->getUrlAction($options['url']);
         }
 
-        if (isset($options['route'])) {
+        if (isset($options['route']) && ! isset($options['action'])) {
             return $this->getRouteAction($options['route']);
-        } elseif (isset($options['action'])) {
+        }
+
+        if (isset($options['action'])) {
             return $this->getControllerAction($options['action']);
         }
 

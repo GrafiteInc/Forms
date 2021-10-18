@@ -58,7 +58,7 @@ class MakeModelFormCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/form.php';
+        return __DIR__ . '/stubs/form.stub';
     }
 
     /**

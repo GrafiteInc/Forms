@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests\Unit;
+
+use Tests\TestCase;
 use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Fields\Email;
 use Grafite\Forms\Fields\Quill;

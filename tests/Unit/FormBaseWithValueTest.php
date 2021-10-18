@@ -1,9 +1,12 @@
 <?php
 
+
+namespace Tests\Unit;
+
+use Tests\TestCase;
 use Grafite\Forms\Fields\Email;
 use Grafite\Forms\Forms\BaseForm;
 use Illuminate\Support\Facades\Route;
-use Grafite\Forms\Fields\Password;
 
 class UserWithValueForm extends BaseForm
 {
@@ -45,6 +48,6 @@ class FormBaseWithValueTest extends TestCase
         $this->assertStringContainsString('http://localhost/user/settings', $form);
         $this->assertStringContainsString('method="POST"', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input  class="form-control" id="Email" name="email" type="email" value="foobar@foo.com"></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value="foobar@foo.com"></div>', $form);
     }
 }

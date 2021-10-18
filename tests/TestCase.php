@@ -1,9 +1,12 @@
 <?php
 
+namespace Tests;
+
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
+use Orchestra\Testbench\TestCase as OrchestraTestCase;
 
-class TestCase extends Orchestra\Testbench\TestCase
+class TestCase extends OrchestraTestCase
 {
     protected $app;
 

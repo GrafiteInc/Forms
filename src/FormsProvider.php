@@ -13,11 +13,9 @@ use Grafite\Forms\Components\FormDelete;
 use Grafite\Forms\Components\FormSearch;
 use Grafite\Forms\Commands\MakeFieldCommand;
 use Grafite\Forms\Commands\MakeBaseFormCommand;
-use Grafite\Forms\Commands\MakeFormTestCommand;
 use Grafite\Forms\Commands\MakeModalFormCommand;
 use Grafite\Forms\Commands\MakeModelFormCommand;
 use Grafite\Forms\Commands\MakeWizardFormCommand;
-use Grafite\Forms\Commands\MakeFormFactoryCommand;
 use Grafite\Forms\Commands\MakeLivewireFormCommand;
 
 class FormsProvider extends ServiceProvider
@@ -60,8 +58,6 @@ class FormsProvider extends ServiceProvider
             MakeBaseFormCommand::class,
             MakeLivewireFormCommand::class,
             MakeWizardFormCommand::class,
-            MakeFormFactoryCommand::class,
-            MakeFormTestCommand::class,
         ]);
     }
 

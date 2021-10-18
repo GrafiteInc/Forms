@@ -6,7 +6,7 @@ use Grafite\Forms\Services\FieldConfigProcessor;
 
 class Field
 {
-    const FIELD_OPTIONS = [
+    public const FIELD_OPTIONS = [
         'type',
         'options',
         'legend',
@@ -106,7 +106,9 @@ class Field
             'stylesheets' => static::stylesheets($options) ?? null,
         ];
 
-        return (new FieldConfigProcessor($name, $options));
+        $config = (new FieldConfigProcessor($name, $options));
+
+        return $config;
     }
 
     /**

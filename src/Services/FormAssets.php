@@ -24,30 +24,8 @@ class FormAssets
     {
         $output = '';
 
-        if (in_array($type, ['all', 'styles'])) {
-            $output .= collect($this->stylesheets)->unique()->implode("\n");
-            $styles = collect($this->styles)->unique()->implode("\n");
-
-            if (app()->environment('production')) {
-                $minifierCSS = new CSS();
-                $styles = $minifierCSS->add($styles)->minify();
-            }
-            $output .= "<style>\n{$styles}\n</style>\n";
-        }
-
-        if (in_array($type, ['all', 'scripts'])) {
-            $output .= collect($this->scripts)->unique()->implode("\n");
-            $js = collect($this->js)->unique()->implode("\n");
-
-            if (app()->environment('production')) {
-                $minifierJS = new JS();
-                $js = $minifierJS->add($js)->minify();
-            }
-
-            $function = "let FormsJS = () => { {$js} }";
-
-            $output .= "<script>\n{$function}\nFormsJS();\n</script>\n";
-        }
+        $output .= $this->compileStyles($type);
+        $output .= $this->compileScripts($type);
 
         return $output;
     }
@@ -110,5 +88,45 @@ class FormAssets
         }
 
         return $this;
+    }
+
+    protected function compileStyles($type)
+    {
+        $output = '';
+
+        if (in_array($type, ['all', 'styles'])) {
+            $output .= collect($this->stylesheets)->unique()->implode("\n");
+            $styles = collect($this->styles)->unique()->implode("\n");
+
+            if (app()->environment('production')) {
+                $minifierCSS = new CSS();
+                $styles = $minifierCSS->add($styles)->minify();
+            }
+
+            $output .= "<style>\n{$styles}\n</style>\n";
+        }
+
+        return $output;
+    }
+
+    protected function compileScripts($type)
+    {
+        $output = '';
+
+        if (in_array($type, ['all', 'scripts'])) {
+            $output .= collect($this->scripts)->unique()->implode("\n");
+            $js = collect($this->js)->unique()->implode("\n");
+
+            if (app()->environment('production')) {
+                $minifierJS = new JS();
+                $js = $minifierJS->add($js)->minify();
+            }
+
+            $function = "let FormsJS = () => { {$js} }";
+
+            $output .= "<script>\n{$function}\nFormsJS();\n</script>\n";
+        }
+
+        return $output;
     }
 }

@@ -425,7 +425,7 @@ EOT;
      * @param string $label
      * @return string
      */
-    private function buildSection($fields, $columns, $label = null, $isStepped = false, $step = 1)
+    private function buildSection($fields, $columns, $label = null)
     {
         $formChunks = [];
         $newFormBuild = [];
@@ -531,7 +531,7 @@ EOT;
                     }
                 }
 
-                $formSections[] = $this->buildSection($inputs, $columns, $label, $isStepped, $step);
+                $formSections[] = $this->buildSection($inputs, $columns, $label);
             }
 
             if (count($this->steps) > 1) {

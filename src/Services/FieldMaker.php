@@ -110,35 +110,29 @@ class FieldMaker
         }
 
         if (isset($columnConfig['template'])) {
-            $rowClass = ($this->orientation === 'horizontal') ? config('forms.form.group-class', 'form-group') . ' ' . config('forms.form.sections.row-class', 'row') : config('forms.form.group-class', 'form-group');
-            $labelClass = ($this->orientation === 'horizontal') ? config('forms.form.label-column', 'col-md-2 col-form-label pt-0') : config('forms.form.label_class', 'control-label');
-            $fieldClass = ($this->orientation === 'horizontal') ? config('forms.form.input-column', 'col-md-10') : '';
             $options = $this->parseOptions($column, $columnConfig);
-            $id = $options['attributes']['id'];
-            $name = Str::of($column)->title()->replace('_', ' ');
-            $name = $options['label'] ?? $name;
 
-            return $this->fieldTemplate($columnConfig['template'], compact(
-                'rowClass',
-                'labelClass',
-                'fieldClass',
-                'label',
-                'field',
-                'errors',
-                'id',
-                'name'
-            ));
+            return $this->fieldTemplate($columnConfig['template'], [
+                'rowClass' => $this->orientation === 'horizontal' ? config('forms.form.group-class', 'form-group') . ' ' . config('forms.form.sections.row-class', 'row') : config('forms.form.group-class', 'form-group'),
+                'labelClass' => $this->orientation === 'horizontal' ? config('forms.form.label-column', 'col-md-2 col-form-label pt-0') : config('forms.form.label_class', 'control-label'),
+                'fieldClass' => $this->orientation === 'horizontal' ? config('forms.form.input-column', 'col-md-10') : '',
+                'label' => $label,
+                'field' => $field,
+                'errors' => $errors,
+                'id' => $options['attributes']['id'],
+                'name' => $options['label'] ?? Str::of($column)->title()->replace('_', ' ')
+            ]);
         }
 
         if (isset($columnConfig['view'])) {
             $options = $this->parseOptions($column, $columnConfig);
 
-            return view($columnConfig['view'], compact(
-                'label',
-                'field',
-                'errors',
-                'options'
-            ))->render();
+            return view($columnConfig['view'], [
+                'label' => $label,
+                'field' => $field,
+                'errors' => $errors,
+                'options' => $options,
+            ])->render();
         }
 
         if (in_array($columnConfig['type'], $this->specialSelect)) {
@@ -192,7 +186,7 @@ class FieldMaker
         }
 
         if (! empty($errors)) {
-            $class = $class . ' ' . config('forms.form.error-class', 'has-error');
+            $class .= ' ' . config('forms.form.error-class', 'has-error');
         }
 
         $id = $columnConfig['attributes']['id'] ?? $this->stripArrayHandles($column);
@@ -244,8 +238,7 @@ class FieldMaker
 
     public function getLabel($column, $columnConfig)
     {
-        $label = Str::title($column);
-        $label = str_replace('_', ' ', $label);
+        $label = Str::of($column)->title()->replace('_', ' ');
 
         if (Str::contains($label, '[')) {
             $label = $this->getNestedFieldLabel($label)[0];
@@ -301,20 +294,19 @@ class FieldMaker
 
     public function after($columnConfig)
     {
-        $postfix = '';
+        $suffix = '';
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
-            $postfix = $columnConfig['after'] . '</div>';
+            $suffix = $columnConfig['after'] . '</div>';
         }
 
-        return $postfix;
+        return $suffix;
     }
 
     protected function fieldTemplate($template, $options)
     {
         $keys = [];
         $values = [];
-        $processedTemplate = '';
 
         foreach ($options as $key => $option) {
             $keys[] = "{{$key}}";
@@ -381,7 +373,7 @@ class FieldMaker
                 return false;
             }
 
-            $fieldGroupClass = (is_string($columnConfig['wrapper'])) ? $columnConfig['wrapper'] : config('forms.form.group-class', 'form-group');
+            $fieldGroupClass = is_string($columnConfig['wrapper']) ? $columnConfig['wrapper'] : config('forms.form.group-class', 'form-group');
         }
 
         if (! isset($columnConfig['wrapper'])) {
@@ -389,7 +381,7 @@ class FieldMaker
         }
 
         if ($this->orientation === 'horizontal') {
-            $fieldGroupClass = $fieldGroupClass . ' ' . config('forms.form.sections.row-class', 'row');
+            $fieldGroupClass .= ' ' . config('forms.form.sections.row-class', 'row');
         }
 
         return $fieldGroupClass;

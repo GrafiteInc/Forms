@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests\Unit;
+
+use Tests\TestCase;
 use Grafite\Forms\Builders\FieldBuilder;
 
 class FieldBuilderTest extends TestCase
@@ -46,24 +49,6 @@ class FieldBuilderTest extends TestCase
         $this->assertEquals('<input  name="" type="submit" value="Save">', $test);
     }
 
-    public function testAttributes()
-    {
-        $test = $this->builder->attributes([
-            'placeholder' => 'thing'
-        ]);
-
-        $this->assertTrue(is_string($test));
-        $this->assertEquals(' placeholder="thing"', $test);
-    }
-
-    public function testAttributeElement()
-    {
-        $test = $this->builder->attributeElement('placeholder', 'thing');
-
-        $this->assertTrue(is_string($test));
-        $this->assertEquals('placeholder="thing"', $test);
-    }
-
     public function testMakeCustomFile()
     {
         $test = $this->builder->makeCustomFile('avatar', null, [
@@ -75,7 +60,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="custom-file"><input  id="Avatar" class="foo-class custom-file-input" type="file" name="avatar[]"><label class="custom-file-label" for="Avatar">Choose files</label></div>', $test);
+        $this->assertEquals('<div class="custom-file"><input id="Avatar" class="foo-class custom-file-input" type="file" name="avatar[]"><label class="custom-file-label" for="Avatar">Choose files</label></div>', $test);
     }
 
     public function testMakeTextarea()
@@ -88,7 +73,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<textarea  id="Avatar" class="foo-class" name="avatar"></textarea>', $test);
+        $this->assertEquals('<textarea id="Avatar" class="foo-class" name="avatar"></textarea>', $test);
     }
 
     public function testMakeCheckboxInline()
@@ -101,7 +86,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<input  id="Avatar" class="foo-class" type="checkbox" name="avatar" >', $test);
+        $this->assertEquals('<input id="Avatar" class="foo-class" type="checkbox" name="avatar">', $test);
     }
 
     public function testMakeRadioInline()
@@ -114,7 +99,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<input  id="Avatar" class="foo-class" type="radio" name="avatar" >', $test);
+        $this->assertEquals('<input id="Avatar" class="foo-class" type="radio" name="avatar">', $test);
     }
 
     public function testMakeSelect()
@@ -131,7 +116,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="Matt" >matt</option><option value="Cassandra" >cassandra</option></select>', $test);
+        $this->assertEquals('<select id="Avatar" class="foo-class" name="avatar"><option value="Matt">matt</option><option value="Cassandra">cassandra</option></select>', $test);
     }
 
     public function testMakeSelectWithValue()
@@ -148,7 +133,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="matt" selected>Matt</option><option value="cassandra" >Cassandra</option></select>', $test);
+        $this->assertEquals('<select id="Avatar" class="foo-class" name="avatar"><option value="matt" selected>Matt</option><option value="cassandra">Cassandra</option></select>', $test);
     }
 
     public function testMakeCheckInput()
@@ -163,7 +148,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-check"><input  id="Avatar" class="form-check-input foo-class" type="radio" name="avatar" ><label class="form-check-label" for="Avatar">foo</label></div>', $test);
+        $this->assertEquals('<div class="form-check"><input id="Avatar" class="form-check-input foo-class" type="radio" name="avatar"><label class="form-check-label" for="Avatar">foo</label></div>', $test);
     }
 
     public function testMakeCheckbox()
@@ -176,7 +161,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<input  id="Avatar" class="foo-class" type="checkbox" name="avatar" >', $test);
+        $this->assertEquals('<input id="Avatar" class="foo-class" type="checkbox" name="avatar">', $test);
     }
 
     public function testMakeRadio()
@@ -189,7 +174,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<input  id="Avatar" class="foo-class" type="radio" name="avatar" >', $test);
+        $this->assertEquals('<input id="Avatar" class="foo-class" type="radio" name="avatar">', $test);
     }
 
     public function testMakeRelationshipWithNone()
@@ -216,7 +201,7 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="" selected>foo</option><option value="1" >BlackSmith</option><option value="2" >Police</option><option value="3" >Brogrammer</option></select>', $test);
+        $this->assertEquals('<select id="Avatar" class="foo-class" name="avatar"><option value="" selected>foo</option><option value="1">BlackSmith</option><option value="2">Police</option><option value="3">Brogrammer</option></select>', $test);
     }
 
     public function testMakeRelationship()
@@ -241,25 +226,25 @@ class FieldBuilderTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<select  id="Avatar" class="foo-class" name="avatar"><option value="1" >BlackSmith</option><option value="2" >Police</option><option value="3" >Brogrammer</option></select>', $test);
+        $this->assertEquals('<select id="Avatar" class="foo-class" name="avatar"><option value="1">BlackSmith</option><option value="2">Police</option><option value="3">Brogrammer</option></select>', $test);
     }
 
     public function testIsChecked()
     {
         $test = $this->builder->isChecked('foo', true, []);
-        $this->assertEquals('checked', $test);
+        $this->assertEquals(' checked', $test);
 
         $test = $this->builder->isChecked('foo', 'on', []);
-        $this->assertEquals('checked', $test);
+        $this->assertEquals(' checked', $test);
 
         $test = $this->builder->isChecked('foo', 1, []);
-        $this->assertEquals('checked', $test);
+        $this->assertEquals(' checked', $test);
 
         $test = $this->builder->isChecked('foo', null, []);
         $this->assertEquals('', $test);
 
         $test = $this->builder->isChecked('foo', ['foo'], []);
-        $this->assertEquals('checked', $test);
+        $this->assertEquals(' checked', $test);
 
         $test = $this->builder->isChecked('foo', null, [
             'attributes' => [
@@ -273,6 +258,6 @@ class FieldBuilderTest extends TestCase
                 'value' => 'foo'
             ]
         ]);
-        $this->assertEquals('checked', $test);
+        $this->assertEquals(' checked', $test);
     }
 }

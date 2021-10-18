@@ -80,7 +80,7 @@ $.typeahead({
     input: '#${id}',
     order: "desc",
     source: {
-        data: $values
+        data: ${values}
     }
 });
 EOT;

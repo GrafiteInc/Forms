@@ -1,5 +1,8 @@
 <?php
 
+namespace Tests\Unit;
+
+use Tests\TestCase;
 use Grafite\Forms\Fields\Password;
 use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Forms\BaseForm;
@@ -46,6 +49,6 @@ class FormBaseSubmitMethodTest extends TestCase
         $this->assertStringContainsString("ajax(event)", $form);
         $this->assertStringContainsString('type="button"', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input  class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
     }
 }

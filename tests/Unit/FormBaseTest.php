@@ -1,5 +1,9 @@
 <?php
 
+
+namespace Tests\Unit;
+
+use Tests\TestCase;
 use Grafite\Forms\Forms\BaseForm;
 use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Fields\Password;
@@ -42,7 +46,7 @@ class FormBaseTest extends TestCase
         $this->assertStringContainsString('http://localhost/user/security', $form);
         $this->assertStringContainsString('method="POST"', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input  class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
     }
 
     public function testMakeRenderedFields()
@@ -52,6 +56,6 @@ class FormBaseTest extends TestCase
         $this->assertStringNotContainsString('http://localhost/user/security', $form);
         $this->assertStringNotContainsString('method="POST"', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input  class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
     }
 }

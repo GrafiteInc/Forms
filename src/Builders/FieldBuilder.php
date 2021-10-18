@@ -6,6 +6,7 @@ use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Support\HtmlString;
 use Grafite\Forms\Traits\HasLivewire;
+use Grafite\Forms\Builders\AttributeBuilder;
 
 class FieldBuilder
 {
@@ -14,6 +15,11 @@ class FieldBuilder
     public $withLivewire = false;
 
     public $livewireOnKeydown = false;
+
+    public function __construct()
+    {
+        $this->attributeBuilder = new AttributeBuilder();
+    }
 
     /**
      * Create a submit button element.
@@ -42,7 +48,7 @@ class FieldBuilder
             $options['type'] = 'button';
         }
 
-        return '<button' . $this->attributes($options) . '>' . $value . '</button>';
+        return '<button ' . $this->attributeBuilder->render($options, null, $this->withLivewire, $this->livewireOnKeydown) . '>' . $value . '</button>';
     }
 
     /**
@@ -57,6 +63,7 @@ class FieldBuilder
      */
     public function makeInput($type, $name, $value, $options = [])
     {
+        // TODO: getFieldValue()
         if ($value instanceof DateTime) {
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
@@ -66,7 +73,7 @@ class FieldBuilder
             unset($options['value']);
         }
 
-        $attributes = $this->attributes($options) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown);
 
         return '<input ' . $attributes . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
     }
@@ -83,62 +90,14 @@ class FieldBuilder
      */
     public function makeField($type, $name, $value, $options = [])
     {
+        // TODO: getFieldValue()
         if ($value instanceof DateTime) {
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
-        $attributes = $this->attributes($options) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown);
 
         return '<' . $type . ' ' . $attributes . ' name="' . $name . '" value="' . e($value) . '"></' . $type . '>';
-    }
-
-    /**
-     * Build an HTML attribute string from an array.
-     *
-     * @param array $attributes
-     *
-     * @return string
-     */
-    public function attributes($attributes)
-    {
-        $html = [];
-
-        foreach ((array) $attributes as $key => $value) {
-            $element = $this->attributeElement($key, $value);
-
-            if (! is_null($element)) {
-                $html[] = $element;
-            }
-        }
-
-        return count($html) > 0 ? ' ' . implode(' ', $html) : '';
-    }
-
-    /**
-     * Build a single attribute element.
-     *
-     * @param string $key
-     * @param string $value
-     *
-     * @return string
-     */
-    public function attributeElement($key, $value)
-    {
-        if (is_numeric($key)) {
-            return $value;
-        }
-
-        if (is_bool($value) && $key !== 'value') {
-            return $value ? $key : '';
-        }
-
-        if (is_array($value) && $key === 'class') {
-            return 'class="' . implode(' ', $value) . '"';
-        }
-
-        if (! is_null($value)) {
-            return $key . '="' . e($value, false) . '"';
-        }
     }
 
     /**
@@ -171,7 +130,7 @@ class FieldBuilder
         $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
         $options['attributes']['class'] = $options['attributes']['class'] . ' ' . $customFileClass;
 
-        $attributes = $this->attributes($options['attributes']) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
 
         $input = '<div class="' . $customFileWrapperClass . '">';
         $input .= '<input ' . $attributes . ' type="file" name="' . $name . '">';
@@ -191,7 +150,7 @@ class FieldBuilder
      */
     public function makeTextarea($name, $value, $options)
     {
-        $attributes = $this->attributes($options['attributes']) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
 
         return '<textarea ' . $attributes . ' name="' . $name . '">' . e($value) . '</textarea>';
     }
@@ -251,7 +210,7 @@ class FieldBuilder
         }
 
         if (isset($options['attributes']['multiple']) && $options['attributes']['multiple']) {
-            $name = $name . '[]';
+            $name .= '[]';
         }
 
         if (isset($options['null_value']) && $options['null_value']) {
@@ -268,7 +227,7 @@ class FieldBuilder
                 && (is_object($selected) || is_array($selected))
             ) {
                 if (in_array($value, collect($selected)->toArray())) {
-                    $selectedValue = 'selected';
+                    $selectedValue = ' selected';
                 }
             }
 
@@ -277,18 +236,18 @@ class FieldBuilder
                 && is_array($selected)
             ) {
                 if (in_array($value, $selected)) {
-                    $selectedValue = 'selected';
+                    $selectedValue = ' selected';
                 }
             }
 
             if ($selected === $value) {
-                $selectedValue = 'selected';
+                $selectedValue = ' selected';
             }
 
-            $selectOptions .= '<option value="' . $value . '" ' . $selectedValue . '>' . $key . '</option>';
+            $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
         }
 
-        $attributes = $this->attributes($options['attributes']) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
 
         return '<select ' . $attributes . ' name="' . $name . '">' . $selectOptions . '</select>';
     }
@@ -310,7 +269,7 @@ class FieldBuilder
             $selectOptions .= '<option value="' . $value . '">';
         }
 
-        $attributes = $this->attributes($options['attributes']) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
 
         return '<input type="search" ' . $attributes . ' name="' . $name . '" list="'.$options['attributes']['id'].'-list"><datalist id="'.$options['attributes']['id'].'-list">' . $selectOptions . '</datalist>';
     }
@@ -380,9 +339,9 @@ class FieldBuilder
     public function makeCheckbox($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
-        $attributes = $this->attributes($options['attributes']) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
 
-        return '<input ' . $attributes . ' type="checkbox" name="' . $name . '" ' . $checked . '>';
+        return '<input ' . $attributes . ' type="checkbox" name="' . $name . '"' . $checked . '>';
     }
 
     /**
@@ -397,9 +356,9 @@ class FieldBuilder
     public function makeRadio($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
-        $attributes = $this->attributes($options['attributes']) . $this->livewireAttribute($name);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
 
-        return '<input ' . $attributes . ' type="radio" name="' . $name . '" ' . $checked . '>';
+        return '<input ' . $attributes . ' type="radio" name="' . $name . '"' . $checked . '>';
     }
 
     /**
@@ -420,14 +379,12 @@ class FieldBuilder
             $class = app()->make($options['model']);
         }
 
-        if (isset($options['model_options']['method'])) {
-            $method = $options['model_options']['method'];
-        }
+        $method = $options['model_options']['method'] ?? 'all';
 
+        // TODO this is weird
         if (! isset($options['model_options']['params'])) {
             $items = $class->$method();
         }
-
         if (isset($options['model_options']['params'])) {
             $items = $class->$method($options['model_options']['params']);
         }
@@ -436,10 +393,10 @@ class FieldBuilder
             $options['options'][$options['null_label']] = null;
         }
 
-        foreach ($items as $item) {
-            $optionLabel = $options['model_options']['label'] ?? 'name';
-            $optionValue = $options['model_options']['value'] ?? 'id';
+        $optionLabel = $options['model_options']['label'] ?? 'name';
+        $optionValue = $options['model_options']['value'] ?? 'id';
 
+        foreach ($items as $item) {
             $options['options'][$item->$optionLabel] = $item->$optionValue;
         }
 
@@ -471,10 +428,8 @@ class FieldBuilder
      */
     public function isChecked($name, $value, $options)
     {
-        if (isset($options['attributes']['value'])) {
-            if ($value === $options['attributes']['value']) {
-                return 'checked';
-            }
+        if (isset($options['attributes']['value']) && $value === $options['attributes']['value']) {
+            return ' checked';
         }
 
         if (is_bool($value) && ! $value) {
@@ -482,29 +437,14 @@ class FieldBuilder
         }
 
         if (Str::contains($name, $value)) {
-            return 'checked';
+            return ' checked';
         }
 
         if ($value === true || $value === 'on' || $value === 1) {
-            return 'checked';
+            return ' checked';
         }
 
         return '';
-    }
-
-    public function livewireAttribute($name)
-    {
-        $livewireAttributes = '';
-
-        if ($this->withLivewire) {
-            $livewireAttributes .= " wire:model=\"data.{$name}\"";
-
-            if ($this->livewireOnKeydown) {
-                $livewireAttributes .= ' wire:keydown.debounce.1000ms="submit"';
-            }
-        }
-
-        return $livewireAttributes;
     }
 
     private function getNestedFieldLabel($label)

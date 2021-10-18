@@ -25,6 +25,6 @@ class MakeLivewireFormCommand extends BaseCommand
          */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/livewire-form.php';
+        return __DIR__ . '/stubs/livewire-form.stub';
     }
 }

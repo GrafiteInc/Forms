@@ -20,7 +20,7 @@ class BaseCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/baseform.php';
+        return __DIR__ . '/stubs/baseform.stub';
     }
 
     /**

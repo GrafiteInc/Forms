@@ -32,7 +32,7 @@ class WizardForm extends HtmlForm
     /**
      * Whether or not the content should validate on keydown
      *
-     * @var boolean
+     * @var bool
      */
     public $withJsValidation = true;
 
@@ -50,9 +50,9 @@ class WizardForm extends HtmlForm
     {
         parent::__construct();
 
-        $this->url = app(UrlGenerator::class);
-        $this->field = app(FieldBuilder::class);
-        $this->session = session();
+        // $this->url = app(UrlGenerator::class);
+        // $this->field = app(FieldBuilder::class);
+        // $this->session = session();
 
         $this->builder = app(FormMaker::class);
 
@@ -100,10 +100,8 @@ class WizardForm extends HtmlForm
      */
     public function make()
     {
-        if ($this->orientation == 'horizontal') {
-            if ($this->formClass === config('forms.form.horizontal-class')) {
-                $this->formClass = config('forms.form.horizontal-class', 'form-horizontal');
-            }
+        if ($this->orientation === 'horizontal') {
+            $this->formClass = $this->formClass ?? config('forms.form.horizontal-class', 'form-horizontal');
         }
 
         $this->builder->setSteps($this->steps());

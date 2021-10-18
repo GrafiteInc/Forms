@@ -34,7 +34,7 @@ class Editor implements FieldParser
             'delimiter' => function () {
                 return '<div><span>* * *</span></div>';
             },
-            'image' => function ($file, $caption, $withBorder, $stretched, $withBackground) {
+            'image' => function ($file, $caption) {
                 return "<img src=\"{$file['url']}\" title=\"{$caption}\" alt=\"{$caption}\">";
             },
             'quote' => function ($text, $caption, $alignment) {

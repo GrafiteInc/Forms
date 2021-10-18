@@ -75,6 +75,8 @@ class HtmlSnippet
             $options = array_merge($options, $content);
         }
 
-        return (new HtmlConfigProcessor($name, $options));
+        $config = (new HtmlConfigProcessor($name, $options));
+
+        return $config;
     }
 }

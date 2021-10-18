@@ -25,6 +25,6 @@ class MakeWizardFormCommand extends BaseCommand
          */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/wizard-form.php';
+        return __DIR__ . '/stubs/wizard-form.stub';
     }
 }
