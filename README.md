@@ -2,8 +2,8 @@
 
 **Forms** - An amazing Forms component for Laravel.
 
-[![Build Status](https://github.com/GrafiteInc/Forms/workflows/PHP%20Package%20Tests/badge.svg?branch=master)](https://github.com/GrafiteInc/Forms/actions?query=workflow%3A%22PHP+Package+Tests%22)
-[![Maintainability](https://api.codeclimate.com/v1/badges/8c00a046fec32d8b8ac7/maintainability)](https://codeclimate.com/github/GrafiteInc/Forms/maintainability)
+[![Build Status](https://github.com/GrafiteInc/Forms/workflows/PHP%20Package%20Tests/badge.svg?branch=main)](https://github.com/GrafiteInc/Forms/actions?query=workflow%3A%22PHP+Package+Tests%22)
+[![Maintainability](https://api.codeclimate.com/v1/badges/5c99d7022684ac3a220c/maintainability)](https://codeclimate.com/github/GrafiteInc/Forms/maintainability)
 [![Packagist](https://img.shields.io/packagist/dt/grafite/forms.svg)](https://packagist.org/packages/grafite/forms)
 [![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/grafite/forms)
 
