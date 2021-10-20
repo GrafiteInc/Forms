@@ -172,28 +172,28 @@ class FieldConfigProcessor
 
     public function modelMethod($value)
     {
-        $this->model_options['model_method'] = $value;
+        $this->model_options['method'] = $value;
 
         return $this;
     }
 
     public function modelParams($value)
     {
-        $this->model_options['model_params'] = $value;
+        $this->model_options['params'] = $value;
 
         return $this;
     }
 
     public function modelValue($value)
     {
-        $this->model_options['model_value'] = $value;
+        $this->model_options['value'] = $value;
 
         return $this;
     }
 
     public function modelLabel($value)
     {
-        $this->model_options['model_label'] = $value;
+        $this->model_options['label'] = $value;
 
         return $this;
     }

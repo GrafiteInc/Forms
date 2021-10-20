@@ -79,7 +79,7 @@ EOT;
     public static function js($id, $options)
     {
         $onComplete = $options['queue-complete'] ?? 'function () { window.location.reload() }';
-        $multiple = $options['upload-muliple'] ?? 'true';
+        $multiple = $options['upload-multiple'] ?? 'true';
         $route = $options['route'] ?? '';
         $url = route($route);
         $token = csrf_token();
