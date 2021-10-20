@@ -90,8 +90,9 @@ class Field
     {
         $field = new static();
         $options = static::parseOptions($options);
+        $options['type'] = static::getType() ?? 'text';
 
-        if (! isset($options['options'])) {
+        if (! in_array($options['type'], ['relationship', 'select'])) {
             foreach ($options as $key => $option) {
                 if (! in_array($key, static::getFieldOptions())) {
                     $options['options'][$key] = $option;
@@ -99,7 +100,6 @@ class Field
             }
         }
 
-        $options['type'] = static::getType() ?? 'text';
         $options['options'] = array_merge(static::getSelectOptions(), $options['options'] ?? []);
         $options['before'] = static::getWrappers($options, 'before');
         $options['after'] = static::getWrappers($options, 'after');
