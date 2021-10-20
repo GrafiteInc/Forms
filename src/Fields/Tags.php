@@ -21,21 +21,21 @@ class Tags extends Field
         return 'text(50)';
     }
 
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [
             '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.css',
         ];
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.min.js',
         ];
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         $defaultBorder = $options['default-border'] ?? '#EEE';
         $focusBorder = $options['focus-border'] ?? '#EEE';
@@ -48,7 +48,7 @@ class Tags extends Field
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $list = $options['list'] ?? '[]';
 

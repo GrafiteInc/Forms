@@ -23,7 +23,7 @@ class FileWithPreview extends Field
         return 'image';
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="{rowClass}">
@@ -36,7 +36,7 @@ class FileWithPreview extends Field
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $preview = $options['preview_identifier'] ?? '';
         $asBackgroundImage = $options['preview_as_background_image'] ?? false;

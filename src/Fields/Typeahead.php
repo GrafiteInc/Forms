@@ -28,31 +28,21 @@ class Typeahead extends Field
         ];
     }
 
-    /**
-     * Field maker options
-     *
-     * @return array
-     */
-    protected static function getOptions()
-    {
-        return [];
-    }
-
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [
             "//cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.0/jquery.typeahead.min.css",
         ];
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.0/jquery.typeahead.min.js'
         ];
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="{rowClass}">
@@ -71,7 +61,7 @@ class Typeahead extends Field
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $values = $options['matches'];
 

@@ -23,7 +23,7 @@ class Code extends Field
         return 'text(300)';
     }
 
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         $theme = $options['theme'] ?? 'default';
 
@@ -33,7 +33,7 @@ class Code extends Field
         ];
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         $mode = $options['mode'] ?? 'htmlmixed';
 
@@ -45,7 +45,7 @@ class Code extends Field
         ];
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $mode = $options['mode'] ?? 'htmlmixed';
         $theme = $options['theme'] ?? 'default';

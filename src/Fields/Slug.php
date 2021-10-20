@@ -16,7 +16,7 @@ class Slug extends Field
         return 'text(50)';
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         return <<<EOT
 document.getElementById('${id}')

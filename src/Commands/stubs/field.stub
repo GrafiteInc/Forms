@@ -37,11 +37,68 @@ class DummyClass extends Field
     }
 
     /**
-     * View path for custom templates
+     * View path for a custom template
+     *
+     * @return mixed
+     */
+    protected static function getView()
+    {
+        return null;
+    }
+
+    /**
+     * Field template string, performs a basic string swap
+     * of name, id, field, label, errors etc
      *
      * @return string
      */
-    protected static function getView()
+    public static function getTemplate($options)
+    {
+        return null;
+    }
+
+    /**
+     * Field related scripts
+     *
+     * @param array $options
+     * @return array
+     */
+    public static function scripts($options)
+    {
+        return [];
+    }
+
+    /**
+         * Field related JavaScript
+         *
+         * @param string $id
+         * @param array $options
+         * @return string|null
+         */
+    public static function js($id, $options)
+    {
+        return null;
+    }
+
+    /**
+     * Field related stylesheets
+     *
+     * @param array $options
+     * @return array
+     */
+    public static function stylesheets($options)
+    {
+        return [];
+    }
+
+    /**
+     * Field related styles
+     *
+     * @param string $id
+     * @param array $options
+     * @return string|null
+     */
+    public static function styles($id, $options)
     {
         return null;
     }

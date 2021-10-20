@@ -19,7 +19,7 @@ class Editor extends Field
         return 'string';
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
         <div class="{rowClass}">
@@ -33,7 +33,7 @@ class Editor extends Field
 EOT;
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         $theme = $options['theme'] ?? 'light';
 
@@ -58,7 +58,7 @@ EOT;
 EOT;
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//cdn.jsdelivr.net/npm/@editorjs/editorjs@latest',
@@ -79,7 +79,7 @@ EOT;
         ];
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $route = route($options['upload_route']);
         $placeholder = $options['placeholder'] ?? 'Let`s write an awesome story!';

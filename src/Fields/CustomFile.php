@@ -28,7 +28,7 @@ class CustomFile extends Field
         return 'image';
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="{rowClass}">
@@ -41,7 +41,7 @@ class CustomFile extends Field
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         return <<<EOT
 window.FormMaker_customFile = function (input) {

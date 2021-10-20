@@ -23,14 +23,14 @@ class Datepicker extends Field
         return 'date';
     }
 
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [
             '//unpkg.com/js-datepicker/dist/datepicker.min.css',
         ];
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//unpkg.com/js-datepicker',
@@ -38,7 +38,7 @@ class Datepicker extends Field
         ];
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         $theme = $options['theme'] ?? 'light';
 
@@ -90,7 +90,7 @@ class Datepicker extends Field
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $startDay = $options['start-day'] ?? 1;
         $format = $options['format'] ?? 'YYYY-MM-DD';

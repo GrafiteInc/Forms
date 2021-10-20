@@ -28,9 +28,10 @@ class FieldConfigProcessor
     public $label_class;
     public $instance;
 
-    public function __construct($name, $options)
+    public function __construct($name, $options, $fieldInstance)
     {
         $this->name = $name;
+        $this->fieldInstance = $fieldInstance;
 
         $this->processOptions($options);
     }
@@ -38,7 +39,7 @@ class FieldConfigProcessor
     protected function processOptions($options)
     {
         $this->type = $options['type'] ?? 'text';
-        $this->options = $options['options'] ?? [];
+        $this->options = array_merge($this->options, $options['options']);
         $this->visible = $options['visible'] ?? true;
         $this->attributes = $options['attributes'] ?? [];
         $this->assets = $options['assets'] ?? [];
@@ -73,6 +74,8 @@ class FieldConfigProcessor
 
     public function toArray()
     {
+        $this->processStaticMethods();
+
         return get_object_vars($this);
     }
 
@@ -93,6 +96,13 @@ class FieldConfigProcessor
     public function placeholder($value)
     {
         $this->attributes['placeholder'] = $value;
+
+        return $this;
+    }
+
+    public function attribute($key, $value)
+    {
+        $this->attributes[$key] = $value;
 
         return $this;
     }
@@ -446,6 +456,22 @@ class FieldConfigProcessor
     public function options($array)
     {
         $this->options = array_merge($this->options, $array);
+
+        return $this;
+    }
+
+    public function processStaticMethods()
+    {
+        if (is_null($this->template)) {
+            $this->template = $this->fieldInstance::getTemplate($this->options);
+        }
+
+        $this->assets = array_merge($this->assets, [
+            'js' => $this->fieldInstance::js(ucfirst($this->name), $this->options),
+            'styles' => $this->fieldInstance::styles(ucfirst($this->name), $this->options) ?? null,
+            'scripts' => $this->fieldInstance::scripts($this->options) ?? null,
+            'stylesheets' => $this->fieldInstance::stylesheets($this->options) ?? null,
+        ]);
 
         return $this;
     }

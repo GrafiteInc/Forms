@@ -26,7 +26,7 @@ class Attachments extends Field
         return 'image';
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="form-group">
@@ -38,12 +38,12 @@ class Attachments extends Field
 EOT;
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         return '';
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $listGroup = config('forms.html.list-group', 'list-group list-group-flush');
         $listGroupItem = config('forms.html.list-group-item', 'list-group-item');

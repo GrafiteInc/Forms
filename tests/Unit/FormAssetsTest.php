@@ -26,7 +26,7 @@ class UserHistoryForm extends BaseForm
                 'toolbars' => [
                     'basic'
                 ]
-            ]),
+            ])->option('upload_route', 'user.history'),
             Tags::make('qualities'),
         ];
     }

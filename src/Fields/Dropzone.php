@@ -21,21 +21,21 @@ class Dropzone extends Field
         return 'image';
     }
 
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [
             '//cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.css',
         ];
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//cdnjs.cloudflare.com/ajax/libs/dropzone/5.7.0/min/dropzone.min.js',
         ];
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="dropzone-wrapper">
@@ -48,7 +48,7 @@ class Dropzone extends Field
 EOT;
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         $theme = $options['theme'] ?? 'light';
         $borderColor = 'CCC';
@@ -76,7 +76,7 @@ EOT;
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $onComplete = $options['queue-complete'] ?? 'function () { window.location.reload() }';
         $multiple = $options['upload-muliple'] ?? 'true';

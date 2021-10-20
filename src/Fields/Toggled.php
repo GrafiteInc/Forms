@@ -29,7 +29,7 @@ class Toggled extends Field
         return 'boolean';
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         return <<<EOT
         let {$id}_checkbox = document.getElementById('{$id}').parentNode;
@@ -46,7 +46,7 @@ class Toggled extends Field
 EOT;
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         $color = $options['color'] ?? 'var(--primary)';
 

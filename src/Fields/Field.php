@@ -88,7 +88,16 @@ class Field
      */
     public static function make($name, $options = [])
     {
+        $field = new static();
         $options = static::parseOptions($options);
+
+        if (! isset($options['options'])) {
+            foreach ($options as $key => $option) {
+                if (! in_array($key, static::getFieldOptions())) {
+                    $options['options'][$key] = $option;
+                }
+            }
+        }
 
         $options['type'] = static::getType() ?? 'text';
         $options['options'] = array_merge(static::getSelectOptions(), $options['options'] ?? []);
@@ -99,14 +108,7 @@ class Field
         $options['attributes'] = static::parseAttributes($options) ?? [];
         $options['factory'] = static::getFactory();
 
-        $options['assets'] = [
-            'js' => static::js(ucfirst($name), $options) ?? null,
-            'styles' => static::styles(ucfirst($name), $options) ?? null,
-            'scripts' => static::scripts($options) ?? null,
-            'stylesheets' => static::stylesheets($options) ?? null,
-        ];
-
-        $config = (new FieldConfigProcessor($name, $options));
+        $config = (new FieldConfigProcessor($name, $options, $field));
 
         return $config;
     }
@@ -142,7 +144,7 @@ class Field
      */
     protected static function parseAttributes($options)
     {
-        foreach (self::getFieldOptions() as $option) {
+        foreach (static::getFieldOptions() as $option) {
             unset($options[$option]);
         }
 
@@ -201,7 +203,7 @@ class Field
      *
      * @return string
      */
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return null;
     }
@@ -212,7 +214,7 @@ class Field
      * @param array $options
      * @return array
      */
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [];
     }
@@ -224,7 +226,7 @@ class Field
      * @param array $options
      * @return string|null
      */
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         return null;
     }
@@ -235,7 +237,7 @@ class Field
      * @param array $options
      * @return array
      */
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [];
     }
@@ -247,7 +249,7 @@ class Field
      * @param array $options
      * @return string|null
      */
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         return null;
     }

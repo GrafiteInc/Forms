@@ -30,7 +30,7 @@ class Quill extends Field
         return 'text(300)';
     }
 
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [
             '//cdn.quilljs.com/1.3.6/quill.bubble.css',
@@ -38,7 +38,7 @@ class Quill extends Field
         ];
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         $theme = $options['theme'] ?? 'light';
         $darkTheme = '';
@@ -98,12 +98,12 @@ EOT;
 EOT;
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return ['//cdn.quilljs.com/1.3.6/quill.js'];
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="{rowClass}">
@@ -117,7 +117,7 @@ EOT;
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $route = null;
 

@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Grafite\Forms\Fields\Url;
+use Grafite\Forms\Fields\Code;
 use Grafite\Forms\Fields\Date;
 use Grafite\Forms\Fields\File;
 use Grafite\Forms\Fields\Text;
@@ -33,6 +34,7 @@ use Grafite\Forms\Fields\CustomFile;
 use Grafite\Forms\Fields\RadioInline;
 use Grafite\Forms\Fields\DatetimeLocal;
 use Grafite\Forms\Fields\CheckboxInline;
+use Grafite\Forms\Fields\PasswordWithReveal;
 
 class FieldTest extends TestCase
 {
@@ -86,6 +88,13 @@ class FieldTest extends TestCase
         $field = Color::make('field')->toArray();
 
         $this->assertEquals('color', $field['type']);
+    }
+
+    public function testCode()
+    {
+        $field = Code::make('field')->option('theme', 'dark')->toArray();
+
+        $this->assertEquals('dark', $field['options']['theme']);
     }
 
     public function testCustomFile()
@@ -217,6 +226,21 @@ class FieldTest extends TestCase
         $this->assertEquals('joe', $field['options']['joe']);
     }
 
+    public function testSelectWithOptionsMethod()
+    {
+        $field = Select::make('field')
+            ->multiple()
+            ->options([
+                'joe' => 'joe',
+                'john' => 'john',
+                'katie' => 'katie',
+            ])->toArray();
+
+        $this->assertEquals('select', $field['type']);
+        $this->assertEquals('joe', $field['options']['joe']);
+        $this->assertTrue($field['attributes']['multiple']);
+    }
+
     public function testTelephone()
     {
         $field = Telephone::make('field')->toArray();
@@ -276,7 +300,34 @@ class FieldTest extends TestCase
             'matches' => json_encode(["Alfred", "Jarvis"])
         ])->toArray();
 
-        $this->assertEquals(json_encode(["Alfred", "Jarvis"]), $field['attributes']['matches']);
+        $this->assertEquals(json_encode(["Alfred", "Jarvis"]), $field['options']['matches']);
         $this->assertStringContainsString('typeahead__container', $field['template']);
+    }
+
+    public function testPasswordWithReveal()
+    {
+        $field = PasswordWithReveal::make('names', [
+            'toggle-classes' => 'foo-bar-biz',
+        ])
+            ->option('toggle-selector', 'pwYoYo')
+            ->option('toggle', 'fooBar')
+            ->toArray();
+
+        $this->assertContains('toggle-classes', array_keys($field['options']));
+        $this->assertContains('toggle-selector', array_keys($field['options']));
+        $this->assertContains('toggle', array_keys($field['options']));
+    }
+
+    public function testPasswordWithRevealTemplate()
+    {
+        $field = PasswordWithReveal::make('password', [
+            'toggle-classes' => 'foo-bar-biz',
+        ])
+            ->value('wtf')
+            ->attribute('data-bad', 'good')
+            ->option('toggle-selector', 'pwYoYo')
+            ->option('toggle', 'fooBar');
+
+        $this->assertStringContainsString('<input class="form-control" id="Password" toggle-classes="foo-bar-biz" data-bad="good" name="password" type="password" value="wtf">', (string) $field);
     }
 }

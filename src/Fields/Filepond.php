@@ -22,14 +22,14 @@ class FilePond extends Field
         return 'image';
     }
 
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [
             '//unpkg.com/filepond/dist/filepond.css',
         ];
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//unpkg.com/filepond/dist/filepond.min.js',
@@ -37,7 +37,7 @@ class FilePond extends Field
         ];
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="filepond-wrapper mb-4">
@@ -48,7 +48,7 @@ class FilePond extends Field
 EOT;
     }
 
-    protected static function styles($id, $options)
+    public static function styles($id, $options)
     {
         return <<<EOT
 .filepond-previews {
@@ -63,7 +63,7 @@ EOT;
 EOT;
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $url = url('/');
         $fileSize = $options['file_size'] ?? '25MB';

@@ -28,21 +28,21 @@ class Toggle extends Field
         return 'boolean';
     }
 
-    protected static function stylesheets($options)
+    public static function stylesheets($options)
     {
         return [
             "//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css",
         ];
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js'
         ];
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $theme = $options['theme'] ?? 'light';
         $on = $options['on'] ?? 'On';

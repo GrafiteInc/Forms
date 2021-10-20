@@ -41,7 +41,7 @@ class UserForm extends ModelForm
                 'toolbars' => [
                     'basic',
                 ]
-            ])
+            ])->option('upload_route', 'users.store')
         ];
     }
 

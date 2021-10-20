@@ -14,14 +14,14 @@ class PasswordWithReveal extends Field
         return 'password';
     }
 
-    protected static function scripts($options)
+    public static function scripts($options)
     {
         return [
             '//cdn.jsdelivr.net/npm/password-revealer@1.1.1/dist/password-revealer.min.js',
         ];
     }
 
-    protected static function js($id, $options)
+    public static function js($id, $options)
     {
         $toggleSelector = $options['toggle-selector'] ?? 'PasswordRevealer-trigger';
 
@@ -30,7 +30,7 @@ class PasswordWithReveal extends Field
 EOT;
     }
 
-    protected static function getTemplate($options)
+    public static function getTemplate($options)
     {
         $toggle = $options['toggle'] ?? 'Toggle';
         $toggleClasses = $options['toggle-classes'] ?? 'btn btn-outline-primary bmx-rounded-left-0';
