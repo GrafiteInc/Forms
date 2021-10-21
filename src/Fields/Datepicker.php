@@ -40,52 +40,48 @@ class Datepicker extends Field
 
     public static function styles($id, $options)
     {
-        $theme = $options['theme'] ?? 'light';
-
-        $background = $options['background-color'] ?? '#FFF';
-        $color = $options['color'] ?? '#FFF';
-        $numberColor = $options['number-color'] ?? '#111';
-        $highlight = $options['highlight'] ?? 'var(--primary, "#EEE")';
-        $header = $options['header'] ?? 'var(--primary, "#EEE")';
-
-        if ($theme != 'light' && $background == '#FFF') {
-            $background = $options['background-color'] ?? '#111';
-        }
-
-        if ($theme != 'light' && $color == '#FFF') {
-            $color = $options['color'] ?? '#FFF';
-        }
-
-        if ($theme != 'light' && $numberColor == '#111') {
-            $numberColor = $options['number-color'] ?? '#FFF';
-        }
-
         return <<<EOT
+:root {
+    --datepicker-bg-color: #111;
+    --datepicker-color: #FFF;
+    --datepicker-number-color: #FFF;
+    --datepicker-header-color: var(--primary, "#EEE");
+    --datepicker-highlight-color: var(--primary, "#EEE");
+}
+
+@media (prefers-color-scheme: light) {
+    --datepicker-bg-color: #FFF;
+    --datepicker-color: #FFF;
+    --datepicker-number-color: #111;
+    --datepicker-header-color: var(--primary, "#EEE");
+    --datepicker-highlight-color: var(--primary, "#EEE");
+}
+
 .qs-datepicker-container {
-    color: ${numberColor};
-    background-color: ${background};
+    color: var(--datepicker-number-color);
+    background-color: var(--datepicker-bg-color);
 }
 .qs-datepicker .qs-controls {
-    background-color: ${header};
-    color: ${color};
+    background-color: var(--datepicker-header-color);
+    color: var(--datepicker-color);
     height: 35px;
 }
 .qs-datepicker .qs-square {
     height: 32px;
 }
 .qs-datepicker .qs-square.qs-active {
-    background-color: ${highlight};
-    color: ${color};
+    background-color: var(--datepicker-header-color);
+    color: var(--datepicker-color);
 }
 .qs-datepicker .qs-square:not(.qs-empty):not(.qs-disabled):not(.qs-day):not(.qs-active):hover {
-    background-color: ${highlight};
-    color: ${color};
+    background-color: var(--datepicker-highlight-color);
+    color: var(--datepicker-color);
 }
 .qs-datepicker .qs-arrow.qs-left:after {
-    border-right-color: ${color};
+    border-right-color: var(--datepicker-color);
 }
 .qs-datepicker .qs-arrow.qs-right:after {
-    border-left-color: ${color};
+    border-left-color: var(--datepicker-color);
 }
 EOT;
     }

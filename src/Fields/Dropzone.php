@@ -50,20 +50,11 @@ EOT;
 
     public static function styles($id, $options)
     {
-        $theme = $options['theme'] ?? 'light';
-        $borderColor = 'CCC';
-        $backgroundColor = 'FFF';
-
-        if ($theme === 'dark') {
-            $borderColor = '333';
-            $backgroundColor = '111';
-        }
-
         return <<<EOT
 .dropzone {
     border-radius: 4px;
-    border: 1px solid #$borderColor;
-    background-color: #$backgroundColor;
+    border: 1px solid #CCC;
+    background-color: #FFF;
 }
 
 .dz-button {
@@ -73,13 +64,21 @@ EOT;
 .dropzone .dz-preview.dz-image-preview {
     background-color: transparent;
 }
+
+@media (prefers-color-scheme: dark) {
+    .dropzone {
+        border-radius: 4px;
+        border: 1px solid #333;
+        background-color: #111;
+    }
+}
 EOT;
     }
 
     public static function js($id, $options)
     {
         $onComplete = $options['queue-complete'] ?? 'function () { window.location.reload() }';
-        $multiple = $options['upload-multiple'] ?? 'true';
+        $multiple = $options['upload-muliple'] ?? 'true';
         $route = $options['route'] ?? '';
         $url = route($route);
         $token = csrf_token();

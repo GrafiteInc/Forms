@@ -7,7 +7,6 @@ class Quill extends Field
     protected static function fieldOptions()
     {
         return [
-            'theme',
             'quill_theme',
             'toolbars',
         ];
@@ -40,31 +39,6 @@ class Quill extends Field
 
     public static function styles($id, $options)
     {
-        $theme = $options['theme'] ?? 'light';
-        $darkTheme = '';
-
-        if ($theme == 'dark') {
-            $darkTheme = <<<EOT
-    .ql-container.ql-snow {
-        border: 1px solid #111;
-    }
-
-    .ql-toolbar.ql-snow {
-        border: 1px solid #000;
-        background-color: #000;
-    }
-
-    .ql-bubble .ql-editor {
-        border: 1px solid transparent;
-    }
-
-    .ql-editor {
-        background-color: #111;
-        border: 1px solid transparent;
-    }
-EOT;
-        }
-
         return <<<EOT
     .ql-container {
         font-size: 16px;
@@ -94,7 +68,25 @@ EOT;
         vertical-align: top;
     }
 
-    {$darkTheme}
+    @media (prefers-color-scheme: dark) {
+        .ql-container.ql-snow {
+            border: 1px solid #111;
+        }
+
+        .ql-toolbar.ql-snow {
+            border: 1px solid #000;
+            background-color: #000;
+        }
+
+        .ql-bubble .ql-editor {
+            border: 1px solid transparent;
+        }
+
+        .ql-editor {
+            background-color: #111;
+            border: 1px solid transparent;
+        }
+    }
 EOT;
     }
 
