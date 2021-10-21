@@ -460,6 +460,13 @@ class FieldConfigProcessor
         return $this;
     }
 
+    public function unlabelled()
+    {
+        $this->label = false;
+
+        return $this;
+    }
+
     public function processStaticMethods()
     {
         if (is_null($this->template)) {
