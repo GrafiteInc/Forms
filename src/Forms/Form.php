@@ -521,7 +521,10 @@ class Form
                 </div>
             </div>
             <button
-                onclick="$('#${modalId}').modal('show')"
+                data-toggle="modal"
+                data-target="#${modalId}"
+                data-bs-toggle="modal"
+                data-bs-target="#${modalId}"
                 class="${triggerClass}"
             >
                 ${triggerContent}
