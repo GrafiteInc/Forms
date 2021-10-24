@@ -50,6 +50,30 @@ EOT;
 
     public static function styles($id, $options)
     {
+        $darkTheme = '';
+
+        if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
+            $darkTheme = <<<EOT
+@media (prefers-color-scheme: dark) {
+    .dropzone {
+        border-radius: 4px;
+        border: 1px solid #333;
+        background-color: #111;
+    }
+}
+EOT;
+        }
+
+        if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
+            $darkTheme = <<<EOT
+    .dropzone {
+        border-radius: 4px;
+        border: 1px solid #333;
+        background-color: #111;
+    }
+EOT;
+        }
+
         return <<<EOT
 .dropzone {
     border-radius: 4px;
@@ -65,13 +89,7 @@ EOT;
     background-color: transparent;
 }
 
-@media (prefers-color-scheme: dark) {
-    .dropzone {
-        border-radius: 4px;
-        border: 1px solid #333;
-        background-color: #111;
-    }
-}
+${darkTheme}
 EOT;
     }
 

@@ -26,12 +26,14 @@ use Grafite\Forms\Fields\Decimal;
 use Grafite\Forms\Fields\HasMany;
 use Grafite\Forms\Fields\Checkbox;
 use Grafite\Forms\Fields\Datalist;
+use Grafite\Forms\Fields\Dropzone;
 use Grafite\Forms\Fields\Password;
 use Grafite\Forms\Fields\TextArea;
 use Grafite\Forms\Fields\Telephone;
 use Grafite\Forms\Fields\Typeahead;
 use Grafite\Forms\Fields\CustomFile;
 use Grafite\Forms\Fields\RadioInline;
+use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Fields\DatetimeLocal;
 use Grafite\Forms\Fields\CheckboxInline;
 use Grafite\Forms\Fields\PasswordWithReveal;
@@ -260,6 +262,15 @@ class FieldTest extends TestCase
         $field = Time::make('field')->toArray();
 
         $this->assertEquals('time', $field['type']);
+    }
+
+    public function testDropzone()
+    {
+        Route::post('user/history')->name('user.history');
+
+        $field = Dropzone::make('field')->option('route', 'user.history')->option('theme', 'dark');
+
+        $this->assertStringContainsString('dropzone-wrapper', (string) $field);
     }
 
     public function testUrl()

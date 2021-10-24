@@ -44,6 +44,17 @@ class Toggle extends Field
 
     public static function js($id, $options)
     {
+        $themeScript = "'light'";
+
+        if (is_bool($options['theme']) && $options['theme']) {
+            $themeScript = "window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'";
+        }
+
+        if (is_string($options['theme'])) {
+            $theme = $options['theme'];
+            $themeScript = "'${theme}'";
+        }
+
         $on = $options['on'] ?? 'On';
         $off = $options['off'] ?? 'Off';
         $size = $options['size'] ?? 'sm';
@@ -51,7 +62,7 @@ class Toggle extends Field
 
         return <<<EOT
 $('#$id').bootstrapToggle({
-    offstyle: window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light',
+    offstyle: ${themeScript},
     on: "$on",
     off: "$off",
     size: "$size"

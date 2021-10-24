@@ -39,6 +39,54 @@ class Quill extends Field
 
     public static function styles($id, $options)
     {
+        $darkTheme = '';
+
+        if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
+            $darkTheme = <<<EOT
+    @media (prefers-color-scheme: dark) {
+        .ql-container.ql-snow {
+            border: 1px solid #111;
+        }
+
+        .ql-toolbar.ql-snow {
+            border: 1px solid #000;
+            background-color: #000;
+        }
+
+        .ql-bubble .ql-editor {
+            border: 1px solid transparent;
+        }
+
+        .ql-editor {
+            background-color: #111;
+            border: 1px solid transparent;
+        }
+    }
+EOT;
+        }
+
+        if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
+            $darkTheme = <<<EOT
+    .ql-container.ql-snow {
+        border: 1px solid #111;
+    }
+
+    .ql-toolbar.ql-snow {
+        border: 1px solid #000;
+        background-color: #000;
+    }
+
+    .ql-bubble .ql-editor {
+        border: 1px solid transparent;
+    }
+
+    .ql-editor {
+        background-color: #111;
+        border: 1px solid transparent;
+    }
+EOT;
+        }
+
         return <<<EOT
     .ql-container {
         font-size: 16px;
@@ -68,25 +116,7 @@ class Quill extends Field
         vertical-align: top;
     }
 
-    @media (prefers-color-scheme: dark) {
-        .ql-container.ql-snow {
-            border: 1px solid #111;
-        }
-
-        .ql-toolbar.ql-snow {
-            border: 1px solid #000;
-            background-color: #000;
-        }
-
-        .ql-bubble .ql-editor {
-            border: 1px solid transparent;
-        }
-
-        .ql-editor {
-            background-color: #111;
-            border: 1px solid transparent;
-        }
-    }
+    ${darkTheme}
 EOT;
     }
 

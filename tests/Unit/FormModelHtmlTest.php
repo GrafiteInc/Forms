@@ -129,7 +129,10 @@ class FormModelHtmlTest extends TestCase
     {
         $form = (new Car)->form()->create()->asModal();
 
-        $this->assertStringContainsString("_Modal').modal('show')", $form);
+        $this->assertStringContainsString("data-toggle", $form);
+        $this->assertStringContainsString("data-target", $form);
+        $this->assertStringContainsString("data-bs-target", $form);
+        $this->assertStringContainsString("data-bs-toggle", $form);
     }
 
     public function testIndex()

@@ -40,7 +40,24 @@ class Datepicker extends Field
 
     public static function styles($id, $options)
     {
-        return <<<EOT
+        $darkTheme = '';
+
+        if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
+            $darkTheme = <<<EOT
+@media (prefers-color-scheme: dark) {
+    :root {
+        --datepicker-bg-color: #111;
+        --datepicker-color: #FFF;
+        --datepicker-number-color: #FFF;
+        --datepicker-header-color: var(--primary, "#EEE");
+        --datepicker-highlight-color: var(--primary, "#EEE");
+    }
+}
+EOT;
+        }
+
+        if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
+            $darkTheme = <<<EOT
 :root {
     --datepicker-bg-color: #111;
     --datepicker-color: #FFF;
@@ -48,14 +65,19 @@ class Datepicker extends Field
     --datepicker-header-color: var(--primary, "#EEE");
     --datepicker-highlight-color: var(--primary, "#EEE");
 }
+EOT;
+        }
 
-@media (prefers-color-scheme: light) {
+        return <<<EOT
+:root {
     --datepicker-bg-color: #FFF;
     --datepicker-color: #FFF;
     --datepicker-number-color: #111;
     --datepicker-header-color: var(--primary, "#EEE");
     --datepicker-highlight-color: var(--primary, "#EEE");
 }
+
+${darkTheme}
 
 .qs-datepicker-container {
     color: var(--datepicker-number-color);

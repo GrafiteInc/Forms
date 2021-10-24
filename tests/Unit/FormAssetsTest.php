@@ -26,7 +26,9 @@ class UserHistoryForm extends BaseForm
                 'toolbars' => [
                     'basic'
                 ]
-            ])->option('upload_route', 'user.history'),
+            ])
+            ->option('theme', true)
+            ->option('upload_route', 'user.history'),
             Tags::make('qualities'),
         ];
     }
@@ -78,6 +80,7 @@ class FormAssetsTest extends TestCase
         $assets = $this->formAssets->render();
 
         $this->assertStringContainsString("console.log('hello world')", $assets);
+        $this->assertStringContainsString("@media (prefers-color-scheme: dark)", $assets);
         $this->assertStringContainsString(".hello { color: red; }", $assets);
     }
 
