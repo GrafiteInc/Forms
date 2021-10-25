@@ -66,6 +66,13 @@ class ModelForm extends HtmlForm
     public $with = [];
 
     /**
+     * Should the delete form act as a modal?
+     *
+     * @var boolean
+     */
+    public $deleteAsModal = false;
+
+    /**
      * Form routes
      *
      * @var array
@@ -263,10 +270,12 @@ class ModelForm extends HtmlForm
 
         $this->setRouteParameterValues();
 
+        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass.' float-right' : $this->formDeleteClass;
+
         $this->html = $this->model($this->instance, [
             'route' => array_merge([$this->routes['delete']], $this->routeParameterValues),
             'method' => $this->methods['delete'],
-            'class' => $this->formDeleteClass,
+            'class' => $formDeleteClass,
             'id' => $this->formId,
         ]);
 
@@ -275,16 +284,31 @@ class ModelForm extends HtmlForm
         ];
 
         $options['onclick'] = $this->getConfirmationOption($options);
-
         $options['type'] = 'submit';
 
         if ($this->formIsDisabled) {
             $options['disabled'] = 'disabled';
         }
 
-        $this->html .= $this->field->button($this->buttons['delete'], $options);
+        $deleteButton = $this->buttons['delete'];
+        $confirmMessage = $this->confirmMessage ?? 'Are you sure you want to delete this?';
+
+        if ($this->deleteAsModal) {
+            $this->message = "<p class=\"mb-4\">{$confirmMessage}</p>";
+            $this->triggerClass = $this->buttonClasses['delete'];
+            $this->triggerContent = $this->buttons['delete'];
+            $deleteButton = $this->buttons['confirm'];
+            $options['class'] = $this->buttonClasses['confirm'];
+            $options['class'] = $this->buttonClasses['confirm'];
+        }
+
+        $this->html .= $this->field->button($deleteButton, $options);
 
         $this->html .= $this->close();
+
+        if ($this->deleteAsModal) {
+            $this->html = $this->asModal();
+        }
 
         return $this;
     }
@@ -446,6 +470,11 @@ class ModelForm extends HtmlForm
 
         if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
             $onclick = "{$this->confirmMethod}(event, '{$this->confirmMessage}')";
+        }
+
+        if ($this->disableOnSubmit && is_null($this->confirmMethod)) {
+            $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> '.$this->buttons['confirm'];
+            $onclick = 'this.innerHTML = \''.$processing.'\'; this.disabled = true; this.form.submit();';
         }
 
         return $onclick;

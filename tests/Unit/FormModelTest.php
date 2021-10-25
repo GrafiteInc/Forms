@@ -152,6 +152,25 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
 
+    public function testRenderedFieldsForCreateAsModal()
+    {
+        $this->form = app(UserForm::class);
+        $this->form->deleteAsModal = true;
+
+        $user = app(User::class)->create([
+            'name' => 'Joe',
+            'email' => 'joe@haltandcatchfire.com',
+            'password' => 'password',
+        ]);
+
+        $form = $this->form->delete($user);
+
+        $this->assertStringContainsString('Are you sure you want to delete this?', $form);
+        $this->assertStringContainsString('Confirm', $form);
+        $this->assertStringContainsString('Delete', $form);
+        $this->assertStringContainsString('data-toggle="modal"', $form);
+    }
+
     public function testRenderedFieldsForCreate()
     {
         $form = $this->form->create()->renderedFields();

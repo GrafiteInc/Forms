@@ -149,6 +149,7 @@ class HtmlForm extends Form
         'edit' => 'Edit',
         'delete' => 'Delete',
         'cancel' => 'Cancel',
+        'confirm' => 'Confirm',
     ];
 
     /**
@@ -170,6 +171,7 @@ class HtmlForm extends Form
         'edit' => null,
         'delete' => null,
         'cancel' => null,
+        'confirm' => null,
     ];
 
     public function __construct()
@@ -195,12 +197,14 @@ class HtmlForm extends Form
             'edit' => $this->buttonClasses['edit'] ?? config('forms.buttons.edit', 'btn btn-outline-primary'),
             'delete' => $this->buttonClasses['delete'] ?? config('forms.buttons.delete', 'btn btn-danger'),
             'cancel' => $this->buttonClasses['cancel'] ?? config('forms.buttons.cancel', 'btn btn-secondary'),
+            'confirm' => $this->buttonClasses['confirm'] ?? config('forms.buttons.confirm', 'btn btn-outline-primary'),
             'next' => $this->buttonClasses['next'] ?? config('forms.buttons.next', 'btn btn-outline-primary'),
             'previous' => $this->buttonClasses['previous'] ?? config('forms.buttons.previous', 'btn btn-outline-secondary'),
         ];
 
         $submitButton = (collect($this->buttons)->contains('submit')) ? 'Submit' : null;
         $deleteButton = 'Delete';
+        $confirmButton = 'Confirm';
         $nextButton = 'Next';
         $previousButton = 'Previous';
 
@@ -208,6 +212,7 @@ class HtmlForm extends Form
             'submit' => $this->buttons['submit'] ?? $submitButton,
             'edit' => $this->buttons['edit'] ?? null,
             'cancel' => $this->buttons['cancel'] ?? null,
+            'confirm' => $this->buttons['confirm'] ?? $confirmButton,
             'delete' => $this->buttons['delete'] ?? $deleteButton,
             'next' => $this->buttons['next'] ?? $nextButton,
             'previous' => $this->buttons['previous'] ?? $previousButton,
@@ -372,7 +377,7 @@ class HtmlForm extends Form
     public function getExtraButtons()
     {
         return collect($this->buttons)->filter(function ($buttonText, $button) {
-            return ! in_array($button, ['cancel', 'submit', 'delete', 'edit', 'next', 'previous']);
+            return ! in_array($button, ['confirm', 'cancel', 'submit', 'delete', 'edit', 'next', 'previous']);
         })->toArray();
     }
 
@@ -427,7 +432,7 @@ class HtmlForm extends Form
 
         if ($this->disableOnSubmit) {
             $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> ' . $this->buttons['submit'];
-            $onSubmit = 'this.innerHTML = \'' . $processing . '\'; this.disabled = true; this.form.submit();';
+            $onSubmit = "return window.Forms_validate_submission(this.form, '${processing}', this);";
         }
 
         if ($this->columns === 'steps') {

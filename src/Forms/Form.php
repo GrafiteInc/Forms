@@ -250,6 +250,24 @@ class Form
     }
 
     /**
+     * Set the confirmation for a form as a modal
+     *
+     * @param string $message
+     * @param string $buttonText
+     * @param string $buttonClass
+     *
+     * @return self
+     */
+    public function confirmAsModal($message, $buttonText, $buttonClass = 'btn btn-primary')
+    {
+        $this->message = "<p class=\"mb-4\">${message}</p>";
+        $this->triggerContent = $buttonText;
+        $this->triggerClass = $buttonClass;
+
+        return $this->asModal();
+    }
+
+    /**
      * Open up a new HTML form.
      *
      * cloned from LaravelCollective/html
