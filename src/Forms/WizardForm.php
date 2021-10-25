@@ -212,6 +212,7 @@ window.Form_next_step = function () {
         _inputFields.forEach(function (_input) {
             if (! _input.validity.patternMismatch
                 && ! _input.validity.valueMissing
+                && ! _input.validity.typeMismatch
                 && ! _input.validity.tooShort
                 && ! _input.validity.tooLong
                 && ! _input.validity.badInput) {
