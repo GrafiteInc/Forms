@@ -365,6 +365,46 @@ class FormMaker
     {
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
 
+        $formPreValidation = <<<EOT
+        window.Forms_validate_submission = function (_form, _processing, _button) {
+            if (! _form.checkValidity()) {
+                let _inputs = _form.querySelectorAll('input');
+                let _selects = _form.querySelectorAll('select');
+                let _textarea = _form.querySelectorAll('textarea');
+                let _inputFields = [..._inputs].concat([..._selects]).concat([..._textarea]);
+
+                _inputFields.forEach(function (_input) {
+                    if (_input.validity.patternMismatch
+                        || _input.validity.valueMissing
+                        || _input.validity.rangeOverflow
+                        || _input.validity.stepMismatch
+                        || _input.validity.typeMismatch
+                        || _input.validity.tooShort
+                        || _input.validity.tooLong
+                        || _input.validity.badInput
+                    ) {
+                        if (! _input.classList.contains('is-invalid')) {
+                            let _errorMessage = document.createElement('div');
+                            _errorMessage.classList.add('invalid-feedback');
+                            _errorMessage.innerText = _input.validationMessage;
+
+                            _input.classList.add('is-invalid');
+                            _input.parentNode.appendChild(_errorMessage);
+                            window.Forms_validation();
+                        }
+                    }
+                });
+
+                return false;
+            };
+
+            _button.innerHTML = _processing;
+            _button.disabled = true;
+
+            _form.submit();
+        };
+EOT;
+
         $formValidation = <<<EOT
 window.Forms_validation = function () {
     let _fields = document.getElementsByClassName('{$formValidationClass}');
@@ -373,14 +413,18 @@ window.Forms_validation = function () {
         _fields[i].addEventListener("keyup", function (e) {
             if (this.value.length > 0) {
                 this.classList.remove('{$formValidationClass}');
-                this.nextSibling.remove();
+                if (this.nextSibling) {
+                    this.nextSibling.remove();
+                }
             }
         });
 
         _fields[i].addEventListener("onfocusout", function (e) {
             if (this.value.length > 0) {
                 this.classList.remove('{$formValidationClass}');
-                this.nextSibling.remove();
+                if (this.nextSibling) {
+                    this.nextSibling.remove();
+                }
             }
         });
     }
@@ -391,6 +435,8 @@ EOT;
         if ($this->withJsValidation) {
             $this->formAssets->addJs($formValidation);
         }
+
+        $this->formAssets->addJs($formPreValidation);
     }
 
     /**

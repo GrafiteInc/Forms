@@ -94,13 +94,14 @@ class FormExtensiveBaseTest extends TestCase
 
         $this->assertStringContainsString('http://localhost/user/sample', $form);
         $this->assertStringContainsString('method="POST"', $form);
+        $this->assertStringContainsString('Forms_validate_submission', $form);
 
         $this->assertStringContainsString('<form method="POST" action="http://localhost/user/sample" accept-charset="UTF-8" class="batman">', $form);
         $this->assertStringContainsString('<div class="card-body">', $form);
         $this->assertStringContainsString('<div class="card-footer">', $form);
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label>', $form);
         $this->assertStringContainsString('<input class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
-        $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><button class="superman" type="submit" onclick="this.innerHTML = &#039;&lt;i class=&quot;fas fa-circle-notch fa-spin mr-2&quot;&gt;&lt;/i&gt; Save &lt;span class=&quot;fas fa-save&quot;&gt;&lt;/span&gt;&#039;; this.disabled = true; this.form.submit();">Save <span class="fas fa-save"></span></button>', $form);
+        $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><button class="superman" type="submit" onclick="return window.Forms_validate_submission(this.form, &#039;&lt;i class=&quot;fas fa-circle-notch fa-spin mr-2&quot;&gt;&lt;/i&gt; Save &lt;span class=&quot;fas fa-save&quot;&gt;&lt;/span&gt;&#039;, this);">Save <span class="fas fa-save"></span></button>', $form);
     }
 
     public function testMakeWithClassChanges()
