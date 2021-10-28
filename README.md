@@ -21,7 +21,8 @@ The Forms package lets you generate forms as well as fields with standard make c
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| ^7.x - ^8.x | 5.x | yes |
+| ^7.x - ^8.x | 6.x | yes |
+| ^7.x - ^8.x | 5.x | no |
 | ^7.x - ^8.x | 4.x | no |
 | ^7.x | 3.x | no |
 | ^5.8.x - 7.x | 2.x | no |

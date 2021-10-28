@@ -479,10 +479,7 @@ EOT;
         // We move all hidden fields to the bottom to not interfere
         // with the layout of columns.
         $fields = collect($fields)->sortBy(function ($element) {
-            if (
-                Str::contains($element, 'type="hidden"')
-                && ! Str::contains($element, 'label')
-            ) {
+            if (Str::contains($element, 'type="hidden"')) {
                 return 4;
             }
 
@@ -512,7 +509,7 @@ EOT;
             foreach ($chunk as $element) {
                 $class = '';
 
-                if (! Str::contains($element, 'type="hidden"') && Str::contains($element, 'label')) {
+                if (! Str::contains($element, 'type="hidden"')) {
                     $class = $columnBase . (12 / $columns);
                 }
 

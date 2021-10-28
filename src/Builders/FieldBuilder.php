@@ -6,7 +6,6 @@ use DateTime;
 use Illuminate\Support\Str;
 use Illuminate\Support\HtmlString;
 use Grafite\Forms\Traits\HasLivewire;
-use Grafite\Forms\Builders\AttributeBuilder;
 
 class FieldBuilder
 {
@@ -199,7 +198,11 @@ class FieldBuilder
     public function makeSelect($name, $selected, $options)
     {
         $selectOptions = '';
-        unset($options['attributes']['value']);
+
+        if (isset($options['attributes']['value'])) {
+            $selected = $options['attributes']['value'];
+            unset($options['attributes']['value']);
+        }
 
         if (isset($options['value']) && is_null($selected)) {
             $selected = $options['value'];
@@ -248,7 +251,7 @@ class FieldBuilder
 
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
 
-        return '<input type="search" ' . $attributes . ' name="' . $name . '" list="'.$options['attributes']['id'].'-list"><datalist id="'.$options['attributes']['id'].'-list">' . $selectOptions . '</datalist>';
+        return '<input type="search" ' . $attributes . ' name="' . $name . '" list="' . $options['attributes']['id'] . '-list"><datalist id="' . $options['attributes']['id'] . '-list">' . $selectOptions . '</datalist>';
     }
 
     /**
