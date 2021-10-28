@@ -3,6 +3,26 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.0.0] - 2021-10-28
+
+### Added
+- Field setting method chaining
+-  for Model Forms
+- OS based themeing for Fields
+- Bootstrap 5 compatibility
+- Datalist and Search fields
+
+### Changed
+- Field static methods are now public
+- Code quality improvements
+
+### Fixed
+- disableOnSubmit breaking validation
+- Missing validation in wizard forms
+
+### Removed
+- Make test command
+
 ## [v5.1.3] - 2021-09-01
 
 ### Fixed
