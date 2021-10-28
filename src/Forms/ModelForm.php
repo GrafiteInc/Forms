@@ -472,7 +472,7 @@ class ModelForm extends HtmlForm
             $onclick = "{$this->confirmMethod}(event, '{$this->confirmMessage}')";
         }
 
-        if ($this->disableOnSubmit && is_null($this->confirmMethod)) {
+        if (is_null($this->confirmMethod) && $this->deleteAsModal) {
             $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> '.$this->buttons['confirm'];
             $onclick = 'this.innerHTML = \''.$processing.'\'; this.disabled = true; this.form.submit();';
         }

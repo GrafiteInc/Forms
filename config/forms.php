@@ -8,6 +8,8 @@
 
 return [
 
+    'modal-centered' => true,
+
     'buttons' => [
         'submit' => 'btn btn-primary',
         'edit' => 'btn btn-outline-primary',
