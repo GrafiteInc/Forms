@@ -49,6 +49,6 @@ class FormBaseSubmitMethodTest extends TestCase
         $this->assertStringContainsString("ajax(event)", $form);
         $this->assertStringContainsString('type="button"', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="form-label" for="Password">Password</label><input class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
     }
 }

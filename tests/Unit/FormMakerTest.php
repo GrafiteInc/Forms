@@ -57,7 +57,7 @@ class FormMakerTest extends TestCase
         $test = $this->formMaker->setConnection('testbench')->fromTable('entries');
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea class="form-control" id="Details" name="details"></textarea></div>', $test);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="form-label" for="Details">Details</label><textarea class="form-control" id="Details" name="details"></textarea></div>', $test);
     }
 
     public function testFromFields()
@@ -68,7 +68,7 @@ class FormMakerTest extends TestCase
         ]);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea class="form-control" id="Details" rows="5" name="details"></textarea></div>', $test);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="form-label" for="Details">Details</label><textarea class="form-control" id="Details" rows="5" name="details"></textarea></div>', $test);
     }
 
     public function testFromTableSimulated()
@@ -83,7 +83,7 @@ class FormMakerTest extends TestCase
             ->fromObject($entry, $this->formMaker->getTableAsFields('entries'));
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value="test entry"></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea class="form-control" id="Details" name="details">this entry is written in [markdown](http://markdown.com)</textarea></div>', $test);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value="test entry"></div><div class="form-group"><label class="form-label" for="Details">Details</label><textarea class="form-control" id="Details" name="details">this entry is written in [markdown](http://markdown.com)</textarea></div>', $test);
     }
 
     public function testFromObject()
@@ -106,6 +106,6 @@ class FormMakerTest extends TestCase
         $test = $this->formMaker->fromObject((object) $testObject, $columns);
 
         $this->assertTrue(is_string($test));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Age">Age</label><input class="form-control" id="Age" name="age" type="number" value=""></div>', $test);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="form-label" for="Age">Age</label><input class="form-control" id="Age" name="age" type="number" value=""></div>', $test);
     }
 }

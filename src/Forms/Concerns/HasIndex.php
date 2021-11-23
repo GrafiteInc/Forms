@@ -81,7 +81,9 @@ trait HasIndex
                 ->with($this->with)
                 ->orderBy(request('sort_by', $sortBy), request('order', 'asc'))
                 ->paginate($this->paginate);
-        } else {
+        }
+
+        if (is_null($this->paginate)) {
             $this->items = $query
                 ->with($this->with)
                 ->orderBy(request('sort_by', $sortBy), request('order', 'asc'))

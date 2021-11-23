@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Attachments extends Field
 {
     protected static function getType()
@@ -16,7 +14,7 @@ class Attachments extends Field
         return [
             'name' => 'attachments[]',
             'class' => 'attachments',
-            'deleteButton' => 'btn btn-sm float-right btn-outline-danger mr--20 ml-2',
+            'deleteButton' => 'btn btn-sm float-end btn-outline-danger me--20 ms-2',
             'inputClass' => 'form-control custom-file-input attachments',
         ];
     }
@@ -47,7 +45,7 @@ EOT;
     {
         $listGroup = config('forms.html.list-group', 'list-group list-group-flush');
         $listGroupItem = config('forms.html.list-group-item', 'list-group-item');
-        $badge = config('forms.html.badge-tag', 'badge badge-primary float-right');
+        $badge = config('forms.html.badge-tag', 'badge bg-primary mt-1 float-end');
 
         $deleteButton = $options['deleteButton'];
         $inputClass = $options['inputClass'];

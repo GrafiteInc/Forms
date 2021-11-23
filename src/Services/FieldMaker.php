@@ -172,7 +172,9 @@ class FieldMaker
             foreach ($nested as $property) {
                 if (! empty($property) && isset($final->{$property})) {
                     $final = $final->{$property};
-                } elseif (is_object($final) && is_null($final->{$property})) {
+                }
+
+                if (is_object($final) && isset($final->{$property}) && is_null($final->{$property})) {
                     $final = '';
                 }
             }

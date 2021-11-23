@@ -16,140 +16,140 @@ class FieldConfigProcessorTest extends TestCase
     {
         $field = Text::make('field')->label('FooBar');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">FooBar</label><input class="form-control" id="Field" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">FooBar</label><input class="form-control" id="Field" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testValue()
     {
         $field = Text::make('field')->value('FooBar');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value="FooBar"></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value="FooBar"></div>', (string) $field);
     }
 
     public function testRequired()
     {
         $field = Text::make('field')->required();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" required name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" required name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testData()
     {
         $field = Text::make('field')->data('user', 123)->data('draggable', 'true');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" data-user="123" data-draggable="true" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" data-user="123" data-draggable="true" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testTitle()
     {
         $field = Text::make('field')->title('user-field');
 
-        $this-> assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" title="user-field" name="field" type="text" value=""></div>', (string) $field);
+        $this-> assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" title="user-field" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testStyle()
     {
         $field = Text::make('field')->style('color: #f00;');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" style="color: #f00;" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" style="color: #f00;" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testId()
     {
         $field = Text::make('field')->id('superman');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="superman">Field</label><input class="form-control" id="superman" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="superman">Field</label><input class="form-control" id="superman" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testAutocomplete()
     {
         $field = Text::make('field')->autocomplete();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" autocomplete name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" autocomplete name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testAutofocus()
     {
         $field = Text::make('field')->autofocus();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" autofocus name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" autofocus name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testMultiple()
     {
         $field = Text::make('field')->multiple();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" multiple name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" multiple name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testStep()
     {
         $field = Text::make('field')->step(5);
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" step="5" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" step="5" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testPattern()
     {
         $field = Text::make('field')->pattern('^[A-Z0-9+_.-]+@[A-Z0-9.-]+$');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" pattern="^[A-Z0-9+_.-]+@[A-Z0-9.-]+$" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" pattern="^[A-Z0-9+_.-]+@[A-Z0-9.-]+$" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testMax()
     {
         $field = Text::make('field')->max(4);
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" max="4" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" max="4" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testMin()
     {
         $field = Text::make('field')->min(4);
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" min="4" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" min="4" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testMaxlength()
     {
         $field = Text::make('field')->maxlength(4);
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" maxlength="4" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" maxlength="4" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testSize()
     {
         $field = Text::make('field')->size(4);
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" size="4" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" size="4" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testDisabled()
     {
         $field = Text::make('field')->disabled();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" disabled name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" disabled name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testReadonly()
     {
         $field = Text::make('field')->readonly();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" readonly name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" readonly name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testTemplate()
     {
         $field = Text::make('field')->template('{label}{field}');
 
-        $this->assertEquals('<label class="control-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value="">', (string) $field);
+        $this->assertEquals('<label class="form-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value="">', (string) $field);
     }
 
     public function testView()
     {
         $field = Text::make('field')->view('test-view');
 
-        $this->assertEquals('<div><label class="control-label" for="Field">Field</label></div>
+        $this->assertEquals('<div><label class="form-label" for="Field">Field</label></div>
 <div><input class="form-control" id="Field" name="field" type="text" value=""></div>', (string) $field);
     }
 
@@ -157,7 +157,7 @@ class FieldConfigProcessorTest extends TestCase
     {
         $field = Text::make('field')->cssClass('foo-bar-baz');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="foo-bar-baz" id="Field" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="foo-bar-baz" id="Field" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testLabelClass()
@@ -196,7 +196,7 @@ class FieldConfigProcessorTest extends TestCase
             'Ninja' => 3,
         ])->canSelectNone();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
     }
 
     public function testNullLabel()
@@ -207,7 +207,7 @@ class FieldConfigProcessorTest extends TestCase
             'Ninja' => 3,
         ])->canSelectNone()->noneLabel('Nada');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>Nada</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>Nada</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
     }
 
     public function testSortable()
@@ -221,14 +221,14 @@ class FieldConfigProcessorTest extends TestCase
     {
         $field = Text::make('field')->groupClass('foo-bar');
 
-        $this->assertEquals('<div class="foo-bar"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="foo-bar"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testWithoutWrapper()
     {
         $field = Text::make('field')->ungrouped();
 
-        $this->assertEquals('<label class="control-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value="">', (string) $field);
+        $this->assertEquals('<label class="form-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="text" value="">', (string) $field);
     }
 
     public function testWithoutLabel()
@@ -277,7 +277,7 @@ class FieldConfigProcessorTest extends TestCase
     {
         $field = Text::make('field')->name('FooBar');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="FooBar">Foobar</label><input class="form-control" id="FooBar" name="FooBar" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="FooBar">Foobar</label><input class="form-control" id="FooBar" name="FooBar" type="text" value=""></div>', (string) $field);
     }
 
     public function testAttributes()
@@ -287,14 +287,14 @@ class FieldConfigProcessorTest extends TestCase
             'data-set' => 'heroes',
         ]);
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" data-name="superman" data-set="heroes" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" data-name="superman" data-set="heroes" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testPlaceholder()
     {
         $field = Text::make('field')->placeholder('Superman');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" placeholder="Superman" name="field" type="text" value=""></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" placeholder="Superman" name="field" type="text" value=""></div>', (string) $field);
     }
 
     public function testModel()

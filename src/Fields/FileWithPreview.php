@@ -15,7 +15,7 @@ class FileWithPreview extends Field
     protected static function getAttributes()
     {
         return [
-            'onChange' => 'window.FormMaker_previewFileUpload(this);'
+            'onChange' => 'window.FormMaker_previewFileUpload(this);',
         ];
     }
 
@@ -45,7 +45,7 @@ EOT;
         $method = 'document.querySelector("' . $preview . '").setAttribute(\'src\', e.target.result);';
 
         if ($asBackgroundImage) {
-            $method = 'document.querySelector("'.$preview.'").setAttribute(\'style\', "background-image: url("+e.target.result+")");';
+            $method = 'document.querySelector("' . $preview . '").setAttribute(\'style\', "background-image: url("+e.target.result+")");';
         }
 
         $siblingCode = '';

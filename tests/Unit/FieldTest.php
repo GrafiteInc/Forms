@@ -295,14 +295,14 @@ class FieldTest extends TestCase
             'Black Panther',
         ])->value('Batman');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input type="search" class="form-control" id="Field" value="Batman" name="field" list="Field-list"><datalist id="Field-list"><option value="Batman"><option value="Superman"><option value="Black Panther"></datalist></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input type="search" class="form-control" id="Field" value="Batman" name="field" list="Field-list"><datalist id="Field-list"><option value="Batman"><option value="Superman"><option value="Black Panther"></datalist></div>', (string) $field);
     }
 
     public function testSearch()
     {
         $field = Search::make('field')->value('Batman');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="search" value="Batman"></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="form-label" for="Field">Field</label><input class="form-control" id="Field" name="field" type="search" value="Batman"></div>', (string) $field);
     }
 
     public function testTypeahead()

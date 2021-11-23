@@ -115,7 +115,7 @@ class FormModelHtmlTest extends TestCase
     {
         $form = (new Car)->form()->create();
 
-        $this->assertStringContainsString('<label class="control-label" for="Name">Name</label>', $form);
+        $this->assertStringContainsString('<label class="form-label" for="Name">Name</label>', $form);
     }
 
     public function testCarFormHasId()

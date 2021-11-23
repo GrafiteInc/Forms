@@ -16,7 +16,7 @@ class Toggled extends Field
     {
         return [
             'label' => false,
-            'class' => ''
+            'class' => '',
         ];
     }
 

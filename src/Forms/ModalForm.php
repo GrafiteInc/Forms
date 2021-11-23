@@ -44,7 +44,9 @@ class ModalForm extends HtmlForm
     {
         if (is_array($parameters)) {
             $this->route = array_merge([ $name ], $parameters);
-        } else {
+        }
+
+        if (! is_array($parameters)) {
             $this->route = [
                 $name,
                 $parameters,

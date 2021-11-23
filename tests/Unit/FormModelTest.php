@@ -86,8 +86,8 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('Save', $form);
         $this->assertStringContainsString('Cancel', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="form-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="form-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
 
     public function testUpdate()
@@ -149,7 +149,7 @@ class FormModelTest extends TestCase
         $this->assertStringNotContainsString('http://localhost/users/3', $form);
         $this->assertStringNotContainsString('PUT', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="form-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
 
     public function testRenderedFieldsForCreateAsModal()
@@ -178,6 +178,6 @@ class FormModelTest extends TestCase
         $this->assertStringNotContainsString('http://localhost/users', $form);
         $this->assertStringNotContainsString('POST', $form);
 
-        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="form-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
 }

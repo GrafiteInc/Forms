@@ -23,11 +23,11 @@ return [
         'pagination' => 'd-flex justify-content-center mt-4 mb-0',
         'table' => 'table table-borderless m-0 p-0',
         'table-head' => 'thead border-bottom',
-        'table-actions-header' => '<th class="text-right">Actions</th>',
+        'table-actions-header' => '<th class="text-end">Actions</th>',
         'sortable-icon' => '<span class="fas fa-fw fa-arrows-alt-v"></span>',
         'list-group' => 'list-group list-group-flush',
         'list-group-item' => 'list-group-item',
-        'badge-tag' => 'badge badge-primary float-right',
+        'badge-tag' => 'badge bg-primary float-end mt-1',
     ],
 
     'form' => [
@@ -37,7 +37,7 @@ return [
 
         'group-class' => 'form-group',
         'input-class' => 'form-control',
-        'label-class' => 'control-label',
+        'label-class' => 'form-label',
         'label-check-class' => 'form-check-label',
         'before-after-input-wrapper' => 'input-group',
         'error-class' => 'has-error',
@@ -47,8 +47,8 @@ return [
 
         'check-input-class' => 'form-check-input',
         'check-inline-class' => 'form-check form-check-inline',
-        'custom-file-label' => 'custom-file-label',
-        'custom-file-input-class' => 'custom-file-input',
+        'custom-file-label' => 'custom-file-label form-label',
+        'custom-file-input-class' => 'custom-file-input form-control',
         'custom-file-wrapper-class' => 'custom-file',
 
         'input-group-text' => 'input-group-text',

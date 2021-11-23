@@ -270,7 +270,7 @@ class ModelForm extends HtmlForm
 
         $this->setRouteParameterValues();
 
-        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass.' float-right' : $this->formDeleteClass;
+        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass.' float-end' : $this->formDeleteClass;
 
         $this->html = $this->model($this->instance, [
             'route' => array_merge([$this->routes['delete']], $this->routeParameterValues),
