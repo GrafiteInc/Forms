@@ -8,7 +8,7 @@
 
 return [
 
-    'bootstrap-version' => '5.0',
+    'bootstrap-version' => '4.6',
 
     'modal-centered' => true,
 
