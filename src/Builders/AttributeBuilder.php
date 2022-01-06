@@ -29,7 +29,7 @@ class AttributeBuilder
         $attributes = array_merge($attributes, $livewireAttributes);
 
         foreach ((array) $attributes as $key => $value) {
-            if (in_array($key, $this->validHtmlAttributes()) || Str::of($key)->startsWith('data-')) {
+            if (in_array(strtolower($key), $this->validHtmlAttributes()) || Str::of($key)->startsWith('data-')) {
                 $element = $this->attributeElement($key, $value);
 
                 if (! is_null($element)) {

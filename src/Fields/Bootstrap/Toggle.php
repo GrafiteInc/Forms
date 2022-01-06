@@ -46,11 +46,11 @@ class Toggle extends Field
     {
         $themeScript = "'light'";
 
-        if (is_bool($options['theme']) && $options['theme']) {
+        if (isset($options['theme']) && is_bool($options['theme']) && $options['theme']) {
             $themeScript = "window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'";
         }
 
-        if (is_string($options['theme'])) {
+        if (isset($options['theme']) && is_string($options['theme'])) {
             $theme = $options['theme'];
             $themeScript = "'${theme}'";
         }
