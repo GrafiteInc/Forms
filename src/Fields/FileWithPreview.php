@@ -50,7 +50,7 @@ EOT;
 
         $siblingCode = '';
 
-        if (Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
+        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
             $siblingCode = 'input.nextElementSibling.innerHTML = input.files[0].name;';
         }
 
