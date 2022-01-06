@@ -122,9 +122,9 @@ class FieldBuilder
 
         unset($options['class']);
 
-        $fileLabel = config('forms.forms.custom-file-label', 'custom-file-label');
-        $customFileClass = config('forms.forms.custom-file-input-class', 'custom-file-input');
-        $customFileWrapperClass = config('forms.forms.custom-file-wrapper-class', 'custom-file');
+        $fileLabel = config('forms.form.custom-file-label', 'custom-file-label');
+        $customFileClass = config('forms.form.custom-file-input-class', 'custom-file-input');
+        $customFileWrapperClass = config('forms.form.custom-file-wrapper-class', 'custom-file');
 
         $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
         $options['attributes']['class'] = $options['attributes']['class'] . ' ' . $customFileClass;
@@ -133,7 +133,12 @@ class FieldBuilder
 
         $input = '<div class="' . $customFileWrapperClass . '">';
         $input .= '<input ' . $attributes . ' type="file" name="' . $name . '">';
-        $input .= $label . '</div>';
+
+        if (! Str::contains($options['attributes']['class'], 'form-control')) {
+            $input .= $label;
+        }
+
+        $input .= '</div>';
 
         return $input;
     }
