@@ -51,7 +51,7 @@ EOT;
     {
         $colorVariable = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '--bs-primary' : '--primary';
         $position = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'relative' : 'absolute';
-        $labelSpacing = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '.form-check-label[for="{$id}"] {margin-left: -24px;}' : '';
+        $labelSpacing = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? ".form-check-label[for=\"{$id}\"] {margin-left: -24px;}" : '';
 
         $color = $options['color'] ?? "var($colorVariable)";
 
