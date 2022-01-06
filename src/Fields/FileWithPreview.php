@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Fields;
 
+use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
 
 class FileWithPreview extends Field
@@ -47,9 +48,15 @@ EOT;
             $method = 'document.querySelector("'.$preview.'").setAttribute(\'style\', "background-image: url("+e.target.result+")");';
         }
 
+        $siblingCode = '';
+
+        if (Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
+            $siblingCode = 'input.nextElementSibling.innerHTML = input.files[0].name;';
+        }
+
         return <<<EOT
 window.FormMaker_previewFileUpload = function (input) {
-    input.nextElementSibling.innerHTML = input.files[0].name;
+    {$siblingCode}
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {

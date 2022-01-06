@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Fields;
 
+use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
 
 class Datepicker extends Field
@@ -40,6 +41,8 @@ class Datepicker extends Field
 
     public static function styles($id, $options)
     {
+        $color = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '--bs-primary' : '--primary';
+
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
@@ -49,8 +52,8 @@ class Datepicker extends Field
         --datepicker-bg-color: #111;
         --datepicker-color: #FFF;
         --datepicker-number-color: #FFF;
-        --datepicker-header-color: var(--primary, "#EEE");
-        --datepicker-highlight-color: var(--primary, "#EEE");
+        --datepicker-header-color: var($color, "#EEE");
+        --datepicker-highlight-color: var($color, "#EEE");
     }
 }
 EOT;
@@ -62,8 +65,8 @@ EOT;
     --datepicker-bg-color: #111;
     --datepicker-color: #FFF;
     --datepicker-number-color: #FFF;
-    --datepicker-header-color: var(--primary, "#EEE");
-    --datepicker-highlight-color: var(--primary, "#EEE");
+    --datepicker-header-color: var($color, "#EEE");
+    --datepicker-highlight-color: var($color, "#EEE");
 }
 EOT;
         }
@@ -73,8 +76,8 @@ EOT;
     --datepicker-bg-color: #FFF;
     --datepicker-color: #FFF;
     --datepicker-number-color: #111;
-    --datepicker-header-color: var(--primary, "#EEE");
-    --datepicker-highlight-color: var(--primary, "#EEE");
+    --datepicker-header-color: var($color, "#EEE");
+    --datepicker-highlight-color: var($color, "#EEE");
 }
 
 ${darkTheme}

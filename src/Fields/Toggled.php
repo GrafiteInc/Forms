@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Fields;
 
+use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
 
 class Toggled extends Field
@@ -48,15 +49,21 @@ EOT;
 
     public static function styles($id, $options)
     {
-        $color = $options['color'] ?? 'var(--primary)';
+        $colorVariable = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '--bs-primary' : '--primary';
+        $position = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'relative' : 'absolute';
+        $labelSpacing = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '.form-check-label[for="{$id}"] {margin-left: -24px;}' : '';
+
+        $color = $options['color'] ?? "var($colorVariable)";
 
         return <<<EOT
             .form-check .${id}_slider {
-                position: absolute;
+                position: ${position};
                 display: inline-block;
                 width: 60px;
                 height: 34px;
             }
+
+            ${labelSpacing}
 
             .form-check-label[for="{$id}"]:not(:empty) {
                 margin-left: 70px;

@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
+use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
 
 class Select extends Field
@@ -27,15 +28,19 @@ class Select extends Field
 
     public static function stylesheets($options)
     {
+        $version = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '1.14.0-beta2' : 'latest';
+
         return [
-            "//cdn.jsdelivr.net/npm/bootstrap-select@latest/dist/css/bootstrap-select.min.css",
+            "//cdn.jsdelivr.net/npm/bootstrap-select@{$version}/dist/css/bootstrap-select.min.css",
         ];
     }
 
     public static function scripts($options)
     {
+        $version = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '1.14.0-beta2' : 'latest';
+
         return [
-            '//cdn.jsdelivr.net/npm/bootstrap-select@latest/dist/js/bootstrap-select.min.js'
+            "//cdn.jsdelivr.net/npm/bootstrap-select@{$version}/dist/js/bootstrap-select.min.js"
         ];
     }
 

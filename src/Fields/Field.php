@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Fields;
 
+use Illuminate\Support\Str;
 use Grafite\Forms\Services\FieldConfigProcessor;
 
 class Field
@@ -161,16 +162,29 @@ class Field
     protected static function getWrappers($options, $key)
     {
         $groupTextClass = config('forms.form.input-group-text', 'input-group-text');
-        $class = config('forms.form.input-group-after', 'input-group-append');
-
-        if ($key === 'before') {
-            $class = config('forms.form.input-group-before', 'input-group-prepend');
-        }
 
         if (isset($options[$key])) {
-            return '<div class="' . $class . '">
+            if (
+                ! is_null(config('forms.bootstrap-version'))
+                && Str::of(config('forms.bootstrap-version'))->startsWith('5')
+            ) {
+                return '<span class="' . $groupTextClass . '">' . $options[$key] . '</span>';
+            }
+
+            if (
+                is_null(config('forms.bootstrap-version'))
+                || Str::of(config('forms.bootstrap-version'))->startsWith('4')
+            ) {
+                $class = config('forms.form.input-group-after', 'input-group-append');
+
+                if ($key === 'before') {
+                    $class = config('forms.form.input-group-before', 'input-group-prepend');
+                }
+
+                return '<div class="' . $class . '">
                         <span class="' . $groupTextClass . '">' . $options[$key] . '</span>
                     </div>';
+            }
         }
 
         return null;

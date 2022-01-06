@@ -8,6 +8,8 @@
 
 return [
 
+    'bootstrap-version' => '5.0',
+
     'modal-centered' => true,
 
     'buttons' => [
