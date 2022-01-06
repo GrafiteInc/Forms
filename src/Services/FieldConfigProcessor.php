@@ -469,7 +469,7 @@ class FieldConfigProcessor
 
     public function processStaticMethods()
     {
-        if (is_null($this->template)) {
+        if (! is_null($this->fieldInstance::getTemplate([]))) {
             $this->template = $this->fieldInstance::getTemplate($this->options);
         }
 

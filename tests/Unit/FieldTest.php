@@ -339,6 +339,7 @@ class FieldTest extends TestCase
             ->option('toggle-selector', 'pwYoYo')
             ->option('toggle', 'fooBar');
 
-        $this->assertStringContainsString('<input class="form-control" id="Password" toggle-classes="foo-bar-biz" data-bad="good" name="password" type="password" value="wtf">', (string) $field);
+        $this->assertStringContainsString('<input class="form-control" id="Password" data-bad="good" name="password" type="password" value="wtf">', (string) $field);
+        $this->assertStringContainsString('<button type="button" class="pwYoYo foo-bar-biz">fooBar</button>', (string) $field);
     }
 }
