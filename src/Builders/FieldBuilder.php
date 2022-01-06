@@ -134,7 +134,7 @@ class FieldBuilder
         $input = '<div class="' . $customFileWrapperClass . '">';
         $input .= '<input ' . $attributes . ' type="file" name="' . $name . '">';
 
-        if (! Str::contains($options['attributes']['class'], 'form-control')) {
+        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
             $input .= $label;
         }
 
