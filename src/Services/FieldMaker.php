@@ -129,7 +129,7 @@ class FieldMaker
         $label = $this->getLabel($column, $columnConfig);
 
         if (is_null($class)) {
-            $class = config('forms.form.label_class', 'control-label');
+            $class = config('forms.form.label-class', 'control-label');
         }
 
         if (! empty($errors)) {
@@ -232,7 +232,7 @@ class FieldMaker
         $prefix = '';
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
-            $class = config('forms.form.before_after_input_wrapper', 'input-group');
+            $class = config('forms.form.before-after-input-wrapper', 'input-group');
             $prefix = '<div class="' . $class . '">' . $columnConfig['before'];
         }
 
@@ -359,7 +359,7 @@ class FieldMaker
         if (isset($columnConfig['template'])) {
             $options = $this->parseOptions($column, $columnConfig);
             $rowClass = config('forms.form.group-class', 'form-group');
-            $labelClass = config('forms.form.label_class', 'control-label');
+            $labelClass = config('forms.form.label-class', 'control-label');
             $fieldClass = '';
 
             if ($this->orientation === 'horizontal') {

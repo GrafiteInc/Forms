@@ -37,7 +37,7 @@ return [
         'input-class' => 'form-control',
         'label-class' => 'control-label',
         'label-check-class' => 'form-check-label',
-        'before_after_input_wrapper' => 'input-group',
+        'before-after-input-wrapper' => 'input-group',
         'error-class' => 'has-error',
         'invalid-input-class' => 'is-invalid',
         'invalid-feedback' => 'invalid-feedback',

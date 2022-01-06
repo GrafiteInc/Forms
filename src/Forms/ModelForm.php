@@ -352,7 +352,7 @@ class ModelForm extends HtmlForm
             'class' => config('forms.form.search-class', 'form-inline'),
         ]);
 
-        $form .= '<div class="' . config('forms.form.before_after_input_wrapper', 'input-group') . '">';
+        $form .= '<div class="' . config('forms.form.before-after-input-wrapper', 'input-group') . '">';
         $form .= $this->field->makeInput('text', 'search', request('search'), [
             'placeholder' => $placeholder,
             'class' => config('forms.form.input-class', 'form-control'),
