@@ -456,7 +456,7 @@ class FieldBuilder
             }
         }
 
-        if ($selected === $value) {
+        if ($selected == $value) {
             $selectedValue = ' selected';
         }
 
