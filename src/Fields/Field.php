@@ -19,7 +19,6 @@ class Field
         'after',
         'view',
         'attributes',
-        'format',
         'visible',
         'sortable',
         'wrapper',
