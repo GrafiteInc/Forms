@@ -592,4 +592,24 @@ Modal;
     {
         return $this->html;
     }
+
+    /**
+     * Mostly for Laravel components
+     *
+     * @return string
+     */
+    public function render()
+    {
+        return $this->html;
+    }
+
+    /**
+     * For Livewire components
+     *
+     * @return string
+     */
+    public function renderForLivewire()
+    {
+        return "<div wire:ignore>{$this->html}</div>";
+    }
 }
