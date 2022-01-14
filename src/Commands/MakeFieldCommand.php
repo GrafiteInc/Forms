@@ -44,6 +44,6 @@ class MakeFieldCommand extends BaseCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Forms\Fields';
+        return $rootNamespace . '\View\Forms\Fields';
     }
 }

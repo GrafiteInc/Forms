@@ -10,7 +10,7 @@ class MakeFieldCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->path = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/app/Http/Forms/Fields/SpecialField.php';
+        $this->path = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/app/View/Forms/Fields/SpecialField.php';
 
         @unlink($this->path);
 

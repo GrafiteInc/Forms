@@ -32,7 +32,7 @@ class BaseCommand extends GeneratorCommand
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\Http\Forms';
+        return $rootNamespace . '\View\Forms';
     }
 
     /**

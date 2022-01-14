@@ -10,7 +10,7 @@ class MakeModelFormCommandTest extends TestCase
     {
         parent::setUp();
 
-        $this->path = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/app/Http/Forms/UserForm.php';
+        $this->path = __DIR__.'/../../vendor/orchestra/testbench-core/laravel/app/View/Forms/UserForm.php';
 
         @unlink($this->path);
 
