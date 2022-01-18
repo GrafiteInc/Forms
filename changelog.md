@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.2.0] - 2022-01-18
+
+### Added
+- New switch field
+
+### Fixed
+- Issues with livewire
+
 ## [v6.1.1] - 2022-01-06
 
 ### Fixed
