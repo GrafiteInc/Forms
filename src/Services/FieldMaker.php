@@ -52,6 +52,7 @@ class FieldMaker
     ];
 
     protected $specialSelect = [
+        'switch',
         'checkbox',
         'radio',
         'checkbox-inline',
@@ -155,7 +156,13 @@ class FieldMaker
             return "{$label}{$fieldString}{$errors}";
         }
 
-        return "<div class=\"{$fieldGroup}\">{$label}{$fieldString}{$errors}</div>";
+        $fieldAndLabel = $label . $fieldString;
+
+        if (Str::of($fieldGroup)->contains('form-floating')) {
+            $fieldAndLabel = $fieldString . $label;
+        }
+
+        return "<div class=\"{$fieldGroup}\">{$fieldAndLabel}{$errors}</div>";
     }
 
     public function getObjectValue($object, $name)

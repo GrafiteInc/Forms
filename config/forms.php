@@ -46,6 +46,7 @@ return [
         'check-class' => 'form-check',
 
         'check-input-class' => 'form-check-input',
+        'check-switch-class' => 'custom-switch',
         'check-inline-class' => 'form-check form-check-inline',
         'custom-file-label' => 'custom-file-label',
         'custom-file-input-class' => 'custom-file-input',

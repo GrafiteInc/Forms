@@ -279,6 +279,10 @@ class FieldBuilder
             $options['check-inline'] = true;
         }
 
+        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5') && $options['type'] === 'switch') {
+            $options['attributes']['class'] = 'custom-control-input';
+        }
+
         if (in_array($options['type'], ['radio', 'radio-inline'])) {
             $field = $this->makeRadio($name, $value, $options);
         } else {
@@ -289,6 +293,10 @@ class FieldBuilder
 
         if (isset($options['check-inline'])) {
             $formClass = config('forms.form.check-inline-class', 'form-check form-check-inline');
+        }
+
+        if ($options['type'] === 'switch') {
+            $formClass = $formClass . ' ' . config('forms.form.check-switch-class', 'custom-switch');
         }
 
         $fieldWrapper = "<div class=\"{$formClass}\">";
@@ -306,6 +314,10 @@ class FieldBuilder
         }
 
         $labelClass = Str::of(config('forms.form.label-check-class', 'form-check-label') . ' ' . $customLabelClasses)->trim();
+
+        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5') && $options['type'] === 'switch') {
+            $labelClass = 'custom-control-label';
+        }
 
         $fieldLabel = "<label class=\"{$labelClass}\" for=\"{$options['attributes']['id']}\">{$label}</label>";
 
