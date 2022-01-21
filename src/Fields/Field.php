@@ -100,7 +100,7 @@ class Field
             }
         }
 
-        $options['options'] = array_merge(static::getSelectOptions(), $options['options'] ?? []);
+        $options['options'] = $options['options'] ?? [] + static::getSelectOptions();
         $options['before'] = static::getWrappers($options, 'before');
         $options['after'] = static::getWrappers($options, 'after');
         $options['view'] = static::getView() ?? null;
