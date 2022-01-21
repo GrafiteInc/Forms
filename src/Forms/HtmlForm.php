@@ -17,6 +17,13 @@ class HtmlForm extends Form
     public $isCardForm = false;
 
     /**
+     * Override the right alignment of buttons
+     *
+     * @var boolean
+     */
+    public $buttonsJustified = false;
+
+    /**
      * Disable buttons after submit
      *
      * @var boolean
@@ -227,6 +234,10 @@ class HtmlForm extends Form
         if (! isset($this->buttonLinks['cancel']) || is_null($this->buttonLinks['cancel'])) {
             $this->buttonLinks['cancel'] = request()->fullUrl();
         }
+
+        if (! is_null($this->buttons())) {
+            $this->buttons = $this->buttons();
+        }
     }
 
     /**
@@ -238,7 +249,7 @@ class HtmlForm extends Form
     {
         $rowAlignment = config('forms.form.sections.row-alignment-end', 'd-flex justify-content-end');
 
-        if (isset($this->buttons['cancel']) || $this->columns === 'steps') {
+        if (isset($this->buttons['cancel']) || $this->columns === 'steps' || $this->buttonsJustified) {
             $rowAlignment = config('forms.form.sections.row-alignment-between', 'd-flex justify-content-between');
         }
 
@@ -464,6 +475,16 @@ class HtmlForm extends Form
             ]);
         }
 
+        if (
+            isset($this->buttons)
+            && isset($this->buttons[0])
+            && get_class($this->buttons[0]) === 'Grafite\Forms\Services\HtmlConfigProcessor'
+        ) {
+            foreach ($this->buttons as $button) {
+                $html .= (string) $button;
+            }
+        }
+
         return $html;
     }
 
@@ -521,6 +542,11 @@ class HtmlForm extends Form
         $this->columns = count($this->fields());
 
         return $this;
+    }
+
+    public function buttons()
+    {
+        return null;
     }
 
     /**
