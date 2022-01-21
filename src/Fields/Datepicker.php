@@ -116,7 +116,7 @@ EOT;
         $startDay = $options['start-day'] ?? 1;
         $format = $options['format'] ?? 'YYYY-MM-DD';
         $event = $options['event'] ?? 'keydown';
-        $wait = $options['wait'] ?? 350;
+        $wait = $options['wait'] ?? 850;
         $identity = $options['identity'] ?? $id;
 
         return <<<EOT
