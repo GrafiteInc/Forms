@@ -39,7 +39,7 @@ class FieldConfigProcessor
     protected function processOptions($options)
     {
         $this->type = $options['type'] ?? 'text';
-        $this->options = array_merge($this->options, $options['options']);
+        $this->options = $this->options + $options['options'];
         $this->visible = $options['visible'] ?? true;
         $this->attributes = $options['attributes'] ?? [];
         $this->assets = $options['assets'] ?? [];
