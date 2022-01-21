@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.2.1] - 2022-01-21
+
+### Added
+- Ability to set button actions instead of links
+
+### Fixed
+- Issue with option keys
+- Issue with slow typing
+
 ## [v6.2.0] - 2022-01-18
 
 ### Added
