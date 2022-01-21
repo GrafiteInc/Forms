@@ -224,7 +224,7 @@ class HtmlForm extends Form
         $this->formClass = $this->formClass ?? config('forms.form.class', 'form');
         $this->formDeleteClass = $this->formDeleteClass ?? config('forms.form.delete-class', 'form-inline');
 
-        if (is_null($this->buttonLinks['cancel'])) {
+        if (! isset($this->buttonLinks['cancel']) || is_null($this->buttonLinks['cancel'])) {
             $this->buttonLinks['cancel'] = request()->fullUrl();
         }
     }
