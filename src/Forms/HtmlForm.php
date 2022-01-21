@@ -257,8 +257,15 @@ class HtmlForm extends Form
             <div class="' . $formButtonColumn . ' ' . $rowAlignment . '">';
 
             foreach ($this->getExtraButtons() as $button => $buttonText) {
-                $lastRowInForm .= '<a class="' . $this->buttonClasses[$button]
-                    . '" href="' . url($this->buttonLinks[$button]) . '">' . $this->buttons[$button] . '</a>';
+                if (isset($this->buttonLinks[$button])) {
+                    $lastRowInForm .= '<a class="' . $this->buttonClasses[$button]
+                        . '" href="' . url($this->buttonLinks[$button]) . '">' . $this->buttons[$button] . '</a>';
+                }
+
+                if (isset($this->buttonActions[$button])) {
+                    $lastRowInForm .= '<button class="' . $this->buttonClasses[$button]
+                        . '" onclick="' . $this->buttonActions[$button] . '">' . $this->buttons[$button] . '</button>';
+                }
             }
 
             if (isset($this->buttons['cancel'])) {
