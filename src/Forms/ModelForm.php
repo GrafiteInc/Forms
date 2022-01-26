@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Forms;
 
 use Exception;
+use Illuminate\Support\Str;
 use Grafite\Forms\Forms\Concerns\HasIndex;
 
 class ModelForm extends HtmlForm
@@ -269,8 +270,8 @@ class ModelForm extends HtmlForm
         $this->submitMethod = $this->submitMethods['delete'] ?? null;
 
         $this->setRouteParameterValues();
-
-        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass.' float-right' : $this->formDeleteClass;
+        $buttonAlignClass = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'float-end' : 'float-right';
+        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass.' '.$buttonAlignClass : $this->formDeleteClass;
 
         $this->html = $this->model($this->instance, [
             'route' => array_merge([$this->routes['delete']], $this->routeParameterValues),
