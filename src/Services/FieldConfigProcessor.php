@@ -2,11 +2,10 @@
 
 namespace Grafite\Forms\Services;
 
-use Grafite\Forms\Services\FieldMaker;
-
 class FieldConfigProcessor
 {
     public $name;
+    public $customOptions = [];
     public $options = [];
     public $type;
     public $legend;
@@ -38,6 +37,8 @@ class FieldConfigProcessor
 
     protected function processOptions($options)
     {
+        $this->customOptions = $options;
+
         $this->type = $options['type'] ?? 'text';
         $this->options = $this->options + $options['options'];
         $this->visible = $options['visible'] ?? true;
@@ -300,7 +301,7 @@ class FieldConfigProcessor
     public function readonly($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'readonly' => $state
+            'readonly' => $state,
         ]);
 
         return $this;
@@ -309,7 +310,7 @@ class FieldConfigProcessor
     public function disabled($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'disabled' => $state
+            'disabled' => $state,
         ]);
 
         return $this;
@@ -318,7 +319,7 @@ class FieldConfigProcessor
     public function maxlength($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'maxlength' => $value
+            'maxlength' => $value,
         ]);
 
         return $this;
@@ -327,7 +328,7 @@ class FieldConfigProcessor
     public function size($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'size' => $value
+            'size' => $value,
         ]);
 
         return $this;
@@ -336,7 +337,7 @@ class FieldConfigProcessor
     public function min($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'min' => $value
+            'min' => $value,
         ]);
 
         return $this;
@@ -345,7 +346,7 @@ class FieldConfigProcessor
     public function max($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'max' => $value
+            'max' => $value,
         ]);
 
         return $this;
@@ -354,7 +355,7 @@ class FieldConfigProcessor
     public function pattern($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'pattern' => $value
+            'pattern' => $value,
         ]);
 
         return $this;
@@ -363,7 +364,7 @@ class FieldConfigProcessor
     public function multiple($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'multiple' => $state
+            'multiple' => $state,
         ]);
 
         return $this;
@@ -372,7 +373,7 @@ class FieldConfigProcessor
     public function step($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'step' => $value
+            'step' => $value,
         ]);
 
         return $this;
@@ -381,7 +382,7 @@ class FieldConfigProcessor
     public function autofocus($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'autofocus' => $state
+            'autofocus' => $state,
         ]);
 
         return $this;
@@ -390,7 +391,7 @@ class FieldConfigProcessor
     public function autocomplete($state = true)
     {
         $this->attributes = array_merge($this->attributes, [
-            'autocomplete' => $state
+            'autocomplete' => $state,
         ]);
 
         return $this;
@@ -399,7 +400,7 @@ class FieldConfigProcessor
     public function id($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'id' => $value
+            'id' => $value,
         ]);
 
         return $this;
@@ -408,7 +409,7 @@ class FieldConfigProcessor
     public function style($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'style' => $value
+            'style' => $value,
         ]);
 
         return $this;
@@ -417,7 +418,7 @@ class FieldConfigProcessor
     public function title($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'title' => $value
+            'title' => $value,
         ]);
 
         return $this;
@@ -426,7 +427,7 @@ class FieldConfigProcessor
     public function data($key, $value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'data-'.$key => $value
+            'data-' . $key => $value,
         ]);
 
         return $this;
@@ -460,6 +461,20 @@ class FieldConfigProcessor
         return $this;
     }
 
+    public function customOption($key, $value)
+    {
+        $this->customOptions[$key] = $value;
+
+        return $this;
+    }
+
+    public function customOptions($array)
+    {
+        $this->customOptions = array_merge($this->customOptions, $array);
+
+        return $this;
+    }
+
     public function unlabelled()
     {
         $this->label = false;
@@ -469,15 +484,17 @@ class FieldConfigProcessor
 
     public function processStaticMethods()
     {
+        $options = $this->customOptions + $this->options;
+
         if (! is_null($this->fieldInstance::getTemplate([]))) {
-            $this->template = $this->fieldInstance::getTemplate($this->options);
+            $this->template = $this->fieldInstance::getTemplate($options);
         }
 
         $this->assets = array_merge($this->assets, [
-            'js' => $this->fieldInstance::js(ucfirst($this->name), $this->options),
-            'styles' => $this->fieldInstance::styles(ucfirst($this->name), $this->options) ?? null,
-            'scripts' => $this->fieldInstance::scripts($this->options) ?? null,
-            'stylesheets' => $this->fieldInstance::stylesheets($this->options) ?? null,
+            'js' => $this->fieldInstance::js(ucfirst($this->name), $options),
+            'styles' => $this->fieldInstance::styles(ucfirst($this->name), $options) ?? null,
+            'scripts' => $this->fieldInstance::scripts($options) ?? null,
+            'stylesheets' => $this->fieldInstance::stylesheets($options) ?? null,
         ]);
 
         return $this;

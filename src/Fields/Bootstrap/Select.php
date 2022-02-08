@@ -40,12 +40,54 @@ class Select extends Field
         $version = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '1.14.0-beta2' : 'latest';
 
         return [
-            "//cdn.jsdelivr.net/npm/bootstrap-select@{$version}/dist/js/bootstrap-select.min.js"
+            "//cdn.jsdelivr.net/npm/bootstrap-select@{$version}/dist/js/bootstrap-select.min.js",
         ];
     }
 
     public static function styles($id, $options)
     {
+        $themes['light'] = <<<LIGHTTHEME
+    .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
+        color: #111 !important;
+        border: 1px solid var(--bs-gray-400) !important;
+        background-color: #FFF !important;
+    }
+    .bootstrap-select .dropdown-menu li a.dropdown-item:hover {
+        color: #FFF !important;
+    }
+LIGHTTHEME;
+
+        $themes['dark'] = <<<DARKTHEME
+    .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
+        color: #FFF !important;
+        border: 2px solid #444 !important;
+        background-color: #1F1F1F !important;
+    }
+    .bootstrap-select .dropdown-menu li a.dropdown-item:hover {
+        color: #FFF !important;
+    }
+    .bootstrap-select .dropdown-menu .no-results {
+        background-color: transparent;
+    }
+    .no-results {
+        background: transparent !important;
+    }
+DARKTHEME;
+
+        $lightTheme = $themes['light'];
+        $darkTheme = $themes['dark'];
+
+        $autoTheme = <<<AUTOTHEME
+        @media (prefers-color-scheme: light) {
+            ${lightTheme}
+        }
+        @media (prefers-color-scheme: dark) {
+            ${darkTheme}
+        }
+AUTOTHEME;
+
+        $themeStyle = (isset($options['theme'])) ? $themes[$options['theme']] : $autoTheme;
+
         return <<<EOT
 .bss-input {
    border:0;
@@ -73,6 +115,8 @@ class Select extends Field
 .addnewicon:hover {
    color: #222;
 }
+
+${themeStyle}
 EOT;
     }
 
@@ -126,7 +170,7 @@ var formsWithInputWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
 formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'onclick'];
 formsWithInputWhiteList.span = ['onclick'];
 
-var content = "<input type='text' class='bss-input' onkeydown='event.stopPropagation();' onkeypress='Forms_select_addSelectInpKeyPress(this,event)' onclick='event.stopPropagation()' placeholder='$addItemPlaceholder'> <span class='fas fa-plus addnewicon' onclick='Forms_select_addSelectItem(this,event,1);'></span>";
+var content = "<input type='text' class='bss-input' onkeydown='event.stopPropagation();' onkeypress='Forms_select_addSelectInpKeyPress(this,event)' onclick='event.stopPropagation()' placeholder='${addItemPlaceholder}'> <span class='fas fa-plus addnewicon' onclick='Forms_select_addSelectItem(this,event,1);'></span>";
 
 var divider = $('<option/>')
     .addClass('divider')
