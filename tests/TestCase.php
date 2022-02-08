@@ -42,6 +42,5 @@ abstract class TestCase extends OrchestraTestCase
         ]);
 
         $this->withoutMiddleware();
-        $this->withoutEvents();
     }
 }

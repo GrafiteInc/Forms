@@ -74,15 +74,15 @@ class FormExtensiveBaseTest extends TestCase
 
     public function testMake()
     {
-        // $form = $this->form->make();
+        $form = $this->form->make();
 
-        // $this->assertStringContainsString('http://localhost/user/sample', $form);
-        // $this->assertStringContainsString('method="POST"', $form);
+        $this->assertStringContainsString('http://localhost/user/sample', $form);
+        $this->assertStringContainsString('method="POST"', $form);
 
-        // $this->assertStringContainsString('<form method="POST" action="http://localhost/user/sample" accept-charset="UTF-8" class="batman">', $form);
-        // $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label>', $form);
-        // $this->assertStringContainsString('<input class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
-        // $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><button class="superman" type="submit">Save <span class="fas fa-save"></span></button></div></div></form>', $form);
+        $this->assertStringContainsString('<form method="POST" action="http://localhost/user/sample" accept-charset="UTF-8" class="batman">', $form);
+        $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Name">Name</label>', $form);
+        $this->assertStringContainsString('<input class="form-control" id="Name" name="name" type="text" value=""></div>', $form);
+        $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><button class="superman" type="submit">Save <span class="fas fa-save"></span></button></div></div></form>', $form);
     }
 
     public function testMakeWithExtras()
