@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.3.0] - 2022-02-08
+
+### Added
+- Autotheme for select field
+- Compatibility with Laravel 9
+
 ## [v6.2.3] - 2022-01-26
 
 ### Fixed
