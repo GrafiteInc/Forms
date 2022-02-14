@@ -35,27 +35,69 @@ EOT;
 
     public static function styles($id, $options)
     {
-        $theme = $options['theme'] ?? 'light';
+        $themes = [];
 
-        $borderColor = 'ced4da';
-        $backgroundColor = 'FFF';
-        $borderThickness = '1';
+        $themes['light'] = <<<EOT
+    .editor_js_container {
+        border-radius: 4px;
+        border: 1px solid #ced4da;
+        background-color: transparent;
+        padding: 24px;
+        width: 100%;
+    }
+EOT;
 
-        if ($theme === 'dark') {
-            $borderColor = '333';
-            $backgroundColor = '1F1F1F';
-            $borderThickness = '2';
+        $themes['dark'] = <<<EOT
+    .editor_js_container {
+        border-radius: 4px;
+        border: 2px solid #333;
+        background-color: transparent;
+        padding: 24px;
+        width: 100%;
+    }
+
+    .editor_js_container .ce-toolbox, .editor_js_container .ce-settings {
+        background: #333;
+    }
+
+    .editor_js_container .codex-editor svg {
+        fill: #FFF;
+    }
+
+    .editor_js_container .ce-toolbox__button:hover, .editor_js_container.tc-toolbox__toggler:hover {
+        background-color: #222;
+    }
+
+    .editor_js_container .ce-toolbar__actions div:hover, .editor_js_container .ce-toolbar__actions span:hover {
+        background-color: #222;
+    }
+
+    .editor_js_container .ce-code__textarea {
+        background: transparent;
+        color: #FFF;
+    }
+EOT;
+
+        if (isset($options['theme'])) {
+            $theme = $themes[$options['theme']];
         }
 
-        return <<<EOT
-.editor_js_container {
-    border-radius: 4px;
-    border: ${borderThickness}px solid #${borderColor};
-    background-color: #${backgroundColor};
-    padding: 24px;
-    width: 100%;
-}
+        if (! isset($options['theme'])) {
+            $lightTheme = $themes['light'];
+            $darkTheme = $themes['dark'];
+
+            $theme = <<<EOT
+    @media (prefers-color-scheme: light) {
+        ${lightTheme}
+    }
+
+    @media (prefers-color-scheme: dark) {
+        ${darkTheme}
+    }
 EOT;
+        }
+
+        return $theme;
     }
 
     public static function scripts($options)
@@ -75,6 +117,8 @@ EOT;
             '//cdn.jsdelivr.net/npm/@editorjs/list@latest',
             '//cdn.jsdelivr.net/npm/@editorjs/image@latest',
             '//cdn.jsdelivr.net/npm/@editorjs/embed@latest',
+            '//cdn.jsdelivr.net/npm/@editorjs/warning@latest',
+            '//cdn.jsdelivr.net/npm/@editorjs/raw@latest',
             '//cdn.jsdelivr.net/npm/@editorjs/delimiter@latest',
         ];
     }
@@ -129,6 +173,8 @@ const editor_{$id} = new EditorJS({
         marker: Marker,
         inlineCode: InlineCode,
         code: CodeTool,
+        raw: RawTool,
+        warning: Warning
     },
 });
 
