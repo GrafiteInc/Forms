@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.3.2] - 2022-02-15
+
+### Changed
+- Editor now has autotheming
+
+### Fixed
+- Issue with id in HTML
+
 ## [v6.3.1] - 2022-02-08
 
 ### Fixed
