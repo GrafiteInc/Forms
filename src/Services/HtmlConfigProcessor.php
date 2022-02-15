@@ -40,6 +40,12 @@ class HtmlConfigProcessor
                 'href' => $options['href'],
             ]);
         }
+
+        if (isset($options['id'])) {
+            $this->attributes([
+                'id' => $options['id'],
+            ]);
+        }
     }
 
     public function toArray()
