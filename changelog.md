@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.3.4] - 2022-02-15
+
+### Fixed
+- Issue with dropdown text colors
+
 ## [v6.3.3] - 2022-02-15
 
 ### Fixed
