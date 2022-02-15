@@ -46,10 +46,12 @@ class Select extends Field
 
     public static function styles($id, $options)
     {
+        $color = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'var(--bs-gray-400)' : 'rgba(0, 0, 0, .1)';
+
         $themes['light'] = <<<LIGHTTHEME
     .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
         color: #111 !important;
-        border: 1px solid var(--bs-gray-400) !important;
+        border: 1px solid $color !important;
         background-color: #FFF !important;
     }
     .bootstrap-select .dropdown-menu li a.dropdown-item:hover {
