@@ -54,9 +54,6 @@ class Select extends Field
         border: 1px solid $color !important;
         background-color: #FFF !important;
     }
-    .bootstrap-select .dropdown-menu li a.dropdown-item:hover {
-        color: #FFF !important;
-    }
 LIGHTTHEME;
 
         $themes['dark'] = <<<DARKTHEME
