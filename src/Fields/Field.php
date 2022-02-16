@@ -164,11 +164,10 @@ class Field
         $groupTextClass = config('forms.form.input-group-text', 'input-group-text');
 
         if (isset($options[$key])) {
-            if (
-                ! is_null(config('forms.bootstrap-version'))
-                && Str::of(config('forms.bootstrap-version'))->startsWith('5')
-            ) {
-                return '<span class="' . $groupTextClass . '">' . $options[$key] . '</span>';
+            $content = '<span class="' . $groupTextClass . '">' . $options[$key] . '</span>';
+
+            if (Str::of($options[$key])->contains('<button')) {
+                $content = $options[$key];
             }
 
             if (
@@ -181,10 +180,10 @@ class Field
                     $class = config('forms.form.input-group-before', 'input-group-prepend');
                 }
 
-                return '<div class="' . $class . '">
-                        <span class="' . $groupTextClass . '">' . $options[$key] . '</span>
-                    </div>';
+                $content = '<div class="' . $class . '">' . $content . '</div>';
             }
+
+            return $content;
         }
 
         return null;
