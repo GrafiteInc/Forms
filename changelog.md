@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.3.5] - 2022-02-16
+
+### Fixed
+- Issue with appending/prepending buttons to fields
+
 ## [v6.3.4] - 2022-02-15
 
 ### Fixed
