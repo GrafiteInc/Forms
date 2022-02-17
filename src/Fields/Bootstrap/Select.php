@@ -47,11 +47,13 @@ class Select extends Field
     public static function styles($id, $options)
     {
         $color = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'var(--bs-gray-400)' : 'rgba(0, 0, 0, .1)';
+        $borderLight = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? "1px solid $color !important" : "1px solid $color !important";
+        $borderDark = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? "2px solid #444 !important" : "1px solid #444 !important";
 
         $themes['light'] = <<<LIGHTTHEME
     .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
         color: #111 !important;
-        border: 1px solid $color !important;
+        border: $borderLight;
         background-color: #FFF !important;
     }
 LIGHTTHEME;
@@ -59,7 +61,7 @@ LIGHTTHEME;
         $themes['dark'] = <<<DARKTHEME
     .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
         color: #FFF !important;
-        border: 2px solid #444 !important;
+        border: $borderDark;
         background-color: #1F1F1F !important;
     }
     .bootstrap-select .dropdown-menu li a.dropdown-item:hover {
