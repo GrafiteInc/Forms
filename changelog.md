@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.3.7] - 2022-02-21
+
+### Added
+- Ability to set form properties on the fly
+
 ## [v6.3.6] - 2022-02-17
 
 ### Fixed
