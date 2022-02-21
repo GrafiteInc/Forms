@@ -612,4 +612,16 @@ Modal;
     {
         return "<div wire:ignore>{$this->html}</div>";
     }
+
+    /**
+     * Set properties
+     *
+     * @return self
+     */
+    public function setProperty($key, $value)
+    {
+        $this->$key = $value;
+
+        return $this;
+    }
 }
