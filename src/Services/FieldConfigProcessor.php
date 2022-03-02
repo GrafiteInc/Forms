@@ -370,6 +370,15 @@ class FieldConfigProcessor
         return $this;
     }
 
+    public function singular($state = false)
+    {
+        $this->attributes = array_merge($this->attributes, [
+            'multiple' => $state,
+        ]);
+
+        return $this;
+    }
+
     public function step($value)
     {
         $this->attributes = array_merge($this->attributes, [
