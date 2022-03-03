@@ -65,6 +65,10 @@ class BaseForm extends HtmlForm
             $options['wire:submit.prevent'] = 'submit';
         }
 
+        if ($this->submitOnKeydown) {
+            $options['onkeydown'] = "{$this->submitMethod}(event)";
+        }
+
         $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());

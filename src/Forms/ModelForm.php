@@ -161,6 +161,10 @@ class ModelForm extends HtmlForm
             $options['wire:submit.prevent'] = 'submit';
         }
 
+        if ($this->submitOnKeydown) {
+            $options['onkeydown'] = "{$this->submitMethod}(event)";
+        }
+
         $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());
@@ -222,6 +226,10 @@ class ModelForm extends HtmlForm
 
         if ($this->withLivewire) {
             $options['wire:submit.prevent'] = 'submit';
+        }
+
+        if ($this->submitOnKeydown) {
+            $options['onkeydown'] = "{$this->submitMethod}(event)";
         }
 
         $this->html = $this->model($this->instance, $options);

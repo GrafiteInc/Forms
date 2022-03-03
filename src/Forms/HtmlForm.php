@@ -101,6 +101,13 @@ class HtmlForm extends Form
     public $submitMethod = null;
 
     /**
+     * If the submit should occur on keydown
+     *
+     * @var boolean
+     */
+    public $submitOnKeydown = false;
+
+    /**
      * The route prefix, generally single form of model
      *
      * @var string
