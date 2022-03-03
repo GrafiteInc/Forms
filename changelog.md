@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.5.0] - 2022-03-03
+
+### Added
+- Ability to submit on keydown
+
 ## [v6.4.0] - 2022-03-02
 
 ### Added
