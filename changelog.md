@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.6.0] - 2022-03-04
+
+### Added
+- Ability to handle form submissions onChange
+
 ## [v6.5.1] - 2022-03-04
 
 ### Fixed
