@@ -279,7 +279,7 @@ class ModelForm extends HtmlForm
 
         $this->setRouteParameterValues();
         $buttonAlignClass = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'float-end' : 'float-right';
-        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass.' '.$buttonAlignClass : $this->formDeleteClass;
+        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass . ' ' . $buttonAlignClass : $this->formDeleteClass;
 
         $this->html = $this->model($this->instance, [
             'route' => array_merge([$this->routes['delete']], $this->routeParameterValues),
@@ -308,7 +308,6 @@ class ModelForm extends HtmlForm
             $this->triggerContent = $this->buttons['delete'];
             $deleteButton = $this->buttons['confirm'];
             $options['class'] = $this->buttonClasses['confirm'];
-            $options['class'] = $this->buttonClasses['confirm'];
         }
 
         $this->html .= $this->field->button($deleteButton, $options);
@@ -316,6 +315,8 @@ class ModelForm extends HtmlForm
         $this->html .= $this->close();
 
         if ($this->deleteAsModal) {
+            $this->modalTitle = 'Confirmation';
+            $this->formId = "{$this->formId}_Delete";
             $this->html = $this->asModal();
         }
 

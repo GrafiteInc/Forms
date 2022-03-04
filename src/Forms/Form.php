@@ -113,6 +113,14 @@ class Form
      */
     public $triggerClass = null;
 
+
+    /**
+     * Text for the modal title
+     *
+     * @var string|null
+     */
+    public $modalTitle = null;
+
     /**
      * The reserved form open attributes.
      *
@@ -512,14 +520,16 @@ class Form
      *
      * @return string
      */
-    public function asModal($triggerContent = null, $triggerClass = null, $message = null)
+    public function asModal($triggerContent = null, $triggerClass = null, $message = null, $modalTitle = null)
     {
-        $title = $this->modalTitle ?? 'Confirmation';
+        $modalTitle = $modalTitle ?? $this->modalTitle;
+        $title = $modalTitle ?? 'Confirmation';
+
         $modalId = $this->getFormId() . '_Modal';
         $form = $this->html;
-        $message = $this->message ?? $message;
-        $triggerContent = $this->triggerContent ?? $triggerContent;
-        $triggerClass = $this->triggerClass ?? $triggerClass;
+        $message = $message ?? $this->message;
+        $triggerContent = $triggerContent ?? $this->triggerContent;
+        $triggerClass = $triggerClass ?? $this->triggerClass;
 
         $closeButton = '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
 

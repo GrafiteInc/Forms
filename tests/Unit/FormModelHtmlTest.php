@@ -17,6 +17,12 @@ class CarForm extends ModelForm
 
     public $routePrefix = 'cars';
 
+    public $modalTitle = 'Car Thingy';
+
+    public $triggerContent = 'Design a new Car!';
+
+    public $triggerClass = 'btn btn-obtuse';
+
     public function fields()
     {
         return [
@@ -129,6 +135,23 @@ class FormModelHtmlTest extends TestCase
     {
         $form = (new Car)->form()->create()->asModal();
 
+        $this->assertStringContainsString('<h5 class="modal-title">Car Thingy</h5>', $form);
+        $this->assertStringContainsString("btn btn-obtuse", $form);
+        $this->assertStringContainsString("Design a new Car!", $form);
+        $this->assertStringContainsString("data-toggle", $form);
+        $this->assertStringContainsString("data-target", $form);
+        $this->assertStringContainsString("data-bs-target", $form);
+        $this->assertStringContainsString("data-bs-toggle", $form);
+    }
+
+    public function testCarFormAsModalWithCustomOptions()
+    {
+        $form = (new Car)->form()->create()->asModal('make new button now', 'btn w-100', 'this model of car is the best', 'New Car Builder Tool');
+
+        $this->assertStringContainsString('<h5 class="modal-title">New Car Builder Tool</h5>', $form);
+        $this->assertStringContainsString("btn w-100", $form);
+        $this->assertStringContainsString("this model of car is the best", $form);
+        $this->assertStringContainsString("make new button now", $form);
         $this->assertStringContainsString("data-toggle", $form);
         $this->assertStringContainsString("data-target", $form);
         $this->assertStringContainsString("data-bs-target", $form);
