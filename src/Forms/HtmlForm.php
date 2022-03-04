@@ -108,6 +108,13 @@ class HtmlForm extends Form
     public $submitOnKeydown = false;
 
     /**
+     * If the submit should occur on change
+     *
+     * @var boolean
+     */
+    public $submitOnChange = false;
+
+    /**
      * The route prefix, generally single form of model
      *
      * @var string

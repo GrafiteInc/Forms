@@ -69,6 +69,10 @@ class BaseForm extends HtmlForm
             $options['onkeydown'] = "{$this->submitMethod}(event)";
         }
 
+        if ($this->submitOnChange) {
+            $options['onchange'] = "{$this->submitMethod}(event)";
+        }
+
         $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());

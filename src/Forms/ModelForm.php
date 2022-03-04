@@ -165,6 +165,10 @@ class ModelForm extends HtmlForm
             $options['onkeydown'] = "{$this->submitMethod}(event)";
         }
 
+        if ($this->submitOnChange) {
+            $options['onchange'] = "{$this->submitMethod}(event)";
+        }
+
         $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());
@@ -230,6 +234,10 @@ class ModelForm extends HtmlForm
 
         if ($this->submitOnKeydown) {
             $options['onkeydown'] = "{$this->submitMethod}(event)";
+        }
+
+        if ($this->submitOnChange) {
+            $options['onchange'] = "{$this->submitMethod}(event)";
         }
 
         $this->html = $this->model($this->instance, $options);
