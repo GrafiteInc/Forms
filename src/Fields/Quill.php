@@ -255,6 +255,8 @@ var {$id}_Quill = new Quill('#{$id}_Editor', {
 document.getElementById('{$id}_Editor').firstChild.innerHTML = document.getElementById('{$id}').value;
 {$id}_Quill.on('editor-change', function () {
     document.getElementById('{$id}').value = document.getElementById('{$id}_Editor').firstChild.innerHTML;
+    let event = new Event('change', { 'bubbles': true });
+    document.getElementById('{$id}').dispatchEvent(event);
 });
 
 if (document.getElementById('{$id}').disabled) {
