@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.6.3] - 2022-03-05
+
+### Added
+- Quill Markdown support
+
 ## [v6.6.2] - 2022-03-05
 
 ### Fixed
