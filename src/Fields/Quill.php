@@ -122,7 +122,10 @@ EOT;
 
     public static function scripts($options)
     {
-        return ['//cdn.quilljs.com/1.3.6/quill.js'];
+        return [
+            '//cdn.quilljs.com/1.3.6/quill.js',
+            '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
+        ];
     }
 
     public static function getTemplate($options)
@@ -225,6 +228,8 @@ EOT;
 
         $uploader = $options['uploader'] ?? $defaultUploader;
 
+        $markdown = (isset($options['quill_markdown']) && $options['quill_markdown']) ? "var {$id}_Quill_Markdown = new QuillMarkdown({$id}_Quill);" : '';
+
         return <<<EOT
 var _editor_{$id}_toolbarOptions = {
     container: [
@@ -251,6 +256,8 @@ var {$id}_Quill = new Quill('#{$id}_Editor', {
         toolbar: _editor_{$id}_toolbarOptions
     }
 });
+
+${markdown}
 
 document.getElementById('{$id}_Editor').firstChild.innerHTML = document.getElementById('{$id}').value;
 {$id}_Quill.on('editor-change', function () {
