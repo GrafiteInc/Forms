@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.6.2] - 2022-03-05
+
+### Fixed
+- Missing check from lists toolbar
+
 ## [v6.6.1] - 2022-03-04
 
 ### Fixed
