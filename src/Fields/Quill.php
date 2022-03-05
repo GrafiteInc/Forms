@@ -171,7 +171,7 @@ EOT;
 
         $basic = ($toolbars->contains('basic')) ? "['bold', 'italic', 'underline', 'strike', { 'align': [] }, 'link']," : '';
         $extra = ($toolbars->contains('extra')) ? "['blockquote', 'code-block']," : '';
-        $lists = ($toolbars->contains('lists')) ? "[{ 'list': 'ordered'}, { 'list': 'bullet' }]," : '';
+        $lists = ($toolbars->contains('lists')) ? "[{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }]," : '';
         $superSub = ($toolbars->contains('super_sub')) ? "[{ 'script': 'sub'}, { 'script': 'super' }]," : '';
         $indents = ($toolbars->contains('indents')) ? "[{ 'indent': '-1'}, { 'indent': '+1' }]," : '';
         $headers = ($toolbars->contains('headers')) ? "[{ 'header': [1, 2, 3, 4, 5, 6, false] }]," : '';
