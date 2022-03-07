@@ -73,6 +73,12 @@ LIGHTTHEME;
     .no-results {
         background: transparent !important;
     }
+    .bss-input {
+        background-color: #111;
+        border-radius: 4px;
+        border: 2px solid #333;
+        color: #FFF;
+    }
 DARKTHEME;
 
         $lightTheme = $themes['light'];
