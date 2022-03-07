@@ -74,6 +74,16 @@ class ModelForm extends HtmlForm
     public $deleteAsModal = false;
 
     /**
+     * Form submit on events
+     *
+     * @var array
+     */
+    public $submitOn = [
+        'create' => null,
+        'update' => null,
+    ];
+
+    /**
      * Form routes
      *
      * @var array
@@ -161,11 +171,11 @@ class ModelForm extends HtmlForm
             $options['wire:submit.prevent'] = 'submit';
         }
 
-        if ($this->submitOnKeydown) {
+        if (in_array('keydown', $this->submitOn['create'] ?? []) || $this->submitOnKeydown) {
             $options['onkeydown'] = "{$this->submitMethod}(event)";
         }
 
-        if ($this->submitOnChange) {
+        if (in_array('change', $this->submitOn['create'] ?? []) || $this->submitOnChange) {
             $options['onchange'] = "{$this->submitMethod}(event)";
         }
 
@@ -232,11 +242,11 @@ class ModelForm extends HtmlForm
             $options['wire:submit.prevent'] = 'submit';
         }
 
-        if ($this->submitOnKeydown) {
+        if (in_array('keydown', $this->submitOn['update'] ?? []) || $this->submitOnKeydown) {
             $options['onkeydown'] = "{$this->submitMethod}(event)";
         }
 
-        if ($this->submitOnChange) {
+        if (in_array('change', $this->submitOn['update'] ?? []) || $this->submitOnChange) {
             $options['onchange'] = "{$this->submitMethod}(event)";
         }
 
