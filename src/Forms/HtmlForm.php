@@ -24,6 +24,14 @@ class HtmlForm extends Form
     public $buttonsJustified = false;
 
     /**
+     * Hide the forms buttons
+     * this is only needed, when we do form submissions by other events.
+     *
+     * @var boolean
+     */
+    public $hideButtons = false;
+
+    /**
      * Disable buttons after submit
      *
      * @var boolean
@@ -307,6 +315,10 @@ class HtmlForm extends Form
             }
         }
 
+        if ($this->hideButtons) {
+            $lastRowInForm = '';
+        }
+
         $lastRowInForm .= $this->close();
 
         return $lastRowInForm;
@@ -330,50 +342,6 @@ class HtmlForm extends Form
     public function steps()
     {
         return [array_keys($this->parseFields($this->fields()))];
-    }
-
-    /**
-     * Set the confirmation message for delete forms
-     *
-     * @param string $message
-     * @param string $method
-     *
-     * @return \Grafite\Forms\Forms\ModelForm
-     */
-    public function confirm($message, $method = null)
-    {
-        $this->confirmMessage = $message;
-        $this->confirmMethod = $method;
-
-        return $this;
-    }
-
-    /**
-     * Set a form as disabled to prevent submission.
-     *
-     * @return \Grafite\Forms\Forms\ModelForm
-     */
-    public function disable()
-    {
-        $this->formIsDisabled = true;
-
-        return $this;
-    }
-
-    /**
-     * Set a form as disabled to prevent submission, when callback is true.
-     *
-     * @return \Grafite\Forms\Forms\ModelForm
-     */
-    public function disabledWhen($callback)
-    {
-        $result = $callback();
-
-        if ($result) {
-            $this->formIsDisabled = true;
-        }
-
-        return $this;
     }
 
     /**
@@ -503,18 +471,6 @@ class HtmlForm extends Form
     }
 
     /**
-     * Set the html to the rendered fields
-     *
-     * @return self
-     */
-    public function renderedFields()
-    {
-        $this->html = $this->renderedFields;
-
-        return $this;
-    }
-
-    /**
      * Scripts for the Form
      *
      * @return mixed
@@ -530,6 +486,16 @@ class HtmlForm extends Form
      * @return mixed
      */
     public function styles()
+    {
+        return null;
+    }
+
+    /**
+     * Outline the buttons for the form
+     *
+     * @return mixed
+     */
+    public function buttons()
     {
         return null;
     }
@@ -558,9 +524,22 @@ class HtmlForm extends Form
         return $this;
     }
 
-    public function buttons()
+    public function hideButtons()
     {
-        return null;
+        $this->hideButtons = true;
+
+        return $this;
+    }
+
+    public function hideButtonsWhen()
+    {
+        $result = $callback();
+
+        if ($result) {
+            $this->hideButtons = true;
+        }
+
+        return $this;
     }
 
     /**
@@ -583,6 +562,62 @@ class HtmlForm extends Form
     public function horizontal()
     {
         $this->orientation = 'horizontal';
+
+        return $this;
+    }
+
+    /**
+     * Set the html to the rendered fields
+     *
+     * @return self
+     */
+    public function renderedFields()
+    {
+        $this->html = $this->renderedFields;
+
+        return $this;
+    }
+
+    /**
+     * Set the confirmation message for delete forms
+     *
+     * @param string $message
+     * @param string $method
+     *
+     * @return \Grafite\Forms\Forms\ModelForm
+     */
+    public function confirm($message, $method = null)
+    {
+        $this->confirmMessage = $message;
+        $this->confirmMethod = $method;
+
+        return $this;
+    }
+
+    /**
+     * Set a form as disabled to prevent submission.
+     *
+     * @return \Grafite\Forms\Forms\ModelForm
+     */
+    public function disable()
+    {
+        $this->formIsDisabled = true;
+
+        return $this;
+    }
+
+    /**
+     * Set a form as disabled to prevent submission, when callback is true.
+     *
+     * @return \Grafite\Forms\Forms\ModelForm
+     */
+    public function disabledWhen($callback)
+    {
+        $result = $callback();
+
+        if ($result) {
+            $this->formIsDisabled = true;
+        }
 
         return $this;
     }
