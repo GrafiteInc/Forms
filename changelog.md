@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.6.4] - 2022-03-07
+
+### Added
+- New hideButtons and hideButtonsWhen methods
+- Ability to set submitOn for different model form types
+
+### Fixed
+- Dark UI issue with Suggest Field
+
 ## [v6.6.3] - 2022-03-05
 
 ### Added
