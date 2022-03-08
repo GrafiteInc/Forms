@@ -123,7 +123,7 @@ EOT;
 var _{$id}Datepicker = datepicker("#${id}", {
   startDay: ${startDay},
   id: "${identity}",
-  dateSelected: moment(document.getElementById("${id}").value, "${format}").toDate(),
+  dateSelected: (document.getElementById("${id}").value) ? moment(document.getElementById("${id}").value, "${format}").toDate() : null,
   formatter: (input, date, instance) => {
       input.value = moment(date).format("${format}");
   }
