@@ -279,7 +279,9 @@ class FieldConfigProcessor
 
     public function cssClass($value)
     {
-        $this->attributes = array_merge($this->attributes, ['class' => $value]);
+        $this->attributes = array_merge($this->attributes, [
+            'class' => $value
+        ]);
 
         return $this;
     }
@@ -444,7 +446,7 @@ class FieldConfigProcessor
 
     public function selectOptions($array)
     {
-        $this->options = array_merge($this->options, $array);
+        $this->options = $this->options + $array;
 
         return $this;
     }
@@ -465,7 +467,7 @@ class FieldConfigProcessor
 
     public function options($array)
     {
-        $this->options = array_merge($this->options, $array);
+        $this->options = $this->options + $array;
 
         return $this;
     }
