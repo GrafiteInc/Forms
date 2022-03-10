@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.6.6] - 2022-03-10
+
+### Fixed
+- Issue with null for datepicker
+
 ## [v6.6.5] - 2022-03-08
 
 ### Fixed
