@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.7.1] - 2022-03-10
+
+### Added
+- Ability to set format and defaultDate for DateTimePicker
+
 ## [v6.7.0] - 2022-03-10
 
 ### Added
