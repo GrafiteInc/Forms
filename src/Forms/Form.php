@@ -153,6 +153,19 @@ class Form
         $this->url = app(UrlGenerator::class);
         $this->field = app(FieldBuilder::class);
         $this->session = session();
+
+        $this->config();
+    }
+
+    /**
+     * This function returns nothing and is meant
+     * for overriding the forms config values
+     *
+     * @return void
+     */
+    public function config()
+    {
+        // Return nothing please.
     }
 
     /**
