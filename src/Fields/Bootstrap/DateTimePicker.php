@@ -85,8 +85,23 @@ EOT;
 
     public static function js($id, $options)
     {
+        $defaultDateCode = '';
+        $format = $options['format'] ?? 'LLLL';
+        $defaultDate = $options['defaultDate'] ?? false;
+
+        if ($defaultDate) {
+            $defaultDateCode = 'defaultDate: "' . $defaultDate . '",';
+        }
+
         return <<<EOT
- new tempusDominus.TempusDominus(document.getElementById('${id}'));
+ new tempusDominus.TempusDominus(document.getElementById('${id}'), {
+     ${defaultDateCode}
+     hooks: {
+         inputFormat:(context, date) => {
+             return moment(date).format('${format}')
+        }
+     }
+ });
 EOT;
     }
 }
