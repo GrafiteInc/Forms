@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.7.0] - 2022-03-10
+
+### Added
+- Ability to override config settings
+
 ## [v6.6.6] - 2022-03-10
 
 ### Fixed
