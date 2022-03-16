@@ -53,6 +53,30 @@ class Quill extends Field
             background-color: #000;
         }
 
+        .ql-toolbar.ql-snow .ql-fill {
+            fill: #EEE !important;
+        }
+
+        .ql-snow .ql-stroke {
+            stroke: #EEE !important;
+        }
+
+        .ql-snow .ql-picker-label {
+            color: #EEE !important;
+        }
+
+        .ql-snow .ql-picker-options {
+            background-color: #222;
+        }
+
+        .ql-snow .ql-picker-options span {
+            color: #EEE;
+        }
+
+        .ql-toolbar.ql-snow .ql-formats button i.fa {
+            color: #EEE !important;
+        }
+
         .ql-bubble .ql-editor {
             border: 1px solid transparent;
         }
@@ -74,6 +98,30 @@ EOT;
     .ql-toolbar.ql-snow {
         border: 1px solid #000;
         background-color: #000;
+    }
+
+    .ql-toolbar.ql-snow .ql-fill {
+        fill: #EEE !important;
+    }
+
+    .ql-snow .ql-picker-label {
+        color: #EEE !important;
+    }
+
+    .ql-snow .ql-picker-options {
+        background-color: #222 !important;
+    }
+
+    .ql-toolbar.ql-snow .ql-formats button i.fa {
+        color: #EEE !important;
+    }
+
+    .ql-picker-options span {
+        color: #EEE;
+    }
+
+    .ql-snow .ql-stroke {
+        stroke: #EEE !important;
     }
 
     .ql-bubble .ql-editor {
@@ -173,7 +221,7 @@ EOT;
         }
 
         $basic = ($toolbars->contains('basic')) ? "['bold', 'italic', 'underline', 'strike', { 'align': [] }, 'link']," : '';
-        $extra = ($toolbars->contains('extra')) ? "['blockquote', 'code-block']," : '';
+        $extra = ($toolbars->contains('extra')) ? "['blockquote', 'code-block', 'divider']," : '';
         $lists = ($toolbars->contains('lists')) ? "[{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }]," : '';
         $superSub = ($toolbars->contains('super_sub')) ? "[{ 'script': 'sub'}, { 'script': 'super' }]," : '';
         $indents = ($toolbars->contains('indents')) ? "[{ 'indent': '-1'}, { 'indent': '+1' }]," : '';
@@ -231,7 +279,16 @@ EOT;
         $markdown = (isset($options['quill_markdown']) && $options['quill_markdown']) ? "var {$id}_Quill_Markdown = new QuillMarkdown({$id}_Quill);" : '';
 
         return <<<EOT
+var _editor_{$id}_icons = Quill.import('ui/icons');
+    _editor_{$id}_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
+
+var _editor_{$id}_dividerHandler = function (value) {
+  let range = {$id}_Quill.getSelection(true);
+  {$id}_Quill.insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
+}
+
 var _editor_{$id}_toolbarOptions = {
+    icons: _editor_{$id}_icons,
     container: [
         {$basic}
         {$extra}
@@ -245,9 +302,19 @@ var _editor_{$id}_toolbarOptions = {
         ['clean']
     ],
     handlers: {
-        image: {$uploader}
+        image: {$uploader},
+        'divider': _editor_{$id}_dividerHandler
     }
 };
+
+if (! BlockEmbed) {
+var BlockEmbed = Quill.import('blots/block/embed');
+class DividerBlot extends BlockEmbed { }
+    DividerBlot.blotName = 'divider';
+    DividerBlot.tagName = 'hr';
+
+Quill.register(DividerBlot);
+}
 
 var {$id}_Quill = new Quill('#{$id}_Editor', {
     theme: '${theme}',
