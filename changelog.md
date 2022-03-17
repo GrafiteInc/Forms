@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.8.0] - 2022-03-17
+
+### Added
+- New Month and Day fields
+
+### Fixed
+- Style issues with Quill
+
 ## [v6.7.3] - 2022-03-16
 
 ### Added
