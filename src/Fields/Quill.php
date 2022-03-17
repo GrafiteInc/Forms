@@ -61,6 +61,11 @@ class Quill extends Field
             stroke: #EEE !important;
         }
 
+        .ql-editor hr {
+            background-color: #FFF;
+            height: 3px;
+        }
+
         .ql-snow .ql-picker-label {
             color: #EEE !important;
         }
@@ -102,6 +107,11 @@ EOT;
 
     .ql-toolbar.ql-snow .ql-fill {
         fill: #EEE !important;
+    }
+
+    .ql-editor hr {
+        background-color: #FFF;
+        height: 3px;
     }
 
     .ql-snow .ql-picker-label {
@@ -162,6 +172,10 @@ EOT;
 
     .ql-snow .ql-color-picker .ql-picker-label svg, .ql-snow .ql-icon-picker .ql-picker-label svg {
         vertical-align: top;
+    }
+
+    .ql-editor hr {
+        height: 3px;
     }
 
     ${darkTheme}
