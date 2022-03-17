@@ -123,6 +123,10 @@ AUTOTHEME;
    color: #222;
 }
 
+.bootstrap-select .dropdown-menu {
+    z-index: 4000;
+}
+
 ${themeStyle}
 EOT;
     }
