@@ -127,6 +127,10 @@ AUTOTHEME;
     z-index: 4000;
 }
 
+.bootstrap-select .dropdown-menu .inner {
+    overflow-x: hidden;
+}
+
 ${themeStyle}
 EOT;
     }
