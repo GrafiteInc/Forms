@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.8.1] - 2022-03-22
+
+### Fixed
+- Issue with white toolbar for quill
+- Issue with select overflow
+
 ## [v6.8.0] - 2022-03-17
 
 ### Added
