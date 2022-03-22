@@ -3,6 +3,18 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.8.2] - 2022-03-22
+
+### Added
+- disabledWhen for forms
+- DateTimePicker layering issue
+
+### Changed
+- Improved Field ID controls
+
+### Fixed
+- Issue with hideButtonsWhen
+
 ## [v6.8.1] - 2022-03-22
 
 ### Fixed
