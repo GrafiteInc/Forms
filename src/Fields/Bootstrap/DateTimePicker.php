@@ -80,6 +80,9 @@ EOT;
         }
 
         return <<<EOT
+        .tempus-dominus-widget {
+            z-index: 90000;
+        }
 ${darkTheme}
 EOT;
     }

@@ -4,6 +4,7 @@ namespace Grafite\Forms\Services;
 
 class FieldConfigProcessor
 {
+    public $id;
     public $name;
     public $customOptions = [];
     public $options = [];
@@ -30,6 +31,7 @@ class FieldConfigProcessor
     public function __construct($name, $options, $fieldInstance)
     {
         $this->name = $name;
+        $this->id = ucfirst($name);
         $this->fieldInstance = $fieldInstance;
 
         $this->processOptions($options);
@@ -318,6 +320,17 @@ class FieldConfigProcessor
         return $this;
     }
 
+    public function disabledWhen($callback)
+    {
+        $state = $callback();
+
+        $this->attributes = array_merge($this->attributes, [
+            'disabled' => $state,
+        ]);
+
+        return $this;
+    }
+
     public function maxlength($value)
     {
         $this->attributes = array_merge($this->attributes, [
@@ -414,6 +427,8 @@ class FieldConfigProcessor
             'id' => $value,
         ]);
 
+        $this->id = $value;
+
         return $this;
     }
 
@@ -502,8 +517,8 @@ class FieldConfigProcessor
         }
 
         $this->assets = array_merge($this->assets, [
-            'js' => $this->fieldInstance::js(ucfirst($this->name), $options),
-            'styles' => $this->fieldInstance::styles(ucfirst($this->name), $options) ?? null,
+            'js' => $this->fieldInstance::js($this->id, $options),
+            'styles' => $this->fieldInstance::styles($this->id, $options) ?? null,
             'scripts' => $this->fieldInstance::scripts($options) ?? null,
             'stylesheets' => $this->fieldInstance::stylesheets($options) ?? null,
         ]);

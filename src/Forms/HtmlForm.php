@@ -531,7 +531,7 @@ class HtmlForm extends Form
         return $this;
     }
 
-    public function hideButtonsWhen()
+    public function hideButtonsWhen($callback)
     {
         $result = $callback();
 
