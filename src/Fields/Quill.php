@@ -155,6 +155,7 @@ EOT;
     .ql-toolbar.ql-snow {
         border-top-left-radius: 8px;
         border-top-right-radius: 8px;
+        background-color: #FFF;
     }
 
     .ql-editor {
