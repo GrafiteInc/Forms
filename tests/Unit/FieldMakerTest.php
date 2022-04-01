@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Grafite\Forms\Fields\Text;
+use Grafite\Forms\Fields\Table;
 use Grafite\Forms\Fields\HasOne;
 use Grafite\Forms\Fields\Number;
 use Grafite\Forms\Fields\Select;
@@ -375,5 +376,15 @@ class FieldMakerTest extends TestCase
 
         $this->assertTrue(is_string($field));
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Ideas">Ideas</label><select class="form-control" id="Ideas" multiple name="ideas[]"><option value="1" selected>Thing</option><option value="2" selected>Foo</option><option value="3">Bar</option><option value="4">Drink</option></select></div>', $field);
+    }
+
+    public function testMakeTableWithObject()
+    {
+        $config = Table::make('attributes')->toArray();
+        $field = $this->fieldMaker->make('attributes', $config, $this->user);
+
+        $this->assertStringContainsString('window.Forms_tableInputValue_attributes = JSON.parse(window.Forms_rootTableInput_attributes.value);', $config['assets']['js']);
+        $this->assertStringContainsString('window.Forms_createItemRow_attributes([]);', $config['assets']['js']);
+        $this->assertStringContainsString('<input class="form-control" id="Attributes" name="attributes" type="hidden" value="">', $field);
     }
 }

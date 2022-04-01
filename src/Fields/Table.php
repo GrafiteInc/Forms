@@ -25,7 +25,7 @@ class Table extends Field
         return 'text';
     }
 
-    public static function getTemplate($options, $value)
+    public static function getTemplate($options)
     {
         return <<<EOT
 <div class="form-group">
