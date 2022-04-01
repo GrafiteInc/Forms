@@ -81,9 +81,6 @@ class Quill extends Field
         .ql-toolbar.ql-snow .ql-formats button i.fa {
             color: #EEE !important;
         }
-        .ql-toolbar .ql-formats button i.fa {
-            color: #EEE !important;
-        }
 
         .ql-bubble .ql-editor {
             border: 1px solid transparent;
@@ -126,9 +123,6 @@ EOT;
     }
 
     .ql-toolbar.ql-snow .ql-formats button i.fa {
-        color: #EEE !important;
-    }
-    .ql-toolbar .ql-formats button i.fa {
         color: #EEE !important;
     }
 
@@ -187,6 +181,10 @@ EOT;
 
     .ql-bubble .ql-tooltip-editor input[type=text] {
         height: 40px;
+    }
+
+    .ql-bubble .ql-toolbar .ql-formats button i.fa {
+        color: #EEE !important;
     }
 
     ${darkTheme}
