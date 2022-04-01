@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.9.0] - 2022-04-01
+
+### Added
+- Rating field
+- Table field
+
+### Fixed
+- Issue with quill bubble theme
+
 ## [v6.8.3] - 2022-03-30
 
 ### Fixed
