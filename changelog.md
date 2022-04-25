@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.9.1] - 2022-04-25
+
+### Added
+- Ability to set searchable in method chaining
+
 ## [v6.9.0] - 2022-04-01
 
 ### Added
