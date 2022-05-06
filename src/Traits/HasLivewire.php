@@ -27,4 +27,16 @@ trait HasLivewire
 
         return $this;
     }
+
+    /**
+     * Set if the form is using livewire on change
+     *
+     * @param bool $onChange
+     */
+    public function setLivewireOnChange($onChange)
+    {
+        $this->livewireOnChange = $onChange;
+
+        return $this;
+    }
 }

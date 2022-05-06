@@ -8,6 +8,8 @@ class LivewireForm extends HtmlForm
 
     public $onKeydown = false;
 
+    public $onChange = false;
+
     public $withLivewire = true;
 
     public $data;
@@ -23,6 +25,10 @@ class LivewireForm extends HtmlForm
 
         if ($this->onKeydown) {
             $this->livewireOnKeydown = true;
+        }
+
+        if ($this->onChange) {
+            $this->livewireOnChange = true;
         }
 
         if ($this->orientation === 'horizontal') {

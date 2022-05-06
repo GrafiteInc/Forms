@@ -22,6 +22,8 @@ class FieldMaker
 
     public $livewireOnKeydown;
 
+    public $livewireOnChange;
+
     protected $standard = [
         'hidden',
         'text',
@@ -68,7 +70,8 @@ class FieldMaker
     {
         $this->builder
             ->setLivewire($this->withLivewire)
-            ->setLivewireOnKeydown($this->livewireOnKeydown);
+            ->setLivewireOnKeydown($this->livewireOnKeydown)
+            ->setLivewireOnChange($this->livewireOnChange);
 
         if ($columnConfig['type'] === 'html') {
             return $columnConfig['instance']::render($columnConfig);

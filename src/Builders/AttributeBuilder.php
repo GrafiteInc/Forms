@@ -13,7 +13,7 @@ class AttributeBuilder
      *
      * @return string
      */
-    public function render($attributes, $name = null, $livewireEnabled = false, $livewireOnKeydown = false)
+    public function render($attributes, $name = null, $livewireEnabled = false, $livewireOnKeydown = false, $livewireOnChange = false)
     {
         $html = [];
         $livewireAttributes = [];
@@ -24,6 +24,10 @@ class AttributeBuilder
 
         if ($livewireOnKeydown) {
             $livewireAttributes['wire:keydown.debounce.1000ms'] = 'submit';
+        }
+
+        if ($livewireOnChange) {
+            $livewireAttributes['wire:change.debounce.600ms'] = 'submit';
         }
 
         $attributes = array_merge($attributes, $livewireAttributes);

@@ -38,6 +38,8 @@ class FormMaker
 
     public $livewireOnKeydown = false;
 
+    public $livewireOnChange = false;
+
     public function __construct()
     {
         $this->fieldMaker = app(FieldMaker::class);
@@ -162,6 +164,7 @@ class FormMaker
                 ->setErrorBag($this->errorBag)
                 ->setLivewire($this->withLivewire)
                 ->setLivewireOnKeydown($this->livewireOnKeydown)
+                ->setLivewireOnChange($this->livewireOnChange)
                 ->make($column, $columnConfig);
         }
 
@@ -194,6 +197,7 @@ class FormMaker
                 ->setErrorBag($this->errorBag)
                 ->setLivewire($this->withLivewire)
                 ->setLivewireOnKeydown($this->livewireOnKeydown)
+                ->setLivewireOnChange($this->livewireOnChange)
                 ->make($column, $fieldConfig);
         }
 
@@ -235,6 +239,7 @@ class FormMaker
                 ->setErrorBag($this->errorBag)
                 ->setLivewire($this->withLivewire)
                 ->setLivewireOnKeydown($this->livewireOnKeydown)
+                ->setLivewireOnChange($this->livewireOnChange)
                 ->make($column, $columnConfig, $object);
         }
 

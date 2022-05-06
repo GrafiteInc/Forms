@@ -44,6 +44,13 @@ class Form
     public $livewireOnKeydown = false;
 
     /**
+     * If the form should submit on change
+     *
+     * @var bool
+     */
+    public $livewireOnChange = false;
+
+    /**
      * The model to be bound
      *
      * @var mixed
@@ -286,6 +293,40 @@ class Form
         $this->triggerClass = $buttonClass;
 
         return $this->asModal();
+    }
+
+    /**
+     * Convert to Livewire
+     *
+     * @return self
+     */
+    public function asLivewire()
+    {
+        $this->withLivewire = true;
+
+        return $this;
+    }
+
+    public function onKeydown()
+    {
+        if ($this->withLivewire) {
+            $this->livewireOnKeydown = true;
+        }
+
+        $this->onKeydown = true;
+
+        return $this;
+    }
+
+    public function onChange()
+    {
+        if ($this->withLivewire) {
+            $this->livewireOnChange = true;
+        }
+
+        $this->onChange = true;
+
+        return $this;
     }
 
     /**

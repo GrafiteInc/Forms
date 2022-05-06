@@ -105,6 +105,7 @@ class WizardForm extends HtmlForm
             ->setMaxColumns($this->maxColumns)
             ->setLivewire($this->withLivewire)
             ->setLivewireOnKeydown($this->livewireOnKeydown)
+            ->setLivewireOnChange($this->livewireOnChange)
             ->setErrorBag($this->errorBag)
             ->setFormJs($this->scripts())
             ->setFormStyles($this->styles())

@@ -110,6 +110,13 @@ EOT;
         }
      }
  });
+
+document.getElementById('${id}').addEventListener('change.td', function (event) {
+     document.getElementById('${id}').value = moment(event.detail.date).format('${format}');
+     let _event = new Event('change');
+     document.getElementById('${id}').dispatchEvent(_event);
+     document.getElementById('${id}').dispatchEvent(new Event('input'));
+});
 EOT;
     }
 }

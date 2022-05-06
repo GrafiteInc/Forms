@@ -189,6 +189,7 @@ class ModelForm extends HtmlForm
             ->setMaxColumns($this->maxColumns)
             ->setLivewire($this->withLivewire)
             ->setLivewireOnKeydown($this->livewireOnKeydown)
+            ->setLivewireOnChange($this->livewireOnChange)
             ->setErrorBag($this->errorBag)
             ->setFormJs($this->scripts())
             ->setFormStyles($this->styles())
@@ -260,6 +261,7 @@ class ModelForm extends HtmlForm
             ->setMaxColumns($this->maxColumns)
             ->setLivewire($this->withLivewire)
             ->setLivewireOnKeydown($this->livewireOnKeydown)
+            ->setLivewireOnChange($this->livewireOnChange)
             ->setErrorBag($this->errorBag)
             ->setFormJs($this->scripts())
             ->setFormStyles($this->styles())
@@ -298,12 +300,14 @@ class ModelForm extends HtmlForm
         $this->setRouteParameterValues();
         $buttonAlignClass = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'float-end' : 'float-right';
         $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass . ' ' . $buttonAlignClass : $this->formDeleteClass;
+        $id = $this->instance->id;
 
         $this->html = $this->model($this->instance, [
             'route' => array_merge([$this->routes['delete']], $this->routeParameterValues),
             'method' => $this->methods['delete'],
             'class' => $formDeleteClass,
             'id' => $this->formId,
+            'wire:submit.prevent' => ($this->withLivewire) ? "delete($id)" : null
         ]);
 
         $options = [
