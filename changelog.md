@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.10.0] - 2022-05-06
+
+### Added
+- onChange livewire binding
+- Delete method for livewire binding
+
 ## [v6.9.1] - 2022-04-25
 
 ### Added
