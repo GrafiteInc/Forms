@@ -15,6 +15,8 @@ class FieldBuilder
 
     public $livewireOnKeydown = false;
 
+    public $livewireOnChange = false;
+
     public function __construct()
     {
         $this->attributeBuilder = new AttributeBuilder();
@@ -47,7 +49,7 @@ class FieldBuilder
             $options['type'] = 'button';
         }
 
-        return '<button ' . $this->attributeBuilder->render($options, null, $this->withLivewire, $this->livewireOnKeydown) . '>' . $value . '</button>';
+        return '<button ' . $this->attributeBuilder->render($options, null, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange) . '>' . $value . '</button>';
     }
 
     /**
@@ -72,7 +74,7 @@ class FieldBuilder
             unset($options['value']);
         }
 
-        $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<input ' . $attributes . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
     }
@@ -94,7 +96,7 @@ class FieldBuilder
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
-        $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<' . $type . ' ' . $attributes . ' name="' . $name . '" value="' . e($value) . '"></' . $type . '>';
     }
@@ -129,7 +131,7 @@ class FieldBuilder
         $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
         $options['attributes']['class'] = $options['attributes']['class'] . ' ' . $customFileClass;
 
-        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         $input = '<div class="' . $customFileWrapperClass . '">';
         $input .= '<input ' . $attributes . ' type="file" name="' . $name . '">';
@@ -154,7 +156,7 @@ class FieldBuilder
      */
     public function makeTextarea($name, $value, $options)
     {
-        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<textarea ' . $attributes . ' name="' . $name . '">' . e($value) . '</textarea>';
     }
@@ -232,7 +234,7 @@ class FieldBuilder
             $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
         }
 
-        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<select ' . $attributes . ' name="' . $name . '">' . $selectOptions . '</select>';
     }
@@ -254,7 +256,7 @@ class FieldBuilder
             $selectOptions .= '<option value="' . $value . '">';
         }
 
-        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<input type="search" ' . $attributes . ' name="' . $name . '" list="' . $options['attributes']['id'] . '-list"><datalist id="' . $options['attributes']['id'] . '-list">' . $selectOptions . '</datalist>';
     }
@@ -336,7 +338,7 @@ class FieldBuilder
     public function makeCheckbox($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
-        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<input ' . $attributes . ' type="checkbox" name="' . $name . '"' . $checked . '>';
     }
@@ -353,7 +355,7 @@ class FieldBuilder
     public function makeRadio($name, $value, $options)
     {
         $checked = $this->isChecked($name, $value, $options);
-        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown);
+        $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<input ' . $attributes . ' type="radio" name="' . $name . '"' . $checked . '>';
     }
