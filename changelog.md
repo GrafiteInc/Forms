@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.10.1] - 2022-05-10
+
+### Fixed
+- Issue with onChange for livewire
+
 ## [v6.10.0] - 2022-05-06
 
 ### Added
