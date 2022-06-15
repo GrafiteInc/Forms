@@ -28,7 +28,7 @@ class Select extends Field
 
     public static function stylesheets($options)
     {
-        $version = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '1.14.0-beta2' : 'latest';
+        $version = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '1.14.0-beta3' : 'latest';
 
         return [
             "//cdn.jsdelivr.net/npm/bootstrap-select@{$version}/dist/css/bootstrap-select.min.css",
@@ -37,7 +37,7 @@ class Select extends Field
 
     public static function scripts($options)
     {
-        $version = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '1.14.0-beta2' : 'latest';
+        $version = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '1.14.0-beta3' : 'latest';
 
         return [
             "//cdn.jsdelivr.net/npm/bootstrap-select@{$version}/dist/js/bootstrap-select.min.js",
@@ -155,14 +155,7 @@ window.Forms_select_addSelectItem = function (t, ev) {
     var o = $('option', p).eq(-2);
     o.before( $("<option>", {"text": txt, "value": txt}) );
 
-    $('#${id}').selectpicker('refresh').parent().css({
-        display: "block",
-        width: "100%"
-    });
-
-    $('#${id}').val(txt);
-
-    $('#${id}').selectpicker('refresh').parent().css({
+    $('#${id}').selectpicker('destroy').selectpicker().selectpicker('val', txt).parent().css({
         display: "block",
         width: "100%"
     });
