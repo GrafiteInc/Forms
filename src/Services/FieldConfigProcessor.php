@@ -258,6 +258,33 @@ class FieldConfigProcessor
         return $this;
     }
 
+    public function hiddenUnless($field, $value)
+    {
+        if (! is_array($value)) {
+            $value = [$value];
+        }
+
+        $value = json_encode($value);
+
+        $script = <<<JS
+            let _visual_validation_$field = function () {
+                if ($value.includes(document.getElementById('$field').value)) {
+                    document.getElementById('$this->id').parentNode.classList.remove('d-none');
+                    document.getElementById('$this->id').parentNode.classList.add('d-block');
+                }
+            };
+
+            document.getElementById('$this->id').parentNode.classList.add('d-none');
+            document.getElementById('$field').addEventListener('change', _visual_validation_$field());
+
+            _visual_validation_$field();
+JS;
+
+        app(FormAssets::class)->addJs($script);
+
+        return $this;
+    }
+
     public function hidden()
     {
         $this->visible = false;
@@ -513,6 +540,24 @@ class FieldConfigProcessor
     public function unlabelled()
     {
         $this->label = false;
+
+        return $this;
+    }
+
+    public function submitOnChange()
+    {
+        $this->attributes = array_merge($this->attributes, [
+            'onchange' => 'this.form.submit()',
+        ]);
+
+        return $this;
+    }
+
+    public function submitOnKeyUp()
+    {
+        $this->attributes = array_merge($this->attributes, [
+            'onkeyup' => 'this.form.submit()',
+        ]);
 
         return $this;
     }

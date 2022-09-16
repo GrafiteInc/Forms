@@ -5,10 +5,11 @@ namespace Tests\Unit;
 use Tests\TestCase;
 use Grafite\Forms\Fields\File;
 use Grafite\Forms\Fields\Text;
-use Grafite\Forms\Fields\Select ;
+use Grafite\Forms\Fields\Select;
 use Grafite\Forms\Fields\Checkbox;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Hash;
+use Grafite\Forms\Services\FormAssets;
 
 class FieldConfigProcessorTest extends TestCase
 {
@@ -197,6 +198,43 @@ class FieldConfigProcessorTest extends TestCase
         ])->canSelectNone();
 
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+    }
+
+    public function testSubmitOnChange()
+    {
+        $field = Select::make('field')->selectOptions([
+            'Superman' => 1,
+            'Batman' => 2,
+            'Ninja' => 3,
+        ])->canSelectNone()->submitOnChange();
+
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" onchange="this.form.submit()" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+    }
+
+    public function testSubmitOnKeyUp()
+    {
+        $field = Select::make('field')->selectOptions([
+            'Superman' => 1,
+            'Batman' => 2,
+            'Ninja' => 3,
+        ])->canSelectNone()->submitOnKeyUp();
+
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" onkeyup="this.form.submit()" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+    }
+
+    public function testHiddenUnless()
+    {
+        $field = Select::make('field')->selectOptions([
+            'Superman' => 1,
+            'Batman' => 2,
+            'Ninja' => 3,
+        ])->canSelectNone()->hiddenUnless('Previous_Field', 'visible');
+
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+
+        $assets = app(FormAssets::class)->render();
+
+        $this->assertStringContainsString("document.getElementById('Previous_Field').addEventListener('change', _visual_validation_Previous_Field());", $assets);
     }
 
     public function testNullLabel()
