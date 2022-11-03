@@ -55,6 +55,11 @@
     },
     "minimum-stability": "dev",
     "prefer-stable": true,
+     "config": {
+        "allow-plugins": {
+            "dealerdirect/phpcodesniffer-composer-installer": true
+        }
+    },
     "scripts": {
         "check-style": "phpcs -p --standard=PSR12 src --extensions=php",
         "fix-style": "phpcbf -p --standard=PSR12 src --extensions=php",
