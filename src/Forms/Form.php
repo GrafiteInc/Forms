@@ -583,6 +583,19 @@ class Form
     }
 
     /**
+     * Set the modal title
+     *
+     * @param string $content
+     * @return self
+     */
+    public function modalTitle($content)
+    {
+        $this->modalTitle = $content;
+
+        return $this;
+    }
+
+    /**
      * Set the trigger css class
      *
      * @param string $cssClass
