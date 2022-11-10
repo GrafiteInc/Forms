@@ -570,6 +570,45 @@ class Form
     }
 
     /**
+     * Set the form id
+     *
+     * @param string $id
+     * @return self
+     */
+    public function id($id)
+    {
+        $this->formId = $id;
+
+        return $this;
+    }
+
+    /**
+     * Set the trigger css class
+     *
+     * @param string $cssClass
+     * @return self
+     */
+    public function triggerClass($cssClass)
+    {
+        $this->triggerClass = $cssClass;
+
+        return $this;
+    }
+
+    /**
+     * Set the trigger Content
+     *
+     * @param string $content
+     * @return self
+     */
+    public function triggerContent($content)
+    {
+        $this->triggerContent = $content;
+
+        return $this;
+    }
+
+    /**
      * Create the form as a modal
      *
      * @return string

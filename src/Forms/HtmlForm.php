@@ -134,6 +134,13 @@ class HtmlForm extends Form
     public $fields = [];
 
     /**
+     * Restrict the fields to only those in the only list.
+     *
+     * @var array
+     */
+    public $only = [];
+
+    /**
      * Html string for output
      *
      * @var string
@@ -408,6 +415,12 @@ class HtmlForm extends Form
             throw new Exception('Invalid fields', 1);
         }
 
+        if (empty($this->only)) {
+            $this->only = collect($formFields)->map(function ($config) {
+                return $config->name;
+            })->toArray();
+        }
+
         foreach ($formFields as $fieldConfig) {
             $config = $fieldConfig->toArray();
 
@@ -419,7 +432,9 @@ class HtmlForm extends Form
 
             unset($config['name']);
 
-            $fields[$key] = $config;
+            if (in_array($key, $this->only)) {
+                $fields[$key] = $config;
+            }
         }
 
         return $fields;
@@ -602,6 +617,23 @@ class HtmlForm extends Form
     public function disable()
     {
         $this->formIsDisabled = true;
+
+        return $this;
+    }
+
+    /**
+     * Restrict a form to only the fields listed here.
+     *
+     * @param array $fields
+     * @return \Grafite\Forms\Forms\HtmlForm
+     */
+    public function only($fields)
+    {
+        if (! is_array($fields)) {
+            $fields = [$fields];
+        }
+
+        $this->only = $fields;
 
         return $this;
     }
