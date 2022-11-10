@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.11.2] - 2022-11-10
+
+### Added
+- Method for setting Modal title
+
 ## [v6.11.1] - 2022-11-10
 
 ### Added
