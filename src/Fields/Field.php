@@ -26,6 +26,7 @@ class Field
         'table_class',
         'label_class',
         'template',
+        'factory',
     ];
 
     /**
