@@ -62,7 +62,7 @@ class AutoSuggest extends Field
             }
         }
 
-        $items = json_encode($options['options']);
+        $items = json_encode(array_values($options['options']));
 
         return <<<scripts
 function _formAutocompleteField(inp, arr) {
