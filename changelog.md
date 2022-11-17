@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.12.1] - 2022-11-17
+
+### Fixed
+- Issue with options array for autosuggest
+
 ## [v6.12.0] - 2022-11-17
 
 ### Added
