@@ -90,6 +90,13 @@ class Quill extends Field
             background-color: #111;
             border: 1px solid transparent;
         }
+        .ql-bubble .ql-editor code {
+            background-color: #333;
+        }
+        .ql-bubble .ql-editor pre.ql-syntax {
+            background-color: #333 !important;
+            color: #FFF !important;
+        }
     }
 EOT;
         }
@@ -167,6 +174,11 @@ EOT;
         border: 1px solid #CCC;
     }
 
+    .ql-bubble .ql-editor code {
+        font-size: 100% !important;
+        padding: 6px !important;
+    }
+
     .ql-snow .ql-editor {
         border-radius: 0px;
     }
@@ -185,6 +197,22 @@ EOT;
 
     .ql-bubble .ql-toolbar .ql-formats button i.fa {
         color: #EEE !important;
+    }
+
+    .ql-bubble .ql-editor pre.ql-syntax {
+        background-color: #f0f0f0;
+        color: #111;
+        border-radius: 12px;
+        padding: 24px;
+    }
+
+    .ql-editor ul[data-checked="true"] li::before, .ql-editor ul[data-checked="false"] li::before {
+        font-size: 26px;
+    }
+    .ql-editor ul li::before {
+    }
+    .ql-editor ul[data-checked="true"] li {
+        text-decoration: line-through;
     }
 
     ${darkTheme}
