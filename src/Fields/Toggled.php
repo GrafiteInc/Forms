@@ -66,8 +66,9 @@ EOT;
             ${labelSpacing}
 
             .form-check-label[for="{$id}"]:not(:empty) {
-                margin-left: 70px;
                 line-height: 34px;
+                vertical-align: top;
+                margin-right: 24px;
             }
 
             .form-check #${id} {

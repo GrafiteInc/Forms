@@ -35,7 +35,7 @@ return [
         'delete-class' => 'form-inline',
         'inline-class' => 'form d-inline',
 
-        'group-class' => 'form-group',
+        'group-class' => 'form-group mb-3',
         'input-class' => 'form-control',
         'label-class' => 'control-label',
         'label-check-class' => 'form-check-label',

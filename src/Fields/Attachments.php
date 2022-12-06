@@ -16,7 +16,7 @@ class Attachments extends Field
         return [
             'name' => 'attachments[]',
             'class' => 'attachments',
-            'deleteButton' => 'btn btn-sm float-right btn-outline-danger mr--20 ml-2',
+            'deleteButton' => 'btn btn-sm float-right btn-outline-danger me--20 ms-2',
             'inputClass' => 'form-control custom-file-input attachments',
         ];
     }
