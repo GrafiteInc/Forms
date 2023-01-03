@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.13.2] - 2023-01-03
+
+### Fixed
+- Issue with iOS
+- Issue with AutoSuggestSelect
+
 ## [v6.13.1] - 2022-12-06
 
 ### Fixed
