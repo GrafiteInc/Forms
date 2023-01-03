@@ -110,7 +110,8 @@ function _formAutocompleteSelectField(inp, arr) {
         a.setAttribute("class", "form-autocomplete-items rounded");
         let border = "border: " + _formElementStyle.border + "; ";
         let width = "width:"+ _altInput.offsetWidth + "px; ";
-        a.setAttribute("style", width + border);
+        let background = "background-color: " + _formElementStyle.backgroundColor + "; ";
+        a.setAttribute("style", width + border + background);
 
         /*append the DIV element as a child of the autocomplete container:*/
         _altInput.parentNode.appendChild(a);
