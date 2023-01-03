@@ -26,7 +26,7 @@ class Editor implements FieldParser
                 return $html;
             },
             'header' => function ($text, $level) {
-                return "<h${level}>${text}</h${level}>";
+                return "<h{$level}>{$text}</h{$level}>";
             },
             'paragraph' => function ($text) {
                 return "<p>{$text}</p>";
@@ -61,7 +61,7 @@ class Editor implements FieldParser
                     $contents .= '<tr>';
 
                     foreach ($row as $columns) {
-                        $contents .= "<td>${columns}</td>";
+                        $contents .= "<td>{$columns}</td>";
                     }
 
                     $contents .= '</tr>';
@@ -90,7 +90,7 @@ class Editor implements FieldParser
             'code' => function ($code) {
                 $code = htmlspecialchars($code);
 
-                return "<pre><code>${code}</code></pre>";
+                return "<pre><code>{$code}</code></pre>";
             },
         ]);
 

@@ -164,7 +164,7 @@ function _formAutocompleteField(inp, arr) {
     });
 }
 
-_formAutocompleteField(document.getElementById("${id}"), ${items});
+_formAutocompleteField(document.getElementById("{$id}"), {$items});
 
 scripts;
     }

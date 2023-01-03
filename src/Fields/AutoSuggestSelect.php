@@ -215,7 +215,7 @@ function _formAutocompleteSelectField(inp, arr) {
     });
 }
 
-_formAutocompleteSelectField(document.getElementById("${id}"), ${items});
+_formAutocompleteSelectField(document.getElementById("{$id}"), {$items});
 
 scripts;
     }

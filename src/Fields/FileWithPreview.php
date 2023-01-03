@@ -60,7 +60,7 @@ window.FormMaker_previewFileUpload = function (input) {
     if (input.files && input.files[0]) {
         var reader = new FileReader();
         reader.onload = function (e) {
-            ${method}
+            {$method}
         };
 
         reader.readAsDataURL(input.files[0]);

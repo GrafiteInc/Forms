@@ -26,7 +26,7 @@ class PasswordWithReveal extends Field
         $toggleSelector = $options['toggle-selector'] ?? 'PasswordRevealer-trigger';
 
         return <<<EOT
-            PasswordRevealer("#${id}", { trigger: { selector: '.${toggleSelector}', eventListener: 'click' } }).init();
+            PasswordRevealer("#{$id}", { trigger: { selector: '.{$toggleSelector}', eventListener: 'click' } }).init();
 EOT;
     }
 
@@ -42,7 +42,7 @@ EOT;
     <div class="{fieldClass}">
         <div class="input-group mb-3">
             {field}
-            <button type="button" class="${toggleSelector} ${toggleClasses}">${toggle}</button>
+            <button type="button" class="{$toggleSelector} {$toggleClasses}">{$toggle}</button>
         </div>
     {errors}
     </div>

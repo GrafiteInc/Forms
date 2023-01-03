@@ -88,11 +88,11 @@ EOT;
 
             $theme = <<<EOT
     @media (prefers-color-scheme: light) {
-        ${lightTheme}
+        {$lightTheme}
     }
 
     @media (prefers-color-scheme: dark) {
-        ${darkTheme}
+        {$darkTheme}
     }
 EOT;
         }

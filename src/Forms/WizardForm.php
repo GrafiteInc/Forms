@@ -309,7 +309,7 @@ EOT;
 	display: flex;
 	justify-content: space-between;
 	align-items: flex-end;
-	width: ${size}px;
+	width: {$size}px;
 	margin:  0 auto;
 	margin-bottom: 24px;
 }
@@ -320,16 +320,16 @@ EOT;
 
 .form-step-text  {
     margin-bottom: 10px;
-    color: ${color};
+    color: {$color};
     display: block;
 }
 
 .form-bullet {
-	border: 1px solid ${color};
+	border: 1px solid {$color};
 	height: 24px;
 	width: 24px;
 	border-radius: 100%;
-	color: ${color};
+	color: {$color};
 	display: inline-block;
 	position: relative;
 	transition: background-color 500ms;
@@ -339,17 +339,17 @@ EOT;
 
 .form-bullet.completed  {
 	color:  white;
-	background-color: ${color};
+	background-color: {$color};
 }
 
 .form-bullet.completed::after {
 	content: '';
 	position: absolute;
-	left: ${left}px;
+	left: {$left}px;
 	bottom: 10px;
 	height: 1px;
-	width: ${width}px;
-	background-color: ${color};
+	width: {$width}px;
+	background-color: {$color};
 }
 EOT;
     }

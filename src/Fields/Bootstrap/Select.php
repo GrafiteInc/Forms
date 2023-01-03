@@ -86,10 +86,10 @@ DARKTHEME;
 
         $autoTheme = <<<AUTOTHEME
         @media (prefers-color-scheme: light) {
-            ${lightTheme}
+            {$lightTheme}
         }
         @media (prefers-color-scheme: dark) {
-            ${darkTheme}
+            {$darkTheme}
         }
 AUTOTHEME;
 
@@ -131,7 +131,7 @@ AUTOTHEME;
     overflow-x: hidden;
 }
 
-${themeStyle}
+{$themeStyle}
 EOT;
     }
 
@@ -155,7 +155,7 @@ window.Forms_select_addSelectItem = function (t, ev) {
     var o = $('option', p).eq(-2);
     o.before( $("<option>", {"text": txt, "value": txt}) );
 
-    $('#${id}').selectpicker('destroy').selectpicker().selectpicker('val', txt).parent().css({
+    $('#{$id}').selectpicker('destroy').selectpicker().selectpicker('val', txt).parent().css({
         display: "block",
         width: "100%"
     });
@@ -178,7 +178,7 @@ var formsWithInputWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
 formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'onclick'];
 formsWithInputWhiteList.span = ['onclick'];
 
-var content = "<input type='text' class='bss-input' onkeydown='event.stopPropagation();' onkeypress='Forms_select_addSelectInpKeyPress(this,event)' onclick='event.stopPropagation()' placeholder='${addItemPlaceholder}'> <span class='fas fa-plus addnewicon' onclick='Forms_select_addSelectItem(this,event,1);'></span>";
+var content = "<input type='text' class='bss-input' onkeydown='event.stopPropagation();' onkeypress='Forms_select_addSelectInpKeyPress(this,event)' onclick='event.stopPropagation()' placeholder='{$addItemPlaceholder}'> <span class='fas fa-plus addnewicon' onclick='Forms_select_addSelectItem(this,event,1);'></span>";
 
 var divider = $('<option/>')
     .addClass('divider')
@@ -187,7 +187,7 @@ var divider = $('<option/>')
 var addoption = $('<option/>', {class: 'addItem'})
     .attr('data-content', content);
 
-$('#${id}')
+$('#{$id}')
     .append(divider)
     .append(addoption)
 .selectpicker({
@@ -203,7 +203,7 @@ EOT;
         }
 
         return <<<EOT
-$('#${id}').selectpicker({
+$('#{$id}').selectpicker({
     style: "{$btn}"
 }).parent().css({
     display: "block",

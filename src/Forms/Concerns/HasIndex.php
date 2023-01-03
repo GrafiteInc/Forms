@@ -142,11 +142,11 @@ trait HasIndex
 <table class="{$tableClass}">
     <thead class="{$tableHeadClass}">
         <tr>
-            ${indexHeaders}
+            {$indexHeaders}
         </tr>
     </thead>
     <tbody>
-        ${indexBody}
+        {$indexBody}
     </tbody>
 </table>
 

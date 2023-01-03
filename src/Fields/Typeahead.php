@@ -67,10 +67,10 @@ EOT;
 
         return <<<EOT
 $.typeahead({
-    input: '#${id}',
+    input: '#{$id}',
     order: "desc",
     source: {
-        data: ${values}
+        data: {$values}
     }
 });
 EOT;

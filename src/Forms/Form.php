@@ -288,7 +288,7 @@ class Form
      */
     public function confirmAsModal($message, $buttonText, $buttonClass = 'btn btn-primary')
     {
-        $this->message = "<p class=\"mb-4\">${message}</p>";
+        $this->message = "<p class=\"mb-4\">{$message}</p>";
         $this->triggerContent = $buttonText;
         $this->triggerClass = $buttonClass;
 
@@ -644,28 +644,28 @@ class Form
         }
 
         return <<<Modal
-            <div id="${modalId}" class="modal fade" tabindex="-1" role="dialog">
+            <div id="{$modalId}" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title">${title}</h5>
-                            ${closeButton}
+                            <h5 class="modal-title">{$title}</h5>
+                            {$closeButton}
                         </div>
                         <div class="modal-body">
-                            ${message}
-                            ${form}
+                            {$message}
+                            {$form}
                         </div>
                     </div>
                 </div>
             </div>
             <button
                 data-toggle="modal"
-                data-target="#${modalId}"
+                data-target="#{$modalId}"
                 data-bs-toggle="modal"
-                data-bs-target="#${modalId}"
-                class="${triggerClass}"
+                data-bs-target="#{$modalId}"
+                class="{$triggerClass}"
             >
-                ${triggerContent}
+                {$triggerContent}
             </button>
 Modal;
     }

@@ -56,14 +56,14 @@ EOT;
         $color = $options['color'] ?? "var($colorVariable)";
 
         return <<<EOT
-            .form-check .${id}_slider {
-                position: ${position};
+            .form-check .{$id}_slider {
+                position: {$position};
                 display: inline-block;
                 width: 60px;
                 height: 34px;
             }
 
-            ${labelSpacing}
+            {$labelSpacing}
 
             .form-check-label[for="{$id}"]:not(:empty) {
                 line-height: 34px;
@@ -71,13 +71,13 @@ EOT;
                 margin-right: 24px;
             }
 
-            .form-check #${id} {
+            .form-check #{$id} {
                 opacity: 0;
                 width: 0;
                 height: 0;
             }
 
-            .${id}_slider {
+            .{$id}_slider {
                 position: absolute;
                 cursor: pointer;
                 top: 0;
@@ -88,7 +88,7 @@ EOT;
                 transition: .4s;
             }
 
-            .${id}_slider:before {
+            .{$id}_slider:before {
                 position: absolute;
                 content: "";
                 height: 26px;
@@ -99,15 +99,15 @@ EOT;
                 transition: .2s;
             }
 
-            #${id}:checked + label + .${id}_slider{
+            #{$id}:checked + label + .{$id}_slider{
                 background-color: {$color};
             }
 
-            #${id}:focus + label + .${id}_slider{
+            #{$id}:focus + label + .{$id}_slider{
                 box-shadow: 0 0 1px {$color};
             }
 
-             #${id}:checked + label + .${id}_slider:before{
+             #{$id}:checked + label + .{$id}_slider:before{
                 transform: translateX(26px);
             }
 

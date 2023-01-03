@@ -19,7 +19,7 @@ class AttributeBuilder
         $livewireAttributes = [];
 
         if ($livewireEnabled) {
-            $livewireAttributes['wire:model'] = "data.${name}";
+            $livewireAttributes['wire:model'] = "data.{$name}";
         }
 
         if ($livewireOnKeydown) {

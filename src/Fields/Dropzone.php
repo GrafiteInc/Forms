@@ -89,7 +89,7 @@ EOT;
     background-color: transparent;
 }
 
-${darkTheme}
+{$darkTheme}
 EOT;
     }
 

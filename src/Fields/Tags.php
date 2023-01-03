@@ -42,8 +42,8 @@ class Tags extends Field
 
         return <<<EOT
 .tagify {
-    --tags-border-color: ${defaultBorder};
-    --tags-focus-border-color: ${focusBorder};
+    --tags-border-color: {$defaultBorder};
+    --tags-focus-border-color: {$focusBorder};
 }
 EOT;
     }
@@ -53,7 +53,7 @@ EOT;
         $list = $options['list'] ?? '[]';
 
         return <<<EOT
-new Tagify (document.getElementById('${id}'), {
+new Tagify (document.getElementById('{$id}'), {
     whitelist: {$list}
 });
 EOT;

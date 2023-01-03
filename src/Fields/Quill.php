@@ -215,7 +215,7 @@ EOT;
         text-decoration: line-through;
     }
 
-    ${darkTheme}
+    {$darkTheme}
 EOT;
     }
 
@@ -305,7 +305,7 @@ EOT;
                     this.quill.enable(false);
 
                     window.axios
-                        .post('${route}', _{$id}FileFormData)
+                        .post('{$route}', _{$id}FileFormData)
                         .then(response => {
                             this.quill.enable(true);
                             let range = this.quill.getSelection(true);
@@ -368,14 +368,14 @@ Quill.register(DividerBlot);
 }
 
 var {$id}_Quill = new Quill('#{$id}_Editor', {
-    theme: '${theme}',
-    placeholder: '${placeholder}',
+    theme: '{$theme}',
+    placeholder: '{$placeholder}',
     modules: {
         toolbar: _editor_{$id}_toolbarOptions
     }
 });
 
-${markdown}
+{$markdown}
 
 document.getElementById('{$id}_Editor').firstChild.innerHTML = document.getElementById('{$id}').value;
 {$id}_Quill.on('editor-change', function () {

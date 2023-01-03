@@ -52,7 +52,7 @@ class Toggle extends Field
 
         if (isset($options['theme']) && is_string($options['theme'])) {
             $theme = $options['theme'];
-            $themeScript = "'${theme}'";
+            $themeScript = "'{$theme}'";
         }
 
         $on = $options['on'] ?? 'On';
@@ -62,7 +62,7 @@ class Toggle extends Field
 
         return <<<EOT
 $('#$id').bootstrapToggle({
-    offstyle: ${themeScript},
+    offstyle: {$themeScript},
     on: "$on",
     off: "$off",
     size: "$size"

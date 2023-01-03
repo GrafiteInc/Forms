@@ -83,7 +83,7 @@ EOT;
         .tempus-dominus-widget {
             z-index: 90000;
         }
-${darkTheme}
+{$darkTheme}
 EOT;
     }
 
@@ -98,12 +98,12 @@ EOT;
         }
 
         return <<<EOT
- new tempusDominus.TempusDominus(document.getElementById('${id}'), {
-     ${defaultDateCode}
+ new tempusDominus.TempusDominus(document.getElementById('{$id}'), {
+     {$defaultDateCode}
      hooks: {
          inputFormat:(context, date) => {
              if (date) {
-                 return moment(date).format('${format}');
+                 return moment(date).format('{$format}');
             }
 
             return null;
@@ -111,11 +111,11 @@ EOT;
      }
  });
 
-document.getElementById('${id}').addEventListener('change.td', function (event) {
-     document.getElementById('${id}').value = moment(event.detail.date).format('${format}');
+document.getElementById('{$id}').addEventListener('change.td', function (event) {
+     document.getElementById('{$id}').value = moment(event.detail.date).format('{$format}');
      let _event = new Event('change');
-     document.getElementById('${id}').dispatchEvent(_event);
-     document.getElementById('${id}').dispatchEvent(new Event('input'));
+     document.getElementById('{$id}').dispatchEvent(_event);
+     document.getElementById('{$id}').dispatchEvent(new Event('input'));
 });
 EOT;
     }
