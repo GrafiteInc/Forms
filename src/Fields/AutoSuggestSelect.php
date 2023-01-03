@@ -80,10 +80,7 @@ function _formAutocompleteSelectField(inp, arr) {
 
     _altInput.addEventListener("focus", function (e) {
         formCloseAllSelectLists();
-
-        if (inp.value === '') {
-            this.value = '';
-        }
+        this.value = '';
 
         _{$id}_formDisplaySelection(this, this.value);
     });
@@ -158,6 +155,10 @@ function _formAutocompleteSelectField(inp, arr) {
         if (inp.value === '') {
             _altInput.value = 'None';
             inp.value = null;
+        }
+
+        if (inp.value !== '') {
+             _altInput.value = arr[inp.value];
         }
 
         if (_altInput.value === '') {
