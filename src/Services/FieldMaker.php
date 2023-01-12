@@ -151,7 +151,7 @@ class FieldMaker
 
     public function wrapField($fieldGroup, $label, $fieldString, $errors)
     {
-        if (Str::contains($fieldString, 'hidden')) {
+        if (Str::contains($fieldString, 'type="hidden"')) {
             return $fieldString;
         }
 
