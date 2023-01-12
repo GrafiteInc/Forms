@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.13.3] - 2023-01-12
+
+### Fixed
+- Issue with hidden fields
+
 ## [v6.13.2] - 2023-01-03
 
 ### Fixed
