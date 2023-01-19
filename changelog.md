@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.13.4] - 2023-01-19
+
+### Fixed
+- Issue with access to main FormJS function
+
 ## [v6.13.3] - 2023-01-12
 
 ### Fixed
