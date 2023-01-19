@@ -122,9 +122,9 @@ class FormAssets
                 $js = $minifierJS->add($js)->minify();
             }
 
-            $function = "let FormsJS = () => { {$js} }";
+            $function = "window.FormsJS = () => { {$js} }";
 
-            $output .= "<script>\n{$function}\nFormsJS();\n</script>\n";
+            $output .= "<script>\n{$function}\nwindow.FormsJS();\n</script>\n";
         }
 
         return $output;
