@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.14.0] - 2023-01-26
+
+### Added
+- New indexColumns method for better control of index listing
+
+### Fixed
+- Arrow issue with sorting
+
 ## [v6.13.4] - 2023-01-19
 
 ### Fixed
