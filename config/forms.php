@@ -23,11 +23,13 @@ return [
         'pagination' => 'd-flex justify-content-center mt-4 mb-0',
         'table' => 'table table-borderless m-0 p-0',
         'table-head' => 'thead border-bottom',
-        'table-actions-header' => '<th class="text-right">Actions</th>',
+        'table-actions-header' => '<th class="text-end">Actions</th>',
         'sortable-icon' => '<span class="fas fa-fw fa-arrows-alt-v"></span>',
+        'sortable-icon-up' => '<span class="fas fa-fw fa-arrow-up"></span>',
+        'sortable-icon-down' => '<span class="fas fa-fw fa-arrow-down"></span>',
         'list-group' => 'list-group list-group-flush',
         'list-group-item' => 'list-group-item',
-        'badge-tag' => 'badge badge-primary float-right',
+        'badge-tag' => 'badge badge-primary float-end',
     ],
 
     'form' => [

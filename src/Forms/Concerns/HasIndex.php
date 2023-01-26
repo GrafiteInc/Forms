@@ -43,6 +43,11 @@ trait HasIndex
                 ));
                 $icon = config('forms.html.sortable-icon', '&#8597;');
 
+                if (request('order') && strtolower($header) === request('sort_by')) {
+                    $direction = (request('order') === 'asc') ? 'up' : 'down';
+                    $icon = config("forms.html.sortable-icon-{$direction}", '&#8597;');
+                }
+
                 $header = "<a href=\"{$sortLink}\">{$header} {$icon}</a>";
             }
 
@@ -55,17 +60,17 @@ trait HasIndex
             $headers .= "<th{$class}>{$header}</th>";
         }
 
-        $headers .= config('forms.html.table-actions-header', '<th class="text-right">Actions</th>');
+        $headers .= config('forms.html.table-actions-header', '<th class="text-end">Actions</th>');
 
         return $headers;
     }
 
     /**
-         * The index body for the model
-         *
-         * @param \Illuminate\Database\Eloquent\Builder $query
-         * @return string
-         */
+     * The index body for the model
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @return string
+     */
     public function indexBody($query = null)
     {
         $fields = $this->parseVisibleFields($this->parseFields($this->fields()));
