@@ -20,8 +20,14 @@ trait HasIndex
     {
         $headers = '';
 
-        foreach ($this->parseVisibleFields($this->parseFields($this->fields())) as $header => $data) {
-            $header = $data['label'] ?? $header;
+        $columns = (! empty($this->indexColumns())) ? $this->indexColumns() : $this->parseVisibleFields($this->parseFields($this->fields()));
+
+        foreach ($columns as $header => $data) {
+            if (! is_array($data)) {
+                $data = (array) $data;
+            }
+
+            $header = (! is_numeric($header)) ? $data['label'] ?? $header : $data['label'] ?? $data['name'];
             $header = ucfirst($header);
             $order = 'desc';
 
@@ -41,6 +47,7 @@ trait HasIndex
                         'order' => $order,
                     ]
                 ));
+
                 $icon = config('forms.html.sortable-icon', '&#8597;');
 
                 if (request('order') && strtolower($header) === request('sort_by')) {
@@ -101,14 +108,30 @@ trait HasIndex
 
             $rows .= '<tr>';
 
-            foreach ($fields as $field => $data) {
+            $columns = (! empty($this->indexColumns())) ? $this->indexColumns() : $fields;
+
+            foreach ($columns as $field => $data) {
+                if (! is_array($data)) {
+                    $data = (array) $data;
+                }
+
                 $class = '';
+
+                if (is_numeric($field)) {
+                    $field = $data['name'];
+                }
 
                 if (! is_null($data['table_class'])) {
                     $class = " class=\"{$data['table_class']}\"";
                 }
 
-                $rows .= "<td{$class}>{$item->$field}</td>";
+                $format = $item->$field;
+
+                if ($data['template']) {
+                    $format = str_replace('{value}', $item->$field, $data['template']);
+                }
+
+                $rows .= "<td{$class}>{$format}</td>";
             }
 
             $rows .= '<td>';
@@ -161,11 +184,16 @@ EOT;
         return $this;
     }
 
+    public function indexColumns()
+    {
+        return [];
+    }
+
     /**
-         * Convert the items from the index to JSON
-         *
-         * @return string
-         */
+     * Convert the items from the index to JSON
+     *
+     * @return string
+     */
     public function toJson()
     {
         return $this->items->toJson();

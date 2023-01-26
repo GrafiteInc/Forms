@@ -384,6 +384,7 @@ class FieldMaker
                 'fieldClass' => $fieldClass,
                 'label' => $label,
                 'field' => $field,
+                'value' => $value,
                 'errors' => $errors,
                 'id' => $options['attributes']['id'],
                 'name' => $options['label'] ?? Str::of($column)->title()->replace('_', ' ')
