@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.15.0] - 2023-02-10
+
+### Added
+- New way of handling JS for fields
+
+### Changed
+- Code styles
+
 ## [v6.14.0] - 2023-01-26
 
 ### Added
