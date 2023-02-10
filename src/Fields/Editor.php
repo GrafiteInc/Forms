@@ -21,7 +21,7 @@ class Editor extends Field
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
         <div class="{rowClass}">
             <label for="{id}" class="{labelClass}">{name}</label>
             <div class="{fieldClass}">
@@ -30,14 +30,14 @@ class Editor extends Field
                 {errors}
             </div>
         </div>
-EOT;
+HTML;
     }
 
     public static function styles($id, $options)
     {
         $themes = [];
 
-        $themes['light'] = <<<EOT
+        $themes['light'] = <<<CSS
     .editor_js_container {
         border-radius: 4px;
         border: 1px solid #ced4da;
@@ -45,9 +45,9 @@ EOT;
         padding: 24px;
         width: 100%;
     }
-EOT;
+CSS;
 
-        $themes['dark'] = <<<EOT
+        $themes['dark'] = <<<CSS
     .editor_js_container {
         border-radius: 4px;
         border: 2px solid #333;
@@ -76,7 +76,7 @@ EOT;
         background: transparent;
         color: #FFF;
     }
-EOT;
+CSS;
 
         if (isset($options['theme'])) {
             $theme = $themes[$options['theme']];
@@ -86,7 +86,7 @@ EOT;
             $lightTheme = $themes['light'];
             $darkTheme = $themes['dark'];
 
-            $theme = <<<EOT
+            $theme = <<<CSS
     @media (prefers-color-scheme: light) {
         {$lightTheme}
     }
@@ -94,7 +94,7 @@ EOT;
     @media (prefers-color-scheme: dark) {
         {$darkTheme}
     }
-EOT;
+CSS;
         }
 
         return $theme;
@@ -123,73 +123,85 @@ EOT;
         ];
     }
 
-    public static function js($id, $options)
+    public static function onLoadJs($id, $options)
     {
-        $route = route($options['upload_route']);
-        $placeholder = $options['placeholder'] ?? 'Let`s write an awesome story!';
+        return '_formsjs_editorField';
+    }
 
-        if (is_null($route)) {
+    public static function onLoadJsData($id, $options)
+    {
+        if (is_null($options['upload_route'])) {
             throw new \Exception('You need to set an `upload_route` for handling image uploads to EditorJs.', 1);
         }
 
-        return <<<EOT
-let _Editor_{$id}_value = document.getElementById('{$id}').value;
+        return json_encode([
+            'route' => route($options['upload_route']),
+            'placeholder' => $options['placeholder'] ?? 'Let`s write an awesome story!',
+        ]);
+    }
 
-if (_Editor_{$id}_value == '') {
-    _Editor_{$id}_value = "null";
-}
+    public static function js($id, $options)
+    {
+        return <<<JS
+            _formsjs_editorField = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                let _Editor_value = element.value;
 
-const editor_{$id} = new EditorJS({
-    holder: 'Editor_{$id}',
-    placeholder: '{$placeholder}',
-    data: JSON.parse(_Editor_{$id}_value),
-    tools: {
-        header: Header,
-        delimiter: Delimiter,
-        paragraph: {
-            class: Paragraph,
-            inlineToolbar: true,
-        },
-        list: {
-            class: List,
-            inlineToolbar: true,
-        },
-        embed: Embed,
-        image: {
-            class: ImageTool,
-            config: {
-                additionalRequestHeaders: {
-                    "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
-                },
-                endpoints: {
-                    byFile: '{$route}',
+                if (element.value == '') {
+                    _Editor_value = "null";
                 }
+
+                let editor_js = new EditorJS({
+                    holder: 'Editor_'+element.getAttribute('id'),
+                    placeholder: _config.placeholder,
+                    data: JSON.parse(_Editor_value),
+                    tools: {
+                        header: Header,
+                        delimiter: Delimiter,
+                        paragraph: {
+                            class: Paragraph,
+                            inlineToolbar: true,
+                        },
+                        list: {
+                            class: List,
+                            inlineToolbar: true,
+                        },
+                        embed: Embed,
+                        image: {
+                            class: ImageTool,
+                            config: {
+                                additionalRequestHeaders: {
+                                    "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
+                                },
+                                endpoints: {
+                                    byFile: _config.route,
+                                }
+                            }
+                        },
+                        underline: Underline,
+                        table: Table,
+                        quote: Quote,
+                        checklist: Checklist,
+                        marker: Marker,
+                        inlineCode: InlineCode,
+                        code: CodeTool,
+                        raw: RawTool,
+                        warning: Warning
+                    },
+                });
+
+                let _form = element.form;
+
+                _form.addEventListener('submit', function () {
+                    editor_js.save().then((outputData) => {
+                        element.value = JSON.stringify(outputData);
+                    }).catch((error) => {
+                        console.log('Saving failed: ', error)
+                    });
+
+                    return true;
+                });
             }
-        },
-        underline: Underline,
-        table: Table,
-        quote: Quote,
-        checklist: Checklist,
-        marker: Marker,
-        inlineCode: InlineCode,
-        code: CodeTool,
-        raw: RawTool,
-        warning: Warning
-    },
-});
-
-let _form = document.getElementById('{$id}').form;
-
-_form.addEventListener('submit', function () {
-    editor_{$id}.save().then((outputData) => {
-        document.getElementById('{$id}').value = JSON.stringify(outputData);
-    }).catch((error) => {
-        console.log('Saving failed: ', error)
-    });
-
-    return true;
-});
-
-EOT;
+JS;
     }
 }

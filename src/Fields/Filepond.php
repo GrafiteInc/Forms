@@ -1,15 +1,15 @@
 <?php
 
-namespace App\Http\Forms\Fields;
+namespace Grafite\Forms\Fields;
 
 use Exception;
 use Grafite\Forms\Fields\Field;
 
-class FilePond extends Field
+class Filepond extends Field
 {
     protected static function getType()
     {
-        return 'file';
+        return 'hidden';
     }
 
     protected static function getAttributes()
@@ -39,18 +39,19 @@ class FilePond extends Field
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
 <div class="filepond-wrapper mb-4">
     <label for="{id}" class="{labelClass}">{name}</label>
-    <div class="filepond-previews"></div>
+    {field}
+    <div class="filepond-previews" {attributes}></div>
     {errors}
 </div>
-EOT;
+HTML;
     }
 
     public static function styles($id, $options)
     {
-        return <<<EOT
+        return <<<CSS
 .filepond-previews {
     border-radius: 4px;
     height: 250px;
@@ -60,57 +61,71 @@ EOT;
 .filepond--action-process-item{
     visibility:hidden;
 }
-EOT;
+CSS;
+    }
+
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_FilePondField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        if (empty($options['process_url'])) {
+            throw new Exception("Must have route for file uploads.", 1);
+        }
+
+        return json_encode([
+            'file_size' => $options['file_size'] ?? '25MB',
+            'process_url' => $options['process_url'] ?? null,
+            'submit_button' => $options['submit_button'] ?? 'button[type="submit"]',
+        ]);
     }
 
     public static function js($id, $options)
     {
         $url = url('/');
-        $fileSize = $options['file_size'] ?? '25MB';
-        $processUrl = $options['process_url'] ?? null;
-        $formSubmitBtn = $options['submit_button'] ?? 'button[type="submit"]';
-        $uploadResultField = $options['upload_result_field'] ?? null;
 
-        if (empty($processUrl)) {
-            throw new Exception("Must have route for file uploads.", 1);
-        }
+        return <<<JS
+            _formsjs_FilePondField = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-        if (empty($uploadResultField)) {
-            throw new Exception("You need to have a field to inject the upload results into.", 1);
-        }
-
-        return <<<EOT
-        $(function () {
-            $.fn.filepond.setDefaults({
-                maxFileSize: '{$fileSize}',
-                instantUpload: false,
-                allowMultiple: true
-            });
-
-            $('.filepond-previews').filepond();
-            $('.filepond-previews').filepond('setOptions', {
-                server: {
-                    url: '{$url}',
-                    process: '{$processUrl}',
-                }
-            });
-
-            let _form = $('.filepond-previews').parent().parent('form');
-            let _files = [];
-
-            $(_form).submit(function (e) {
-                e.preventDefault();
-                $('{$formSubmitBtn}').attr('disabled', 'disabled');
-
-                $('.filepond-previews').filepond('processFiles').then(files => {
-                    $('input[name="filepond"]').remove();
-
-                    $('{$uploadResultField}').val(files);
-
-                    _form[0].submit();
+                $.fn.filepond.setDefaults({
+                    maxFileSize: _config.size,
+                    instantUpload: false,
+                    allowMultiple: true
                 });
-            });
-        });
-EOT;
+
+                $('.filepond-previews').filepond();
+                $('.filepond-previews').filepond('setOptions', {
+                    server: {
+                        url: '{$url}',
+                        process: {
+                            url: '/'+_config.process_url,
+                            method: 'POST',
+                            headers: {
+                                "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
+                            }
+                        },
+                    }
+                });
+
+                let _form = $('.filepond-previews').parent().parent('form');
+                let _files = [];
+
+                $(_form).submit(function (e) {
+                    e.preventDefault();
+                    $(_config.submit_button).attr('disabled', 'disabled');
+
+                    $('.filepond-previews').filepond('processFiles').then(files => {
+                        $('input[name="filepond"]').remove();
+
+                        $(element).val(files);
+
+                        _form[0].submit();
+                    });
+                });
+            }
+JS;
     }
 }

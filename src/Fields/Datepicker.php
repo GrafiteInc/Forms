@@ -46,7 +46,7 @@ class Datepicker extends Field
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
-            $darkTheme = <<<EOT
+            $darkTheme = <<<CSS
 @media (prefers-color-scheme: dark) {
     :root {
         --datepicker-bg-color: #111;
@@ -56,11 +56,11 @@ class Datepicker extends Field
         --datepicker-highlight-color: var($color, "#EEE");
     }
 }
-EOT;
+CSS;
         }
 
         if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
-            $darkTheme = <<<EOT
+            $darkTheme = <<<CSS
 :root {
     --datepicker-bg-color: #111;
     --datepicker-color: #FFF;
@@ -68,10 +68,10 @@ EOT;
     --datepicker-header-color: var($color, "#EEE");
     --datepicker-highlight-color: var($color, "#EEE");
 }
-EOT;
+CSS;
         }
 
-        return <<<EOT
+        return <<<CSS
 :root {
     --datepicker-bg-color: #FFF;
     --datepicker-color: #FFF;
@@ -108,48 +108,62 @@ EOT;
 .qs-datepicker .qs-arrow.qs-right:after {
     border-left-color: var(--datepicker-color);
 }
-EOT;
+CSS;
+    }
+
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_DatepickerField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([
+            'startDay' => $options['start-day'] ?? 1,
+            'format' => $options['format'] ?? 'YYYY-MM-DD',
+            'event' => $options['event'] ?? 'keydown',
+            'wait' => $options['wait'] ?? 850,
+            'identity' => $options['identity'] ?? $id,
+        ]);
     }
 
     public static function js($id, $options)
     {
-        $startDay = $options['start-day'] ?? 1;
-        $format = $options['format'] ?? 'YYYY-MM-DD';
-        $event = $options['event'] ?? 'keydown';
-        $wait = $options['wait'] ?? 850;
-        $identity = $options['identity'] ?? $id;
+        return <<<JS
+        _formsjs_DatepickerField = function (element) {
+            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-        return <<<EOT
-var _{$id}Datepicker = datepicker("#{$id}", {
-  startDay: {$startDay},
-  id: "{$identity}",
-  dateSelected: (document.getElementById("{$id}").value) ? moment(document.getElementById("{$id}").value, "{$format}").toDate() : null,
-  formatter: (input, date, instance) => {
-      input.value = moment(date).format("{$format}");
-  }
-});
+            let _Datepicker = datepicker('#' + element.getAttribute('id'), {
+                startDay: _config.startDay,
+                id: _config.identity,
+                dateSelected: (element.value) ? moment(element.value, _config.format).toDate() : null,
+                formatter: (input, date, instance) => {
+                    input.value = moment(date).format(_config.format);
+                }
+            });
 
-const {$id}_datepicker_debounce = (func, wait) => {
-    let timeout;
+            let _datepicker_debounce = (func, wait) => {
+                let timeout;
 
-    return function executedFunction(...args) {
-        const later = () => {
-            clearTimeout(timeout);
-            func(...args);
-        };
+                return function executedFunction(...args) {
+                    const later = () => {
+                        clearTimeout(timeout);
+                        func(...args);
+                    };
 
-        clearTimeout(timeout);
-        timeout = setTimeout(later, wait);
-    };
-};
+                    clearTimeout(timeout);
+                    timeout = setTimeout(later, wait);
+                };
+            };
 
-const {$id}_debounce = {$id}_datepicker_debounce(function() {
-    _{$id}Datepicker.hide();
-	let date = moment(document.getElementById("{$id}").value, "{$format}").toDate();
-    _{$id}Datepicker.setDate(date, true);
-}, {$wait});
+            let _debounce = _datepicker_debounce(function () {
+                _Datepicker.hide();
+                let date = moment(element.value, _config.format).toDate();
+                _Datepicker.setDate(date, true);
+            }, _config.wait);
 
-document.getElementById("{$id}").addEventListener('{$event}', {$id}_debounce);
-EOT;
+            element.addEventListener(_config.event, _debounce);
+        }
+JS;
     }
 }

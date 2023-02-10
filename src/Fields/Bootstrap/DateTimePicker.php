@@ -45,7 +45,7 @@ class DateTimePicker extends Field
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
-            $darkTheme = <<<EOT
+            $darkTheme = <<<CSS
 @media (prefers-color-scheme: dark) {
     .tempus-dominus-widget {
         border: 2px solid #333;
@@ -76,47 +76,60 @@ class DateTimePicker extends Field
         background-color: #111;
     }
 }
-EOT;
+CSS;
         }
 
-        return <<<EOT
+        return <<<CSS
         .tempus-dominus-widget {
             z-index: 90000;
         }
 {$darkTheme}
-EOT;
+CSS;
+    }
+
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_datetimePickerField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([
+            'format' => $options['format'] ?? 'LLLL',
+            'defaultDate' => $options['defaultDate'] ?? false,
+        ]);
     }
 
     public static function js($id, $options)
     {
-        $defaultDateCode = '';
-        $format = $options['format'] ?? 'LLLL';
-        $defaultDate = $options['defaultDate'] ?? false;
+        return <<<JS
+        _formsjs_datetimePickerField = function (element) {
+            var _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+            let _dateTimeConfig = {
+                hooks: {
+                    inputFormat:(context, date) => {
+                        if (date) {
+                            return moment(date).format(_config.format);
+                        }
 
-        if ($defaultDate) {
-            $defaultDateCode = 'defaultDate: "' . $defaultDate . '",';
-        }
+                        return null;
+                    }
+                }
+            };
 
-        return <<<EOT
- new tempusDominus.TempusDominus(document.getElementById('{$id}'), {
-     {$defaultDateCode}
-     hooks: {
-         inputFormat:(context, date) => {
-             if (date) {
-                 return moment(date).format('{$format}');
+            if (_config.defaultDate) {
+                _dateTimeConfig.defaultDate = _config.defaultDate;
             }
 
-            return null;
-        }
-     }
- });
+            new tempusDominus.TempusDominus(element, _dateTimeConfig);
 
-document.getElementById('{$id}').addEventListener('change.td', function (event) {
-     document.getElementById('{$id}').value = moment(event.detail.date).format('{$format}');
-     let _event = new Event('change');
-     document.getElementById('{$id}').dispatchEvent(_event);
-     document.getElementById('{$id}').dispatchEvent(new Event('input'));
-});
-EOT;
+            element.addEventListener('change.td', function (event) {
+                element.value = moment(event.detail.date).format(_config.format);
+                let _event = new Event('change');
+                element.dispatchEvent(_event);
+                element.dispatchEvent(new Event('input'));
+            });
+        }
+JS;
     }
 }

@@ -48,14 +48,24 @@ class Tags extends Field
 EOT;
     }
 
+    public static function onLoadJs($id, $options)
+    {
+        return "_formjs_tagify";
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode($options['list'] ?? []);
+    }
+
     public static function js($id, $options)
     {
-        $list = $options['list'] ?? '[]';
-
-        return <<<EOT
-new Tagify (document.getElementById('{$id}'), {
-    whitelist: {$list}
-});
-EOT;
+        return <<<JS
+        window._formsjs_tagify = function (element) {
+            new Tagify (element, {
+                whitelist: JSON.parse(element.getAttribute('data-formsjs-data'))
+            });
+        }
+JS;
     }
 }

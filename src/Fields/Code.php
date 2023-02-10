@@ -45,17 +45,31 @@ class Code extends Field
         ];
     }
 
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_codeField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([
+            'mode' => $options['mode'] ?? 'htmlmixed',
+            'theme' => $options['theme'] ?? 'default',
+        ]);
+    }
+
     public static function js($id, $options)
     {
-        $mode = $options['mode'] ?? 'htmlmixed';
-        $theme = $options['theme'] ?? 'default';
+        return <<<JS
+        _formsjs_codeField = function (element) {
+            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-        return <<<EOT
-CodeMirror.fromTextArea(document.getElementById("$id"), {
-    lineNumbers: true,
-    mode: '$mode',
-    theme: '$theme',
-});
-EOT;
+            CodeMirror.fromTextArea(element, {
+                lineNumbers: true,
+                mode: _config.mode,
+                theme: _config.theme,
+            });
+        }
+JS;
     }
 }

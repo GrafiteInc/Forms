@@ -42,7 +42,7 @@ class Quill extends Field
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
-            $darkTheme = <<<EOT
+            $darkTheme = <<<CSS
     @media (prefers-color-scheme: dark) {
         .ql-container.ql-snow {
             border: 1px solid #111;
@@ -98,11 +98,11 @@ class Quill extends Field
             color: #FFF !important;
         }
     }
-EOT;
+CSS;
         }
 
         if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
-            $darkTheme = <<<EOT
+            $darkTheme = <<<CSS
     .ql-container.ql-snow {
         border: 1px solid #111;
     }
@@ -149,10 +149,10 @@ EOT;
         background-color: #111;
         border: 1px solid transparent;
     }
-EOT;
+CSS;
         }
 
-        return <<<EOT
+        return <<<CSS
     .ql-container {
         font-size: 16px;
         border-bottom-left-radius: 8px;
@@ -216,7 +216,7 @@ EOT;
     }
 
     {$darkTheme}
-EOT;
+CSS;
     }
 
     public static function scripts($options)
@@ -229,7 +229,7 @@ EOT;
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -238,10 +238,15 @@ EOT;
         {errors}
     </div>
 </div>
-EOT;
+HTML;
     }
 
-    public static function js($id, $options)
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_quillField';
+    }
+
+    public static function onLoadJsData($id, $options)
     {
         $route = null;
 
@@ -271,122 +276,122 @@ EOT;
             throw new \Exception('You need to set an `upload_route` for handling image uploads to Quill.', 1);
         }
 
-        $basic = ($toolbars->contains('basic')) ? "['bold', 'italic', 'underline', 'strike', { 'align': [] }, 'link']," : '';
-        $extra = ($toolbars->contains('extra')) ? "['blockquote', 'code-block', 'divider']," : '';
-        $lists = ($toolbars->contains('lists')) ? "[{ 'list': 'ordered'}, { 'list': 'bullet' }, { 'list': 'check' }]," : '';
-        $superSub = ($toolbars->contains('super_sub')) ? "[{ 'script': 'sub'}, { 'script': 'super' }]," : '';
-        $indents = ($toolbars->contains('indents')) ? "[{ 'indent': '-1'}, { 'indent': '+1' }]," : '';
-        $headers = ($toolbars->contains('headers')) ? "[{ 'header': [1, 2, 3, 4, 5, 6, false] }]," : '';
-        $colors = ($toolbars->contains('colors')) ? "[{ 'color': [] }, { 'background': [] }]," : '';
-        $image = ($toolbars->contains('image')) ? "['image']," : '';
-        $video = ($toolbars->contains('video')) ? "['video']," : '';
+        $container = [
+            ($toolbars->contains('basic')) ? ['bold', 'italic', 'underline', 'strike', ['align' => []], 'link'] : [],
+            ($toolbars->contains('extra')) ? ['blockquote', 'code-block', 'divider'] : [],
+            ($toolbars->contains('lists')) ? [['list' => 'ordered'], ['list' => 'bullet'], ['list' => 'check']] : [],
+            ($toolbars->contains('super_sub')) ? [['script' => 'sub'], ['script' => 'super']] : [],
+            ($toolbars->contains('indents')) ? [['indent' => '-1', 'indent' => '+1']] : [],
+            ($toolbars->contains('headers')) ? [['header' => [1, 2, 3, 4, 5, 6, false]]] : [],
+            ($toolbars->contains('colors')) ? [['color' => []], ['background' => []]] : [],
+            ($toolbars->contains('image')) ? ['image'] : [],
+            ($toolbars->contains('video')) ? ['video'] : [],
+        ];
 
-        $defaultUploader = <<<EOT
-        function () {
-            let _{$id}FileInput = this.container.querySelector('input.ql-image[type=file]');
+        return json_encode([
+            'route' => $route,
+            'theme' => $theme,
+            'placeholder' => $placeholder,
+            'container' => $container,
+            'markdown' => $options['quill_markdown'] ?? false,
+        ]);
+    }
 
-            if (_{$id}FileInput == null) {
-                _{$id}FileInput = document.createElement('input');
-                _{$id}FileInput.setAttribute('type', 'file');
-                _{$id}FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
-                _{$id}FileInput.classList.add('ql-image');
-                _{$id}FileInput.addEventListener('change', () => {
-                    const files = _{$id}FileInput.files;
-                    const range = this.quill.getSelection(true);
+    public static function js($id, $options)
+    {
+        return <<<JS
+            _formsjs_quillField = function (element) {
+                let _id = element.getAttribute('id');
+                let _instance = '_formsjs_'+ _id + '_Quill';
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                let _editor_icons = Quill.import('ui/icons');
+                    _editor_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
 
-                    if (!files || !files.length) {
-                        console.log('No files selected');
-                        return;
+                let _editor_toolbarOptions = {
+                    icons: _editor_icons,
+                    container: _config.container,
+                    handlers: {
+                        image: function () {
+                            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                            let _FileInput = this.container.querySelector('input.ql-image[type=file]');
+
+                            if (_FileInput == null) {
+                                _FileInput = document.createElement('input');
+                                _FileInput.setAttribute('type', 'file');
+                                _FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+                                _FileInput.classList.add('ql-image');
+                                _FileInput.addEventListener('change', () => {
+                                    const files = _FileInput.files;
+                                    const range = this.quill.getSelection(true);
+
+                                    if (!files || !files.length) {
+                                        console.log('No files selected');
+                                        return;
+                                    }
+
+                                    const _FileFormData = new FormData();
+                                    _FileFormData.append('image', files[0]);
+
+                                    this.quill.enable(false);
+
+                                    window.axios
+                                        .post(_config.route, _FileFormData)
+                                        .then(response => {
+                                            this.quill.enable(true);
+                                            let range = this.quill.getSelection(true);
+                                            this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
+                                            this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                                            _FileInput.value = '';
+                                        })
+                                        .catch(error => {
+                                            console.log('Image upload failed');
+                                            console.log(error);
+                                            this.quill.enable(true);
+                                        });
+                                });
+                                this.container.appendChild(_FileInput);
+                            }
+                            _FileInput.click();
+                        },
+                        'divider': function (value) {
+                            let range = window[_instance].getSelection(true);
+                            window[_instance].insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
+                        }
                     }
+                };
 
-                    const _{$id}FileFormData = new FormData();
-                    _{$id}FileFormData.append('image', files[0]);
+                if (! BlockEmbed) {
+                    var BlockEmbed = Quill.import('blots/block/embed');
+                    class DividerBlot extends BlockEmbed { }
+                        DividerBlot.blotName = 'divider';
+                        DividerBlot.tagName = 'hr';
 
-                    this.quill.enable(false);
+                    Quill.register(DividerBlot);
+                }
 
-                    window.axios
-                        .post('{$route}', _{$id}FileFormData)
-                        .then(response => {
-                            this.quill.enable(true);
-                            let range = this.quill.getSelection(true);
-                            this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
-                            this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
-                            _{$id}FileInput.value = '';
-                        })
-                        .catch(error => {
-                            console.log('Image upload failed');
-                            console.log(error);
-                            this.quill.enable(true);
-                        });
+                window[_instance] = new Quill('#'+_id+'_Editor', {
+                    theme: _config.theme,
+                    placeholder: _config.placeholder,
+                    modules: {
+                        toolbar: _editor_toolbarOptions
+                    }
                 });
-                this.container.appendChild(_{$id}FileInput);
-            }
-            _{$id}FileInput.click();
-        }
-EOT;
 
-        $uploader = $options['uploader'] ?? $defaultUploader;
+                if (_config.markdown) {
+                    new QuillMarkdown(window[_instance]);
+                }
 
-        $markdown = (isset($options['quill_markdown']) && $options['quill_markdown']) ? "var {$id}_Quill_Markdown = new QuillMarkdown({$id}_Quill);" : '';
+                document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
+                    window[_instance].on('editor-change', function () {
+                        element.value = document.getElementById(_id+'_Editor').firstChild.innerHTML;
+                        let event = new Event('change', { 'bubbles': true });
+                        element.dispatchEvent(event);
+                    });
 
-        return <<<EOT
-var _editor_{$id}_icons = Quill.import('ui/icons');
-    _editor_{$id}_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
-
-var _editor_{$id}_dividerHandler = function (value) {
-  let range = {$id}_Quill.getSelection(true);
-  {$id}_Quill.insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
-}
-
-var _editor_{$id}_toolbarOptions = {
-    icons: _editor_{$id}_icons,
-    container: [
-        {$basic}
-        {$extra}
-        {$lists}
-        {$superSub}
-        {$indents}
-        {$headers}
-        {$colors}
-        {$image}
-        {$video}
-        ['clean']
-    ],
-    handlers: {
-        image: {$uploader},
-        'divider': _editor_{$id}_dividerHandler
-    }
-};
-
-if (! BlockEmbed) {
-var BlockEmbed = Quill.import('blots/block/embed');
-class DividerBlot extends BlockEmbed { }
-    DividerBlot.blotName = 'divider';
-    DividerBlot.tagName = 'hr';
-
-Quill.register(DividerBlot);
-}
-
-var {$id}_Quill = new Quill('#{$id}_Editor', {
-    theme: '{$theme}',
-    placeholder: '{$placeholder}',
-    modules: {
-        toolbar: _editor_{$id}_toolbarOptions
-    }
-});
-
-{$markdown}
-
-document.getElementById('{$id}_Editor').firstChild.innerHTML = document.getElementById('{$id}').value;
-{$id}_Quill.on('editor-change', function () {
-    document.getElementById('{$id}').value = document.getElementById('{$id}_Editor').firstChild.innerHTML;
-    let event = new Event('change', { 'bubbles': true });
-    document.getElementById('{$id}').dispatchEvent(event);
-});
-
-if (document.getElementById('{$id}').disabled) {
-    {$id}_Quill.enable(false)
-}
-EOT;
+                    if (element.disabled) {
+                        window[_instance].enable(false)
+                    }
+            };
+JS;
     }
 }

@@ -256,13 +256,40 @@ class Field
     }
 
     /**
-     * Field related JavaScript
+     * Field related JavaScript - this should be writting with the pattern below
+     * It helps ensure that the method can be called when the item is loaded
+     * which resolves times when we have to dynamically load content
+     *  ex: window._formsjs_fieldMethod(field)
      *
      * @param string $id
      * @param array $options
      * @return string|null
      */
     public static function js($id, $options)
+    {
+        return null;
+    }
+
+    /**
+     * Field related JavaScript when the element is generated in the DOM
+     *
+     * @param string $id
+     * @param array $options
+     * @return string|null
+     */
+    public static function onLoadJs($id, $options)
+    {
+        return null;
+    }
+
+    /**
+     * Field related JavaScript Data for when the element is loaded in the DOM
+     *
+     * @param string $id
+     * @param array $options
+     * @return string|null
+     */
+    public static function onLoadJsData($id, $options)
     {
         return null;
     }

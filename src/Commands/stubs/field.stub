@@ -69,15 +69,45 @@ class DummyClass extends Field
     }
 
     /**
-         * Field related JavaScript
-         *
-         * @param string $id
-         * @param array $options
-         * @return string|null
-         */
+     * The onload method call for when FormsJS loads
+     *
+     * @param integer $id
+     * @param array $options
+     * @return string
+     */
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_DummyClass';
+    }
+
+    /**
+     * The config details passed to the field for its onload method call
+     *
+     * @param integer $id
+     * @param array $options
+     * @return string
+     */
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([]);
+    }
+
+    /**
+     * Field related JavaScript for onload call
+     *
+     * @param integer $id
+     * @param array $options
+     * @return string|null
+     */
     public static function js($id, $options)
     {
-        return null;
+        return <<<JS
+            _formsjs_DummyClass = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+
+                // put JS code here
+            }
+        JS;
     }
 
     /**

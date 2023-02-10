@@ -19,7 +19,7 @@ class CustomFile extends Field
     protected static function getAttributes()
     {
         return [
-            'onChange' => 'window.FormMaker_customFile(this);'
+            'onChange' => '_formsjs_customfileField(this);'
         ];
     }
 
@@ -30,7 +30,7 @@ class CustomFile extends Field
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -38,15 +38,15 @@ class CustomFile extends Field
     </div>
     {errors}
 </div>
-EOT;
+HTML;
     }
 
     public static function js($id, $options)
     {
-        return <<<EOT
-window.FormMaker_customFile = function (input) {
-    input.nextElementSibling.innerHTML = input.files[0].name;
-}
-EOT;
+        return <<<JS
+            _formsjs_customfileField = function (input) {
+                input.nextElementSibling.innerHTML = input.files[0].name;
+            }
+JS;
     }
 }

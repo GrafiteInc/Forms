@@ -38,16 +38,24 @@ class Rating extends Field
         ];
     }
 
+    public static function onLoadJsData($id, $options)
+    {
+        return $options['theme'] ?? 'fontawesome-stars-o';
+    }
+
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_rating_field';
+    }
+
     public static function js($id, $options)
     {
-        $theme = $options['theme'] ?? 'fontawesome-stars-o';
-
         return <<<JS
-            $(function() {
-                $('#{$id}').barrating({
-                    theme: '{$theme}'
-                });
+        _formsjs_rating_field = function (element) {
+            $(element).barrating({
+                theme: element.getAttribute('data-formsjs-onload-data')
             });
+        }
 JS;
     }
 }

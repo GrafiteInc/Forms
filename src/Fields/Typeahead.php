@@ -44,7 +44,7 @@ class Typeahead extends Field
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -58,21 +58,35 @@ class Typeahead extends Field
         </div>
     </div>
 </div>
-EOT;
+HTML;
+    }
+
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_typeaheadField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([
+            'matches' => json_decode($options['matches']),
+        ]);
     }
 
     public static function js($id, $options)
     {
-        $values = $options['matches'];
+        return <<<JS
+            _formsjs_typeaheadField = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-        return <<<EOT
-$.typeahead({
-    input: '#{$id}',
-    order: "desc",
-    source: {
-        data: {$values}
-    }
-});
-EOT;
+                $.typeahead({
+                    input: '#' + element.getAttribute('id'),
+                    order: "desc",
+                    source: {
+                        data: _config.matches
+                    }
+                });
+            }
+JS;
     }
 }

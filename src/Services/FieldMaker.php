@@ -6,6 +6,7 @@ use Illuminate\Support\Str;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Traits\HasLivewire;
 use Grafite\Forms\Builders\FieldBuilder;
+use Grafite\Forms\Builders\AttributeBuilder;
 
 class FieldMaker
 {
@@ -378,6 +379,8 @@ class FieldMaker
                 $fieldClass = config('forms.form.input-column', 'col-md-10');
             }
 
+            $name = $options['label'] ?? Str::of($column)->title()->replace('_', ' ');
+
             return $this->fieldTemplate($columnConfig['template'], [
                 'rowClass' => $rowClass,
                 'labelClass' => $labelClass,
@@ -386,8 +389,9 @@ class FieldMaker
                 'field' => $field,
                 'value' => $value,
                 'errors' => $errors,
+                'attributes' => app(AttributeBuilder::class)->render($options['attributes'], $name),
                 'id' => $options['attributes']['id'],
-                'name' => $options['label'] ?? Str::of($column)->title()->replace('_', ' ')
+                'name' => $name
             ]);
         }
 

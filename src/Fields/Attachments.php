@@ -28,118 +28,135 @@ class Attachments extends Field
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
 <div class="form-group">
     <label for="{id}" class="{labelClass}">{name}</label>
     {field}
     <div class="attachments-list"></div>
     {errors}
 </div>
-EOT;
+HTML;
     }
 
-    public static function styles($id, $options)
+    public static function onLoadJs($id, $options)
     {
-        return '';
+        return '_formsjs_AttachmentsField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([
+            'delete_button' => $options['deleteButton'],
+            'input_class' => $options['inputClass'],
+        ]);
     }
 
     public static function js($id, $options)
     {
         $listGroup = config('forms.html.list-group', 'list-group list-group-flush');
         $listGroupItem = config('forms.html.list-group-item', 'list-group-item');
-        $badge = config('forms.html.badge-tag', 'badge badge-primary float-right');
+        $badge = config('forms.html.badge-tag', 'badge badge-primary float-end');
 
-        $deleteButton = $options['deleteButton'];
-        $inputClass = $options['inputClass'];
+        return <<<JS
+            let _formsjs_attachmentBindings = function (element) {
+                element.addEventListener('change', function () {
+                    let _id = element.getAttribute('id');
+                    let _class = element.getAttribute('class');
+                    let filename = this.value;
+                    this.setAttribute('id', 'attachment_' + _formsjs_attachments.length);
+                    this.setAttribute('style', 'display: none;');
+                    let _inputContainer = element.parentNode.parentNode.querySelector('.custom-file');
 
-        return <<<EOT
-var Forms_attachments = [];
-let Forms_listAttachments = function (attachments) {
-    let _list = document.querySelector('.attachments-list');
-        _list.innerHTML = "";
-    let filesElement = document.createElement('ul');
-        filesElement.className = '{$listGroup}';
+                    let _inputField = document.createElement('input');
+                        _inputField.setAttribute('type', 'file');
+                        _inputField.setAttribute('id', _id);
+                        _inputField.setAttribute('name', 'attachments[]');
+                        _inputField.setAttribute('class', _class);
+                        _inputField.setAttribute('data-formsjs-onload-data', element.getAttribute('data-formsjs-onload-data'));
+                        _inputField.setAttribute('data-formsjs-onload', element.getAttribute('data-formsjs-onload'));
 
-    for (let i = 0; i < attachments.length; i++) {
-        let attachment = attachments[i];
 
-        for (let j = 0; j < attachment.files.length; j++) {
-            let file = attachment.files[j];
+                    _inputContainer.appendChild(_inputField);
 
-            var sizes = ['B', 'KB', 'MB', 'GB'];
-            fileSize = file.size;
-            var sizeIndex = 0;
+                    if (filename !== '') {
+                        _formsjs_attachments.push(this);
+                    }
 
-            while (fileSize > 1024) {
-              sizeIndex++;
-              fileSize = fileSize/1024;
-            }
-
-            fileSize = Math.round(fileSize*10) / 10 + sizes[sizeIndex];
-            let _name = file.name.substring(0, 30);
-
-            if (file.name.length > 30) {
-                _name = _name + '...';
-            }
-
-            let nameSpan = document.createElement('span');
-                nameSpan.innerText = _name;
-
-            let fileSizeBadge = document.createElement('span');
-                fileSizeBadge.innerText = fileSize;
-                fileSizeBadge.className = '{$badge}';
-
-            let deleteIcon = document.createElement('span');
-                deleteIcon.className = 'fas fa-trash';
-            let deleteButton = document.createElement('button');
-                deleteButton.className = '{$deleteButton}';
-                deleteButton.appendChild(deleteIcon);
-                deleteButton.addEventListener('click', event => {
-                    event.preventDefault();
-                    document.getElementById(attachment.getAttribute('id')).remove();
-                    attachments.splice(i, 1);
-                    Forms_listAttachments(attachments);
+                    _formsjs_attachmentsList(_inputField);
+                    _formsjs_attachmentBindings(_inputField);
                 });
+            }
 
-            let fileElement = document.createElement('li');
-                fileElement.classList.add('{$listGroupItem}');
-                fileElement.appendChild(nameSpan);
-                fileElement.appendChild(deleteButton);
-                fileElement.appendChild(fileSizeBadge);
+            _formsjs_attachmentsList = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                let attachments = _formsjs_attachments;
 
-            filesElement.appendChild(fileElement);
-        }
-    }
+                let _list = element.parentNode.parentNode.querySelector('.attachments-list');
+                    _list.innerHTML = "";
+                let filesElement = document.createElement('ul');
+                    filesElement.className = '{$listGroup}';
 
-    document.querySelector('.attachments-list').appendChild(filesElement);
-}
+                for (let i = 0; i < attachments.length; i++) {
+                    let attachment = attachments[i];
 
-let Forms_setAttachmentBindings = function () {
-    document.getElementById('{$id}').addEventListener('change', function () {
-        let filename = this.value;
-        this.setAttribute('id', 'attachment_' + Forms_attachments.length);
-        this.setAttribute('style', 'display: none;');
-        let _inputContainer = document.querySelector('.custom-file');
+                    for (let j = 0; j < attachment.files.length; j++) {
+                        let file = attachment.files[j];
 
-        let _inputField = document.createElement('input');
-            _inputField.setAttribute('type', 'file');
-            _inputField.setAttribute('id', '{$id}');
-            _inputField.setAttribute('name', 'attachments[]');
-            _inputField.setAttribute('class', '{$inputClass}');
+                        var sizes = ['B', 'KB', 'MB', 'GB'];
+                        fileSize = file.size;
+                        var sizeIndex = 0;
 
-        _inputContainer.appendChild(_inputField);
+                        while (fileSize > 1024) {
+                            sizeIndex++;
+                            fileSize = fileSize/1024;
+                        }
 
-        if (filename !== '') {
-            Forms_attachments.push(this);
-        }
+                        fileSize = Math.round(fileSize*10) / 10 + sizes[sizeIndex];
+                        let _name = file.name.substring(0, 30);
 
-        Forms_listAttachments(Forms_attachments);
+                        if (file.name.length > 30) {
+                            _name = _name + '...';
+                        }
 
-        Forms_setAttachmentBindings();
-    });
-}
+                        let nameSpan = document.createElement('span');
+                            nameSpan.innerText = _name;
 
-Forms_setAttachmentBindings();
-EOT;
+                        let fileSizeBadge = document.createElement('span');
+                            fileSizeBadge.innerText = fileSize;
+                            fileSizeBadge.className = '{$badge}';
+
+                        let deleteIcon = document.createElement('span');
+                            deleteIcon.className = 'fas fa-trash';
+                        let deleteButton = document.createElement('button');
+                            deleteButton.className = _config.delete_button;
+                            deleteButton.appendChild(deleteIcon);
+                            deleteButton.addEventListener('click', event => {
+                                event.preventDefault();
+                                document.getElementById(attachment.getAttribute('id')).remove();
+                                attachments.splice(i, 1);
+                                _formsjs_attachmentsList(element);
+                            });
+
+                        let fileElement = document.createElement('li');
+                            fileElement.classList.add('{$listGroupItem}');
+                            fileElement.appendChild(nameSpan);
+                            fileElement.appendChild(deleteButton);
+                            fileElement.appendChild(fileSizeBadge);
+
+                        filesElement.appendChild(fileElement);
+                    }
+                }
+
+                element.parentNode.parentNode.querySelector('.attachments-list').appendChild(filesElement);
+            }
+
+            _formsjs_AttachmentsField = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                _formsjs_attachments = [];
+
+                _formsjs_attachmentsList(element);
+                _formsjs_attachmentBindings(element);
+            }
+JS;
     }
 }

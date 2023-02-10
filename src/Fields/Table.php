@@ -2,7 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
 
 class Table extends Field
@@ -27,93 +26,110 @@ class Table extends Field
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
 <div class="form-group">
     <label for="{id}" class="{labelClass}">{name}</label>
     {field}
     {errors}
 </div>
-EOT;
+HTML;
     }
 
-    public static function styles($id, $options)
+    public static function onLoadJs($id, $options)
     {
-        return '';
+        return '_formsjs_tableField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([
+            'columns' => $options['columns'],
+        ]);
     }
 
     public static function js($id, $options)
     {
-            $rows = [0];
-            $fields = '';
-            $id = Str::of($id)->lower();
+        return <<<JS
+            _formsjs_tableCreateRow = function (element, item, _template) {
+                let _id = element.getAttribute('id');
+                let _rowCount = document.querySelectorAll('.'+_id+'-item-row').length;
+                let _rowCountLast = _rowCount++;
+                let _nextItem = _template.cloneNode(true);
+                    _nextItem.setAttribute('data-item-number', _rowCountLast);
+                        let _rowName = `\${_id}[\${_rowCountLast}][]`;
 
-            foreach ($rows as $row) {
-                $fields .= "<div class=\"input-group mb-3 {$id}-item-row\" data-item-number=\"{$row}\">";
-                foreach (range(1, $options['columns'] ?? 2) as $column) {
-                    $fields .= "<input name=\"{$id}[{$row}][]\" type=\"text\" class=\"form-control {$id}-item-input\" placeholder=\"\">";
+                    _nextItem.querySelectorAll(`.\${_id}-item-input`).forEach(function (_input, index) {
+                        _input.setAttribute('name', _rowName);
+                        if (typeof item[index] != 'undefined') {
+                            _input.value = item[index];
+                        }
+                    });
+                    _nextItem.querySelectorAll(`.\${_id}-remove-item`).forEach(function (_input) {
+                        _input.setAttribute('data-item-number', _rowCountLast);
+                    });
+                    _nextItem.querySelectorAll(`.\${_id}-add-item`).forEach(function (_input) {
+                        _input.setAttribute('data-item-number', _rowCountLast);
+                    });
+
+                    element.parentNode.appendChild(_nextItem);
+            }
+
+            _formsjs_tableRemoveRow = function (e) {
+                e.preventDefault();
+                let _row = e.target;
+                if (e.target.matches('.fa.fa-minus')) {
+                    _row = e.target.parentNode;
                 }
-                $fields .= "<button class=\"btn btn-outline-secondary {$id}-remove-item\" type=\"button\" data-item-number=\"{$row}\" onclick=\"window.Forms_removeItemAction_{$id}(event)\"><span class=\"fa fa-minus\"></span></button>";
-                $fields .= "<button class=\"btn btn-outline-secondary {$id}-add-item\" type=\"button\" data-item-number=\"{$row}\" onclick=\"window.Forms_addItemAction_{$id}(event)\"><span class=\"fa fa-plus\"></span></button>";
-                $fields .= '</div>';
+                let _number = _row.getAttribute('data-item-number');
+                let _element = e.target.parentNode.closest('.form-group').querySelector('input[data-formsjs-onload]');
+                let _id = _element.getAttribute('id');
+
+                document.querySelector(`.\${_id}-item-row[data-item-number="\${_number}"]`).remove();
             }
 
-        return <<<EOT
-window.Forms_lastTableRowHtml_{$id} = '$fields';
-window.Forms_lastTableRow_{$id} = new DOMParser().parseFromString(window.Forms_lastTableRowHtml_{$id}, "text/html").body.firstElementChild;
+            _formsjs_tableAddItem = function (e) {
+                e.preventDefault();
+                let _row = e.target;
+                if (e.target.matches('.fa.fa-plus')) {
+                    _row = e.target.parentNode;
+                }
 
-window.Forms_createItemRow_{$id} = function (item) {
-    let _rowCount = document.querySelectorAll('.{$id}-item-row').length;
-    let _rowCountLast = _rowCount++;
-    let _nextItem = window.Forms_lastTableRow_{$id}.cloneNode(true);
-        _nextItem.setAttribute('data-item-number', _rowCountLast);
-        let _rowName = '{$id}[' + _rowCountLast + '][]';
-        _nextItem.querySelectorAll('.{$id}-item-input').forEach(function (_input, index) {
-            _input.setAttribute('name', _rowName);
-            if (typeof item[index] != 'undefined') {
-                _input.value = item[index];
+                let _element = _row.parentNode.closest('.form-group').querySelector('input[data-formsjs-onload]');
+                // TODO can I clean up the input elements inside this "template"
+                _formsjs_tableCreateRow(_element, _row, _row.parentNode);
             }
-        });
-        _nextItem.querySelectorAll('.{$id}-remove-item').forEach(function (_input) {
-            _input.setAttribute('data-item-number', _rowCountLast);
-        });
-        _nextItem.querySelectorAll('.{$id}-add-item').forEach(function (_input) {
-            _input.setAttribute('data-item-number', _rowCountLast);
-        });
-    window.Forms_rootTableForm_{$id}.appendChild(_nextItem);
-}
 
-window.Forms_addItemAction_{$id} = function (e) {
-    e.preventDefault();
-    let _row = e.target;
-    if (e.target.matches('.fa.fa-plus')) {
-        _row = e.target.parentNode;
-    }
-    window.Forms_createItemRow_{$id}(_row);
-}
+            _formsjs_getTableRowTemplate = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                let _template = '';
+                let _id = element.getAttribute('id');
 
-window.Forms_removeItemAction_{$id} = function (e) {
-    e.preventDefault();
-    let _row = e.target;
-    if (e.target.matches('.fa.fa-minus')) {
-        _row = e.target.parentNode;
-    }
-    let _number = _row.getAttribute('data-item-number');
-    document.querySelector('.{$id}-item-row[data-item-number="'+_number+'"]').remove();
-}
+                [0].forEach (function (_row) {
+                    _template += `<div class="input-group mb-3 \${_id}-item-row" data-item-number="\${_row}">`;
+                    [...Array(_config.columns).keys()].forEach (function (_column) {
+                        _template += `<input name="\${_id}[\${_row}][]" type="text" class="form-control \${_id}-item-input">`;
+                    });
+                    _template += `<button class="btn btn-outline-secondary \${_id}-remove-item" type="button" data-item-number="\${_row}" onclick="_formsjs_tableRemoveRow(event)"><span class="fa fa-minus"></span></button>`;
+                    _template += `<button class="btn btn-outline-secondary \${_id}-add-item" type="button" data-item-number="\${_row}" onclick="_formsjs_tableAddItem(event)"><span class="fa fa-plus"></span></button>`;
+                    _template += `</div>`;
+                });
 
-window.Forms_rootTableInput_{$id} = document.querySelector('input[name="{$id}"][type="hidden"]');
-window.Forms_rootTableForm_{$id} = window.Forms_rootTableInput_{$id}.parentNode;
+                return _template;
+            }
 
-if (window.Forms_rootTableInput_{$id}.value) {
-    window.Forms_tableInputValue_{$id} = JSON.parse(window.Forms_rootTableInput_{$id}.value);
-    window.Forms_tableInputValue_{$id}.forEach(function (item) {
-        window.Forms_createItemRow_{$id}(item);
-    });
-} else {
-    window.Forms_createItemRow_{$id}([]);
-}
+            _formsjs_tableField = function (element) {
+                _tableRowTemplate = _formsjs_getTableRowTemplate(element);
+                _tableLastRow = new DOMParser().parseFromString(_tableRowTemplate, "text/html").body.firstElementChild;
 
-window.Forms_rootTableInput_{$id}.remove();
-EOT;
+                if (element.value) {
+                    let _tableValue = JSON.parse(element.value);
+                        _tableValue.forEach(function (item) {
+                            _formsjs_tableCreateRow(element, item, _tableLastRow);
+                        });
+                } else {
+                    _formsjs_tableCreateRow(element, [], _tableLastRow);
+                }
+            }
+JS;
     }
 }

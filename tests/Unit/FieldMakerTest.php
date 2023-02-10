@@ -7,6 +7,7 @@ use Grafite\Forms\Fields\Text;
 use Grafite\Forms\Fields\Table;
 use Grafite\Forms\Fields\HasOne;
 use Grafite\Forms\Fields\Number;
+use Grafite\Forms\Fields\Rating;
 use Grafite\Forms\Fields\Select;
 use Grafite\Forms\Fields\HasMany;
 use Grafite\Forms\Fields\Checkbox;
@@ -383,8 +384,21 @@ class FieldMakerTest extends TestCase
         $config = Table::make('attributes')->toArray();
         $field = $this->fieldMaker->make('attributes', $config, $this->user);
 
-        $this->assertStringContainsString('window.Forms_tableInputValue_attributes = JSON.parse(window.Forms_rootTableInput_attributes.value);', $config['assets']['js']);
-        $this->assertStringContainsString('window.Forms_createItemRow_attributes([]);', $config['assets']['js']);
-        $this->assertStringContainsString('<input class="form-control" id="Attributes" name="attributes" type="hidden" value="">', $field);
+        $this->assertStringContainsString('_formsjs_tableField = function (element) {', $config['assets']['js']);
+        $this->assertStringContainsString('_formsjs_getTableRowTemplate = function (element) {', $config['assets']['js']);
+        $this->assertStringContainsString('_formsjs_tableAddItem = function (e) {', $config['assets']['js']);
+        $this->assertStringContainsString('_formsjs_tableRemoveRow = function (e) {', $config['assets']['js']);
+        $this->assertStringContainsString('_formsjs_tableCreateRow = function (element, item, _template) {', $config['assets']['js']);
+        $this->assertStringContainsString('data-formsjs-onload="_formsjs_tableField"', $field);
+        $this->assertStringContainsString('data-formsjs-onload-data="{&quot;columns&quot;:2}"', $field);
+    }
+
+    public function testMakeRating()
+    {
+        $config = Rating::make('skills')->toArray();
+        $field = $this->fieldMaker->make('skills', $config);
+
+        $this->assertStringContainsString('_formsjs_rating_field = function (element) {', $config['assets']['js']);
+        $this->assertStringContainsString('data-formsjs-onload-data="fontawesome-stars-o"', $field);
     }
 }

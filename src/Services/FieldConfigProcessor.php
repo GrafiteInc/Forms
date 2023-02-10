@@ -570,6 +570,9 @@ JS;
             $this->template = $this->fieldInstance::getTemplate($options);
         }
 
+        $this->attributes['data-formsjs-onload-data'] = $this->fieldInstance::onLoadJsData($this->id, $options) ?? null;
+        $this->attributes['data-formsjs-onload'] = $this->fieldInstance::onLoadJs($this->id, $options) ?? null;
+
         $this->assets = array_merge($this->assets, [
             'js' => $this->fieldInstance::js($this->id, $options),
             'styles' => $this->fieldInstance::styles($this->id, $options) ?? null,

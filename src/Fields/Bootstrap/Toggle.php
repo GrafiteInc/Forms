@@ -42,7 +42,12 @@ class Toggle extends Field
         ];
     }
 
-    public static function js($id, $options)
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_toggleField';
+    }
+
+    public static function onLoadJsData($id, $options)
     {
         $themeScript = "'light'";
 
@@ -55,19 +60,29 @@ class Toggle extends Field
             $themeScript = "'{$theme}'";
         }
 
-        $on = $options['on'] ?? 'On';
-        $off = $options['off'] ?? 'Off';
-        $size = $options['size'] ?? 'sm';
-        $labelClass = $options['label_class'] ?? 'bootstrap-toggle-label';
+        return json_encode([
+            'theme' => $themeScript,
+            'on' => $options['on'] ?? 'On',
+            'off' => $options['off'] ?? 'Off',
+            'size' => $options['size'] ?? 'sm',
+            'label_class' => $options['label_class'] ?? 'bootstrap-toggle-label',
+        ]);
+    }
 
-        return <<<EOT
-$('#$id').bootstrapToggle({
-    offstyle: {$themeScript},
-    on: "$on",
-    off: "$off",
-    size: "$size"
-});
-$('#$id').parent().siblings('label').addClass('$labelClass')
-EOT;
+    public static function js($id, $options)
+    {
+        return <<<JS
+            _formsjs_toggleField = function (element) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                $(element).bootstrapToggle({
+                    offstyle: _config.theme,
+                    on: _config.on,
+                    off: _config.off,
+                    size: _config.size
+                });
+
+                $(element).parent().siblings('label').addClass(_config.label_class);
+            }
+JS;
     }
 }

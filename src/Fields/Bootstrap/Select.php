@@ -50,15 +50,15 @@ class Select extends Field
         $borderLight = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? "1px solid $color !important" : "1px solid $color !important";
         $borderDark = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? "2px solid #444 !important" : "1px solid #444 !important";
 
-        $themes['light'] = <<<LIGHTTHEME
+        $themes['light'] = <<<CSS
     .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
         color: #111 !important;
         border: $borderLight;
         background-color: #FFF !important;
     }
-LIGHTTHEME;
+CSS;
 
-        $themes['dark'] = <<<DARKTHEME
+        $themes['dark'] = <<<CSS
     .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
         color: #FFF !important;
         border: $borderDark;
@@ -79,23 +79,23 @@ LIGHTTHEME;
         border: 2px solid #333;
         color: #FFF;
     }
-DARKTHEME;
+CSS;
 
         $lightTheme = $themes['light'];
         $darkTheme = $themes['dark'];
 
-        $autoTheme = <<<AUTOTHEME
+        $autoTheme = <<<CSS
         @media (prefers-color-scheme: light) {
             {$lightTheme}
         }
         @media (prefers-color-scheme: dark) {
             {$darkTheme}
         }
-AUTOTHEME;
+CSS;
 
         $themeStyle = (isset($options['theme'])) ? $themes[$options['theme']] : $autoTheme;
 
-        return <<<EOT
+        return <<<CSS
 .bss-input {
    border:0;
    padding: 6px;
@@ -132,83 +132,98 @@ AUTOTHEME;
 }
 
 {$themeStyle}
-EOT;
+CSS;
+    }
+
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_bootstrapSelectField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return json_encode([
+            'btn' => $options['btn'] ?? 'btn-outline-primary',
+            'with_add_item' => $options['add-item'] ?? false,
+            'add_item_placeholder' => $options['add-item-placeholder'] ?? 'Add Item',
+        ]);
     }
 
     public static function js($id, $options)
     {
-        $btn = $options['btn'] ?? 'btn-outline-primary';
-        $withAddItem = $options['add-item'] ?? false;
-        $addItemPlaceholder = $options['add-item-placeholder'] ?? 'Add Item';
+        return <<<JS
+        _formsjs_bootstrapSelect_addInpKeyPress = function (t, ev, id) {
+            ev.stopPropagation();
 
-        $addItem = <<<EOT
-window.Forms_select_addSelectItem = function (t, ev) {
-    ev.stopPropagation();
+            // do not allow pipe character
+            if (ev.which == 124) ev.preventDefault();
 
-    var bs = $(t).closest('.bootstrap-select')
-    var txt = bs.find('.bss-input').val().replace(/[|]/g,"");
-    var txt = $(t).prev().val().replace(/[|]/g,"");
-
-    if ($.trim(txt) == '') return;
-
-    var p = bs.find('select');
-    var o = $('option', p).eq(-2);
-    o.before( $("<option>", {"text": txt, "value": txt}) );
-
-    $('#{$id}').selectpicker('destroy').selectpicker().selectpicker('val', txt).parent().css({
-        display: "block",
-        width: "100%"
-    });
-}
-
-window.Forms_select_addSelectInpKeyPress = function (t, ev) {
-   ev.stopPropagation();
-
-   // do not allow pipe character
-   if (ev.which == 124) ev.preventDefault();
-
-   // enter character adds the option
-   if (ev.which == 13) {
-      ev.preventDefault();
-      window.Forms_select_addSelectItem($(t).next(),ev);
-   }
-}
-
-var formsWithInputWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
-formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'onclick'];
-formsWithInputWhiteList.span = ['onclick'];
-
-var content = "<input type='text' class='bss-input' onkeydown='event.stopPropagation();' onkeypress='Forms_select_addSelectInpKeyPress(this,event)' onclick='event.stopPropagation()' placeholder='{$addItemPlaceholder}'> <span class='fas fa-plus addnewicon' onclick='Forms_select_addSelectItem(this,event,1);'></span>";
-
-var divider = $('<option/>')
-    .addClass('divider')
-    .attr('data-divider', true);
-
-var addoption = $('<option/>', {class: 'addItem'})
-    .attr('data-content', content);
-
-$('#{$id}')
-    .append(divider)
-    .append(addoption)
-.selectpicker({
-    style: "{$btn}"
-}).parent().css({
-    display: "block",
-    width: "100%"
-});
-EOT;
-
-        if ($withAddItem) {
-            return $addItem;
+            // enter character adds the option
+            if (ev.which == 13) {
+                ev.preventDefault();
+                _formsjs_bootstrapSelect_addSelectItem($(t).next(), ev, id);
+            }
         }
 
-        return <<<EOT
-$('#{$id}').selectpicker({
-    style: "{$btn}"
-}).parent().css({
-    display: "block",
-    width: "100%"
-});
-EOT;
+        _formsjs_bootstrapSelect_addSelectItem = function (t, ev, id) {
+            ev.stopPropagation();
+
+            let bs = $(t).closest('.bootstrap-select')
+            let txt = bs.find('.bss-input').val().replace(/[|]/g,"");
+                txt = $(t).prev().val().replace(/[|]/g,"");
+
+            if ($.trim(txt) == '') return;
+
+            let p = bs.find('select');
+            let o = $('option', p).eq(-2);
+                o.before( $("<option>", {"text": txt, "value": txt}) );
+
+            $(`#\${id}`).selectpicker('destroy')
+                .selectpicker()
+                .selectpicker('val', txt)
+                .parent().css({
+                    display: "block",
+                    width: "100%"
+                });
+        }
+
+        _formsjs_bootstrapSelectField = function (element) {
+            let _id = element.getAttribute('id');
+            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+            let formsWithInputWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
+                formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'onclick'];
+                formsWithInputWhiteList.span = ['onclick'];
+
+            if (_config.with_add_item) {
+                let content = `<input type="text" class="bss-input" onkeydown="event.stopPropagation();" onkeypress="_formsjs_bootstrapSelect_addInpKeyPress(this, event, '\${_id}')" onclick="event.stopPropagation()" placeholder="\${_config.add_item_placeholder}"> <span class="fas fa-plus addnewicon" onclick="_formsjs_bootstrapSelect_addSelectItem(this, event, '\${_id}');"></span>`;
+
+                let divider = $('<option/>')
+                    .addClass('divider')
+                    .attr('data-divider', true);
+
+                let addoption = $('<option/>', {class: 'addItem'})
+                    .attr('data-content', content);
+
+                $(element)
+                    .append(divider)
+                    .append(addoption)
+                .selectpicker({
+                    style: _config.btn
+                }).parent().css({
+                    display: "block",
+                    width: "100%"
+                });
+            }
+
+            if (! _config.with_add_item) {
+                $(element).selectpicker({
+                    style: _config.btn
+                }).parent().css({
+                    display: "block",
+                    width: "100%"
+                });
+            }
+        }
+JS;
     }
 }

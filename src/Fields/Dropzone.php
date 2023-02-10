@@ -13,7 +13,9 @@ class Dropzone extends Field
 
     protected static function getAttributes()
     {
-        return [];
+        return [
+            'class' => 'dropzone'
+        ];
     }
 
     protected static function getFactory()
@@ -37,15 +39,15 @@ class Dropzone extends Field
 
     public static function getTemplate($options)
     {
-        return <<<EOT
+        return <<<HTML
 <div class="dropzone-wrapper">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
-        <div id="{id}DropZone" class="dropzone"></div>
+        <div id="{id}DropZone" {attributes} class="dropzone" ></div>
     </div>
     {errors}
 </div>
-EOT;
+HTML;
     }
 
     public static function styles($id, $options)
@@ -53,7 +55,7 @@ EOT;
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
-            $darkTheme = <<<EOT
+            $darkTheme = <<<CSS
 @media (prefers-color-scheme: dark) {
     .dropzone {
         border-radius: 4px;
@@ -61,20 +63,20 @@ EOT;
         background-color: #111;
     }
 }
-EOT;
+CSS;
         }
 
         if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
-            $darkTheme = <<<EOT
+            $darkTheme = <<<CSS
     .dropzone {
         border-radius: 4px;
         border: 1px solid #333;
         background-color: #111;
     }
-EOT;
+CSS;
         }
 
-        return <<<EOT
+        return <<<CSS
 .dropzone {
     border-radius: 4px;
     border: 1px solid #CCC;
@@ -90,27 +92,45 @@ EOT;
 }
 
 {$darkTheme}
-EOT;
+CSS;
+    }
+
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_dropzoneField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        $route = $options['route'] ?? '';
+
+        return json_encode([
+            'queue-complete' => '_formsjs_reload_page',
+            'multiple' => $options['upload-muliple'] ?? 'true',
+            'url' => route($route),
+        ]);
     }
 
     public static function js($id, $options)
     {
-        $onComplete = $options['queue-complete'] ?? 'function () { window.location.reload() }';
-        $multiple = $options['upload-muliple'] ?? 'true';
-        $route = $options['route'] ?? '';
-        $url = route($route);
-        $token = csrf_token();
+        return <<<JS
+        _formsjs_reload_page = function () {
+            window.location.reload();
+        }
 
-        return <<<EOT
-Dropzone.autoDiscover = false;
-new Dropzone("#{$id}DropZone", {
-    url: "$url",
-    uploadMultiple: $multiple,
-    sending: function(file, xhr, formData) {
-        formData.append("_token", "$token");
-    },
-    queuecomplete: $onComplete,
-});
-EOT;
+        _formsjs_dropzoneField = function (element) {
+            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+            let _fieldId = element.getAttribute('id');
+            Dropzone.autoDiscover = false;
+            new Dropzone("#"+_fieldId, {
+                url: _config.url,
+                uploadMultiple: _config.multiple,
+                sending: function(file, xhr, formData) {
+                    formData.append("_token", document.head.querySelector('meta[name="csrf-token"]').content);
+                },
+                queuecomplete: window[_config['queue-complete']],
+            });
+        }
+JS;
     }
 }

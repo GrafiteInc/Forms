@@ -21,13 +21,24 @@ class PasswordWithReveal extends Field
         ];
     }
 
+    public static function onLoadJs($id, $options)
+    {
+        return '_formsjs_passwordWithRevealField';
+    }
+
+    public static function onLoadJsData($id, $options)
+    {
+        return $options['toggle-selector'] ?? 'PasswordRevealer-trigger';
+    }
+
     public static function js($id, $options)
     {
-        $toggleSelector = $options['toggle-selector'] ?? 'PasswordRevealer-trigger';
-
-        return <<<EOT
-            PasswordRevealer("#{$id}", { trigger: { selector: '.{$toggleSelector}', eventListener: 'click' } }).init();
-EOT;
+        return <<<JS
+            _formsjs_passwordWithRevealField = function (element) {
+                let _selector = '.' + element.getAttribute('data-formsjs-onload-data');
+                PasswordRevealer(element, { trigger: { selector: _selector, eventListener: 'click' } }).init();
+            }
+JS;
     }
 
     public static function getTemplate($options)
@@ -36,7 +47,7 @@ EOT;
         $toggleClasses = $options['toggle-classes'] ?? 'btn btn-outline-primary bmx-rounded-left-0';
         $toggleSelector = $options['toggle-selector'] ?? 'PasswordRevealer-trigger';
 
-        return <<<EOT
+        return <<<HTML
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -47,6 +58,6 @@ EOT;
     {errors}
     </div>
 </div>
-EOT;
+HTML;
     }
 }
