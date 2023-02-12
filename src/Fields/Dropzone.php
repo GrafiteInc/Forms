@@ -119,17 +119,19 @@ CSS;
         }
 
         _formsjs_dropzoneField = function (element) {
-            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-            let _fieldId = element.getAttribute('id');
-            Dropzone.autoDiscover = false;
-            new Dropzone("#"+_fieldId, {
-                url: _config.url,
-                uploadMultiple: _config.multiple,
-                sending: function(file, xhr, formData) {
-                    formData.append("_token", document.head.querySelector('meta[name="csrf-token"]').content);
-                },
-                queuecomplete: window[_config['queue-complete']],
-            });
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                let _fieldId = element.getAttribute('id');
+                Dropzone.autoDiscover = false;
+                new Dropzone("#"+_fieldId, {
+                    url: _config.url,
+                    uploadMultiple: _config.multiple,
+                    sending: function(file, xhr, formData) {
+                        formData.append("_token", document.head.querySelector('meta[name="csrf-token"]').content);
+                    },
+                    queuecomplete: window[_config['queue-complete']],
+                });
+            }
         }
 JS;
     }

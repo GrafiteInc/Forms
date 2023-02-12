@@ -77,15 +77,17 @@ HTML;
     {
         return <<<JS
             _formsjs_typeaheadField = function (element) {
-                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-                $.typeahead({
-                    input: '#' + element.getAttribute('id'),
-                    order: "desc",
-                    source: {
-                        data: _config.matches
-                    }
-                });
+                    $.typeahead({
+                        input: '#' + element.getAttribute('id'),
+                        order: "desc",
+                        source: {
+                            data: _config.matches
+                        }
+                    });
+                }
             }
 JS;
     }

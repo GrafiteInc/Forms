@@ -36,163 +36,165 @@ class AutoSuggestSelect extends Field
     {
         return <<<JS
             _formsjs_autosuggestSelectField = function (inp) {
-                var arr = JSON.parse(inp.getAttribute('data-formsjs-onload-data'));
-                inp.type = "hidden";
-                var currentFocus;
+                if (! inp.getAttribute('data-formsjs-rendered')) {
+                    let arr = JSON.parse(inp.getAttribute('data-formsjs-onload-data'));
+                    inp.type = "hidden";
+                    var currentFocus;
 
-                let _altInput = inp.cloneNode(true);
-                    _altInput.id = inp.id + "_visual";
-                    _altInput.name = inp.name + "_visual";
-                    _altInput.type = "text";
-                    _altInput.value = arr[inp.value];
-                    _altInput.autocomplete = "off";
+                    let _altInput = inp.cloneNode(true);
+                        _altInput.id = inp.id + "_visual";
+                        _altInput.name = inp.name + "_visual";
+                        _altInput.type = "text";
+                        _altInput.value = arr[inp.value];
+                        _altInput.autocomplete = "off";
 
-                inp.parentNode.appendChild(_altInput);
+                    inp.parentNode.appendChild(_altInput);
 
-                _altInput.addEventListener("focusin", function (e) {
-                    formCloseAllSelectLists();
-                    this.value = '';
+                    _altInput.addEventListener("focusin", function (e) {
+                        formCloseAllSelectLists();
+                        this.value = '';
 
-                    _formDisplaySelection(this, this.value);
+                        _formDisplaySelection(this, this.value);
 
-                    setTimeout(function () {
-                        _altInput.addEventListener("click", formCloseAllSelectLists);
-                    }, 250);
-                });
-
-                _altInput.addEventListener("input", function(e) {
-                    var a, b, i, val = this.value;
-                    formCloseAllSelectLists();
-                    _formDisplaySelection(this, this.value);
-                });
-
-                function formCloseAllSelectLists(elmnt) {
-                    var x = document.getElementsByClassName("form-autocomplete-items");
-                    for (var i = 0; i < x.length; i++) {
-                        if (elmnt != x[i] && elmnt != x[i].previousElementSibling) {
-                            x[i].parentNode.removeChild(x[i]);
-                        }
-                    }
-                }
-
-                function _formDisplaySelection(_field, val) {
-                    currentFocus = -1;
-                    let _formElementStyle = getComputedStyle(_field);
-
-                    /*create a DIV element that will contain the items (values):*/
-                    let a = document.createElement("DIV");
-                    a.setAttribute("id", _altInput.id + "form-autocomplete-list");
-                    a.setAttribute("class", "form-autocomplete-items rounded");
-                    let border = "border: " + _formElementStyle.border + "; ";
-                    let width = "width:"+ _altInput.offsetWidth + "px; ";
-                    let background = "background-color: " + _formElementStyle.backgroundColor + "; ";
-                    a.setAttribute("style", width + border + background);
-
-                    /*append the DIV element as a child of the autocomplete container:*/
-                    _altInput.parentNode.appendChild(a);
-                    let _itemCount = Object.keys(arr).length
-
-                    Object.keys(arr).forEach(key => {
-                        if (arr[key].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
-                            let b = document.createElement("DIV");
-                            let background = "background-color: " + _formElementStyle.backgroundColor + "; ";
-                            b.setAttribute('style', background);
-                            b.innerHTML = "<strong>" + arr[key].substr(0, val.length) + "</strong>";
-                            b.innerHTML += arr[key].substr(val.length);
-                            b.innerHTML += "<input type='hidden' value='" + key + "'>";
-                            b.addEventListener("click", function(e) {
-                                inp.value = this.getElementsByTagName("input")[0].value;
-                                _altInput.value = arr[key];
-                                formCloseAllSelectLists();
-
-                                if (a.childNodes.length > 0) {
-                                    _altInput.setAttribute('class', inp.getAttribute('class'))
-                                    let _formElementStyle = getComputedStyle(_altInput);
-                                    let border = "border: " + _formElementStyle.border + "; ";
-                                    let width = "width:"+ _altInput.offsetWidth + "px; ";
-                                    a.setAttribute("style", width + border);
-                                }
-                            });
-
-                            a.appendChild(b);
-                        }
+                        setTimeout(function () {
+                            _altInput.addEventListener("click", formCloseAllSelectLists);
+                        }, 250);
                     });
 
-                    if (a.childNodes.length === 0) {
-                        a.style.display = 'none';
-                    }
-                }
-
-                document.addEventListener("click", function (e) {
-                    formCloseAllSelectLists(e.target);
-                });
-
-                _altInput.addEventListener('focusout', function () {
-                    if (inp.value === '') {
-                        _altInput.value = 'None';
-                        inp.value = null;
-                    }
-
-                    if (inp.value !== '') {
-                        _altInput.value = arr[inp.value];
-                    }
-
-                    if (_altInput.value === '') {
-                        _altInput.value = 'None';
-                        inp.value = null;
-                    }
-
-                    setTimeout(function () {
+                    _altInput.addEventListener("input", function(e) {
+                        var a, b, i, val = this.value;
                         formCloseAllSelectLists();
-                        _altInput.removeEventListener("click", formCloseAllSelectLists);
-                    }, 250);
-                });
+                        _formDisplaySelection(this, this.value);
+                    });
 
-                function addSelectActive(x) {
-                    if (!x) return false;
-                    removeSelectActive(x);
-                    if (currentFocus >= x.length) currentFocus = 0;
-                    if (currentFocus < 0) currentFocus = (x.length - 1);
-                    x[currentFocus].classList.add("form-autocomplete-active");
-                    x[currentFocus].parentNode.scrollTop = currentFocus * 44;
-                }
-
-                function removeSelectActive(x) {
-                    for (var i = 0; i < x.length; i++) {
-                        x[i].classList.remove("form-autocomplete-active");
-                    }
-                }
-
-                /*execute a function presses a key on the keyboard:*/
-                _altInput.addEventListener("keydown", function(e) {
-                    var x = document.getElementById(this.id + "form-autocomplete-list");
-                    if (x) x = x.getElementsByTagName("div");
-                    if (e.keyCode == 40) {
-                        currentFocus++;
-                        addSelectActive(x);
-                    } else if (e.keyCode == 38) { //up
-                        currentFocus--;
-                        addSelectActive(x);
-                    } else if (e.keyCode == 13) {
-                        e.preventDefault();
-                        if (currentFocus > -1) {
-                            if (x) x[currentFocus].click();
+                    function formCloseAllSelectLists(elmnt) {
+                        var x = document.getElementsByClassName("form-autocomplete-items");
+                        for (var i = 0; i < x.length; i++) {
+                            if (elmnt != x[i] && elmnt != x[i].previousElementSibling) {
+                                x[i].parentNode.removeChild(x[i]);
+                            }
                         }
                     }
 
-                    let _list = document.getElementById(_altInput.id + "form-autocomplete-list");
-                    if (_list && _list.childNodes.length === 0) {
-                        _altInput.setAttribute('class', inp.getAttribute('class') + ' is-invalid');
-                    }
+                    function _formDisplaySelection(_field, val) {
+                        currentFocus = -1;
+                        let _formElementStyle = getComputedStyle(_field);
 
-                    if (_list && _list.childNodes.length > 0) {
-                        _altInput.setAttribute('class', inp.getAttribute('class'))
-                        let _formElementStyle = getComputedStyle(_altInput);
+                        /*create a DIV element that will contain the items (values):*/
+                        let a = document.createElement("DIV");
+                        a.setAttribute("id", _altInput.id + "form-autocomplete-list");
+                        a.setAttribute("class", "form-autocomplete-items rounded");
                         let border = "border: " + _formElementStyle.border + "; ";
                         let width = "width:"+ _altInput.offsetWidth + "px; ";
-                        _list.setAttribute("style", width + border);
+                        let background = "background-color: " + _formElementStyle.backgroundColor + "; ";
+                        a.setAttribute("style", width + border + background);
+
+                        /*append the DIV element as a child of the autocomplete container:*/
+                        _altInput.parentNode.appendChild(a);
+                        let _itemCount = Object.keys(arr).length
+
+                        Object.keys(arr).forEach(key => {
+                            if (arr[key].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
+                                let b = document.createElement("DIV");
+                                let background = "background-color: " + _formElementStyle.backgroundColor + "; ";
+                                b.setAttribute('style', background);
+                                b.innerHTML = "<strong>" + arr[key].substr(0, val.length) + "</strong>";
+                                b.innerHTML += arr[key].substr(val.length);
+                                b.innerHTML += "<input type='hidden' value='" + key + "'>";
+                                b.addEventListener("click", function(e) {
+                                    inp.value = this.getElementsByTagName("input")[0].value;
+                                    _altInput.value = arr[key];
+                                    formCloseAllSelectLists();
+
+                                    if (a.childNodes.length > 0) {
+                                        _altInput.setAttribute('class', inp.getAttribute('class'))
+                                        let _formElementStyle = getComputedStyle(_altInput);
+                                        let border = "border: " + _formElementStyle.border + "; ";
+                                        let width = "width:"+ _altInput.offsetWidth + "px; ";
+                                        a.setAttribute("style", width + border);
+                                    }
+                                });
+
+                                a.appendChild(b);
+                            }
+                        });
+
+                        if (a.childNodes.length === 0) {
+                            a.style.display = 'none';
+                        }
                     }
-                });
+
+                    document.addEventListener("click", function (e) {
+                        formCloseAllSelectLists(e.target);
+                    });
+
+                    _altInput.addEventListener('focusout', function () {
+                        if (inp.value === '') {
+                            _altInput.value = 'None';
+                            inp.value = null;
+                        }
+
+                        if (inp.value !== '') {
+                            _altInput.value = arr[inp.value];
+                        }
+
+                        if (_altInput.value === '') {
+                            _altInput.value = 'None';
+                            inp.value = null;
+                        }
+
+                        setTimeout(function () {
+                            formCloseAllSelectLists();
+                            _altInput.removeEventListener("click", formCloseAllSelectLists);
+                        }, 250);
+                    });
+
+                    function addSelectActive(x) {
+                        if (!x) return false;
+                        removeSelectActive(x);
+                        if (currentFocus >= x.length) currentFocus = 0;
+                        if (currentFocus < 0) currentFocus = (x.length - 1);
+                        x[currentFocus].classList.add("form-autocomplete-active");
+                        x[currentFocus].parentNode.scrollTop = currentFocus * 44;
+                    }
+
+                    function removeSelectActive(x) {
+                        for (var i = 0; i < x.length; i++) {
+                            x[i].classList.remove("form-autocomplete-active");
+                        }
+                    }
+
+                    /*execute a function presses a key on the keyboard:*/
+                    _altInput.addEventListener("keydown", function(e) {
+                        var x = document.getElementById(this.id + "form-autocomplete-list");
+                        if (x) x = x.getElementsByTagName("div");
+                        if (e.keyCode == 40) {
+                            currentFocus++;
+                            addSelectActive(x);
+                        } else if (e.keyCode == 38) { //up
+                            currentFocus--;
+                            addSelectActive(x);
+                        } else if (e.keyCode == 13) {
+                            e.preventDefault();
+                            if (currentFocus > -1) {
+                                if (x) x[currentFocus].click();
+                            }
+                        }
+
+                        let _list = document.getElementById(_altInput.id + "form-autocomplete-list");
+                        if (_list && _list.childNodes.length === 0) {
+                            _altInput.setAttribute('class', inp.getAttribute('class') + ' is-invalid');
+                        }
+
+                        if (_list && _list.childNodes.length > 0) {
+                            _altInput.setAttribute('class', inp.getAttribute('class'))
+                            let _formElementStyle = getComputedStyle(_altInput);
+                            let border = "border: " + _formElementStyle.border + "; ";
+                            let width = "width:"+ _altInput.offsetWidth + "px; ";
+                            _list.setAttribute("style", width + border);
+                        }
+                    });
+                }
             }
 JS;
     }

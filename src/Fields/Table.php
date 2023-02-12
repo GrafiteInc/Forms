@@ -118,16 +118,18 @@ HTML;
             }
 
             _formsjs_tableField = function (element) {
-                _tableRowTemplate = _formsjs_getTableRowTemplate(element);
-                _tableLastRow = new DOMParser().parseFromString(_tableRowTemplate, "text/html").body.firstElementChild;
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    _tableRowTemplate = _formsjs_getTableRowTemplate(element);
+                    _tableLastRow = new DOMParser().parseFromString(_tableRowTemplate, "text/html").body.firstElementChild;
 
-                if (element.value) {
-                    let _tableValue = JSON.parse(element.value);
-                        _tableValue.forEach(function (item) {
-                            _formsjs_tableCreateRow(element, item, _tableLastRow);
-                        });
-                } else {
-                    _formsjs_tableCreateRow(element, [], _tableLastRow);
+                    if (element.value) {
+                        let _tableValue = JSON.parse(element.value);
+                            _tableValue.forEach(function (item) {
+                                _formsjs_tableCreateRow(element, item, _tableLastRow);
+                            });
+                    } else {
+                        _formsjs_tableCreateRow(element, [], _tableLastRow);
+                    }
                 }
             }
 JS;

@@ -188,40 +188,42 @@ CSS;
         }
 
         _formsjs_bootstrapSelectField = function (element) {
-            let _id = element.getAttribute('id');
-            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-            let formsWithInputWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
-                formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'onclick'];
-                formsWithInputWhiteList.span = ['onclick'];
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                let _id = element.getAttribute('id');
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                let formsWithInputWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
+                    formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'onclick'];
+                    formsWithInputWhiteList.span = ['onclick'];
 
-            if (_config.with_add_item) {
-                let content = `<input type="text" class="bss-input" onkeydown="event.stopPropagation();" onkeypress="_formsjs_bootstrapSelect_addInpKeyPress(this, event, '\${_id}')" onclick="event.stopPropagation()" placeholder="\${_config.add_item_placeholder}"> <span class="fas fa-plus addnewicon" onclick="_formsjs_bootstrapSelect_addSelectItem(this, event, '\${_id}');"></span>`;
+                if (_config.with_add_item) {
+                    let content = `<input type="text" class="bss-input" onkeydown="event.stopPropagation();" onkeypress="_formsjs_bootstrapSelect_addInpKeyPress(this, event, '\${_id}')" onclick="event.stopPropagation()" placeholder="\${_config.add_item_placeholder}"> <span class="fas fa-plus addnewicon" onclick="_formsjs_bootstrapSelect_addSelectItem(this, event, '\${_id}');"></span>`;
 
-                let divider = $('<option/>')
-                    .addClass('divider')
-                    .attr('data-divider', true);
+                    let divider = $('<option/>')
+                        .addClass('divider')
+                        .attr('data-divider', true);
 
-                let addoption = $('<option/>', {class: 'addItem'})
-                    .attr('data-content', content);
+                    let addoption = $('<option/>', {class: 'addItem'})
+                        .attr('data-content', content);
 
-                $(element)
-                    .append(divider)
-                    .append(addoption)
-                .selectpicker({
-                    style: _config.btn
-                }).parent().css({
-                    display: "block",
-                    width: "100%"
-                });
-            }
+                    $(element)
+                        .append(divider)
+                        .append(addoption)
+                    .selectpicker({
+                        style: _config.btn
+                    }).parent().css({
+                        display: "block",
+                        width: "100%"
+                    });
+                }
 
-            if (! _config.with_add_item) {
-                $(element).selectpicker({
-                    style: _config.btn
-                }).parent().css({
-                    display: "block",
-                    width: "100%"
-                });
+                if (! _config.with_add_item) {
+                    $(element).selectpicker({
+                        style: _config.btn
+                    }).parent().css({
+                        display: "block",
+                        width: "100%"
+                    });
+                }
             }
         }
 JS;

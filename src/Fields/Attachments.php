@@ -151,11 +151,13 @@ HTML;
             }
 
             _formsjs_AttachmentsField = function (element) {
-                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                _formsjs_attachments = [];
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                    _formsjs_attachments = [];
 
-                _formsjs_attachmentsList(element);
-                _formsjs_attachmentBindings(element);
+                    _formsjs_attachmentsList(element);
+                    _formsjs_attachmentBindings(element);
+                }
             }
 JS;
     }

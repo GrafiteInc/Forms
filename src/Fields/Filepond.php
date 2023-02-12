@@ -88,43 +88,45 @@ CSS;
 
         return <<<JS
             _formsjs_FilePondField = function (element) {
-                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-                $.fn.filepond.setDefaults({
-                    maxFileSize: _config.size,
-                    instantUpload: false,
-                    allowMultiple: true
-                });
-
-                $('.filepond-previews').filepond();
-                $('.filepond-previews').filepond('setOptions', {
-                    server: {
-                        url: '{$url}',
-                        process: {
-                            url: '/'+_config.process_url,
-                            method: 'POST',
-                            headers: {
-                                "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
-                            }
-                        },
-                    }
-                });
-
-                let _form = $('.filepond-previews').parent().parent('form');
-                let _files = [];
-
-                $(_form).submit(function (e) {
-                    e.preventDefault();
-                    $(_config.submit_button).attr('disabled', 'disabled');
-
-                    $('.filepond-previews').filepond('processFiles').then(files => {
-                        $('input[name="filepond"]').remove();
-
-                        $(element).val(files);
-
-                        _form[0].submit();
+                    $.fn.filepond.setDefaults({
+                        maxFileSize: _config.size,
+                        instantUpload: false,
+                        allowMultiple: true
                     });
-                });
+
+                    $('.filepond-previews').filepond();
+                    $('.filepond-previews').filepond('setOptions', {
+                        server: {
+                            url: '{$url}',
+                            process: {
+                                url: '/'+_config.process_url,
+                                method: 'POST',
+                                headers: {
+                                    "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
+                                }
+                            },
+                        }
+                    });
+
+                    let _form = $('.filepond-previews').parent().parent('form');
+                    let _files = [];
+
+                    $(_form).submit(function (e) {
+                        e.preventDefault();
+                        $(_config.submit_button).attr('disabled', 'disabled');
+
+                        $('.filepond-previews').filepond('processFiles').then(files => {
+                            $('input[name="filepond"]').remove();
+
+                            $(element).val(files);
+
+                            _form[0].submit();
+                        });
+                    });
+                }
             }
 JS;
     }

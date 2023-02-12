@@ -52,9 +52,11 @@ class Rating extends Field
     {
         return <<<JS
         _formsjs_rating_field = function (element) {
-            $(element).barrating({
-                theme: element.getAttribute('data-formsjs-onload-data')
-            });
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                $(element).barrating({
+                    theme: element.getAttribute('data-formsjs-onload-data')
+                });
+            }
         }
 JS;
     }

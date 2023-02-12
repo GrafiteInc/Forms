@@ -73,15 +73,17 @@ class Toggle extends Field
     {
         return <<<JS
             _formsjs_toggleField = function (element) {
-                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                $(element).bootstrapToggle({
-                    offstyle: _config.theme,
-                    on: _config.on,
-                    off: _config.off,
-                    size: _config.size
-                });
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                    $(element).bootstrapToggle({
+                        offstyle: _config.theme,
+                        on: _config.on,
+                        off: _config.off,
+                        size: _config.size
+                    });
 
-                $(element).parent().siblings('label').addClass(_config.label_class);
+                    $(element).parent().siblings('label').addClass(_config.label_class);
+                }
             }
 JS;
     }

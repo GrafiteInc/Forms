@@ -104,31 +104,33 @@ CSS;
     {
         return <<<JS
         _formsjs_datetimePickerField = function (element) {
-            var _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-            let _dateTimeConfig = {
-                hooks: {
-                    inputFormat:(context, date) => {
-                        if (date) {
-                            return moment(date).format(_config.format);
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                var _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                let _dateTimeConfig = {
+                    hooks: {
+                        inputFormat:(context, date) => {
+                            if (date) {
+                                return moment(date).format(_config.format);
+                            }
+
+                            return null;
                         }
-
-                        return null;
                     }
+                };
+
+                if (_config.defaultDate) {
+                    _dateTimeConfig.defaultDate = _config.defaultDate;
                 }
-            };
 
-            if (_config.defaultDate) {
-                _dateTimeConfig.defaultDate = _config.defaultDate;
+                new tempusDominus.TempusDominus(element, _dateTimeConfig);
+
+                element.addEventListener('change.td', function (event) {
+                    element.value = moment(event.detail.date).format(_config.format);
+                    let _event = new Event('change');
+                    element.dispatchEvent(_event);
+                    element.dispatchEvent(new Event('input'));
+                });
             }
-
-            new tempusDominus.TempusDominus(element, _dateTimeConfig);
-
-            element.addEventListener('change.td', function (event) {
-                element.value = moment(event.detail.date).format(_config.format);
-                let _event = new Event('change');
-                element.dispatchEvent(_event);
-                element.dispatchEvent(new Event('input'));
-            });
         }
 JS;
     }

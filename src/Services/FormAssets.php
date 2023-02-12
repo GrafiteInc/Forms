@@ -116,7 +116,7 @@ class FormAssets
         if (in_array($type, ['all', 'scripts'])) {
             $output .= collect($this->scripts)->unique()->implode("\n");
             $js = collect($this->js)->push("document.querySelectorAll('[data-formsjs-onload]').forEach(function (element) { let _method = element.getAttribute('data-formsjs-onload');
-            window[_method](element); });")->unique()->implode("\n");
+            window[_method](element); element.setAttribute('data-formsjs-rendered', true); });")->unique()->implode("\n");
 
             if (app()->environment('production')) {
                 $minifierJS = new JS();

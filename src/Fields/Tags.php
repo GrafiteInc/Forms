@@ -62,9 +62,11 @@ EOT;
     {
         return <<<JS
         window._formsjs_tagify = function (element) {
-            new Tagify (element, {
-                whitelist: JSON.parse(element.getAttribute('data-formsjs-data'))
-            });
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                new Tagify (element, {
+                    whitelist: JSON.parse(element.getAttribute('data-formsjs-data'))
+                });
+            }
         }
 JS;
     }

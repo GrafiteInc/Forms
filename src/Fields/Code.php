@@ -62,13 +62,15 @@ class Code extends Field
     {
         return <<<JS
         _formsjs_codeField = function (element) {
-            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-            CodeMirror.fromTextArea(element, {
-                lineNumbers: true,
-                mode: _config.mode,
-                theme: _config.theme,
-            });
+                CodeMirror.fromTextArea(element, {
+                    lineNumbers: true,
+                    mode: _config.mode,
+                    theme: _config.theme,
+                });
+            }
         }
 JS;
     }

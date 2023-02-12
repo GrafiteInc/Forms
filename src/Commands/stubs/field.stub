@@ -105,7 +105,9 @@ class DummyClass extends Field
             _formsjs_DummyClass = function (element) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-                // put JS code here
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    // put JS code here
+                }
             }
         JS;
     }

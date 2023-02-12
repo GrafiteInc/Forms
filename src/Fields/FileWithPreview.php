@@ -55,20 +55,22 @@ HTML;
 
         return <<<JS
             _formsjs_fileWithPreviewField = function (input) {
-                let _config = JSON.parse(input.getAttribute('data-formsjs-onload-data'));
-                let _method = function (e) { document.querySelector(_config.preview).setAttribute('src', e.target.result); };
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _config = JSON.parse(input.getAttribute('data-formsjs-onload-data'));
+                    let _method = function (e) { document.querySelector(_config.preview).setAttribute('src', e.target.result); };
 
-                if (_config.as_background_image) {
-                    _method = function (e) { document.querySelector(_config.preview).setAttribute('style', 'background-image: url('+e.target.result+')'); };
-                }
+                    if (_config.as_background_image) {
+                        _method = function (e) { document.querySelector(_config.preview).setAttribute('style', 'background-image: url('+e.target.result+')'); };
+                    }
 
-                {$siblingCode}
+                    {$siblingCode}
 
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) { _method(e) };
+                    if (input.files && input.files[0]) {
+                        var reader = new FileReader();
+                        reader.onload = function (e) { _method(e) };
 
-                    reader.readAsDataURL(input.files[0]);
+                        reader.readAsDataURL(input.files[0]);
+                    }
                 }
             }
 JS;

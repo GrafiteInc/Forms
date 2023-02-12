@@ -39,18 +39,20 @@ class Toggled extends Field
     {
         return <<<JS
         _formsjs_toggledField = function (element) {
-            let _checkbox = element.parentNode;
-                _checkbox.classList.add('toggle-slider-wrapper')
-            let _toggle = document.createElement("span");
-                _toggle.classList.add('toggle_slider');
-                _toggle.classList.add('slider');
-                _toggle.classList.add('round');
-            _checkbox.appendChild(_toggle);
-            _checkbox.classList.add('d-inline-block');
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                let _checkbox = element.parentNode;
+                    _checkbox.classList.add('toggle-slider-wrapper')
+                let _toggle = document.createElement("span");
+                    _toggle.classList.add('toggle_slider');
+                    _toggle.classList.add('slider');
+                    _toggle.classList.add('round');
+                _checkbox.appendChild(_toggle);
+                _checkbox.classList.add('d-inline-block');
 
-            _checkbox.addEventListener('click', () => {
-                _checkbox.querySelector('.form-check-input').click()
-            });
+                _checkbox.addEventListener('click', () => {
+                    _checkbox.querySelector('.form-check-input').click()
+                });
+            }
         }
 JS;
     }

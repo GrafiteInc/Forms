@@ -131,38 +131,40 @@ CSS;
     {
         return <<<JS
         _formsjs_DatepickerField = function (element) {
-            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-            let _Datepicker = datepicker('#' + element.getAttribute('id'), {
-                startDay: _config.startDay,
-                id: _config.identity,
-                dateSelected: (element.value) ? moment(element.value, _config.format).toDate() : null,
-                formatter: (input, date, instance) => {
-                    input.value = moment(date).format(_config.format);
-                }
-            });
+                let _Datepicker = datepicker('#' + element.getAttribute('id'), {
+                    startDay: _config.startDay,
+                    id: _config.identity,
+                    dateSelected: (element.value) ? moment(element.value, _config.format).toDate() : null,
+                    formatter: (input, date, instance) => {
+                        input.value = moment(date).format(_config.format);
+                    }
+                });
 
-            let _datepicker_debounce = (func, wait) => {
-                let timeout;
+                let _datepicker_debounce = (func, wait) => {
+                    let timeout;
 
-                return function executedFunction(...args) {
-                    const later = () => {
+                    return function executedFunction(...args) {
+                        const later = () => {
+                            clearTimeout(timeout);
+                            func(...args);
+                        };
+
                         clearTimeout(timeout);
-                        func(...args);
+                        timeout = setTimeout(later, wait);
                     };
-
-                    clearTimeout(timeout);
-                    timeout = setTimeout(later, wait);
                 };
-            };
 
-            let _debounce = _datepicker_debounce(function () {
-                _Datepicker.hide();
-                let date = moment(element.value, _config.format).toDate();
-                _Datepicker.setDate(date, true);
-            }, _config.wait);
+                let _debounce = _datepicker_debounce(function () {
+                    _Datepicker.hide();
+                    let date = moment(element.value, _config.format).toDate();
+                    _Datepicker.setDate(date, true);
+                }, _config.wait);
 
-            element.addEventListener(_config.event, _debounce);
+                element.addEventListener(_config.event, _debounce);
+            }
         }
 JS;
     }

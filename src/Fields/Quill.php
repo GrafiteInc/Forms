@@ -301,87 +301,88 @@ HTML;
     {
         return <<<JS
             _formsjs_quillField = function (element) {
-                let _id = element.getAttribute('id');
-                let _instance = '_formsjs_'+ _id + '_Quill';
-                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                let _editor_icons = Quill.import('ui/icons');
-                    _editor_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _id = element.getAttribute('id');
+                    let _instance = '_formsjs_'+ _id + '_Quill';
+                    let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                    let _editor_icons = Quill.import('ui/icons');
+                        _editor_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
 
-                let _editor_toolbarOptions = {
-                    icons: _editor_icons,
-                    container: _config.container,
-                    handlers: {
-                        image: function () {
-                            let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                            let _FileInput = this.container.querySelector('input.ql-image[type=file]');
+                    let _editor_toolbarOptions = {
+                        icons: _editor_icons,
+                        container: _config.container,
+                        handlers: {
+                            image: function () {
+                                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                                let _FileInput = this.container.querySelector('input.ql-image[type=file]');
 
-                            if (_FileInput == null) {
-                                _FileInput = document.createElement('input');
-                                _FileInput.setAttribute('type', 'file');
-                                _FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
-                                _FileInput.classList.add('ql-image');
-                                _FileInput.addEventListener('change', () => {
-                                    const files = _FileInput.files;
-                                    const range = this.quill.getSelection(true);
+                                if (_FileInput == null) {
+                                    _FileInput = document.createElement('input');
+                                    _FileInput.setAttribute('type', 'file');
+                                    _FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+                                    _FileInput.classList.add('ql-image');
+                                    _FileInput.addEventListener('change', () => {
+                                        const files = _FileInput.files;
+                                        const range = this.quill.getSelection(true);
 
-                                    if (!files || !files.length) {
-                                        console.log('No files selected');
-                                        return;
-                                    }
+                                        if (!files || !files.length) {
+                                            console.log('No files selected');
+                                            return;
+                                        }
 
-                                    const _FileFormData = new FormData();
-                                    _FileFormData.append('image', files[0]);
+                                        const _FileFormData = new FormData();
+                                        _FileFormData.append('image', files[0]);
 
-                                    this.quill.enable(false);
+                                        this.quill.enable(false);
 
-                                    window.axios
-                                        .post(_config.route, _FileFormData)
-                                        .then(response => {
-                                            this.quill.enable(true);
-                                            let range = this.quill.getSelection(true);
-                                            this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
-                                            this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
-                                            _FileInput.value = '';
-                                        })
-                                        .catch(error => {
-                                            console.log('Image upload failed');
-                                            console.log(error);
-                                            this.quill.enable(true);
-                                        });
-                                });
-                                this.container.appendChild(_FileInput);
+                                        window.axios
+                                            .post(_config.route, _FileFormData)
+                                            .then(response => {
+                                                this.quill.enable(true);
+                                                let range = this.quill.getSelection(true);
+                                                this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
+                                                this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                                                _FileInput.value = '';
+                                            })
+                                            .catch(error => {
+                                                console.log('Image upload failed');
+                                                console.log(error);
+                                                this.quill.enable(true);
+                                            });
+                                    });
+                                    this.container.appendChild(_FileInput);
+                                }
+                                _FileInput.click();
+                            },
+                            'divider': function (value) {
+                                let range = window[_instance].getSelection(true);
+                                window[_instance].insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
                             }
-                            _FileInput.click();
-                        },
-                        'divider': function (value) {
-                            let range = window[_instance].getSelection(true);
-                            window[_instance].insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
                         }
+                    };
+
+                    if (! BlockEmbed) {
+                        var BlockEmbed = Quill.import('blots/block/embed');
+                        class DividerBlot extends BlockEmbed { }
+                            DividerBlot.blotName = 'divider';
+                            DividerBlot.tagName = 'hr';
+
+                        Quill.register(DividerBlot);
                     }
-                };
 
-                if (! BlockEmbed) {
-                    var BlockEmbed = Quill.import('blots/block/embed');
-                    class DividerBlot extends BlockEmbed { }
-                        DividerBlot.blotName = 'divider';
-                        DividerBlot.tagName = 'hr';
+                    window[_instance] = new Quill('#'+_id+'_Editor', {
+                        theme: _config.theme,
+                        placeholder: _config.placeholder,
+                        modules: {
+                            toolbar: _editor_toolbarOptions
+                        }
+                    });
 
-                    Quill.register(DividerBlot);
-                }
-
-                window[_instance] = new Quill('#'+_id+'_Editor', {
-                    theme: _config.theme,
-                    placeholder: _config.placeholder,
-                    modules: {
-                        toolbar: _editor_toolbarOptions
+                    if (_config.markdown) {
+                        new QuillMarkdown(window[_instance]);
                     }
-                });
 
-                if (_config.markdown) {
-                    new QuillMarkdown(window[_instance]);
-                }
-
-                document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
+                    document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
                     window[_instance].on('editor-change', function () {
                         element.value = document.getElementById(_id+'_Editor').firstChild.innerHTML;
                         let event = new Event('change', { 'bubbles': true });
@@ -391,6 +392,7 @@ HTML;
                     if (element.disabled) {
                         window[_instance].enable(false)
                     }
+                }
             };
 JS;
     }

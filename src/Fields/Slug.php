@@ -25,12 +25,14 @@ class Slug extends Field
     {
         return <<<JS
         _formsjs_slug_field = function (element) {
-            element.addEventListener("keyup", event => {
-                event.preventDefault();
-                let str = element.value;
-                str = str.replace(/\W+(?!$)/g, '-').toLowerCase();
-                element.value = str;
-            });
+            if (! element.getAttribute('data-formsjs-rendered')) {
+                element.addEventListener("keyup", event => {
+                    event.preventDefault();
+                    let str = element.value;
+                    str = str.replace(/\W+(?!$)/g, '-').toLowerCase();
+                    element.value = str;
+                });
+            }
         }
 JS;
     }

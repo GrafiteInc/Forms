@@ -144,63 +144,65 @@ CSS;
     {
         return <<<JS
             _formsjs_editorField = function (element) {
-                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                let _Editor_value = element.value;
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                    let _Editor_value = element.value;
 
-                if (element.value == '') {
-                    _Editor_value = "null";
-                }
+                    if (element.value == '') {
+                        _Editor_value = "null";
+                    }
 
-                let editor_js = new EditorJS({
-                    holder: 'Editor_'+element.getAttribute('id'),
-                    placeholder: _config.placeholder,
-                    data: JSON.parse(_Editor_value),
-                    tools: {
-                        header: Header,
-                        delimiter: Delimiter,
-                        paragraph: {
-                            class: Paragraph,
-                            inlineToolbar: true,
-                        },
-                        list: {
-                            class: List,
-                            inlineToolbar: true,
-                        },
-                        embed: Embed,
-                        image: {
-                            class: ImageTool,
-                            config: {
-                                additionalRequestHeaders: {
-                                    "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
-                                },
-                                endpoints: {
-                                    byFile: _config.route,
+                    let editor_js = new EditorJS({
+                        holder: 'Editor_'+element.getAttribute('id'),
+                        placeholder: _config.placeholder,
+                        data: JSON.parse(_Editor_value),
+                        tools: {
+                            header: Header,
+                            delimiter: Delimiter,
+                            paragraph: {
+                                class: Paragraph,
+                                inlineToolbar: true,
+                            },
+                            list: {
+                                class: List,
+                                inlineToolbar: true,
+                            },
+                            embed: Embed,
+                            image: {
+                                class: ImageTool,
+                                config: {
+                                    additionalRequestHeaders: {
+                                        "X-CSRF-TOKEN": document.head.querySelector('meta[name="csrf-token"]').content
+                                    },
+                                    endpoints: {
+                                        byFile: _config.route,
+                                    }
                                 }
-                            }
+                            },
+                            underline: Underline,
+                            table: Table,
+                            quote: Quote,
+                            checklist: Checklist,
+                            marker: Marker,
+                            inlineCode: InlineCode,
+                            code: CodeTool,
+                            raw: RawTool,
+                            warning: Warning
                         },
-                        underline: Underline,
-                        table: Table,
-                        quote: Quote,
-                        checklist: Checklist,
-                        marker: Marker,
-                        inlineCode: InlineCode,
-                        code: CodeTool,
-                        raw: RawTool,
-                        warning: Warning
-                    },
-                });
-
-                let _form = element.form;
-
-                _form.addEventListener('submit', function () {
-                    editor_js.save().then((outputData) => {
-                        element.value = JSON.stringify(outputData);
-                    }).catch((error) => {
-                        console.log('Saving failed: ', error)
                     });
 
-                    return true;
-                });
+                    let _form = element.form;
+
+                    _form.addEventListener('submit', function () {
+                        editor_js.save().then((outputData) => {
+                            element.value = JSON.stringify(outputData);
+                        }).catch((error) => {
+                            console.log('Saving failed: ', error)
+                        });
+
+                        return true;
+                    });
+                }
             }
 JS;
     }
