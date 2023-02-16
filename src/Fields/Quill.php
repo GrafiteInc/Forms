@@ -286,6 +286,7 @@ HTML;
             ($toolbars->contains('colors')) ? [['color' => []], ['background' => []]] : [],
             ($toolbars->contains('image')) ? ['image'] : [],
             ($toolbars->contains('video')) ? ['video'] : [],
+            ['clean']
         ];
 
         return json_encode([
