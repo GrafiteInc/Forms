@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.15.3] - 2023-02-17
+
+### Fixed
+- Issue with the ComponentModelForm
+- Issue with search form button wrapper
+
 ## [v6.15.2] - 2023-02-16
 
 ### Fixed
