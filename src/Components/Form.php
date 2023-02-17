@@ -2,9 +2,7 @@
 
 namespace Grafite\Forms\Components;
 
-use Illuminate\View\Component;
-
-class Form extends Component
+class Form
 {
     public $content;
 

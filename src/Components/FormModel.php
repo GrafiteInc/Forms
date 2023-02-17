@@ -9,17 +9,19 @@ class FormModel extends Component
     public $form;
     public $action;
     public $model;
+    public $modal;
 
     /**
      * Create a new component instance.
      *
      * @return void
      */
-    public function __construct($form, $action, $model)
+    public function __construct($form, $action, $model = null, $modal = false)
     {
         $this->form = $form;
         $this->action = $action;
         $this->model = $model;
+        $this->modal = $modal;
     }
 
     /**
@@ -31,6 +33,20 @@ class FormModel extends Component
     {
         $action = $this->action;
 
-        return (string) app($this->form)->$action($this->model);
+        $form = app($this->form);
+
+        if ($this->model) {
+            $form->$action($this->model);
+        }
+
+        if (is_null($this->model)) {
+            $form->$action();
+        }
+
+        if ($this->modal) {
+            return (string) $form->asModal();
+        }
+
+        return (string) $form;
     }
 }
