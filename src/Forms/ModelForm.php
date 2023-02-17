@@ -389,12 +389,20 @@ class ModelForm extends HtmlForm
             'placeholder' => $placeholder,
             'class' => config('forms.form.input-class', 'form-control'),
         ]);
-        $form .= '<div class="' . config('forms.form.input-group-after', 'input-group-append') . '">';
+
+        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
+            $form .= '<div class="' . config('forms.form.input-group-after', 'input-group-append') . '">';
+        }
+
         $form .= $this->field->button($submitValue, [
             'type' => 'submit',
             'class' => config('forms.buttons.submit', 'btn btn-primary'),
         ]);
-        $form .= '</div>';
+
+        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
+            $form .= '</div>';
+        }
+
         $form .= '</div>';
 
         $form .= $this->close();
