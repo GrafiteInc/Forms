@@ -55,7 +55,7 @@ HTML;
 
         return <<<JS
             _formsjs_fileWithPreviewField = function (input) {
-                if (! element.getAttribute('data-formsjs-rendered')) {
+                if (! input.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(input.getAttribute('data-formsjs-onload-data'));
                     let _method = function (e) { document.querySelector(_config.preview).setAttribute('src', e.target.result); };
 
