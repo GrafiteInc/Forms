@@ -49,7 +49,7 @@ class Toggle extends Field
 
     public static function onLoadJsData($id, $options)
     {
-        $themeScript = "'light'";
+        $themeScript = "light";
 
         if (isset($options['theme']) && is_bool($options['theme']) && $options['theme']) {
             $themeScript = "window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'";
@@ -57,7 +57,7 @@ class Toggle extends Field
 
         if (isset($options['theme']) && is_string($options['theme'])) {
             $theme = $options['theme'];
-            $themeScript = "'{$theme}'";
+            $themeScript = "{$theme}";
         }
 
         return json_encode([
