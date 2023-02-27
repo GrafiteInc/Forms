@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.17.0] - 2023-02-27
+
+### Changed
+- Laravel 10 compatible
+
+### Fixed
+- Small UI issue with Toggle
+
 ## [v6.16.2] - 2023-02-20
 
 ### Fixed
