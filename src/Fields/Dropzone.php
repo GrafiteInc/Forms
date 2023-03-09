@@ -108,7 +108,7 @@ CSS;
             'queue-complete' => '_formsjs_reload_page',
             'multiple' => $options['upload-muliple'] ?? 'true',
             'url' => route($route),
-            'params' => $options['params'],
+            'params' => $options['params'] ?? [],
         ]);
     }
 
