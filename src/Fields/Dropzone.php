@@ -108,6 +108,7 @@ CSS;
             'queue-complete' => '_formsjs_reload_page',
             'multiple' => $options['upload-muliple'] ?? 'true',
             'url' => route($route),
+            'params' => $options['params'],
         ]);
     }
 
@@ -125,6 +126,7 @@ CSS;
                 Dropzone.autoDiscover = false;
                 new Dropzone("#"+_fieldId, {
                     url: _config.url,
+                    params: _config.params,
                     uploadMultiple: _config.multiple,
                     sending: function(file, xhr, formData) {
                         formData.append("_token", document.head.querySelector('meta[name="csrf-token"]').content);
