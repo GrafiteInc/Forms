@@ -7,18 +7,14 @@ use Illuminate\View\Component;
 class FormAction extends Component
 {
     public $route;
-
     public $method;
-
     public $content;
-
     public $options;
-
     public $confirm;
-
     public $confirmMessage;
-
     public $confirmMethod;
+    public $payload;
+    public $disableOnSubmit;
 
     /**
      * Create a new component instance.

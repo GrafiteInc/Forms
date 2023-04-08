@@ -22,7 +22,7 @@ class HtmlSnippet
         return '';
     }
 
-    public static function make($content = null, $name = null)
+    public static function make($content = null, $name = null): HtmlConfigProcessor
     {
         if (is_null($name)) {
             $name = 'html-snippet-' . Str::uuid();

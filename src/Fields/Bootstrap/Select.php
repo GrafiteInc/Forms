@@ -131,6 +131,10 @@ CSS;
     overflow-x: hidden;
 }
 
+.bs-searchbox {
+    margin-bottom: 12px;
+}
+
 {$themeStyle}
 CSS;
     }

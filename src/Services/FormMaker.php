@@ -17,27 +17,18 @@ class FormMaker
     use HasErrorBag;
 
     protected $columns = 1;
-
     protected $maxColumns = 6;
-
     protected $sections = [];
-
     protected $steps = [];
-
     protected $orientation;
-
     protected $withJsValidation = false;
-
     protected $fieldMaker;
-
+    protected $fieldAssets;
+    public $formAssets;
     public $connection;
-
     public $errorBag;
-
     public $withLivewire = false;
-
     public $livewireOnKeydown = false;
-
     public $livewireOnChange = false;
 
     public function __construct()
@@ -364,7 +355,7 @@ class FormMaker
     /**
      * The default JS for form validation
      *
-     * @return string
+     * @return void
      */
     public function defaultJs()
     {

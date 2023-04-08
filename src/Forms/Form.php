@@ -30,6 +30,20 @@ class Form
     public $errorBag;
 
     /**
+     * If the form should be submitted on keydown
+     *
+     * @var bool
+     */
+    public $onKeydown = false;
+
+    /**
+     * If the form should be submitted on change
+     *
+     * @var bool
+     */
+    public $onChange = false;
+
+    /**
      * If the form should be livewire based or not
      *
      * @var bool
@@ -63,6 +77,13 @@ class Form
      * @var \Illuminate\Contracts\Routing\UrlGenerator
      */
     public $url;
+
+    /**
+     * The Field Builder
+     *
+     * @var \Grafite\Forms\Builders\FieldBuilder
+     */
+    public $field;
 
     /**
      * Html string for output

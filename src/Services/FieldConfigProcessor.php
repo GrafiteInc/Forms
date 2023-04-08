@@ -6,6 +6,7 @@ class FieldConfigProcessor
 {
     public $id;
     public $name;
+    public $factory;
     public $customOptions = [];
     public $options = [];
     public $type;
@@ -27,6 +28,8 @@ class FieldConfigProcessor
     public $table_class;
     public $label_class;
     public $instance;
+    public $fieldInstance;
+    public $assets;
 
     public function __construct($name, $options, $fieldInstance)
     {

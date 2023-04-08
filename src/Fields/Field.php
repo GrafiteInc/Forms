@@ -85,9 +85,9 @@ class Field
      * @param string $name
      * @param array $options
      *
-     * @return array
+     * @return \Grafite\Forms\Services\FieldConfigProcessor
      */
-    public static function make($name, $options = [])
+    public static function make($name, $options = []): FieldConfigProcessor
     {
         $field = new static();
         $options = static::parseOptions($options);

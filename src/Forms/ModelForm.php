@@ -18,6 +18,13 @@ class ModelForm extends HtmlForm
     public $model;
 
     /**
+     * Model class
+     *
+     * @var mixed
+     */
+    public $modelClass;
+
+    /**
      * Model instance
      *
      * @var \Illuminate\Database\Eloquent\Model|null

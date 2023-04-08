@@ -12,6 +12,7 @@ class HtmlConfigProcessor
     public $content;
     public $attributes;
     public $level;
+    public $instance;
 
     public function __construct($name, $options)
     {

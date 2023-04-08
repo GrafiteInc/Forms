@@ -31,7 +31,8 @@
         "orchestra/database": "^5.0|^6.0|^7.0|^8.0",
         "orchestra/testbench": "^5.0|^6.0|^7.0|^8.0",
         "nunomaduro/phpinsights": "^2.0",
-        "nunomaduro/collision": "^5.10|^6.0"
+        "nunomaduro/collision": "^5.10|^6.0",
+        "nunomaduro/larastan": "^2.0"
     },
     "autoload": {
         "psr-4": {
@@ -64,6 +65,7 @@
         "check-style": "phpcs -p --standard=PSR12 src --extensions=php",
         "fix-style": "phpcbf -p --standard=PSR12 src --extensions=php",
         "insights": "vendor/bin/phpinsights",
+        "analyse": "vendor/bin/phpstan analyse ./src --memory-limit=2G --error-format=table",
         "test": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-clover clover.xml && php coverage-checker.php clover.xml 50"
     }
 }

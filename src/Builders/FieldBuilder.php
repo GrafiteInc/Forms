@@ -12,10 +12,9 @@ class FieldBuilder
     use HasLivewire;
 
     public $withLivewire = false;
-
     public $livewireOnKeydown = false;
-
     public $livewireOnChange = false;
+    public $attributeBuilder;
 
     public function __construct()
     {

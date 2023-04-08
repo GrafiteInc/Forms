@@ -7,10 +7,14 @@ use Illuminate\View\Component;
 class FormModal extends Component
 {
     public $payload;
-
     public $triggerContent;
-
     public $triggerClass;
+    public $route;
+    public $method;
+    public $message;
+    public $content;
+    public $options;
+    public $disableOnSubmit;
 
     /**
      * Create a new component instance.

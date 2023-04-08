@@ -8,12 +8,14 @@ use MatthiasMullie\Minify\CSS;
 class FormAssets
 {
     public $stylesheets = [];
-
     public $scripts = [];
-
     public $styles = [];
-
     public $js = [];
+
+    public function __construct()
+    {
+        // Nothing here
+    }
 
     /**
      * Render the form assets
