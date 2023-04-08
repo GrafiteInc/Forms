@@ -76,7 +76,7 @@ class HtmlForm extends Form
     /**
      * Number of columns for the form
      *
-     * @var integer
+     * @var mixed
      */
     public $columns = 1;
 
