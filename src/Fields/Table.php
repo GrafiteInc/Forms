@@ -51,7 +51,7 @@ HTML;
     {
         return <<<JS
             _formsjs_tableCreateRow = function (element, item, _template) {
-                let _id = element.getAttribute('id');
+                let _id = element.getAttribute('name');
                 let _rowCount = document.querySelectorAll('.'+_id+'-item-row').length;
                 let _rowCountLast = _rowCount++;
                 let _nextItem = _template.cloneNode(true);
@@ -82,7 +82,7 @@ HTML;
                 }
                 let _number = _row.getAttribute('data-item-number');
                 let _element = e.target.parentNode.closest('.form-group').querySelector('input[data-formsjs-onload]');
-                let _id = _element.getAttribute('id');
+                let _id = _element.getAttribute('name');
 
                 document.querySelector(`.\${_id}-item-row[data-item-number="\${_number}"]`).remove();
             }
@@ -102,7 +102,7 @@ HTML;
             _formsjs_getTableRowTemplate = function (element) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                 let _template = '';
-                let _id = element.getAttribute('id');
+                let _id = element.getAttribute('name');
 
                 [0].forEach (function (_row) {
                     _template += `<div class="input-group mb-3 \${_id}-item-row" data-item-number="\${_row}">`;
