@@ -388,7 +388,7 @@ class FieldMakerTest extends TestCase
         $this->assertStringContainsString('_formsjs_getTableRowTemplate = function (element) {', $config['assets']['js']);
         $this->assertStringContainsString('_formsjs_tableAddItem = function (e) {', $config['assets']['js']);
         $this->assertStringContainsString('_formsjs_tableRemoveRow = function (e) {', $config['assets']['js']);
-        $this->assertStringContainsString('_formsjs_tableCreateRow = function (element, item, _template) {', $config['assets']['js']);
+        $this->assertStringContainsString('_formsjs_tableCreateRow = function (element, item, _template, _index, _makeClearRow) {', $config['assets']['js']);
         $this->assertStringContainsString('data-formsjs-onload="_formsjs_tableField"', $field);
         $this->assertStringContainsString('data-formsjs-onload-data="{&quot;columns&quot;:2}"', $field);
     }
