@@ -54,7 +54,7 @@ HTML;
                 let _id = element.getAttribute('name');
                 let _nextItem = _template.cloneNode(true);
                     _nextItem.setAttribute('data-item-number', _index);
-                    _nextItem.querySelector('.input-group-text').setHTML(_index + 1);
+                    _nextItem.querySelector('.input-group-text').innerHTML = (_index + 1);
                     _nextItem.querySelectorAll(`.\${_id}-item-input`).forEach(function (_input, index) {
                         _input.setAttribute('name', `\${_id}[\${_index}][]`);
                         if (typeof item[index] != 'undefined') {
@@ -91,7 +91,7 @@ HTML;
 
                 document.querySelectorAll('.' + _name).forEach(function (node, index) {
                     node.setAttribute('data-item-number', index);
-                    node.querySelector('.input-group-text').setHTML(index + 1);
+                    node.querySelector('.input-group-text').innerHTML = (index + 1);
                     node.querySelectorAll('input').forEach(function (input) {
                         input.setAttribute('name', _element.getAttribute('id').toLowerCase() + '['+index+'][]')
                     });
@@ -115,7 +115,7 @@ HTML;
                 document.querySelectorAll('.' + _name).forEach(function (node, index) {
                     _index.push(index);
                     node.setAttribute('data-item-number', index);
-                    node.querySelector('.input-group-text').setHTML(index + 1);
+                    node.querySelector('.input-group-text').innerHTML = (index + 1);
                     node.querySelectorAll('input').forEach(function (input) {
                         input.setAttribute('name', _element.getAttribute('id').toLowerCase() + '['+index+'][]')
                     });
