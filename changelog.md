@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.17.7] - 2023-04-22
+
+### Fixed
+- Issue with Safari
+
 ## [v6.17.6] - 2023-04-21
 
 ### Fixed
