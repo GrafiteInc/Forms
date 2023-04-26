@@ -257,6 +257,7 @@ class HtmlForm extends Form
         $this->buttonClasses = array_merge($buttonClasses, $this->getExtraButtonClasses());
         $this->buttons = array_merge($buttons, $this->getExtraButtons());
 
+        $this->formId = $this->getFormId();
         $this->formClass = $this->formClass ?? config('forms.form.class', 'form');
         $this->formDeleteClass = $this->formDeleteClass ?? config('forms.form.delete-class', 'form-inline');
 

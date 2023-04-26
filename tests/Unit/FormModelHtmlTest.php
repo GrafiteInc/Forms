@@ -128,6 +128,7 @@ class FormModelHtmlTest extends TestCase
     {
         $form = (new Car)->form()->create();
 
+        $this->assertStringContainsString($form->getFormId(), $form->render());
         $this->assertNotNull($form->getFormId());
     }
 
