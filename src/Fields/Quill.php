@@ -302,6 +302,12 @@ HTML;
     {
         return <<<JS
             _formsjs_quillField = function (element) {
+                element.addEventListener('grafite-form-change', function (event) {
+                    let _method = element.form.getAttribute('onchange');
+                        _method = _method.replace('(event)', '');
+                    window[_method](event);
+                });
+
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _id = element.getAttribute('id');
                     let _instance = '_formsjs_'+ _id + '_Quill';
@@ -386,7 +392,8 @@ HTML;
                     document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
                     window[_instance].on('editor-change', function () {
                         element.value = document.getElementById(_id+'_Editor').firstChild.innerHTML;
-                        let event = new Event('change', { 'bubbles': true });
+
+                        let event = new CustomEvent('grafite-form-change', { 'bubbles': true });
                         element.dispatchEvent(event);
                     });
 

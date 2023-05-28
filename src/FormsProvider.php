@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms;
 
+use Illuminate\Support\Str;
 use Grafite\Forms\Components\Form;
 use Grafite\Forms\Components\FormBase;
 use Grafite\Forms\Services\FormAssets;
@@ -31,16 +32,16 @@ class FormsProvider extends ServiceProvider
             __DIR__ . '/../config/forms.php' => base_path('config/forms.php'),
         ]);
 
-        $this->app['blade.compiler']->directive('forms', function () {
-            return "<?php echo app('" . FormAssets::class . "')->render(); ?>";
+        $this->app['blade.compiler']->directive('forms', function ($nonce) {
+            return "<?php echo app('" . FormAssets::class . "')->render('all', {$nonce}); ?>";
         });
 
-        $this->app['blade.compiler']->directive('formScripts', function () {
-            return "<?php echo app('" . FormAssets::class . "')->render('scripts'); ?>";
+        $this->app['blade.compiler']->directive('formScripts', function ($nonce) {
+            return "<?php echo app('" . FormAssets::class . "')->render('scripts', {$nonce}); ?>";
         });
 
-        $this->app['blade.compiler']->directive('formStyles', function () {
-            return "<?php echo app('" . FormAssets::class . "')->render('styles'); ?>";
+        $this->app['blade.compiler']->directive('formStyles', function ($nonce) {
+            return "<?php echo app('" . FormAssets::class . "')->render('styles', {$nonce}); ?>";
         });
 
         $this->app['blade.compiler']->component('f', Form::class);

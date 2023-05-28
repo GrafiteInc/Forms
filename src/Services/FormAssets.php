@@ -11,6 +11,7 @@ class FormAssets
     public $scripts = [];
     public $styles = [];
     public $js = [];
+    public $fields = [];
 
     public function __construct()
     {
@@ -22,12 +23,12 @@ class FormAssets
      *
      * @return string
      */
-    public function render($type = 'all')
+    public function render($type = 'all', $nonce = false)
     {
         $output = '';
 
-        $output .= $this->compileStyles($type);
-        $output .= $this->compileScripts($type);
+        $output .= $this->compileStyles($type, $nonce);
+        $output .= $this->compileScripts($type, $nonce);
 
         return $output;
     }
@@ -92,8 +93,9 @@ class FormAssets
         return $this;
     }
 
-    protected function compileStyles($type)
+    protected function compileStyles($type, $nonce)
     {
+        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
         $output = '';
 
         if (in_array($type, ['all', 'styles'])) {
@@ -105,14 +107,15 @@ class FormAssets
                 $styles = $minifierCSS->add($styles)->minify();
             }
 
-            $output .= "<style>\n{$styles}\n</style>\n";
+            $output .= "<style {$nonce}>\n{$styles}\n</style>\n";
         }
 
         return $output;
     }
 
-    protected function compileScripts($type)
+    protected function compileScripts($type, $nonce = false)
     {
+        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
         $output = '';
 
         if (in_array($type, ['all', 'scripts'])) {
@@ -127,7 +130,7 @@ class FormAssets
 
             $function = "window.FormsJS = () => { {$js} }";
 
-            $output .= "<!-- Form Scripts --><script>\n{$function}\nwindow.FormsJS();\n</script>\n";
+            $output .= "<!-- Form Scripts --><script {$nonce}>\n{$function}\nwindow.FormsJS();\n</script>\n";
         }
 
         return $output;
