@@ -15,7 +15,7 @@ class FileWithPreview extends Field
     protected static function getAttributes()
     {
         return [
-            'data-formsjs-onchange' => '_formsjs_fileWithPreviewField(this);'
+            'data-formsjs-onchange' => 'FormJS_fileWithPreviewField(event)'
         ];
     }
 
@@ -54,7 +54,8 @@ HTML;
         }
 
         return <<<JS
-            _formsjs_fileWithPreviewField = function (input) {
+            window.FormJS_fileWithPreviewField = function (event) {
+                let input = event.target;
                 if (! input.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(input.getAttribute('data-formsjs-onload-data'));
                     let _method = function (e) { document.querySelector(_config.preview).setAttribute('src', e.target.result); };

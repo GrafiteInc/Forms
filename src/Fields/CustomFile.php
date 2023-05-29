@@ -19,7 +19,7 @@ class CustomFile extends Field
     protected static function getAttributes()
     {
         return [
-            'data-formsjs-onchange' => '_formsjs_customfileField(this);'
+            'data-formsjs-onchange' => 'FormJS_customfileField(event)'
         ];
     }
 
@@ -44,7 +44,7 @@ HTML;
     public static function js($id, $options)
     {
         return <<<JS
-            _formsjs_customfileField = function (input) {
+            window.FormJS_customfileField = function (input) {
                 input.nextElementSibling.innerHTML = input.files[0].name;
             }
 JS;

@@ -140,6 +140,19 @@ class FormAssets
             window.Forms_validate_submission(event.target.form, '<i class=\"fas fa-circle-notch fa-spin mr-2\"></i> Save',event.target);
         } else if (_method.includes('FormsJS_disableOnSubmit')) {
             window.FormsJS_disableOnSubmit(event);
+        } else if (_method.includes('.')) {
+            let _path = _method.split('.');
+            if (_path.length == 2) {
+                window[_path[0]][_path[1]](event);
+            }
+
+            if (_path.length == 3) {
+                window[_path[0]][_path[1]][_path[2]](event);
+            }
+
+            if (_path.length == 4) {
+                throw new Error('Method nesting is too deep. Max of 3!');
+            }
         } else if (typeof window[_method] === 'function') {
             window[_method](event);
         }
