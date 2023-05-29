@@ -121,7 +121,30 @@ class FormAssets
         if (in_array($type, ['all', 'scripts'])) {
             $output .= collect($this->scripts)->unique()->implode("\n");
             $js = collect($this->js)->push("document.querySelectorAll('[data-formsjs-onload]').forEach(function (element) { let _method = element.getAttribute('data-formsjs-onload');
-            window[_method](element); element.setAttribute('data-formsjs-rendered', true); });")->unique()->implode("\n");
+            window[_method](element); element.setAttribute('data-formsjs-rendered', true); });document.querySelectorAll('[data-formsjs-onchange]').forEach(function (element) {
+    let _method = element.getAttribute('data-formsjs-onchange');
+    _method = _method.replace('(event)', '');
+    element.addEventListener('change', function (event) {
+        window[_method](event);
+    }); });
+
+    document.querySelectorAll('[data-formsjs-onclick]').forEach(function (element) {
+    let _method = element.getAttribute('data-formsjs-onclick');
+    _method = _method.replace('(event)', '');
+    element.addEventListener('click', function (event) {
+        event.preventDefault();
+        _method = _method.replace('return ', '');
+        _method = _method.replace('window.', '');
+
+        if (_method.includes('Forms_validate_submission')) {
+            window.Forms_validate_submission(event.target.form, '<i class=\"fas fa-circle-notch fa-spin mr-2\"></i> Save',event.target);
+        } else if (_method.includes('FormsJS_disableOnSubmit')) {
+            window.FormsJS_disableOnSubmit(event);
+        } else if (typeof window[_method] === 'function') {
+            window[_method](event);
+        }
+
+    }); });")->unique()->implode("\n");
 
             if (app()->environment('production')) {
                 $minifierJS = new JS();

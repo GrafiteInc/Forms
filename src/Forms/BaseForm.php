@@ -66,11 +66,15 @@ class BaseForm extends HtmlForm
         }
 
         if ($this->submitOnKeydown) {
-            $options['onkeydown'] = "{$this->submitMethod}(event)";
+            $options['data-formsjs-onkeydown'] = "{$this->submitMethod}(event)";
         }
 
         if ($this->submitOnChange) {
-            $options['onchange'] = "{$this->submitMethod}(event)";
+            $options['data-formsjs-onchange'] = "{$this->submitMethod}(event)";
+        }
+
+        if ($this->submitViaAjax) {
+            $options['data-formsjs-submit'] = "ajax(event)";
         }
 
         $this->html = $this->open($options);

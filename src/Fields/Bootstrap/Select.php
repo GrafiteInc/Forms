@@ -196,8 +196,8 @@ CSS;
                 let _id = element.getAttribute('id');
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                 let formsWithInputWhiteList = $.fn.selectpicker.Constructor.DEFAULTS.whiteList;
-                    formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'onclick'];
-                    formsWithInputWhiteList.span = ['onclick'];
+                    formsWithInputWhiteList.input = ['type', 'placeholder', 'onkeypress', 'onkeydown', 'data-formsjs-onclick'];
+                    formsWithInputWhiteList.span = ['data-formsjs-onclick'];
 
                 if (_config.with_add_item) {
                     let content = `<input type="text" class="bss-input" onkeydown="event.stopPropagation();" onkeypress="_formsjs_bootstrapSelect_addInpKeyPress(this, event, '\${_id}')" onclick="event.stopPropagation()" placeholder="\${_config.add_item_placeholder}"> <span class="fas fa-plus addnewicon" onclick="_formsjs_bootstrapSelect_addSelectItem(this, event, '\${_id}');"></span>`;

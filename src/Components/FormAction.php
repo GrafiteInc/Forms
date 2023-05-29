@@ -15,6 +15,7 @@ class FormAction extends Component
     public $confirmMethod;
     public $payload;
     public $disableOnSubmit;
+    public $submitViaAjax;
 
     /**
      * Create a new component instance.
@@ -30,7 +31,8 @@ class FormAction extends Component
         $confirm = false,
         $confirmMessage = "Are you sure you want to complete this action?",
         $confirmMethod = "confirm",
-        $disableOnSubmit = false
+        $disableOnSubmit = false,
+        $submitViaAjax = false
     ) {
         $this->route = $route;
         $this->method = $method;
@@ -41,6 +43,7 @@ class FormAction extends Component
         $this->confirmMessage = $confirmMessage;
         $this->confirmMethod = $confirmMethod;
         $this->disableOnSubmit = $disableOnSubmit;
+        $this->submitViaAjax = $submitViaAjax;
     }
 
     /**
@@ -57,6 +60,6 @@ class FormAction extends Component
         }
 
         return (string) $form->payload($this->payload)
-            ->action($this->method, $this->route, $this->content, $this->options, false, $this->disableOnSubmit);
+            ->action($this->method, $this->route, $this->content, $this->options, false, $this->disableOnSubmit, $this->submitViaAjax);
     }
 }

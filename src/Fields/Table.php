@@ -140,8 +140,8 @@ HTML;
                     [...Array(_config.columns).keys()].forEach (function (_column) {
                         _template += `<input name="\${_id}[\${_row}][]" type="text" class="form-control \${_id}-item-input">`;
                     });
-                    _template += `<button class="btn btn-outline-warning \${_id}-remove-item" type="button" data-item-number="\${_row}" onclick="_formsjs_tableRemoveRow(event)"><span class="fa fa-minus"></span></button>`;
-                    _template += `<button class="btn btn-outline-primary \${_id}-add-item" type="button" data-item-number="\${_row}" onclick="_formsjs_tableAddItem(event)"><span class="fa fa-plus"></span></button>`;
+                    _template += `<button class="btn btn-outline-warning \${_id}-remove-item" type="button" data-item-number="\${_row}" data-formsjs-onclick="_formsjs_tableRemoveRow(event)"><span class="fa fa-minus"></span></button>`;
+                    _template += `<button class="btn btn-outline-primary \${_id}-add-item" type="button" data-item-number="\${_row}" data-formsjs-onclick="_formsjs_tableAddItem(event)"><span class="fa fa-plus"></span></button>`;
                     _template += `</div>`;
                 });
 

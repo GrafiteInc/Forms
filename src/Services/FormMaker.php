@@ -362,6 +362,38 @@ class FormMaker
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
 
         $formPreValidation = <<<EOT
+        window.FormsJS_confirm = function (event) {
+            let _message = event.target.getAttribute('data-formsjs-confirm-message');
+
+            if (confirm(_message)) {
+                event.target.form.submit();
+            }
+        }
+
+        window.FormsJS_confirmForAjax = function (event) {
+            let _message = event.target.getAttribute('data-formsjs-confirm-message');
+
+            if (confirm(_message)) {
+                window.ajax(event);
+            }
+        }
+
+        window.FormsJS_submit = function (event) {
+            event.target.form.submit()
+        }
+
+        window.FormsJS_disableOnSubmit = function (event) {
+            let _target = event.target;
+
+            if (! _target.hasAttribute('data-formsjs-onclick')) {
+                _target = event.target.closest('button');
+            }
+
+            let _button = _target.getAttribute('data-formsjs-button');
+            _target.innerHTML = '<i class=\"fas fa-circle-notch fa-spin mr-2\"></i> ' + _button;
+            _target.disabled = true;
+            _target.form.submit();
+        }
         window.Forms_validate_submission = function (_form, _processing, _button) {
             if (! _form.checkValidity()) {
                 let _inputs = _form.querySelectorAll('input');

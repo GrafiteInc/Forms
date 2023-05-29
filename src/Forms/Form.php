@@ -43,6 +43,8 @@ class Form
      */
     public $onChange = false;
 
+    public $submitViaAjax = false;
+
     /**
      * If the form should be livewire based or not
      *
@@ -204,7 +206,7 @@ class Form
      * @param string $button
      * @return self
      */
-    public function action($method, $route, $button = 'Send', $options = [], $asModal = false, $disableOnSubmit = false)
+    public function action($method, $route, $button = 'Send', $options = [], $asModal = false, $disableOnSubmit = false, $submitViaAjax = false)
     {
         $this->html = $this->open([
             'route' => $route,
@@ -218,21 +220,28 @@ class Form
 
         if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
             $options = array_merge($options, [
-                'onclick' => "return confirm('{$this->confirmMessage}')",
+                'data-formsjs-confirm-message' => $this->confirmMessage,
+                'data-formsjs-onclick' => "FormsJS_confirm(event)",
+            ]);
+        }
+
+        if (! empty($this->confirmMessage) && is_null($this->confirmMethod) && $this->submitViaAjax) {
+            $options = array_merge($options, [
+                'data-formsjs-onclick' => "FormsJS_confirmForAjax(event)",
             ]);
         }
 
         if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
             $options = array_merge($options, [
-                'onclick' => "{$this->confirmMethod}(event, '{$this->confirmMessage}')",
+                'data-formsjs-confirm-message' => $this->confirmMessage,
+                'data-formsjs-onclick' => "{$this->confirmMethod}(event)",
             ]);
         }
 
         if ($disableOnSubmit && is_null($this->confirmMethod)) {
-            $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> '.$button;
-            $onSubmit = 'this.innerHTML = \''.$processing.'\'; this.disabled = true; this.form.submit();';
             $options = array_merge($options, [
-                'onclick' => $onSubmit,
+                'data-formsjs-button' => $button,
+                'data-formsjs-onclick' => 'window.FormsJS_disableOnSubmit(event)',
             ]);
         }
 
@@ -243,6 +252,8 @@ class Form
                 $this->html .= $this->field->makeInput('hidden', $key, $value);
             }
         }
+
+        $options['data-formsjs-onclick'] = ($submitViaAjax) ? 'ajax(event)' : false;
 
         $this->html .= $this->field->button($button, $options);
 

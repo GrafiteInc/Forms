@@ -157,10 +157,10 @@ window.Form_steps = function () {
 
     window.location.hash = '1';
 
-    window.Form_show_step(1)
+    window.FormJS_show_step(1)
 };
 
-window.Form_show_step = function (stepToShow, validate) {
+window.FormJS_show_step = function (stepToShow, validate) {
     let _steps = document.querySelectorAll('.form_step');
     let _submitButton = _steps[0].closest('form').querySelector('.form-submit-btn');
 
@@ -199,7 +199,7 @@ window.Form_show_step = function (stepToShow, validate) {
     }
 };
 
-window.Form_next_step = function () {
+window.FormJS_next_step = function (event) {
     let _validCount = 0;
     let _count = document.querySelectorAll('.form_step').length;
     let _step = parseInt(window.location.hash.substr(1));
@@ -234,7 +234,7 @@ window.Form_next_step = function () {
 
         if (_validCount == _inputFields.length) {
             window.location.hash = _step + 1;
-            window.Form_show_step(_step + 1, true);
+            window.FormJS_show_step(_step + 1, true);
             let _previous = _step - 1;
             document.querySelector('[data-bullet="' + _previous + '"]').classList.add('completed');
         }
@@ -245,13 +245,13 @@ window.Form_next_step = function () {
     }
 };
 
-window.Form_previous_step = function () {
+window.FormJS_previous_step = function (event) {
     let _count = document.querySelectorAll('.form_step').length;
     let _step = parseInt(window.location.hash.substr(1));
 
     if (_step != 1) {
         window.location.hash = _step - 1;
-        window.Form_show_step(_step - 1)
+        window.FormJS_show_step(_step - 1)
         let _previous = _step - 2;
         document.querySelector('[data-bullet="' + _previous + '"]').classList.remove('completed');
     }

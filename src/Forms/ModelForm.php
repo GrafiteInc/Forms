@@ -179,11 +179,11 @@ class ModelForm extends HtmlForm
         }
 
         if (in_array('keydown', $this->submitOn['create'] ?? []) || $this->submitOnKeydown) {
-            $options['onkeydown'] = "{$this->submitMethod}(event)";
+            $options['data-formjs-onkeydown'] = "{$this->submitMethod}(event)";
         }
 
         if (in_array('change', $this->submitOn['create'] ?? []) || $this->submitOnChange) {
-            $options['onchange'] = "{$this->submitMethod}(event)";
+            $options['data-formsjs-onchange'] = "{$this->submitMethod}(event)";
         }
 
         $this->html = $this->open($options);
@@ -251,11 +251,11 @@ class ModelForm extends HtmlForm
         }
 
         if (in_array('keydown', $this->submitOn['update'] ?? []) || $this->submitOnKeydown) {
-            $options['onkeydown'] = "{$this->submitMethod}(event)";
+            $options['data-formsjs-onkeydown'] = "{$this->submitMethod}(event)";
         }
 
         if (in_array('change', $this->submitOn['update'] ?? []) || $this->submitOnChange) {
-            $options['onchange'] = "{$this->submitMethod}(event)";
+            $options['data-formsjs-onchange'] = "{$this->submitMethod}(event)";
         }
 
         $this->html = $this->model($this->instance, $options);
@@ -322,7 +322,8 @@ class ModelForm extends HtmlForm
             'class' => $this->buttonClasses['delete'],
         ];
 
-        $options['onclick'] = $this->getConfirmationOption($options);
+        $options['data-formsjs-confirm-message'] = (! empty($this->confirmMessage)) ? $this->confirmMessage : false;
+        $options['data-formsjs-onclick'] = $this->getConfirmationOption($options);
         $options['type'] = 'submit';
 
         if ($this->formIsDisabled) {
@@ -513,16 +514,19 @@ class ModelForm extends HtmlForm
         $onclick = false;
 
         if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
-            $onclick = "return confirm('{$this->confirmMessage}')";
+            $onclick = "FormsJS_confirm(event)";
+        }
+
+        if (! empty($this->confirmMessage) && is_null($this->confirmMethod) && $this->submitViaAjax) {
+            $onclick = "FormsJS_confirmForAjax(event)";
         }
 
         if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {
-            $onclick = "{$this->confirmMethod}(event, '{$this->confirmMessage}')";
+            $onclick = "{$this->confirmMethod}(event)";
         }
 
         if (is_null($this->confirmMethod) && $this->deleteAsModal) {
-            $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> '.$this->buttons['confirm'];
-            $onclick = 'this.innerHTML = \''.$processing.'\'; this.disabled = true; this.form.submit();';
+            return 'FormsJS_disableOnSubmit(event)';
         }
 
         return $onclick;

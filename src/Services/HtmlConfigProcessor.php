@@ -157,7 +157,7 @@ class HtmlConfigProcessor
     public function onClick($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'onclick' => $value
+            'data-formsjs-onclick' => $value
         ]);
 
         return $this;

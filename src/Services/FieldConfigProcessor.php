@@ -550,7 +550,7 @@ JS;
     public function submitOnChange()
     {
         $this->attributes = array_merge($this->attributes, [
-            'onchange' => 'this.form.submit()',
+            'data-formsjs-onchange' => 'FormsJS_submit',
         ]);
 
         return $this;
@@ -559,7 +559,7 @@ JS;
     public function submitOnKeyUp()
     {
         $this->attributes = array_merge($this->attributes, [
-            'onkeyup' => 'this.form.submit()',
+            'data-formsjs-onkeyup' => 'FormsJS_submit',
         ]);
 
         return $this;

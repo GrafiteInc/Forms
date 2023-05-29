@@ -454,11 +454,11 @@ class HtmlForm extends Form
         if ($this->columns === 'steps') {
             $html .= $this->field->button($this->buttons['previous'], [
                 'class' => $this->buttonClasses['previous'] . ' form-previous-btn',
-                'onclick' => 'window.Form_previous_step()',
+                'data-formsjs-onclick' => 'window.FormJS_previous_step(event)',
             ]);
             $html .= $this->field->button($this->buttons['next'], [
                 'class' => $this->buttonClasses['next'] . ' form-next-btn',
-                'onclick' => 'window.Form_next_step()',
+                'data-formsjs-onclick' => 'window.FormJS_next_step(event)',
             ]);
         }
 
@@ -469,7 +469,7 @@ class HtmlForm extends Form
             $html .= $this->field->button($this->buttons['submit'], [
                 'class' => $this->buttonClasses['submit'],
                 'type' => $submitType,
-                'onclick' => $submitMethod,
+                'data-formsjs-onclick' => $submitMethod,
             ]);
         }
 
@@ -590,6 +590,13 @@ class HtmlForm extends Form
     public function renderedFields()
     {
         $this->html = $this->renderedFields;
+
+        return $this;
+    }
+
+    public function viaAjax()
+    {
+        $this->submitViaAjax = true;
 
         return $this;
     }

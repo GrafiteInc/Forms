@@ -15,7 +15,7 @@ class FileWithPreview extends Field
     protected static function getAttributes()
     {
         return [
-            'onChange' => '_formsjs_fileWithPreviewField(this);'
+            'data-formsjs-onchange' => '_formsjs_fileWithPreviewField(this);'
         ];
     }
 

@@ -19,7 +19,7 @@ class CustomFile extends Field
     protected static function getAttributes()
     {
         return [
-            'onChange' => '_formsjs_customfileField(this);'
+            'data-formsjs-onchange' => '_formsjs_customfileField(this);'
         ];
     }
 
