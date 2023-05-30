@@ -70,7 +70,7 @@ class HtmlConfigProcessorTest extends TestCase
     {
         $html = Button::make('click Me!')->cssClass('are-you')->onClick('window.location.reload();');
 
-        $this->assertEquals('<button class="are-you" onclick="window.location.reload();">click Me!</button>', (string) $html);
+        $this->assertEquals('<button class="are-you" data-formsjs-onclick="window.location.reload();">click Me!</button>', (string) $html);
     }
 
     public function testOriginal()
