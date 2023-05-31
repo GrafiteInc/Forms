@@ -350,6 +350,33 @@ JS;
         return $this;
     }
 
+    public function hiddenWhen($field, $value)
+    {
+        if (! is_array($value)) {
+            $value = [$value];
+        }
+
+        $value = json_encode($value);
+
+        $script = <<<JS
+            let _hidden_validation_$field = function () {
+                if (! $value.includes(document.getElementById('$field').value)) {
+                    document.getElementById('$this->id').parentNode.classList.remove('d-none');
+                    document.getElementById('$this->id').parentNode.classList.add('d-block');
+                }
+            };
+
+            document.getElementById('$this->id').parentNode.classList.add('d-none');
+            document.getElementById('$field').addEventListener('change', _hidden_validation_$field());
+
+            _hidden_validation_$field();
+JS;
+
+        app(FormAssets::class)->addJs($script);
+
+        return $this;
+    }
+
     public function disabledWhen($callback)
     {
         $state = $callback();
