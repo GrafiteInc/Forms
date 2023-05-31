@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.18.3] - 2023-05-31
+
+### Fixed
+- Spacing for Table Field
+- Issue with add/remove rows in Table Field
+
 ## [v6.18.2] - 2023-05-31
 
 ### Added
