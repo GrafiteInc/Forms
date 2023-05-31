@@ -86,6 +86,10 @@ class FieldMaker
             $value = $this->getObjectValue($object, $column) ?? $value;
         }
 
+        if (is_null($value) && isset($columnConfig['attributes']['value'])) {
+            $value = $columnConfig['attributes']['value'];
+        }
+
         $errors = $this->getFieldErrors($column, $object);
         $columnConfig = $this->setClassIfErrors($columnConfig, $errors);
 
