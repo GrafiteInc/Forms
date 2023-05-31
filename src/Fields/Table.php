@@ -27,7 +27,7 @@ class Table extends Field
     public static function getTemplate($options)
     {
         return <<<HTML
-<div class="form-group">
+<div class="form-group mb-3">
     <label for="{id}" class="{labelClass}">{name}</label>
     {field}
     {errors}
