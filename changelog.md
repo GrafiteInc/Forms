@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.18.2] - 2023-05-31
+
+### Added
+- Grab the field value if set
+
 ## [v6.18.1] - 2023-05-31
 
 ### Added
