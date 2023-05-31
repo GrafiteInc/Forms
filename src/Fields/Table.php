@@ -50,6 +50,20 @@ HTML;
     public static function js($id, $options)
     {
         return <<<JS
+            _formsjs_tableActionBinding = function (element) {
+                let _id = element.getAttribute('name');
+
+                document.querySelectorAll(`.\${_id}-add-item`).forEach(function (_item) {
+                    _item.removeEventListener('click', _formsjs_tableAddItem);
+                    _item.addEventListener('click', _formsjs_tableAddItem);
+                });
+
+                document.querySelectorAll(`.\${_id}-remove-item`).forEach(function (_item) {
+                    _item.removeEventListener('click', _formsjs_tableRemoveRow);
+                    _item.addEventListener('click', _formsjs_tableRemoveRow);
+                });
+            }
+
             _formsjs_tableCreateRow = function (element, item, _template, _index, _makeClearRow) {
                 let _id = element.getAttribute('name');
                 let _nextItem = _template.cloneNode(true);
@@ -95,10 +109,15 @@ HTML;
                     node.querySelectorAll('input').forEach(function (input) {
                         input.setAttribute('name', _element.getAttribute('id').toLowerCase() + '['+index+'][]')
                     });
+                    node.querySelectorAll('button').forEach(function (button) {
+                        button.setAttribute('data-item-number', index);
+                    });
                 });
 
                 let event = new Event('change', { 'bubbles': true });
                 _element.dispatchEvent(event);
+
+                _formsjs_tableActionBinding(_element);
             }
 
             _formsjs_tableAddItem = function (e) {
@@ -127,6 +146,8 @@ HTML;
 
                 let event = new Event('change', { 'bubbles': true });
                 _element.dispatchEvent(event);
+
+                _formsjs_tableActionBinding(_element);
             }
 
             _formsjs_getTableRowTemplate = function (element) {
@@ -140,8 +161,8 @@ HTML;
                     [...Array(_config.columns).keys()].forEach (function (_column) {
                         _template += `<input name="\${_id}[\${_row}][]" type="text" class="form-control \${_id}-item-input">`;
                     });
-                    _template += `<button class="btn btn-outline-warning \${_id}-remove-item" type="button" data-item-number="\${_row}" data-formsjs-onclick="_formsjs_tableRemoveRow(event)"><span class="fa fa-minus"></span></button>`;
-                    _template += `<button class="btn btn-outline-primary \${_id}-add-item" type="button" data-item-number="\${_row}" data-formsjs-onclick="_formsjs_tableAddItem(event)"><span class="fa fa-plus"></span></button>`;
+                    _template += `<button class="btn btn-outline-warning \${_id}-remove-item" type="button" data-item-number="\${_row}"><span class="fa fa-minus"></span></button>`;
+                    _template += `<button class="btn btn-outline-primary \${_id}-add-item" type="button" data-item-number="\${_row}"><span class="fa fa-plus"></span></button>`;
                     _template += `</div>`;
                 });
 
@@ -161,6 +182,8 @@ HTML;
                     } else {
                         _formsjs_tableCreateRow(element, [], _tableLastRow, 0, true);
                     }
+
+                    _formsjs_tableActionBinding(element);
                 }
             }
 JS;
