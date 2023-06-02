@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.18.4] - 2023-06-02
+
+### Changed
+- Made ajax customizable
+- Removed a Save word
+
+### Fixed
+- Minor issue with checkboxes
+
 ## [v6.18.3] - 2023-05-31
 
 ### Fixed
