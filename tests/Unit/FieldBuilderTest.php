@@ -248,10 +248,10 @@ class FieldBuilderTest extends TestCase
 
         $test = $this->builder->isChecked('foo', null, [
             'attributes' => [
-                'value' => 'foo'
+                'value' => 'on'
             ]
         ]);
-        $this->assertEquals('', $test);
+        $this->assertEquals(' checked', $test);
 
         $test = $this->builder->isChecked('foo', 'foo', [
             'attributes' => [

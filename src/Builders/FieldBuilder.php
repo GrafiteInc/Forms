@@ -426,6 +426,10 @@ class FieldBuilder
      */
     public function isChecked($name, $value, $options)
     {
+        if (is_null($value) && isset($options['attributes']['value'])) {
+            $value = $options['attributes']['value'];
+        }
+
         if (! $value) {
             return '';
         }
