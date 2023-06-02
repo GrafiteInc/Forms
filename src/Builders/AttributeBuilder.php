@@ -46,7 +46,7 @@ class AttributeBuilder
             }
         }
 
-        return implode(' ', $html);
+        return collect($html)->unique()->implode(' ');
     }
 
     /**
