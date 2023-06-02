@@ -33,6 +33,7 @@ return [
     ],
 
     'form' => [
+        'global-ajax-method' => 'ajax',
         'class' => 'form',
         'delete-class' => 'form-inline',
         'inline-class' => 'form d-inline',

@@ -359,6 +359,7 @@ class FormMaker
      */
     public function defaultJs()
     {
+        $ajaxMethod = config('forms.global-ajax-method', 'ajax');
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
 
         $formPreValidation = <<<EOT
@@ -374,7 +375,7 @@ class FormMaker
             let _message = event.target.getAttribute('data-formsjs-confirm-message');
 
             if (confirm(_message)) {
-                window.ajax(event);
+                window['$ajaxMethod'](event);
             }
         }
 

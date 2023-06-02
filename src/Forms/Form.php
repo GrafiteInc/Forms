@@ -253,7 +253,9 @@ class Form
             }
         }
 
-        $options['data-formsjs-onclick'] = ($submitViaAjax) ? 'ajax(event)' : false;
+        $ajaxMethod = config('forms.global-ajax-method', 'ajax');
+
+        $options['data-formsjs-onclick'] = ($submitViaAjax) ? $ajaxMethod.'(event)' : $options['data-formsjs-onclick'] ?? false;
 
         $this->html .= $this->field->button($button, $options);
 
