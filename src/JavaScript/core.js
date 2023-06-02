@@ -22,7 +22,7 @@ document.querySelectorAll('[data-formsjs-onclick]').forEach(function (element) {
         _method = _method.replace('window.', '');
 
         if (_method.includes('Forms_validate_submission')) {
-            window.Forms_validate_submission(event.target.form, '<i class=\"fas fa-circle-notch fa-spin mr-2\"></i> Save',event.target);
+            window.Forms_validate_submission(event.target.form, '<i class=\"fas fa-circle-notch fa-spin mr-2\"></i>',event.target);
         } else if (_method.includes('FormsJS_disableOnSubmit')) {
             window.FormsJS_disableOnSubmit(event);
         } else if (_method.includes('.')) {
