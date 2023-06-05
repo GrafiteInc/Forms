@@ -43,7 +43,12 @@ class Form
      */
     public $onChange = false;
 
-    public $submitViaAjax = false;
+    /**
+     * If we want to run the submission through an ajax call
+     *
+     * @var boolean
+     */
+    public $submitViaAjax = null;
 
     /**
      * If the form should be livewire based or not
@@ -208,6 +213,10 @@ class Form
      */
     public function action($method, $route, $button = 'Send', $options = [], $asModal = false, $disableOnSubmit = false, $submitViaAjax = false)
     {
+        if (! is_null($this->submitViaAjax)) {
+            $submitViaAjax = $this->submitViaAjax;
+        }
+
         $this->html = $this->open([
             'route' => $route,
             'method' => $method,
@@ -225,7 +234,7 @@ class Form
             ]);
         }
 
-        if (! empty($this->confirmMessage) && is_null($this->confirmMethod) && $this->submitViaAjax) {
+        if (! empty($this->confirmMessage) && is_null($this->confirmMethod) && $submitViaAjax) {
             $options = array_merge($options, [
                 'data-formsjs-onclick' => "FormsJS_confirmForAjax(event)",
             ]);
@@ -337,6 +346,18 @@ class Form
     public function asLivewire()
     {
         $this->withLivewire = true;
+
+        return $this;
+    }
+
+    /**
+     * Set the form as an ajax based one
+     *
+     * @return self
+     */
+    public function viaAjax()
+    {
+        $this->submitViaAjax = true;
 
         return $this;
     }
