@@ -264,7 +264,7 @@ class Form
 
         $ajaxMethod = config('forms.global-ajax-method', 'ajax');
 
-        $options['data-formsjs-onclick'] = ($submitViaAjax) ? $ajaxMethod.'(event)' : $options['data-formsjs-onclick'] ?? false;
+        $options['data-formsjs-onclick'] = ($submitViaAjax) ? $ajaxMethod . '(event)' : $options['data-formsjs-onclick'] ?? false;
 
         $this->html .= $this->field->button($button, $options);
 
@@ -288,7 +288,7 @@ class Form
             return $this->formId;
         }
 
-        return 'Form_'.Str::random(10);
+        return 'Form_' . Str::random(10);
     }
 
     /**

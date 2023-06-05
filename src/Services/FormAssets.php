@@ -120,7 +120,7 @@ class FormAssets
 
         if (in_array($type, ['all', 'scripts'])) {
             $output .= collect($this->scripts)->unique()->implode("\n");
-            $coreJavaScript = file_get_contents(__DIR__.'/../JavaScript/core.js');
+            $coreJavaScript = file_get_contents(__DIR__ . '/../JavaScript/core.js');
             $js = collect($this->js)->push($coreJavaScript)->unique()->implode("\n");
 
             if (app()->environment('production')) {

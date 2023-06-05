@@ -130,7 +130,7 @@ class HtmlConfigProcessor
     public function data($key, $value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'data-'.$key => $value
+            'data-' . $key => $value
         ]);
 
         return $this;
