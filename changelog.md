@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.18.5] - 2023-06-05
+
+### Fixed
+- Issue with viaAjax
+- Issue with click bindings
+
 ## [v6.18.4] - 2023-06-02
 
 ### Changed
