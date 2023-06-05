@@ -395,6 +395,7 @@ class FormMaker
             _target.disabled = true;
             _target.form.submit();
         }
+
         window.Forms_validate_submission = function (_form, _processing, _button) {
             if (! _form.checkValidity()) {
                 let _inputs = _form.querySelectorAll('input');
