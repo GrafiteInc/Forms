@@ -103,8 +103,11 @@ class DummyClass extends Field
     {
         return <<<JS
             _formsjs_DummyClass = function (element) {
+                // Get the config from the element
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
+                // this is code to run on the element AFTER its been rendered
+                // this is where you could add further bindings etc
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     // put JS code here
                 }

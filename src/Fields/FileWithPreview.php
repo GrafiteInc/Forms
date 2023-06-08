@@ -12,11 +12,9 @@ class FileWithPreview extends Field
         return 'custom-file';
     }
 
-    protected static function getAttributes()
+    public static function onLoadJs($id, $options)
     {
-        return [
-            'data-formsjs-onchange' => 'FormJS_fileWithPreviewField(event)'
-        ];
+        return '_formsjs_fileWithPreviewField';
     }
 
     protected static function getFactory()
@@ -42,36 +40,37 @@ HTML;
         return json_encode([
             'preview' => $options['preview_identifier'] ?? '',
             'as_background_image' => $options['preview_as_background_image'] ?? false,
+            'with_sibling' => ! Str::of(config('forms.bootstrap-version'))->startsWith('5'),
         ]);
     }
 
     public static function js($id, $options)
     {
-        $siblingCode = '';
-
-        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
-            $siblingCode = 'input.nextElementSibling.innerHTML = input.files[0].name;';
-        }
-
         return <<<JS
-            window.FormJS_fileWithPreviewField = function (event) {
-                let input = event.target;
-                if (! input.getAttribute('data-formsjs-rendered')) {
-                    let _config = JSON.parse(input.getAttribute('data-formsjs-onload-data'));
-                    let _method = function (e) { document.querySelector(_config.preview).setAttribute('src', e.target.result); };
+            _formsjs_fileWithPreviewField = function (element) {
+                if (! element.getAttribute('data-formsjs-rendered')) {
+                    let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-                    if (_config.as_background_image) {
-                        _method = function (e) { document.querySelector(_config.preview).setAttribute('style', 'background-image: url('+e.target.result+')'); };
-                    }
+                    element.addEventListener('change', function () {
+                        let input = element;
+                        let _config = JSON.parse(input.getAttribute('data-formsjs-onload-data'));
+                        let _method = function (e) { document.querySelector(_config.preview).setAttribute('src', e.target.result); };
 
-                    {$siblingCode}
+                        if (_config.as_background_image) {
+                            _method = function (e) { document.querySelector(_config.preview).setAttribute('style', 'background-image: url('+e.target.result+')'); };
+                        }
 
-                    if (input.files && input.files[0]) {
-                        var reader = new FileReader();
-                        reader.onload = function (e) { _method(e) };
+                        if (_config.with_sibling) {
+                            input.nextElementSibling.innerHTML = input.files[0].name;
+                        }
 
-                        reader.readAsDataURL(input.files[0]);
-                    }
+                        if (input.files && input.files[0]) {
+                            var reader = new FileReader();
+                            reader.onload = function (e) { _method(e) };
+
+                            reader.readAsDataURL(input.files[0]);
+                        }
+                    });
                 }
             }
 JS;
