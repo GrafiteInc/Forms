@@ -396,7 +396,7 @@ class FormMaker
             _target.form.submit();
         }
 
-        window.Forms_validate_submission = function (_form, _processing, _button) {
+        window.Forms_validate_submission = function (_form, _processing) {
             if (! _form.checkValidity()) {
                 let _inputs = _form.querySelectorAll('input');
                 let _selects = _form.querySelectorAll('select');
@@ -428,7 +428,9 @@ class FormMaker
                 return false;
             };
 
-            _button.innerHTML = _processing;
+            let _button = _form.querySelector('button[type="submit"]');
+            let _originalContent = _button.innerHTML;
+            _button.innerHTML = _processing + _originalContent;
             _button.disabled = true;
 
             _form.submit();

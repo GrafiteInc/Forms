@@ -447,8 +447,8 @@ class HtmlForm extends Form
         $onSubmit = null;
 
         if ($this->disableOnSubmit) {
-            $processing = '<i class="fas fa-circle-notch fa-spin mr-2"></i> ' . $this->buttons['submit'];
-            $onSubmit = "return window.Forms_validate_submission(this.form, '{$processing}', this);";
+            $processing = '<i class="fas fa-circle-notch fa-spin me-1"></i>';
+            $onSubmit = "return window.Forms_validate_submission(this.form, {$processing});";
         }
 
         if ($this->columns === 'steps') {
