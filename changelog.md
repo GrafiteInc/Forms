@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.18.6] - 2023-06-08
+
+### Added
+- Summernote as a field
+
+### Fixed
+- Issues with bindings using Livewire
+
 ## [v6.18.5] - 2023-06-05
 
 ### Fixed
