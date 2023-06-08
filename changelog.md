@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.18.7] - 2023-06-08
+
+### Fixed
+- Minor issue with FileWithPreview field
+
 ## [v6.18.6] - 2023-06-08
 
 ### Added
