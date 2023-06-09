@@ -13,7 +13,13 @@ window._formsjs_trigger_onchange_function = function (event) {
 window._formsjs_trigger_onclick_function = function (event) {
     event.preventDefault();
 
+    let _form = event.target.form;
     let _method = event.target.getAttribute('data-formsjs-onclick');
+
+    if (! _method) {
+        _form = event.target.parentNode.form;
+        _method = event.target.parentNode.getAttribute('data-formsjs-onclick');
+    }
 
     if (_method) {
         _method = _method.replace('(event)', '');
@@ -21,7 +27,7 @@ window._formsjs_trigger_onclick_function = function (event) {
         _method = _method.replace('window.', '');
 
         if (_method.includes('Forms_validate_submission')) {
-            window.Forms_validate_submission(event.target.form, '<i class=\"fas fa-circle-notch fa-spin me-1\"></i>');
+            window.Forms_validate_submission(_form, '<i class=\"fas fa-circle-notch fa-spin me-1\"></i>');
         } else if (_method.includes('FormsJS_disableOnSubmit')) {
             window.FormsJS_disableOnSubmit(event);
         } else if (_method.includes('.')) {
@@ -41,10 +47,6 @@ window._formsjs_trigger_onclick_function = function (event) {
             window[_method](event);
         }
     }
-
-    let _clickEvent = new CustomEvent('click');
-
-    event.target.parentNode.dispatchEvent(_clickEvent);
 }
 
 window._formsjs_set_bindings = function () {
