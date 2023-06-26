@@ -2,7 +2,6 @@
 
 namespace Grafite\Forms;
 
-use Illuminate\Support\Str;
 use Grafite\Forms\Components\Form;
 use Grafite\Forms\Components\FormBase;
 use Grafite\Forms\Services\FormAssets;
