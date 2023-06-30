@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.0] - 2023-06-30
+
+### Added
+- hCaptcha field with middleware
+- GrapesJs field
+
 ## [v6.18.8] - 2023-06-09
 
 ### Fixed
