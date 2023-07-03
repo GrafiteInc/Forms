@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.1] - 2023-07-03
+
+### Fixed
+- Issue with button actions
+
 ## [v6.19.0] - 2023-06-30
 
 ### Added
