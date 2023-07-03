@@ -198,6 +198,13 @@ class HtmlForm extends Form
     ];
 
     /**
+     * Form button onclick actions
+     *
+     * @var array
+     */
+    public $buttonActions = [];
+
+    /**
      * Form button classes
      *
      * @var array
@@ -305,7 +312,7 @@ class HtmlForm extends Form
 
                 if (isset($this->buttonActions[$button])) {
                     $lastRowInForm .= '<button class="' . $this->buttonClasses[$button]
-                        . '" onclick="' . $this->buttonActions[$button] . '">' . $this->buttons[$button] . '</button>';
+                        . '" data-formsjs-onclick="' . $this->buttonActions[$button] . '">' . $this->buttons[$button] . '</button>';
                 }
             }
 
