@@ -160,7 +160,6 @@ class ModelForm extends HtmlForm
      */
     public function create()
     {
-        $this->builder->setSections($this->setSections());
         $this->submitMethod = $this->submitMethods['create'] ?? null;
 
         if ($this->orientation === 'horizontal') {
@@ -189,6 +188,7 @@ class ModelForm extends HtmlForm
         $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());
+        $this->builder->setSections($this->setSections($fields));
 
         $this->renderedFields = $this->builder
             ->setConnection($this->connection)
@@ -229,7 +229,6 @@ class ModelForm extends HtmlForm
             $this->setInstance($model);
         }
 
-        $this->builder->setSections($this->setSections());
         $this->submitMethod = $this->submitMethods['update'] ?? null;
 
         $this->setRouteParameterValues();
@@ -261,6 +260,7 @@ class ModelForm extends HtmlForm
         $this->html = $this->model($this->instance, $options);
 
         $fields = $this->parseFields($this->fields());
+        $this->builder->setSections($this->setSections($fields));
 
         $this->renderedFields = $this->builder
             ->setConnection($this->connection)
@@ -301,7 +301,7 @@ class ModelForm extends HtmlForm
             $this->setInstance($model);
         }
 
-        $this->builder->setSections($this->setSections());
+        $this->builder->setSections($this->setSections([]));
         $this->submitMethod = $this->submitMethods['delete'] ?? null;
 
         $this->setRouteParameterValues();

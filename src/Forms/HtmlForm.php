@@ -169,9 +169,9 @@ class HtmlForm extends Form
     public $confirmMethod;
 
     /**
-     * The field builder
+     * The form builder
      *
-     * @var \Grafite\Forms\Builders\FieldBuilder
+     * @var \Grafite\Forms\Services\FormMaker
      */
     protected $builder;
 
@@ -344,9 +344,9 @@ class HtmlForm extends Form
      *
      * @return array
      */
-    public function setSections()
+    public function setSections($fields)
     {
-        return [array_keys($this->parseFields($this->fields()))];
+        return [array_keys($fields)];
     }
 
     /**
@@ -354,9 +354,9 @@ class HtmlForm extends Form
      *
      * @return array
      */
-    public function steps()
+    public function steps($fields)
     {
-        return [array_keys($this->parseFields($this->fields()))];
+        return [array_keys($fields)];
     }
 
     /**

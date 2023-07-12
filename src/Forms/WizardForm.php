@@ -82,8 +82,6 @@ class WizardForm extends HtmlForm
             $this->formClass = $this->formClass ?? config('forms.form.horizontal-class', 'form-horizontal');
         }
 
-        $this->builder->setSteps($this->steps());
-
         $options = [
             'route' => $this->route,
             'method' => $this->method,
@@ -99,6 +97,7 @@ class WizardForm extends HtmlForm
         $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());
+        $this->builder->setSteps($this->steps($fields));
 
         $this->renderedFields = $this->builder
             ->setColumns($this->columns)

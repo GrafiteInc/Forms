@@ -35,8 +35,6 @@ class LivewireForm extends HtmlForm
             $this->formClass = $this->formClass ?? config('forms.form.horizontal-class', 'form-horizontal');
         }
 
-        $this->builder->setSections($this->setSections());
-
         $options = [
             'files' => $this->hasFiles,
             'class' => $this->formClass,
@@ -47,6 +45,7 @@ class LivewireForm extends HtmlForm
         $this->html = $this->open($options);
 
         $fields = $this->parseFields($this->fields());
+        $this->builder->setSections($this->setSections($fields));
 
         $this->renderedFields = $this->builder
             ->setColumns($this->columns)
