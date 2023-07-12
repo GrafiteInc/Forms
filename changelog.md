@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.2] - 2023-07-12
+
+### Fixed
+- Issue with setSections and auto-naming
+
 ## [v6.19.1] - 2023-07-03
 
 ### Fixed
