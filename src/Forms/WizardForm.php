@@ -40,6 +40,13 @@ class WizardForm extends HtmlForm
     public $progressBarColor;
 
     /**
+     * A means of tracking the fields in for step setting
+     *
+     * @var array
+     */
+    protected $fieldsForSteps;
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -98,6 +105,7 @@ class WizardForm extends HtmlForm
 
         $fields = $this->parseFields($this->fields());
         $this->builder->setSteps($this->steps($fields));
+        $this->fieldsForSteps = $fields;
 
         $this->renderedFields = $this->builder
             ->setColumns($this->columns)
@@ -132,7 +140,7 @@ class WizardForm extends HtmlForm
     {
         $html = '<div class="form-progress-bar">';
 
-        foreach (array_keys($this->steps()) as $key => $title) {
+        foreach (array_keys($this->steps($this->fieldsForSteps)) as $key => $title) {
             $htmlTitle = (is_numeric($title)) ? '' : 'title="' . $title . '"';
             $html .= '<div class="form-step">';
             $html .= '<span ' . $htmlTitle . ' class="form-bullet" data-bullet="' . $key . '">' . ($key + 1) . '</span>';
@@ -141,11 +149,6 @@ class WizardForm extends HtmlForm
         $html .= '</div>';
 
         return $html;
-    }
-
-    public function steps()
-    {
-        return [];
     }
 
     public function scripts()
@@ -267,7 +270,7 @@ EOT;
     public function styles()
     {
         $color = $this->progressBarColor ?? '#28a745';
-        $numberOfSteps = count($this->steps());
+        $numberOfSteps = count($this->steps($this->fieldsForSteps));
         $size = $numberOfSteps * 100;
         $left = 30;
 
