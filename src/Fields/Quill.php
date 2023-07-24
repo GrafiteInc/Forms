@@ -222,7 +222,7 @@ CSS;
     public static function scripts($options)
     {
         return [
-            '//cdn.quilljs.com/1.3.6/quill.js',
+            '//cdn.quilljs.com/1.3.7/quill.js',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
         ];
     }
