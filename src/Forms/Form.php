@@ -10,6 +10,7 @@ use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Builders\FieldBuilder;
 use Grafite\Forms\Builders\AttributeBuilder;
+use Grafite\Forms\Services\FormAssets;
 
 class Form
 {
@@ -93,6 +94,13 @@ class Form
     public $field;
 
     /**
+     * The Asset Builder
+     *
+     * @var \Grafite\Forms\Services\FormAssets
+     */
+    public $assets;
+
+    /**
      * Html string for output
      *
      * @var string
@@ -148,7 +156,6 @@ class Form
      */
     public $triggerClass = null;
 
-
     /**
      * Text for the modal title
      *
@@ -187,6 +194,7 @@ class Form
     {
         $this->url = app(UrlGenerator::class);
         $this->field = app(FieldBuilder::class);
+        $this->assets = app(FormAssets::class);
         $this->session = session();
 
         $this->config();
@@ -273,6 +281,11 @@ class Form
         if ($asModal) {
             $this->html = $this->asModal();
         }
+
+        $defaultJavaScript = file_get_contents(__DIR__ . '/../JavaScript/default.js');
+        $defaultJavaScript = Str::of($defaultJavaScript)->replace('_ajaxMethod', $ajaxMethod);
+
+        $this->assets->addJs($defaultJavaScript);
 
         return $this;
     }

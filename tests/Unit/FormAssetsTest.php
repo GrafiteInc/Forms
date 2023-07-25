@@ -46,6 +46,7 @@ class UserHistoryForm extends BaseForm
 
 class FormAssetsTest extends TestCase
 {
+    protected $form;
     protected $formAssets;
 
     public function setUp(): void
