@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.4] - 2023-07-25
+
+### Fixed
+- Issue with default JS methods
+- Issue with modal centering
+
 ## [v6.19.3] - 2023-07-12
 
 ### Fixed
