@@ -711,9 +711,11 @@ class Form
             $closeButton = '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
         }
 
+        $centered = (config('forms.modal-centered')) ? 'modal-dialog-centered' : '';
+
         return <<<Modal
             <div id="{$modalId}" class="modal fade" tabindex="-1" role="dialog">
-                <div class="modal-dialog" role="document">
+                <div class="modal-dialog {$centered} modal-dialog-scrollable" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h5 class="modal-title">{$title}</h5>
