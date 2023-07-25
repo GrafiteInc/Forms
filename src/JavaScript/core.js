@@ -26,8 +26,8 @@ window._formsjs_trigger_onclick_function = function (event) {
         _method = _method.replace('return ', '');
         _method = _method.replace('window.', '');
 
-        if (_method.includes('Forms_validate_submission')) {
-            window.Forms_validate_submission(_form, '<i class=\"fas fa-circle-notch fa-spin me-1\"></i>');
+        if (_method.includes('FormsJS_validate_submission')) {
+            window.FormsJS_validate_submission(_form, '<i class=\"fas fa-circle-notch fa-spin me-1\"></i>');
         } else if (_method.includes('FormsJS_disableOnSubmit')) {
             window.FormsJS_disableOnSubmit(event);
         } else if (_method.includes('.')) {

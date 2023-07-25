@@ -362,113 +362,17 @@ class FormMaker
         $ajaxMethod = config('forms.global-ajax-method', 'ajax');
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
 
-        $formPreValidation = <<<EOT
-        window.FormsJS_confirm = function (event) {
-            let _message = event.target.getAttribute('data-formsjs-confirm-message');
+        $defaultJavaScript = file_get_contents(__DIR__ . '/../JavaScript/default.js');
+        $defaultJavaScript = Str::of($defaultJavaScript)->replace('_ajaxMethod', $ajaxMethod);
 
-            if (confirm(_message)) {
-                event.target.form.submit();
-            }
-        }
-
-        window.FormsJS_confirmForAjax = function (event) {
-            let _message = event.target.getAttribute('data-formsjs-confirm-message');
-
-            if (confirm(_message)) {
-                window['$ajaxMethod'](event);
-            }
-        }
-
-        window.FormsJS_submit = function (event) {
-            event.target.form.submit()
-        }
-
-        window.FormsJS_disableOnSubmit = function (event) {
-            let _target = event.target;
-
-            if (! _target.hasAttribute('data-formsjs-onclick')) {
-                _target = event.target.closest('button');
-            }
-
-            let _button = _target.getAttribute('data-formsjs-button');
-            _target.innerHTML = '<i class=\"fas fa-circle-notch fa-spin mr-2\"></i> ' + _button;
-            _target.disabled = true;
-            _target.form.submit();
-        }
-
-        window.Forms_validate_submission = function (_form, _processing) {
-            if (! _form.checkValidity()) {
-                let _inputs = _form.querySelectorAll('input');
-                let _selects = _form.querySelectorAll('select');
-                let _textarea = _form.querySelectorAll('textarea');
-                let _inputFields = [..._inputs].concat([..._selects]).concat([..._textarea]);
-
-                _inputFields.forEach(function (_input) {
-                    if (_input.validity.patternMismatch
-                        || _input.validity.valueMissing
-                        || _input.validity.rangeOverflow
-                        || _input.validity.stepMismatch
-                        || _input.validity.typeMismatch
-                        || _input.validity.tooShort
-                        || _input.validity.tooLong
-                        || _input.validity.badInput
-                    ) {
-                        if (! _input.classList.contains('is-invalid')) {
-                            let _errorMessage = document.createElement('div');
-                            _errorMessage.classList.add('invalid-feedback');
-                            _errorMessage.innerText = _input.validationMessage;
-
-                            _input.classList.add('is-invalid');
-                            _input.parentNode.appendChild(_errorMessage);
-                            window.Forms_validation();
-                        }
-                    }
-                });
-
-                return false;
-            };
-
-            let _button = _form.querySelector('button[type="submit"]');
-            let _originalContent = _button.innerHTML;
-            _button.innerHTML = _processing + _originalContent;
-            _button.disabled = true;
-
-            _form.submit();
-        };
-EOT;
-
-        $formValidation = <<<EOT
-window.Forms_validation = function () {
-    let _fields = document.getElementsByClassName('{$formValidationClass}');
-
-    for (let i = 0; i < _fields.length; i++) {
-        _fields[i].addEventListener("keyup", function (e) {
-            if (this.value.length > 0) {
-                this.classList.remove('{$formValidationClass}');
-                if (this.nextSibling) {
-                    this.nextSibling.remove();
-                }
-            }
-        });
-
-        _fields[i].addEventListener("onfocusout", function (e) {
-            if (this.value.length > 0) {
-                this.classList.remove('{$formValidationClass}');
-                if (this.nextSibling) {
-                    this.nextSibling.remove();
-                }
-            }
-        });
-    }
-}
-window.Forms_validation();
-EOT;
+        $validationJavaScript = file_get_contents(__DIR__ . '/../JavaScript/validation.js');
+        $formValidation = Str::of($validationJavaScript)->replace('_formValidationClass', $formValidationClass);
 
         if ($this->withJsValidation) {
             $this->formAssets->addJs($formValidation);
         }
 
-        $this->formAssets->addJs($formPreValidation);
+        $this->formAssets->addJs($defaultJavaScript);
     }
 
     /**
