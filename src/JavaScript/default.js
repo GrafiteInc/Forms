@@ -60,7 +60,7 @@ window.FormsJS_validate_submission = function (_form, _processing) {
 
                     _input.classList.add('is-invalid');
                     _input.parentNode.appendChild(_errorMessage);
-                    window.Forms_validation();
+                    window.FormsJS_validation();
                 }
             }
         });

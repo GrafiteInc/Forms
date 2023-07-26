@@ -153,8 +153,8 @@ class WizardForm extends HtmlForm
 
     public function scripts()
     {
-        return <<<EOT
-window.Form_steps = function () {
+        return <<<JS
+window.FormsJS_steps = function () {
     let _steps = document.querySelectorAll('.form_step');
 
     window.location.hash = '1';
@@ -229,7 +229,7 @@ window.FormJS_next_step = function (event) {
 
                         _input.classList.add('is-invalid');
                         _input.parentNode.appendChild(_errorMessage);
-                        window.Forms_validation();
+                        window.FormsJS_validation();
                     }
                 }
         });
@@ -263,8 +263,8 @@ window.FormJS_previous_step = function (event) {
     }
 };
 
-window.Form_steps();
-EOT;
+window.FormsJS_steps();
+JS;
     }
 
     public function styles()
