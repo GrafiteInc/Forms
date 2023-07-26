@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.5] - 2023-07-26
+
+### Changed
+- Some component CDN versions
+
+### Fixed
+- Issue with prefixes
+- Issue with Tag component
+
 ## [v6.19.4] - 2023-07-25
 
 ### Fixed
