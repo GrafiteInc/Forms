@@ -24,14 +24,14 @@ class Tags extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.css',
+            '//cdn.jsdelivr.net/npm/@yaireo/tagify@4.17.7/dist/tagify.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/@yaireo/tagify@3.8.0/dist/tagify.min.js',
+            '//cdn.jsdelivr.net/npm/@yaireo/tagify@4.17.7/dist/tagify.min.js',
         ];
     }
 
@@ -50,7 +50,7 @@ EOT;
 
     public static function onLoadJs($id, $options)
     {
-        return "_formjs_tagify";
+        return "_formsjs_tagify";
     }
 
     public static function onLoadJsData($id, $options)
@@ -64,7 +64,7 @@ EOT;
         window._formsjs_tagify = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 new Tagify (element, {
-                    whitelist: JSON.parse(element.getAttribute('data-formsjs-data'))
+                    whitelist: JSON.parse(element.getAttribute('data-formsjs-onload-data'))
                 });
             }
         }
