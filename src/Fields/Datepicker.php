@@ -35,7 +35,7 @@ class Datepicker extends Field
     {
         return [
             '//unpkg.com/js-datepicker',
-            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js',
+            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js',
         ];
     }
 
