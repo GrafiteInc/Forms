@@ -28,7 +28,7 @@ class hCaptcha
                 }
             }
 
-           return redirect()->back()->withErrors(['hCaptcha could not be confirmed.']);
+            return redirect()->back()->withErrors(['hCaptcha could not be confirmed.']);
         }
 
         return $next($request);
