@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.6] - 2023-07-27
+
+### Added
+- More image controls to Quill
+
 ## [v6.19.5] - 2023-07-26
 
 ### Changed
