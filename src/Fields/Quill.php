@@ -224,6 +224,8 @@ CSS;
         return [
             '//cdn.quilljs.com/1.3.7/quill.js',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
+            '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
+            '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js'
         ];
     }
 
@@ -315,52 +317,62 @@ HTML;
                     let _editor_icons = Quill.import('ui/icons');
                         _editor_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
 
+                    window._formsjs_quill_file_upload = function () {
+                        let _container = null;
+
+                        if (this.constructor.name.includes('Keyboard')) {
+                            _container = this.quill.getModule('toolbar').container;
+                        } else {
+                            _container = this.container;
+                        }
+
+                        let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                        let _FileInput = _container.querySelector('input.ql-image[type=file]');
+
+                        if (_FileInput == null) {
+                            _FileInput = document.createElement('input');
+                            _FileInput.setAttribute('type', 'file');
+                            _FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
+                            _FileInput.classList.add('ql-image');
+                            _FileInput.addEventListener('change', () => {
+                                const files = _FileInput.files;
+                                const range = this.quill.getSelection(true);
+
+                                if (!files || !files.length) {
+                                    console.log('No files selected');
+                                    return;
+                                }
+
+                                const _FileFormData = new FormData();
+                                _FileFormData.append('image', files[0]);
+
+                                this.quill.enable(false);
+
+                                window.axios
+                                    .post(_config.route, _FileFormData)
+                                    .then(response => {
+                                        this.quill.enable(true);
+                                        let range = this.quill.getSelection(true);
+                                        this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
+                                        this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                                        _FileInput.value = '';
+                                    })
+                                    .catch(error => {
+                                        console.log('Image upload failed');
+                                        console.log(error);
+                                        this.quill.enable(true);
+                                    });
+                            });
+                            _container.appendChild(_FileInput);
+                        }
+                        _FileInput.click();
+                    }
+
                     let _editor_toolbarOptions = {
                         icons: _editor_icons,
                         container: _config.container,
                         handlers: {
-                            image: function () {
-                                let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                                let _FileInput = this.container.querySelector('input.ql-image[type=file]');
-
-                                if (_FileInput == null) {
-                                    _FileInput = document.createElement('input');
-                                    _FileInput.setAttribute('type', 'file');
-                                    _FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
-                                    _FileInput.classList.add('ql-image');
-                                    _FileInput.addEventListener('change', () => {
-                                        const files = _FileInput.files;
-                                        const range = this.quill.getSelection(true);
-
-                                        if (!files || !files.length) {
-                                            console.log('No files selected');
-                                            return;
-                                        }
-
-                                        const _FileFormData = new FormData();
-                                        _FileFormData.append('image', files[0]);
-
-                                        this.quill.enable(false);
-
-                                        window.axios
-                                            .post(_config.route, _FileFormData)
-                                            .then(response => {
-                                                this.quill.enable(true);
-                                                let range = this.quill.getSelection(true);
-                                                this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
-                                                this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
-                                                _FileInput.value = '';
-                                            })
-                                            .catch(error => {
-                                                console.log('Image upload failed');
-                                                console.log(error);
-                                                this.quill.enable(true);
-                                            });
-                                    });
-                                    this.container.appendChild(_FileInput);
-                                }
-                                _FileInput.click();
-                            },
+                            image: window._formsjs_quill_file_upload,
                             'divider': function (value) {
                                 let range = window[_instance].getSelection(true);
                                 window[_instance].insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
@@ -377,11 +389,44 @@ HTML;
                         Quill.register(DividerBlot);
                     }
 
+                    let _route = _config.route;
+
                     window[_instance] = new Quill('#'+_id+'_Editor', {
                         theme: _config.theme,
                         placeholder: _config.placeholder,
                         modules: {
-                            toolbar: _editor_toolbarOptions
+                            toolbar: _editor_toolbarOptions,
+                            imageResize: {
+                                // See optional "config" below
+                            },
+                             dragAndDrop: {
+                                draggables: [
+                                    {
+                                        content_type_pattern: '^image\/',
+                                        tag: 'img',
+                                        attr: 'src'
+                                    },
+                                ],
+                                onDrop (file) {
+                                    const _FileFormData = new FormData();
+                                    _FileFormData.append('image', file);
+
+                                    return window.axios
+                                        .post(_route, _FileFormData)
+                                        .then(response => {
+                                            return response.data.file.url;
+                                        });
+                                },
+                            },
+                            keyboard: {
+                                bindings: {
+                                    image: {
+                                        key: 'i',
+                                        ctrlKey: true,
+                                        handler: window._formsjs_quill_file_upload,
+                                    },
+                                }
+                            }
                         }
                     });
 
