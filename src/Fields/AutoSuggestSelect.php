@@ -45,7 +45,11 @@ class AutoSuggestSelect extends Field
                         _altInput.id = inp.id + "_visual";
                         _altInput.name = inp.name + "_visual";
                         _altInput.type = "text";
-                        _altInput.value = arr[inp.value];
+
+                        if (arr[inp.value]) {
+                            _altInput.value = arr[inp.value];
+                        }
+
                         _altInput.autocomplete = "off";
 
                     inp.parentNode.appendChild(_altInput);
