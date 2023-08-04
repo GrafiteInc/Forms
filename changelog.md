@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.7] - 2023-08-04
+
+### Fixed
+- Issue with undefined in AutoSuggestSelectField
+
 ## [v6.19.6] - 2023-07-27
 
 ### Added
