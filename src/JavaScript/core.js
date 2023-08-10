@@ -10,6 +10,18 @@ window._formsjs_trigger_onchange_function = function (event) {
     window[_method](event);
 }
 
+window._formsjs_trigger_onkeydown_function = function (event) {
+    let _method = event.target.getAttribute('data-formsjs-onkeydown');
+
+    if (! _method) {
+        _method = event.target.closest('form').getAttribute('data-formsjs-onkeydown');
+    }
+
+    _method = _method.replace('(event)', '');
+
+    window[_method](event);
+}
+
 window._formsjs_trigger_onclick_function = function (event) {
     event.preventDefault();
 
@@ -61,6 +73,14 @@ window._formsjs_set_bindings = function () {
     document.querySelectorAll('[data-formsjs-onchange]').forEach(function (element) {
         if (! element.hasAttribute('data-formsjs-rendered')) {
             element.addEventListener('change', _formsjs_trigger_onchange_function);
+            element.addEventListener('input', _formsjs_trigger_onchange_function);
+            element.setAttribute('data-formsjs-rendered', true);
+        }
+    });
+
+    document.querySelectorAll('[data-formsjs-onkeydown]').forEach(function (element) {
+        if (! element.hasAttribute('data-formsjs-rendered')) {
+            element.addEventListener('keydown', _formsjs_trigger_onkeydown_function);
             element.setAttribute('data-formsjs-rendered', true);
         }
     });
