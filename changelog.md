@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.19.8] - 2023-08-10
+
+### Fixed
+- Issue with keydown support
+- Issue with tests
+
 ## [v6.19.7] - 2023-08-04
 
 ### Fixed
