@@ -65,10 +65,14 @@ class Code extends Field
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
-                CodeMirror.fromTextArea(element, {
+                let cm = CodeMirror.fromTextArea(element, {
                     lineNumbers: true,
                     mode: _config.mode,
                     theme: _config.theme,
+                });
+
+                window.addEventListener('keydown', function (event) {
+                    element.value = cm.getDoc().getValue();
                 });
             }
         }
