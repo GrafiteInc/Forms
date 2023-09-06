@@ -98,8 +98,8 @@ class FormAssetsTest extends TestCase
     {
         $this->form->make();
 
-        $this->assertEquals(3, count($this->formAssets->stylesheets));
-        $this->assertEquals(5, count($this->formAssets->scripts));
+        $this->assertEquals(4, count($this->formAssets->stylesheets));
+        $this->assertEquals(7, count($this->formAssets->scripts));
         $this->assertEquals(3, count($this->formAssets->styles));
         $this->assertEquals(5, count($this->formAssets->js));
     }
