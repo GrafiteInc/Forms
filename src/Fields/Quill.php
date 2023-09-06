@@ -7,6 +7,12 @@ class Quill extends Field
     protected static function fieldOptions()
     {
         return [
+            'mention_ats',
+            'mention_hashes',
+            'mention_links',
+            'mention_link_path',
+            'mention_at_path',
+            'mention_hash_path',
             'quill_theme',
             'toolbars',
         ];
@@ -34,6 +40,7 @@ class Quill extends Field
         return [
             '//cdn.quilljs.com/1.3.6/quill.bubble.css',
             '//cdn.quilljs.com/1.3.6/quill.snow.css',
+            '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.css',
         ];
     }
 
@@ -96,6 +103,13 @@ class Quill extends Field
         .ql-bubble .ql-editor pre.ql-syntax {
             background-color: #333 !important;
             color: #FFF !important;
+        }
+        .ql-container .ql-mention-list-container {
+            background-color: #000 !important;
+        }
+        .ql-mention-list-item.selected {
+            color: #fff;
+            background-color: var(--bs-primary) !important;
         }
     }
 CSS;
@@ -215,6 +229,12 @@ CSS;
         text-decoration: line-through;
     }
 
+    .ql-editor .mention {
+        background-color: var(--bs-primary);
+        color: var(--bs-white);
+        cursor: pointer;
+    }
+
     {$darkTheme}
 CSS;
     }
@@ -225,7 +245,9 @@ CSS;
             '//cdn.quilljs.com/1.3.7/quill.js',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
             '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
-            '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js'
+            '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js',
+            '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.js',
+            '//cdn.jsdelivr.net/npm/quill-magic-url@4.2.0/dist/index.min.js',
         ];
     }
 
@@ -256,6 +278,13 @@ HTML;
             $route = route($options['upload_route']);
         }
 
+        $mentionAtPath = $options['mention_at_path'] ?? '{at}';
+        $mentionHashPath = $options['mention_hash_path'] ?? '{hash}';
+        $mentionLinkPath = $options['mention_link_path'] ?? '{link}';
+
+        $mentions = $options['mention_ats'] ?? [];
+        $hashValues = $options['mention_hashes'] ?? [];
+        $links = $options['mention_links'] ?? [];
         $theme = $options['quill_theme'] ?? 'snow';
         $placeholder = $options['placeholder'] ?? '';
         $toolbars = $options['toolbars'] ?? [
@@ -294,6 +323,12 @@ HTML;
         return json_encode([
             'route' => $route,
             'theme' => $theme,
+            'mention_at_path' => $mentionAtPath,
+            'mention_hash_path' => $mentionHashPath,
+            'mention_link_path' => $mentionLinkPath,
+            'atValues' => $mentions,
+            'hashValues' => $hashValues,
+            'linkValues' => $links,
             'placeholder' => $placeholder,
             'container' => $container,
             'markdown' => $options['quill_markdown'] ?? false,
@@ -391,15 +426,22 @@ HTML;
 
                     let _route = _config.route;
 
+                    console.log(_config)
+
+                    window[_instance+'_atValues'] = _config.atValues;
+                    window[_instance+'_hashtagValues'] = _config.hashValues;
+                    window[_instance+'_linkValues'] = _config.linkValues;
+
                     window[_instance] = new Quill('#'+_id+'_Editor', {
                         theme: _config.theme,
                         placeholder: _config.placeholder,
                         modules: {
+                            magicUrl: true,
                             toolbar: _editor_toolbarOptions,
                             imageResize: {
                                 // See optional "config" below
                             },
-                             dragAndDrop: {
+                            dragAndDrop: {
                                 draggables: [
                                     {
                                         content_type_pattern: '^image\/',
@@ -417,6 +459,38 @@ HTML;
                                             return response.data.file.url;
                                         });
                                 },
+                            },
+                            mention: {
+                                allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
+                                mentionDenotationChars: ["@", "#", "^"],
+                                source: function(searchTerm, renderList, mentionChar) {
+                                    let values;
+
+                                    if (mentionChar === "@") {
+                                        values = window[_instance+'_atValues'];
+                                    }
+
+                                    if (mentionChar === "#") {
+                                        values = window[_instance+'_hashtagValues'];
+                                    }
+
+                                    if (mentionChar === "^") {
+                                        values = window[_instance+'_linkValues'];
+                                    }
+
+                                    if (searchTerm.length === 0) {
+                                        renderList(values, searchTerm);
+                                    } else {
+                                        const matches = [];
+                                        for (let i = 0; i < values.length; i++) {
+                                            if (~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())) {
+                                                matches.push(values[i]);
+                                            }
+
+                                            renderList(matches, searchTerm);
+                                        }
+                                    }
+                                }
                             },
                             keyboard: {
                                 bindings: {
@@ -445,6 +519,21 @@ HTML;
                     if (element.disabled) {
                         window[_instance].enable(false)
                     }
+
+                    // window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
+                    window.addEventListener('mention-clicked', function (event) {
+                        if (event.value.denotationChar === '^') {
+                            window.location = _config.mention_link_path.replace('{link}', event.value.id);
+                        }
+
+                        if (event.value.denotationChar === '@') {
+                            window.location = _config.mention_at_path.replace('{at}', event.value.id);
+                        }
+
+                        if (event.value.denotationChar === '#') {
+                            window.location = _config.mention_hash_path.replace('{hash}', event.value.id);
+                        }
+                    }, false);
                 }
             };
 JS;
