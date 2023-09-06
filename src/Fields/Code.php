@@ -71,7 +71,7 @@ class Code extends Field
                     theme: _config.theme,
                 });
 
-                window.addEventListener('keydown', function (event) {
+                window.addEventListener('keyup', function (event) {
                     element.value = cm.getDoc().getValue();
                 });
             }
