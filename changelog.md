@@ -3,6 +3,20 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.20.0] - 2023-09-06
+
+### Added
+- New Fields: Trix
+-  AutoTextArea
+
+### Changed
+- Added new features to Quill including: @mentions
+-  ^pages
+-  #hashtags
+
+### Fixed
+- Issue with Code editor
+
 ## [v6.19.8] - 2023-08-10
 
 ### Fixed
