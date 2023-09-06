@@ -109,6 +109,13 @@ class HtmlForm extends Form
     public $submitMethod = null;
 
     /**
+     * A string context if you wish to confirm the form submission
+     *
+     * @var string
+     */
+    public $confirmSubmission = null;
+
+    /**
      * If the submit should occur on keydown
      *
      * @var boolean
@@ -471,13 +478,16 @@ class HtmlForm extends Form
 
         $submitMethod = is_null($this->submitMethod) ? $onSubmit : "{$this->submitMethod}(event)";
         $submitType = is_null($this->submitMethod) ? 'submit' : 'button';
+        $submitConfirmation = ! is_null($this->confirmSubmission) ? [
+            'data-formsjs-confirm-message' => $this->confirmSubmission,
+        ] : [];
 
         if (isset($this->buttons['submit'])) {
-            $html .= $this->field->button($this->buttons['submit'], [
+            $html .= $this->field->button($this->buttons['submit'], array_merge([
                 'class' => $this->buttonClasses['submit'],
                 'type' => $submitType,
                 'data-formsjs-onclick' => $submitMethod,
-            ]);
+            ], $submitConfirmation));
         }
 
         if (
