@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.21.0] - 2023-10-18
+
+### Added
+- Flatpickr is now a field option
+
 ## [v6.20.1] - 2023-09-06
 
 ### Added
