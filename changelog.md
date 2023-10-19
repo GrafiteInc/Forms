@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.21.1] - 2023-10-19
+
+### Fixed
+- Minor issue with mobile for flatpickr
+
 ## [v6.21.0] - 2023-10-18
 
 ### Added
