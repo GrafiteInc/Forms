@@ -113,6 +113,7 @@ CSS;
     {
         return json_encode([
             'enableTime' => $options['enableTime'] ?? 'true',
+            'disableMobile' => $options['disableMobile'] ?? 'true',
             'format' => $options['format'] ?? 'Y-m-j h:i K',
             'identity' => $options['identity'] ?? $id,
         ]);
@@ -129,6 +130,7 @@ CSS;
                     id: _config.identity,
                     enableTime: _config.enableTime,
                     dateFormat: _config.format,
+                    disableMobile: _config.disableMobile,
                 });
             }
         }
