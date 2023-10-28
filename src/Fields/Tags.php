@@ -37,13 +37,18 @@ class Tags extends Field
 
     public static function styles($id, $options)
     {
-        $defaultBorder = $options['default-border'] ?? '#EEE';
-        $focusBorder = $options['focus-border'] ?? '#EEE';
+        $defaultBorder = $options['default-border'] ?? 'rgba(0, 0, 0, 0.1)';
+        $focusBorder = $options['focus-border'] ?? 'rgba(0, 0, 0, 0.1)';
 
         return <<<EOT
 .tagify {
     --tags-border-color: {$defaultBorder};
     --tags-focus-border-color: {$focusBorder};
+    --tags-hover-border-color: {$focusBorder};
+}
+
+.tagify:focus-within {
+    border-color: {$focusBorder};
 }
 EOT;
     }
