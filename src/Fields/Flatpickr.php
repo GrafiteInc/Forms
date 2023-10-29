@@ -100,7 +100,19 @@ class Flatpickr extends Field
     .flatpickr-calendar.arrowTop:before {
         border-bottom-color: #111;
     }
-}
+
+    .flatpickr-day.flatpickr-disabled, .flatpickr-day.flatpickr-disabled:hover, .flatpickr-day.prevMonthDay, .flatpickr-day.nextMonthDay, .flatpickr-day.notAllowed, .flatpickr-day.notAllowed.prevMonthDay, .flatpickr-day.notAllowed.nextMonthDay {
+        background: transparent;
+        cursor: default;
+        color: rgba(160, 160, 160, 0.5);
+        background-color: transparent;
+    }
+
+    .flatpickr-day.inRange, .flatpickr-day.prevMonthDay.inRange, .flatpickr-day.nextMonthDay.inRange, .flatpickr-day.today.inRange, .flatpickr-day.prevMonthDay.today.inRange, .flatpickr-day.nextMonthDay.today.inRange, .flatpickr-day:hover, .flatpickr-day.prevMonthDay:hover, .flatpickr-day.nextMonthDay:hover, .flatpickr-day:focus, .flatpickr-day.prevMonthDay:focus, .flatpickr-day.nextMonthDay:focus {
+        cursor: pointer;
+        outline: 0;
+        color: #222;
+    }
 CSS;
     }
 
