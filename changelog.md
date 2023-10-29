@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.21.2] - 2023-10-29
+
+### Fixed
+- Issue with file field
+- Issue with some general dark styles
+
 ## [v6.21.1] - 2023-10-19
 
 ### Fixed
