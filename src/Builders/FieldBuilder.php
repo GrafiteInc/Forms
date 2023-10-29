@@ -73,6 +73,10 @@ class FieldBuilder
             unset($options['value']);
         }
 
+        if ($type === 'file') {
+            $value = null;
+        }
+
         $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
         return '<input ' . $attributes . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
