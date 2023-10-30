@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Tests\TestCase;
 use Grafite\Forms\Fields\Text;
+use Grafite\Forms\Fields\Range;
 use Grafite\Forms\Fields\Table;
 use Grafite\Forms\Fields\HasOne;
 use Grafite\Forms\Fields\Number;
@@ -400,5 +401,13 @@ class FieldMakerTest extends TestCase
 
         $this->assertStringContainsString('_formsjs_rating_field = function (element) {', $config['assets']['js']);
         $this->assertStringContainsString('data-formsjs-onload-data="fontawesome-stars-o"', $field);
+    }
+
+    public function testMakeRange()
+    {
+        $config = Range::make('skills')->toArray();
+        $field = $this->fieldMaker->make('skills', $config);
+
+        $this->assertStringContainsString('<input class="form-range" id="Skills" name="skills" type="range" value="">', $field);
     }
 }

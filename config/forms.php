@@ -40,6 +40,7 @@ return [
 
         'group-class' => 'form-group mb-3',
         'input-class' => 'form-control',
+        'range-class' => 'form-range',
         'label-class' => 'control-label',
         'label-check-class' => 'form-check-label',
         'before-after-input-wrapper' => 'input-group',

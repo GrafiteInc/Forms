@@ -290,6 +290,10 @@ class FieldMaker
             'id' => ucfirst($name),
         ];
 
+        if ($options['type'] === 'range') {
+            $default['class'] = config('forms.form.range-class', 'form-range');
+        }
+
         $options['attributes'] = array_merge($default, $options['attributes'] ?? []);
 
         return $options;
