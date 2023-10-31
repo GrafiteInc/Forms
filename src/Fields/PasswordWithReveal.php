@@ -28,7 +28,7 @@ class PasswordWithReveal extends Field
 
     public static function onLoadJsData($id, $options)
     {
-        return $options['toggle-selector'] ?? 'PasswordRevealer-trigger';
+        return $options['toggle-selector'] ?? 'PasswordRevealer-trigger-'.$id;
     }
 
     public static function js($id, $options)
@@ -55,7 +55,7 @@ JS;
     <div class="{fieldClass}">
         <div class="input-group mb-3">
             {field}
-            <button type="button" class="{$toggleSelector} {$toggleClasses}">{$toggle}</button>
+            <button type="button" class="{$toggleSelector}-{id} {$toggleClasses}">{$toggle}</button>
         </div>
     {errors}
     </div>
