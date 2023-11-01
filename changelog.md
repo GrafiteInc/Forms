@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.21.3] - 2023-11-01
+
+### Fixed
+- Minor issue with multiple password reveals
+- Issue with Range Field
+
 ## [v6.21.2] - 2023-10-29
 
 ### Fixed
