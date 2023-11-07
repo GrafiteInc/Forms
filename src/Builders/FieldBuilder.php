@@ -73,7 +73,7 @@ class FieldBuilder
             unset($options['value']);
         }
 
-        if ($type === 'file') {
+        if (in_array($type, ['file', 'password'])) {
             $value = null;
         }
 
