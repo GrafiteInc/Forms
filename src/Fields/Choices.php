@@ -14,9 +14,7 @@ class Choices extends Field
     protected static function getAttributes()
     {
         return [
-            'class' => 'selectpicker',
             'multiple' => true,
-            'data-size' => 8,
         ];
     }
 
