@@ -2,7 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
 
 class Address extends Field
@@ -83,9 +82,6 @@ HTML;
     {
         return json_encode([
             'key' => $options['key'] ?? null,
-            // 'btn' => $options['btn'] ?? 'btn-outline-primary',
-            // 'with_add_item' => $options['add-item'] ?? false,
-            // 'add_item_placeholder' => $options['add-item-placeholder'] ?? 'Add Item',
         ]);
     }
 
