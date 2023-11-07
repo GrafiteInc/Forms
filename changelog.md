@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.22.0] - 2023-11-07
+
+### Added
+- Choices
+- Address fields
+
+### Fixed
+- Issue with some field values
+
 ## [v6.21.3] - 2023-11-01
 
 ### Fixed
