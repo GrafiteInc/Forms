@@ -64,6 +64,15 @@ class Select2 extends Field
         background-color: var(--bs-tertiary-bg);
         color: #FFF;
     }
+    .select2-container--bootstrap-5 .select2-dropdown {
+        border: 1px solid #111;
+    }
+}
+
+@media (prefers-color-scheme: light) {
+    .select2-container--bootstrap-5 .select2-dropdown {
+        border-color: inherit !important;
+    }
 }
 
 .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--selected, .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option[aria-selected=true]:not(.select2-results__option--highlighted) {
@@ -71,6 +80,10 @@ class Select2 extends Field
 }
 .select2-container--bootstrap-5 .select2-dropdown .select2-results__options .select2-results__option.select2-results__option--highlighted {
     background-color: var(--bs-primary);
+}
+.select2-container--bootstrap-5.select2-container--focus .select2-selection, .select2-container--bootstrap-5.select2-container--open .select2-selection {
+    box-shadow: none !important;
+    border-color: inherit !important;
 }
 CSS;
     }
