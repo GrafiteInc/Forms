@@ -10,6 +10,7 @@ class Country extends AutoSuggestSelect
     {
         return [
             'options' => [
+                'any' => 'Any',
                 'AF' => 'Afghanistan',
                 'AL' => 'Albania',
                 'DZ' => 'Algeria',
