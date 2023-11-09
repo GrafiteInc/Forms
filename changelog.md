@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.23.0] - 2023-11-09
+
+### Added
+- Select2 field type
+
+### Changed
+- Added in Any option to countries
+
 ## [v6.22.0] - 2023-11-07
 
 ### Added
