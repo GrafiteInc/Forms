@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.23.1] - 2023-11-09
+
+### Fixed
+- Minor issue with coloring for Select2
+
 ## [v6.23.0] - 2023-11-09
 
 ### Added
