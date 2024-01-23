@@ -19,6 +19,15 @@ window.FormsJS_validation = function () {
                 }
             }
         });
+
+        _fields[i].addEventListener("change", function (e) {
+            if (this.value.length > 0) {
+                this.classList.remove('_formValidationClass');
+                if (this.nextSibling) {
+                    this.nextSibling.remove();
+                }
+            }
+        });
     }
 }
 

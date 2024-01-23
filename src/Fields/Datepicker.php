@@ -159,8 +159,10 @@ CSS;
 
                 let _debounce = _datepicker_debounce(function () {
                     _Datepicker.hide();
-                    let date = moment(element.value, _config.format).toDate();
-                    _Datepicker.setDate(date, true);
+                    if (element.value !== '') {
+                        let date = moment(element.value, _config.format).toDate();
+                        _Datepicker.setDate(date, true);
+                    }
                 }, _config.wait);
 
                 element.addEventListener(_config.event, _debounce);
