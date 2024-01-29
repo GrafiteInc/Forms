@@ -42,6 +42,10 @@ class AutosizeTextArea extends Field
                 _formsjs_autosizeTextAreaField = function (element) {
                     if (! element.getAttribute('data-formsjs-rendered')) {
                         autosize(element);
+
+                        setTimeout(function() {
+                            autosize.update(element);
+                        }, 150);
                     }
                 }
             JS;
