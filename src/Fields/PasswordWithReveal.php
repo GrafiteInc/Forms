@@ -28,7 +28,7 @@ class PasswordWithReveal extends Field
 
     public static function onLoadJsData($id, $options)
     {
-        return $options['toggle-selector'] ?? 'PasswordRevealer-trigger-'.$id;
+        return $options['toggle-selector'] ?? 'PasswordRevealer-trigger-' . $id;
     }
 
     public static function js($id, $options)
