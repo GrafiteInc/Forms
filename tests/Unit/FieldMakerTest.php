@@ -130,7 +130,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('countries', $config, $object);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Countries">Countries</label><select class="form-control" id="Countries" multiple name="countries[]"><option value="Canada">Canada</option><option value="America">America</option><option value="UK">UK</option><option value="Ireland">Ireland</option></select></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Countries">Countries</label><select class="form-select" id="Countries" multiple name="countries[]"><option value="Canada">Canada</option><option value="America">America</option><option value="UK">UK</option><option value="Ireland">Ireland</option></select></div>', $field);
     }
 
     public function testCreateMultipleNestedString()
@@ -218,7 +218,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('jobs', $config);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-control" id="Jobs" multiple name="jobs[]"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" multiple name="jobs[]"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
     }
 
     public function testCreateRelationshipWithoutObjectWithForcedOptions()
@@ -255,7 +255,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('jobs', $config);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-control" id="Jobs" multiple name="jobs[]"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" multiple name="jobs[]"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
     }
 
     public function testCreateRelationshipHasOne()
@@ -295,7 +295,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('jobs', $config, $user);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-control" id="Jobs" name="jobs"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" name="jobs"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
     }
 
     public function testCreateRelationshipCustom()
@@ -339,7 +339,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('jobs', $config, $user);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-control" id="Jobs" name="jobs"><option value="4">Brogrammer</option></select></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" name="jobs"><option value="4">Brogrammer</option></select></div>', $field);
     }
 
     public function testCreateRelationshipCustomMultiple()
@@ -377,7 +377,7 @@ class FieldMakerTest extends TestCase
         $field = $this->fieldMaker->make('ideas', $config, $user);
 
         $this->assertTrue(is_string($field));
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Ideas">Ideas</label><select class="form-control" id="Ideas" multiple name="ideas[]"><option value="1" selected>Thing</option><option value="2" selected>Foo</option><option value="3">Bar</option><option value="4">Drink</option></select></div>', $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Ideas">Ideas</label><select class="form-select" id="Ideas" multiple name="ideas[]"><option value="1" selected>Thing</option><option value="2" selected>Foo</option><option value="3">Bar</option><option value="4">Drink</option></select></div>', $field);
     }
 
     public function testMakeTableWithObject()

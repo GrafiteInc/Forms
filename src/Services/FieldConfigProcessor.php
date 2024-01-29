@@ -448,6 +448,8 @@ JS;
             'data-live-search' => 'true',
         ]);
 
+        $this->customOption('searchable', true);
+
         return $this;
     }
 

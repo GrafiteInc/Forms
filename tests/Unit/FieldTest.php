@@ -36,6 +36,7 @@ use Grafite\Forms\Fields\RadioInline;
 use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Fields\DatetimeLocal;
 use Grafite\Forms\Fields\CheckboxInline;
+use Grafite\Forms\Fields\Bootstrap\Select2;
 use Grafite\Forms\Fields\PasswordWithReveal;
 
 class FieldTest extends TestCase
@@ -224,6 +225,21 @@ class FieldTest extends TestCase
             ]
         ])->toArray();
 
+        $this->assertEquals('select', $field['type']);
+        $this->assertEquals('joe', $field['options']['joe']);
+    }
+
+    public function testSelect2()
+    {
+        $field = Select2::make('field', [
+            'options' => [
+                'joe' => 'joe',
+                'john' => 'john',
+                'katie' => 'katie',
+            ]
+        ])->searchable()->toArray();
+
+        $this->assertStringContainsString('minimumResultsForSearch: _config.searchable ? 3 : Infinity,', $field['assets']['js']);
         $this->assertEquals('select', $field['type']);
         $this->assertEquals('joe', $field['options']['joe']);
     }

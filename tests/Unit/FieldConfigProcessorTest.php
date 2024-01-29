@@ -197,7 +197,7 @@ class FieldConfigProcessorTest extends TestCase
             'Ninja' => 3,
         ])->canSelectNone();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-select" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
     }
 
     public function testSubmitOnChange()
@@ -208,7 +208,7 @@ class FieldConfigProcessorTest extends TestCase
             'Ninja' => 3,
         ])->canSelectNone()->submitOnChange();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" data-formsjs-onchange="FormsJS_submit" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-select" id="Field" data-formsjs-onchange="FormsJS_submit" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
     }
 
     public function testSubmitOnKeyUp()
@@ -219,7 +219,7 @@ class FieldConfigProcessorTest extends TestCase
             'Ninja' => 3,
         ])->canSelectNone()->submitOnKeyUp();
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" data-formsjs-onkeyup="FormsJS_submit" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-select" id="Field" data-formsjs-onkeyup="FormsJS_submit" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
     }
 
     public function testHiddenUnless()
@@ -230,7 +230,7 @@ class FieldConfigProcessorTest extends TestCase
             'Ninja' => 3,
         ])->canSelectNone()->hiddenUnless('Previous_Field', 'visible');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-select" id="Field" name="field"><option value="" selected>None</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
 
         $assets = app(FormAssets::class)->render();
 
@@ -245,7 +245,7 @@ class FieldConfigProcessorTest extends TestCase
             'Ninja' => 3,
         ])->canSelectNone()->noneLabel('Nada');
 
-        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-control" id="Field" name="field"><option value="" selected>Nada</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
+        $this->assertEquals('<div class="form-group"><label class="control-label" for="Field">Field</label><select class="form-select" id="Field" name="field"><option value="" selected>Nada</option><option value="1">Superman</option><option value="2">Batman</option><option value="3">Ninja</option></select></div>', (string) $field);
     }
 
     public function testSortable()

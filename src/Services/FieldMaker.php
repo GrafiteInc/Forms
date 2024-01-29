@@ -294,6 +294,10 @@ class FieldMaker
             $default['class'] = config('forms.form.range-class', 'form-range');
         }
 
+        if (in_array($options['type'], ['select', 'relationship'])) {
+            $default['class'] = config('forms.form.select-class', 'form-select');
+        }
+
         $options['attributes'] = array_merge($default, $options['attributes'] ?? []);
 
         return $options;
