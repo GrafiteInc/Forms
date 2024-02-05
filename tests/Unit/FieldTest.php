@@ -38,6 +38,7 @@ use Grafite\Forms\Fields\DatetimeLocal;
 use Grafite\Forms\Fields\CheckboxInline;
 use Grafite\Forms\Fields\Bootstrap\Select2;
 use Grafite\Forms\Fields\PasswordWithReveal;
+use Grafite\Forms\Fields\Bootstrap\SimpleSelect;
 
 class FieldTest extends TestCase
 {
@@ -240,6 +241,22 @@ class FieldTest extends TestCase
         ])->searchable()->toArray();
 
         $this->assertStringContainsString('minimumResultsForSearch: _config.searchable ? 3 : Infinity,', $field['assets']['js']);
+        $this->assertEquals('select', $field['type']);
+        $this->assertEquals('joe', $field['options']['joe']);
+    }
+
+    public function testSimpleSelect()
+    {
+        $field = SimpleSelect::make('field', [
+            'options' => [
+                'joe' => 'joe',
+                'john' => 'john',
+                'katie' => 'katie',
+            ]
+        ])->searchable()->toArray();
+
+        $this->assertStringContainsString('.bs-select', $field['assets']['styles']);
+        $this->assertStringContainsString('_formsjs_bootstrapCustomSelectField', $field['assets']['js']);
         $this->assertEquals('select', $field['type']);
         $this->assertEquals('joe', $field['options']['joe']);
     }
