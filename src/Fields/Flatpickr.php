@@ -40,6 +40,11 @@ class Flatpickr extends Field
     public static function styles($id, $options)
     {
         return <<<CSS
+.flatpickr-current-month .flatpickr-monthDropdown-months {
+    appearance: none !important;
+    -webkit-appearance: none !important;
+}
+
 @media (prefers-color-scheme: dark) {
     .flatpickr-calendar.open {
         background: #333;
