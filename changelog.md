@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.24.0] - 2024-02-06
+
+### Added
+- New SimpleSelect for Bootstrap
+
+### Fixed
+- Issue with color for flatpickr
+
 ## [v6.23.2] - 2024-01-29
 
 ### Fixed
