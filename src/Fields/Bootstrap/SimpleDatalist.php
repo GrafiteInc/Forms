@@ -4,17 +4,17 @@ namespace Grafite\Forms\Fields\Bootstrap;
 
 use Grafite\Forms\Fields\Field;
 
-class SimpleSelect extends Field
+class SimpleDatalist extends Field
 {
     protected static function getType()
     {
-        return 'select';
+        return 'input';
     }
 
     protected static function getAttributes()
     {
         return [
-            'class' => 'form-select',
+            'class' => 'form-control',
         ];
     }
 
@@ -46,7 +46,7 @@ class SimpleSelect extends Field
     display: none;
 }
 
-.simple-select-selected {
+.simple-datalist-selected {
     background-color: var(--bs-input-bg);
     border-color: var(--bs-border-color);
     border-width: var(--bs-border-width);
@@ -54,7 +54,7 @@ class SimpleSelect extends Field
     border-style: var(--bs-border-style);
 }
 
-.simple-select-selected:after {
+.simple-datalist-selected:after {
     position: absolute;
     content: "";
     top: 16px;
@@ -65,12 +65,12 @@ class SimpleSelect extends Field
     border-color: var(--bs-body-color) transparent transparent transparent;
 }
 
-.simple-select-selected.simple-select-arrow-active:after {
+.simple-datalist-selected.simple-datalist-arrow-active:after {
   border-color: transparent transparent var(--bs-body-color) transparent;
   top: 10px;
 }
 
-.simple-select-selected {
+.simple-datalist-selected {
     color: var(--bs-body-color);
     padding: 6px 12px;
     cursor: pointer;
@@ -80,13 +80,13 @@ class SimpleSelect extends Field
     border-style: var(--bs-border-style);
 }
 
-.simple-select-items div {
+.simple-datalist-items div {
     color: var(--bs-body-color);
     padding: 8px 12px;
     cursor: pointer;
 }
 
-.simple-select-items {
+.simple-datalist-items {
     position: absolute;
     background-color: var(--bs-body-bg);
     top: 100%;
@@ -115,21 +115,21 @@ class SimpleSelect extends Field
     border-bottom-right-radius: var(--bs-border-radius);
 }
 
-.simple-select-hide {
+.simple-datalist-hide {
     display: none;
 }
 
-.simple-select-items div:first-child {
+.simple-datalist-items div:first-child {
     border-top-left-radius: var(--bs-border-radius);
     border-top-right-radius: var(--bs-border-radius);
 }
 
-.simple-select-items div:last-child {
+.simple-datalist-items div:last-child {
     border-bottom-left-radius: var(--bs-border-radius);
     border-bottom-right-radius: var(--bs-border-radius);
 }
 
-.simple-select-items div:hover, .same-as-selected {
+.simple-datalist-items div:hover, .same-as-selected {
     background-color: var(--bs-primary);
     color: var(--bs-white) !important;
 }
@@ -138,20 +138,20 @@ CSS;
 
     public static function onLoadJs($id, $options)
     {
-        return '_formsjs_bootstrapCustomSelectField';
+        return '_formsjs_bootstrapSimpleDatalistField';
     }
 
     public static function onLoadJsData($id, $options)
     {
         return json_encode([
-            // 'btn' => $options['btn'] ?? 'btn-outline-primary',
+            'options' => $options['datalist'] ?? [],
         ]);
     }
 
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_bootstrapCustomSelectField = function (element) {
+        _formsjs_bootstrapSimpleDatalistField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
@@ -161,94 +161,96 @@ CSS;
                     element.parentNode.insertBefore(wrapper, element);
                     wrapper.appendChild(element);
 
-                var x, i, j, l, ll, selElmnt, a, b, c;
-                    selElmnt = element;
-                    ll = selElmnt.length;
+                /* For each element, create a new DIV that will contain the option list: */
+                var dropdownContainer = document.createElement("DIV");
+                    dropdownContainer.setAttribute("class", "simple-datalist-items simple-datalist-hide");
 
-                    a = document.createElement("DIV");
-                    a.setAttribute("class", "simple-select-selected");
-                    a.innerHTML = selElmnt.options[selElmnt.selectedIndex].innerHTML;
-                    wrapper.appendChild(a);
+                for (j = 0; j < _config.options.length; j++) {
+                    var c = document.createElement("DIV");
+                        c.innerHTML = _config.options[j];
 
-                    /* For each element, create a new DIV that will contain the option list: */
-                    b = document.createElement("DIV");
-                    b.setAttribute("class", "simple-select-items simple-select-hide");
-
-                for (j = 0; j < ll; j++) {
-                    c = document.createElement("DIV");
-                    c.innerHTML = selElmnt.options[j].innerHTML;
-
-                    if (selElmnt.options[j].value) {
-                        c.setAttribute("data-value", selElmnt.options[j].value);
+                    if (_config.options[j]) {
+                        c.setAttribute("data-value", _config.options[j]);
                     } else {
                         c.setAttribute("data-value", null);
                     }
 
-                    if (selElmnt.options[j].value == selElmnt.value) {
-                        a.innerHTML = selElmnt.options[j].innerHTML;
-                        c.setAttribute("class", "same-as-selected");
-                    }
+                    dropdownContainer.appendChild(c);
+                }
 
-                    c.addEventListener("click", function(e) {
-                        var y, i, k, s, h, sl, yl;
-                        s = this.parentNode.parentNode.getElementsByTagName("select")[0];
-                        sl = s.length;
-                        h = this.parentNode.previousSibling;
-                        for (i = 0; i < sl; i++) {
-                            if (s.options[i].innerHTML == this.innerHTML) {
-                                s.selectedIndex = i;
-                                h.innerHTML = this.innerHTML;
-                                y = this.parentNode.getElementsByClassName("same-as-selected");
-                                yl = y.length;
-                                for (k = 0; k < yl; k++) {
-                                    y[k].removeAttribute("class");
-                                }
-                                this.setAttribute("class", "same-as-selected");
-                                break;
-                            }
-                        }
-                        element.selected = this.getAttribute('data-value');
+                wrapper.appendChild(dropdownContainer);
+
+                [...dropdownContainer.children].forEach(elem => {
+                    elem.addEventListener('click', function (event) {
+                        element.value = this.innerHTML;
                         var event = new Event('change', {
                             bubbles: true
                         });
                         element.dispatchEvent(event);
-                        h.click();
+                        _formsjs_closeAllBsSimpleDatalist(element);
                     });
-                    b.appendChild(c);
-                    wrapper.appendChild(b);
-                }
-
-                a.addEventListener("click", function(e) {
-                    e.stopPropagation();
-                    _formsjs_closeAllBsSimpleSelect(this);
-                    this.nextSibling.classList.toggle("simple-select-hide");
-                    this.classList.toggle("simple-select-arrow-active");
                 });
 
-                function _formsjs_closeAllBsSimpleSelect(elmnt) {
+                element.addEventListener("focus", function(e) {
+                    _formsjs_closeAllBsSimpleDatalist(this);
+                    this.nextSibling.classList.toggle("simple-datalist-hide");
+                    this.classList.toggle("simple-datalist-arrow-active");
+                });
+
+                element.addEventListener("keyup", function(e) {
+                    [...dropdownContainer.children].forEach(elem => {
+                        if (! elem.innerHTML.includes(element.value)) {
+                            elem.classList.add("d-none");
+                        } else {
+                            elem.classList.remove("d-none");
+                        }
+                    });
+
+                    if (element.value === '') {
+                        [...dropdownContainer.children].forEach(elem => {
+                            elem.classList.remove("d-none");
+                        });
+                    }
+
+                    if (_config.options.length === element.nextSibling.querySelectorAll('.d-none').length) {
+                        element.nextSibling.classList.add("simple-datalist-hide");
+                    } else {
+                        element.nextSibling.classList.remove("simple-datalist-hide");
+                    }
+                });
+
+                // NEED TO THINK ON THIS
+                element.addEventListener("blur", function(e) {
+                    setTimeout(() => {
+                        _formsjs_closeAllBsSimpleDatalist(this);
+                    }, 450);
+                });
+
+                function _formsjs_closeAllBsSimpleDatalist(elmnt) {
+                    // refactor this
                     var x, y, i, xl, yl, arrNo = [];
-                    x = document.getElementsByClassName("simple-select-items");
-                    y = document.getElementsByClassName("simple-select-selected");
+                    x = document.getElementsByClassName("simple-datalist-items");
+                    y = document.getElementsByClassName("simple-datalist-selected");
                     xl = x.length;
                     yl = y.length;
                     for (i = 0; i < yl; i++) {
                         if (elmnt == y[i]) {
                             arrNo.push(i)
                         } else {
-                            y[i].classList.remove("simple-select-arrow-active");
+                            y[i].classList.remove("simple-datalist-arrow-active");
                         }
                     }
                     for (i = 0; i < xl; i++) {
                         if (arrNo.indexOf(i)) {
-                            x[i].classList.add("simple-select-hide");
+                            x[i].classList.add("simple-datalist-hide");
                         }
                     }
                 }
 
-                document.addEventListener("click", _formsjs_closeAllBsSimpleSelect);
+                // document.addEventListener("click", _formsjs_closeAllBsSimpleDatalist);
                 document.addEventListener("keyup", function (e) {
                     if (e.key === 'Escape') {
-                        _formsjs_closeAllBsSimpleSelect();
+                        _formsjs_closeAllBsSimpleDatalist();
                     }
                 });
             }

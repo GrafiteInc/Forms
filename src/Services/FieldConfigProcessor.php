@@ -534,6 +534,13 @@ JS;
         return $this;
     }
 
+    public function datalist($array)
+    {
+        $this->options['datalist'] = $array;
+
+        return $this;
+    }
+
     public function instance($value)
     {
         $this->instance = $value;
