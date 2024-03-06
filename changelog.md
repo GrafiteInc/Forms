@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.24.1] - 2024-03-06
+
+### Added
+- New SimpleDatalist field
+
+### Fixed
+- Minor issue with Quill
+
 ## [v6.24.0] - 2024-02-06
 
 ### Added
