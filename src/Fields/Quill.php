@@ -38,8 +38,8 @@ class Quill extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.quilljs.com/1.3.6/quill.bubble.css',
-            '//cdn.quilljs.com/1.3.6/quill.snow.css',
+            '//cdn.quilljs.com/1.3.7/quill.bubble.css',
+            '//cdn.quilljs.com/1.3.7/quill.snow.css',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.css',
         ];
     }
@@ -425,8 +425,6 @@ HTML;
                     }
 
                     let _route = _config.route;
-
-                    console.log(_config)
 
                     window[_instance+'_atValues'] = _config.atValues;
                     window[_instance+'_hashtagValues'] = _config.hashValues;
