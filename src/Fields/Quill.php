@@ -38,9 +38,22 @@ class Quill extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.quilljs.com/1.3.6/quill.bubble.css',
-            '//cdn.quilljs.com/1.3.6/quill.snow.css',
+            '//cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.bubble.css',
+            '//cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.css',
+        ];
+    }
+
+    public static function scripts($options)
+    {
+        return [
+            '//cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js',
+            '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
+            '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
+            // '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js',
+            '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.js',
+            '//cdn.jsdelivr.net/npm/quill-magic-url@4.2.0/dist/index.min.js',
+            '//cdn.jsdelivr.net/npm/quill-format-img@0.0.7/dist/quill-blot-formatter.min.js'
         ];
     }
 
@@ -188,7 +201,7 @@ CSS;
         border: 1px solid #CCC;
     }
 
-    .ql-bubble .ql-editor code {
+    .ql-bubble .ql-editor .ql-code-block {
         font-size: 100% !important;
         padding: 6px !important;
     }
@@ -199,10 +212,6 @@ CSS;
 
     .ql-snow .ql-color-picker .ql-picker-label svg, .ql-snow .ql-icon-picker .ql-picker-label svg {
         vertical-align: top;
-    }
-
-    .ql-editor hr {
-        height: 3px;
     }
 
     .ql-bubble .ql-tooltip-editor input[type=text] {
@@ -220,12 +229,12 @@ CSS;
         padding: 24px;
     }
 
-    .ql-editor ul[data-checked="true"] li::before, .ql-editor ul[data-checked="false"] li::before {
+    .ql-editor li[data-list="checked"] span::before, .ql-editor li[data-list="unchecked"] span::before {
         font-size: 26px;
     }
-    .ql-editor ul li::before {
+    .ql-editor ol li::before {
     }
-    .ql-editor ul[data-checked="true"] li {
+    .ql-editor li[data-list="checked"] {
         text-decoration: line-through;
     }
 
@@ -237,18 +246,6 @@ CSS;
 
     {$darkTheme}
 CSS;
-    }
-
-    public static function scripts($options)
-    {
-        return [
-            '//cdn.quilljs.com/1.3.7/quill.js',
-            '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
-            '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
-            '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js',
-            '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.js',
-            '//cdn.jsdelivr.net/npm/quill-magic-url@4.2.0/dist/index.min.js',
-        ];
     }
 
     public static function getTemplate($options)
@@ -354,11 +351,10 @@ HTML;
 
                     window._formsjs_quill_file_upload = function () {
                         let _container = null;
-
                         if (this.constructor.name.includes('Keyboard')) {
                             _container = this.quill.getModule('toolbar').container;
                         } else {
-                            _container = this.container;
+                            _container = this.quill.container;
                         }
 
                         let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
@@ -369,6 +365,7 @@ HTML;
                             _FileInput.setAttribute('type', 'file');
                             _FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
                             _FileInput.classList.add('ql-image');
+                            _FileInput.classList.add('ql-hidden');
                             _FileInput.addEventListener('change', () => {
                                 const files = _FileInput.files;
                                 const range = this.quill.getSelection(true);
@@ -426,11 +423,13 @@ HTML;
 
                     let _route = _config.route;
 
-                    console.log(_config)
+                    // console.log(_config)
 
                     window[_instance+'_atValues'] = _config.atValues;
                     window[_instance+'_hashtagValues'] = _config.hashValues;
                     window[_instance+'_linkValues'] = _config.linkValues;
+
+                    Quill.register('modules/blotFormatter', QuillBlotFormatter.default);
 
                     window[_instance] = new Quill('#'+_id+'_Editor', {
                         theme: _config.theme,
@@ -438,9 +437,10 @@ HTML;
                         modules: {
                             magicUrl: true,
                             toolbar: _editor_toolbarOptions,
-                            imageResize: {
-                                // See optional "config" below
-                            },
+                            blotFormatter: {},
+                            // ImageResize: {
+                            //     // See optional "config" below
+                            // },
                             dragAndDrop: {
                                 draggables: [
                                     {
@@ -452,7 +452,6 @@ HTML;
                                 onDrop (file) {
                                     const _FileFormData = new FormData();
                                     _FileFormData.append('image', file);
-
                                     return window.axios
                                         .post(_route, _FileFormData)
                                         .then(response => {
