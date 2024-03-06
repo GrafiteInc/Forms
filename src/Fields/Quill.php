@@ -423,8 +423,6 @@ HTML;
 
                     let _route = _config.route;
 
-                    // console.log(_config)
-
                     window[_instance+'_atValues'] = _config.atValues;
                     window[_instance+'_hashtagValues'] = _config.hashValues;
                     window[_instance+'_linkValues'] = _config.linkValues;
