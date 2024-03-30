@@ -231,7 +231,9 @@ class ModelForm extends HtmlForm
 
         $this->submitMethod = $this->submitMethods['update'] ?? null;
 
-        $this->setRouteParameterValues();
+        if (empty($this->routeParameterValues)) {
+            $this->setRouteParameterValues();
+        }
 
         if ($this->orientation === 'horizontal') {
             $this->formClass = $this->formClass ?? config('forms.form.horizontal-class', 'form-horizontal');
@@ -304,19 +306,24 @@ class ModelForm extends HtmlForm
         $this->builder->setSections($this->setSections([]));
         $this->submitMethod = $this->submitMethods['delete'] ?? null;
 
-        $this->setRouteParameterValues();
+        if (empty($this->routeParameterValues)) {
+            $this->setRouteParameterValues();
+        }
+
         $buttonAlignClass = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'float-end' : 'float-right';
         $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass . ' ' . $buttonAlignClass : $this->formDeleteClass;
         $id = $this->instance->id;
         $instanceClass = Str::of(get_class($this->instance))->explode('\\')->last();
 
-        $this->html = $this->model($this->instance, [
+        $config = [
             'route' => array_merge([$this->routes['delete']], $this->routeParameterValues),
             'method' => $this->methods['delete'],
             'class' => $formDeleteClass,
             'id' => $this->formId,
             'wire:submit.prevent' => ($this->withLivewire) ? "delete($id, '$instanceClass')" : null
-        ]);
+        ];
+
+        $this->html = $this->model($this->instance, $config);
 
         $options = [
             'class' => $this->buttonClasses['delete'],
