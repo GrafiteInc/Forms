@@ -27,6 +27,8 @@ class Field
         'label_class',
         'template',
         'factory',
+        'group_option_key',
+        'group_option_value',
     ];
 
     /**

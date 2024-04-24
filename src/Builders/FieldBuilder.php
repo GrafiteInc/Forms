@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Builders;
 
 use DateTime;
+use Exception;
 use Illuminate\Support\Str;
 use Illuminate\Support\HtmlString;
 use Grafite\Forms\Traits\HasLivewire;
@@ -232,9 +233,38 @@ class FieldBuilder
             $options['options'] = array_merge($nullValue, $options['options']);
         }
 
-        foreach ($options['options'] as $key => $value) {
-            $selectedValue = $this->getOptionSelectedValue($selected, $value, $options);
-            $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
+        if (
+            isset(array_values($options['options'])[0])
+            && is_array(array_values($options['options'])[0])
+        ) {
+            if (
+                ! isset($options['customOptions']['group_option_key'])
+                || ! isset($options['customOptions']['group_option_value'])
+            ) {
+                throw new Exception("It looks like you're using option groups, you need to then set: `group_option_key` and `group_option_value` as customOptions", 1);
+            }
+
+
+            foreach ($options['options'] as $group => $groupOptions) {
+                $label = !empty($group) ? $group : 'Undefined';
+                $selectOptions .= '<optgroup label="'.$label.'">';
+                foreach ($groupOptions as $key => $value) {
+                    if (is_array($value)) {
+                        $key = $value[$options['customOptions']['group_option_key']];
+                        $value = $value[$options['customOptions']['group_option_value']];
+                    }
+
+                    $selectedValue = $this->getOptionSelectedValue($selected, $value, $groupOptions);
+                    $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
+                }
+
+                $selectOptions .= '</optgroup>';
+            }
+        } else {
+            foreach ($options['options'] as $key => $value) {
+                $selectedValue = $this->getOptionSelectedValue($selected, $value, $options);
+                $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
+            }
         }
 
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
