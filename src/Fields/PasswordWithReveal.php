@@ -55,7 +55,7 @@ JS;
     <div class="{fieldClass}">
         <div class="input-group mb-3">
             {field}
-            <button type="button" class="{$toggleSelector}-{id} {$toggleClasses}">{$toggle}</button>
+            <button tabindex="-1" type="button" class="{$toggleSelector}-{id} {$toggleClasses}">{$toggle}</button>
         </div>
     {errors}
     </div>
