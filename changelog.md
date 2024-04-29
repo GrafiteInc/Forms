@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.25.3] - 2024-04-29
+
+### Changed
+- Moved all CDN assets to jsdelivr.com
+
 ## [v6.25.2] - 2024-04-24
 
 ### Added
