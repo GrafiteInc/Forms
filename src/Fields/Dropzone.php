@@ -26,14 +26,14 @@ class Dropzone extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.css',
+            '//cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdnjs.cloudflare.com/ajax/libs/dropzone/5.9.3/min/dropzone.min.js',
+            '//cdn.jsdelivr.net/npm/dropzone@5.9.3/dist/min/dropzone.min.js',
         ];
     }
 

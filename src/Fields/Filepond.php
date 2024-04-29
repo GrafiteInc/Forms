@@ -25,15 +25,15 @@ class Filepond extends Field
     public static function stylesheets($options)
     {
         return [
-            '//unpkg.com/filepond/dist/filepond.css',
+            '//cdn.jsdelivr.net/npm/filepond@4.31.1/dist/filepond.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//unpkg.com/filepond/dist/filepond.min.js',
-            '//unpkg.com/jquery-filepond/filepond.jquery.js'
+            '//cdn.jsdelivr.net/npm/filepond@4.31.1/dist/filepond.min.js',
+            '//cdn.jsdelivr.net/npm/jquery-filepond@1.0.0/filepond.jquery.min.js',
         ];
     }
 

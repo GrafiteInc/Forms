@@ -68,6 +68,10 @@ The package was renamed in version 3 to 4. This means that the following would n
 
 `<x-fm-search></x-fm-search>` -> `<x-f-search></x-f-search>`
 
+## Asset Sources for CSP
+js.hcaptcha.com
+cdn.jsdelivr.net
+
 ## License
 Forms is open-sourced software licensed under the [MIT license](http://opensource.org/licenses/MIT)
 

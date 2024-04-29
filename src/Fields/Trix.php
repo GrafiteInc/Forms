@@ -32,14 +32,14 @@ class Trix extends Field
     public static function stylesheets($options)
     {
         return [
-            '//unpkg.com/trix@2.0.0/dist/trix.css',
+            '//cdn.jsdelivr.net/npm/trix@2.1.0/dist/trix.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//unpkg.com/trix@2.0.0/dist/trix.umd.min.js',
+            '//cdn.jsdelivr.net/npm/trix@2.1.0/dist/trix.umd.min.js',
         ];
     }
 

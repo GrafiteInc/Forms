@@ -24,14 +24,14 @@ class Address extends Field
     public static function stylesheets($options)
     {
         return [
-            "//unpkg.com/@geoapify/geocoder-autocomplete@^1/styles/minimal.css",
+            '//cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@2.0.1/styles/minimal.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            "//unpkg.com/@geoapify/geocoder-autocomplete@^1/dist/index.min.js",
+            '//cdn.jsdelivr.net/npm/@geoapify/geocoder-autocomplete@1.5.1/dist/index.min.js',
         ];
     }
 

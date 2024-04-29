@@ -27,15 +27,15 @@ class Datepicker extends Field
     public static function stylesheets($options)
     {
         return [
-            '//unpkg.com/js-datepicker/dist/datepicker.min.css',
+            '//cdn.jsdelivr.net/npm/js-datepicker@5.18.2/dist/datepicker.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//unpkg.com/js-datepicker',
-            '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.4/moment.min.js',
+            '//cdn.jsdelivr.net/npm/js-datepicker@5.18.2/dist/datepicker.min.js',
+            '//cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js',
         ];
     }
 

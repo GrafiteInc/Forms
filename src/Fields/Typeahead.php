@@ -31,14 +31,14 @@ class Typeahead extends Field
     public static function stylesheets($options)
     {
         return [
-            "//cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.0/jquery.typeahead.min.css",
+            '//cdn.jsdelivr.net/npm/jquery-typeahead@2.11.1/dist/jquery.typeahead.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.0/jquery.typeahead.min.js'
+            '//cdn.jsdelivr.net/npm/jquery-typeahead@2.11.1/dist/jquery.typeahead.min.js',
         ];
     }
 

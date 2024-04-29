@@ -28,8 +28,8 @@ class Code extends Field
         $theme = $options['theme'] ?? 'default';
 
         return [
-            "//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/theme/$theme.min.css",
-            "//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.css",
+            "//cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/$theme.min.css",
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css',
         ];
     }
 
@@ -38,10 +38,10 @@ class Code extends Field
         $mode = $options['mode'] ?? 'htmlmixed';
 
         return [
-            '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/codemirror.min.js',
-            '//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/xml/xml.min.js',
-            "//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/css/css.min.js",
-            "//cdnjs.cloudflare.com/ajax/libs/codemirror/5.65.14/mode/$mode/$mode.min.js",
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js',
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/xml/xml.min.js',
+            "//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/css/css.min.js",
+            "//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/$mode/$mode.min.js",
         ];
     }
 

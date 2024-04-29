@@ -38,8 +38,8 @@ class Quill extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.quilljs.com/1.3.7/quill.bubble.css',
-            '//cdn.quilljs.com/1.3.7/quill.snow.css',
+            '//cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.snow.css',
+            '//cdn.jsdelivr.net/npm/quill@1.3.7/dist/quill.bubble.css',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.css',
         ];
     }
@@ -242,7 +242,7 @@ CSS;
     public static function scripts($options)
     {
         return [
-            '//cdn.quilljs.com/1.3.7/quill.js',
+            '//cdn.jsdelivr.com/npm/quill@1.3.7',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
             '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
             '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js',

@@ -26,16 +26,16 @@ class GrapesJs extends Field
     public static function stylesheets($options)
     {
         return [
-            '//unpkg.com/grapesjs/dist/css/grapes.min.css',
+            '//cdn.jsdelivr.net/npm/grapesjs@0.21.10/dist/css/grapes.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//unpkg.com/grapesjs',
-            '//unpkg.com/grapesjs-blocks-basic@1.0.1',
-            '//unpkg.com/grapesjs-preset-webpage@1.0.2',
+            '//cdn.jsdelivr.net/npm/grapesjs@0.21.10/dist/grapes.min.js',
+            '//cdn.jsdelivr.net/npm/grapesjs-blocks-basic@1.0.2/dist/index.min.js',
+            '//cdn.jsdelivr.net/npm/grapesjs-preset-webpage@1.0.3/dist/index.min.js',
         ];
     }
 
