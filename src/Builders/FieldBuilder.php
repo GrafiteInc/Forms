@@ -227,7 +227,10 @@ class FieldBuilder
             $name .= '[]';
         }
 
-        if (isset($options['null_value']) && $options['null_value']) {
+        if (
+            isset($options['null_value']) && $options['null_value']
+            && ! is_array(array_values($options['options'])[0])
+        ) {
             $nullValue = [];
             $nullValue[$options['null_label'] ?? 'None'] = null;
             $options['options'] = array_merge($nullValue, $options['options']);
@@ -244,10 +247,14 @@ class FieldBuilder
                 throw new Exception("It looks like you're using option groups, you need to then set: `group_option_key` and `group_option_value` as customOptions", 1);
             }
 
+            if (isset($options['null_value']) && $options['null_value']) {
+                $nullLabel = $options['null_label'] ?? 'None';
+                $options['options'] = array_merge(['Universal' => [$nullLabel => null]], $options['options']);
+            }
 
             foreach ($options['options'] as $group => $groupOptions) {
                 $label = !empty($group) ? $group : 'Undefined';
-                $selectOptions .= '<optgroup label="'.$label.'">';
+                $selectOptions .= '<optgroup label="' . $label . '">';
                 foreach ($groupOptions as $key => $value) {
                     if (is_array($value)) {
                         $key = $value[$options['customOptions']['group_option_key']];
