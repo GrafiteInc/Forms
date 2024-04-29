@@ -242,7 +242,7 @@ CSS;
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.com/npm/quill@1.3.7',
+            '//cdn.jsdelivr.net/npm/quill@1.3.7',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
             '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
             '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js',
