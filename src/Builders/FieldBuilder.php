@@ -229,6 +229,7 @@ class FieldBuilder
 
         if (
             isset($options['null_value']) && $options['null_value']
+            && isset(array_values($options['options'])[0])
             && ! is_array(array_values($options['options'])[0])
         ) {
             $nullValue = [];
