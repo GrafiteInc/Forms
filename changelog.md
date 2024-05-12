@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.25.6] - 2024-05-12
+
+### Fixed
+- Issue with empty arrays
+
 ## [v6.25.5] - 2024-04-29
 
 ### Fixed
