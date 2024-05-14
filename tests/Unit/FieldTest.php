@@ -373,6 +373,6 @@ class FieldTest extends TestCase
             ->option('toggle', 'fooBar');
 
         $this->assertStringContainsString('<input class="form-control" id="Password" data-bad="good" data-formsjs-onload-data="pwYoYo" data-formsjs-onload="_formsjs_passwordWithRevealField" name="password" type="password" value="">', (string) $field);
-        $this->assertStringContainsString('<button type="button" class="pwYoYo-Password foo-bar-biz">fooBar</button>', (string) $field);
+        $this->assertStringContainsString('<button tabindex="-1" type="button" class="pwYoYo-Password foo-bar-biz">fooBar</button>', (string) $field);
     }
 }
