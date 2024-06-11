@@ -38,8 +38,8 @@ class Quill extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.bubble.css',
-            '//cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.snow.css',
+            '//cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.bubble.css',
+            '//cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.css',
         ];
     }
@@ -47,13 +47,14 @@ class Quill extends Field
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/quill@2.0.0-rc.2/dist/quill.js',
+            '//cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
             '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
             // '//cdn.jsdelivr.net/npm/quill-image-resize-module@3.0.0/image-resize.min.js',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.js',
             '//cdn.jsdelivr.net/npm/quill-magic-url@4.2.0/dist/index.min.js',
-            '//cdn.jsdelivr.net/npm/quill-format-img@0.0.7/dist/quill-blot-formatter.min.js'
+            '//cdn.jsdelivr.net/npm/@ssumo/quill-resize-module@1.0.1/dist/quill-resize-module.min.js'
+            // '//cdn.jsdelivr.net/npm/quill-format-img@0.0.7/dist/quill-blot-formatter.min.js'
         ];
     }
 
@@ -236,12 +237,28 @@ CSS;
     }
     .ql-editor li[data-list="checked"] {
         text-decoration: line-through;
+        color: var(--bs-primary);
+    }
+    .ql-editor li[data-list="checked"] span:before {
+        color: var(--bs-primary);
     }
 
     .ql-editor .mention {
         background-color: var(--bs-primary);
         color: var(--bs-white);
         cursor: pointer;
+    }
+
+    #editor-resizer .toolbar {
+        min-width: 340px;
+        background-color: var(--bs-body-bg);
+        border: 1px solid var(--bs-border-color);
+    }
+
+    #editor-resizer .toolbar .group .btn {
+        padding: 3px;
+        border-radius: 0px;
+        color: var(--bs-body-color);
     }
 
     {$darkTheme}
@@ -306,7 +323,7 @@ HTML;
 
         $container = [
             ($toolbars->contains('basic')) ? ['bold', 'italic', 'underline', 'strike', ['align' => []], 'link'] : [],
-            ($toolbars->contains('extra')) ? ['blockquote', 'code-block', 'divider'] : [],
+            ($toolbars->contains('extra')) ? ['blockquote', 'code-block'] : [],
             ($toolbars->contains('lists')) ? [['list' => 'ordered'], ['list' => 'bullet'], ['list' => 'check']] : [],
             ($toolbars->contains('super_sub')) ? [['script' => 'sub'], ['script' => 'super']] : [],
             ($toolbars->contains('indents')) ? [['indent' => '-1', 'indent' => '+1']] : [],
@@ -346,8 +363,8 @@ HTML;
                     let _id = element.getAttribute('id');
                     let _instance = '_formsjs_'+ _id + '_Quill';
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                    let _editor_icons = Quill.import('ui/icons');
-                        _editor_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
+                    // let _editor_icons = Quill.import('ui/icons');
+                    //     _editor_icons['divider'] = '<i class="fa fa-horizontal-rule" aria-hidden="true"></i>';
 
                     window._formsjs_quill_file_upload = function () {
                         let _container = null;
@@ -401,25 +418,18 @@ HTML;
                     }
 
                     let _editor_toolbarOptions = {
-                        icons: _editor_icons,
+                        // icons: _editor_icons,
                         container: _config.container,
                         handlers: {
                             image: window._formsjs_quill_file_upload,
-                            'divider': function (value) {
-                                let range = window[_instance].getSelection(true);
-                                window[_instance].insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
-                            }
+                            // 'divider': function (value) {
+                            //     let range = window[_instance].getSelection(true);
+                            //     window[_instance].insertEmbed(range.index + 1, 'divider', true, Quill.sources.USER);
+                            // }
                         }
                     };
 
-                    if (! BlockEmbed) {
-                        var BlockEmbed = Quill.import('blots/block/embed');
-                        class DividerBlot extends BlockEmbed { }
-                            DividerBlot.blotName = 'divider';
-                            DividerBlot.tagName = 'hr';
 
-                        Quill.register(DividerBlot);
-                    }
 
                     let _route = _config.route;
 
@@ -427,7 +437,8 @@ HTML;
                     window[_instance+'_hashtagValues'] = _config.hashValues;
                     window[_instance+'_linkValues'] = _config.linkValues;
 
-                    Quill.register('modules/blotFormatter', QuillBlotFormatter.default);
+                    // Quill.register('modules/blotFormatter', QuillBlotFormatter.default);
+                    Quill.register("modules/resize", window.QuillResizeModule);
 
                     window[_instance] = new Quill('#'+_id+'_Editor', {
                         theme: _config.theme,
@@ -435,10 +446,19 @@ HTML;
                         modules: {
                             magicUrl: true,
                             toolbar: _editor_toolbarOptions,
-                            blotFormatter: {},
+                            // blotFormatter: {},
                             // ImageResize: {
                             //     // See optional "config" below
                             // },
+                            resize: {
+                                locale: {
+                                    altTip: "alt",
+                                    floatLeft: "Left",
+                                    floatRight: "Right",
+                                    center: "Center",
+                                    restore: "Restore"
+                                }
+                            },
                             dragAndDrop: {
                                 draggables: [
                                     {
@@ -506,6 +526,7 @@ HTML;
                     }
 
                     document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
+
                     window[_instance].on('editor-change', function () {
                         element.value = document.getElementById(_id+'_Editor').firstChild.innerHTML;
 
