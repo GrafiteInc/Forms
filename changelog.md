@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.25.8] - 2024-06-11
+
+### Fixed
+- Issue with Flatpickr styles
+
 ## [v6.25.7] - 2024-05-14
 
 ### Changed
