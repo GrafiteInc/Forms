@@ -118,6 +118,7 @@ class Flatpickr extends Field
         outline: 0;
         color: #222;
     }
+}
 CSS;
     }
 
