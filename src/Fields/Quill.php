@@ -528,10 +528,12 @@ HTML;
                     document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
 
                     window[_instance].on('editor-change', function () {
-                        element.value = document.getElementById(_id+'_Editor').firstChild.innerHTML;
+                        if (document.getElementById(_id).getAttribute('disabled') !== 'disabled') {
+                            element.value = document.getElementById(_id+'_Editor').firstChild.innerHTML;
 
-                        let event = new CustomEvent('grafite-form-change', { 'bubbles': true });
-                        element.dispatchEvent(event);
+                            let event = new CustomEvent('grafite-form-change', { 'bubbles': true });
+                            element.dispatchEvent(event);
+                        }
                     });
 
                     if (element.disabled) {
