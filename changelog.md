@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.26.0] - 2024-06-19
+
+### Added
+- Quill 2.0 support
+
+### Fixed
+- Issue with Quill being disabled
+
 ## [v6.25.8] - 2024-06-11
 
 ### Fixed
