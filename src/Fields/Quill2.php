@@ -49,7 +49,6 @@ class Quill2 extends Field
         return [
             '//cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
-            // '//cdn.jsdelivr.net/npm/quill-drag-and-drop-module@0.3.0/quill-module.min.js',
             '//cdn.jsdelivr.net/npm/quill-image-drop-and-paste@1.3.0/dist/quill-image-drop-and-paste.min.js',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.js',
             '//cdn.jsdelivr.net/npm/quill-magic-url@4.2.0/dist/index.min.js',
@@ -230,6 +229,8 @@ CSS;
 
     .ql-editor li[data-list="checked"] span::before, .ql-editor li[data-list="unchecked"] span::before {
         font-size: 26px;
+        margin-top: -4px;
+        line-height: 28px;
     }
     .ql-editor ol li::before {
     }
