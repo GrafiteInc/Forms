@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.26.2] - 2024-07-04
+
+### Fixed
+- Issue with model indexes
+
 ## [v6.26.1] - 2024-06-20
 
 ### Fixed
