@@ -130,7 +130,7 @@ CSS;
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_DatepickerField = function (element) {
+        window._formsjs_DatepickerField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 

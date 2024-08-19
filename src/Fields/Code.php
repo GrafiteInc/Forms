@@ -61,7 +61,7 @@ class Code extends Field
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_codeField = function (element) {
+        window._formsjs_codeField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 

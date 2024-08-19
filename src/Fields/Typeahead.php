@@ -76,7 +76,7 @@ HTML;
     public static function js($id, $options)
     {
         return <<<JS
-            _formsjs_typeaheadField = function (element) {
+            window._formsjs_typeaheadField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 

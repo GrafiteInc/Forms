@@ -24,7 +24,7 @@ class Slug extends Field
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_slug_field = function (element) {
+        window._formsjs_slug_field = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 element.addEventListener("keyup", event => {
                     event.preventDefault();

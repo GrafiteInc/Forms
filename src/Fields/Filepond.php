@@ -87,7 +87,7 @@ CSS;
         $url = url('/');
 
         return <<<JS
-            _formsjs_FilePondField = function (element) {
+            window._formsjs_FilePondField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 

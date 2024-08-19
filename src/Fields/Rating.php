@@ -51,7 +51,7 @@ class Rating extends Field
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_rating_field = function (element) {
+        window._formsjs_rating_field = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 $(element).barrating({
                     theme: element.getAttribute('data-formsjs-onload-data')

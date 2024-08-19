@@ -75,7 +75,7 @@ class AutoSuggest extends Field
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_autoSuggestField = function (element) {
+        window._formsjs_autoSuggestField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                 let arr = _config.options;
@@ -104,7 +104,7 @@ class AutoSuggest extends Field
                     }
                 }
 
-                _formDisplaySelection = function (_field, val) {
+                window._formDisplaySelection = function (_field, val) {
                     currentFocus = -1;
 
                     let _formElementStyle = getComputedStyle(_field);
@@ -119,7 +119,7 @@ class AutoSuggest extends Field
                     /*append the DIV element as a child of the autocomplete container:*/
                     _field.parentNode.appendChild(a);
 
-                    for (i = 0; i < arr.length; i++) {
+                    for (var i = 0; i < arr.length; i++) {
                         if (arr[i].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
                             let b = document.createElement("DIV");
                             let background = "background-color: " + _formElementStyle.backgroundColor + "; ";

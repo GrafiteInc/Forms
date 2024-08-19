@@ -35,7 +35,7 @@ class AutoSuggestSelect extends Field
     public static function js($id, $options)
     {
         return <<<JS
-            _formsjs_autosuggestSelectField = function (inp) {
+            window._formsjs_autosuggestSelectField = function (inp) {
                 if (! inp.getAttribute('data-formsjs-rendered')) {
                     let arr = JSON.parse(inp.getAttribute('data-formsjs-onload-data'));
                     inp.type = "hidden";

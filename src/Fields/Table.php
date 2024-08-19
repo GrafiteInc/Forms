@@ -50,7 +50,7 @@ HTML;
     public static function js($id, $options)
     {
         return <<<JS
-            _formsjs_tableActionBinding = function (element) {
+            window._formsjs_tableActionBinding = function (element) {
                 let _id = element.getAttribute('name');
 
                 document.querySelectorAll(`.\${_id}-add-item`).forEach(function (_item) {
@@ -64,7 +64,7 @@ HTML;
                 });
             }
 
-            _formsjs_tableCreateRow = function (element, item, _template, _index, _makeClearRow) {
+            window._formsjs_tableCreateRow = function (element, item, _template, _index, _makeClearRow) {
                 let _id = element.getAttribute('name');
                 let _nextItem = _template.cloneNode(true);
                     _nextItem.setAttribute('data-item-number', _index);
@@ -90,7 +90,7 @@ HTML;
                 element.parentNode.appendChild(_nextItem);
             }
 
-            _formsjs_tableRemoveRow = function (e) {
+            window._formsjs_tableRemoveRow = function (e) {
                 e.preventDefault();
                 let _row = e.target;
                 if (e.target.matches('.fa.fa-minus')) {
@@ -120,7 +120,7 @@ HTML;
                 _formsjs_tableActionBinding(_element);
             }
 
-            _formsjs_tableAddItem = function (e) {
+            window._formsjs_tableAddItem = function (e) {
                 e.preventDefault();
                 let _row = e.target;
                 if (e.target.matches('.fa.fa-plus')) {
@@ -142,12 +142,12 @@ HTML;
 
                 let _max = Math.max.apply(this, _index);
 
-                _formsjs_tableCreateRow(_element, _row, _row.parentNode, _max + 1, true);
+                window._formsjs_tableCreateRow(_element, _row, _row.parentNode, _max + 1, true);
 
                 let event = new Event('change', { 'bubbles': true });
                 _element.dispatchEvent(event);
 
-                _formsjs_tableActionBinding(_element);
+                window._formsjs_tableActionBinding(_element);
             }
 
             _formsjs_getTableRowTemplate = function (element) {

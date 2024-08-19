@@ -338,7 +338,7 @@ HTML;
     public static function js($id, $options)
     {
         return <<<JS
-            _formsjs_quillField = function (element) {
+            window._formsjs_quillField = function (element) {
                 element.addEventListener('grafite-form-change', function (event) {
                     let _method = element.form.getAttribute('data-formsjs-onchange');
                         _method = _method.replace('(event)', '');

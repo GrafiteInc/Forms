@@ -103,7 +103,7 @@ HTML;
                         let file = attachment.files[j];
 
                         var sizes = ['B', 'KB', 'MB', 'GB'];
-                        fileSize = file.size;
+                        var fileSize = file.size;
                         var sizeIndex = 0;
 
                         while (fileSize > 1024) {

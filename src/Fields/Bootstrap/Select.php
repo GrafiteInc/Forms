@@ -156,7 +156,7 @@ CSS;
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_bootstrapSelect_addInpKeyPress = function (t, ev, id) {
+        window._formsjs_bootstrapSelect_addInpKeyPress = function (t, ev, id) {
             ev.stopPropagation();
 
             // do not allow pipe character
@@ -169,7 +169,7 @@ CSS;
             }
         }
 
-        _formsjs_bootstrapSelect_addSelectItem = function (t, ev, id) {
+        window._formsjs_bootstrapSelect_addSelectItem = function (t, ev, id) {
             ev.stopPropagation();
 
             let bs = $(t).closest('.bootstrap-select')
@@ -191,7 +191,7 @@ CSS;
                 });
         }
 
-        _formsjs_bootstrapSelectField = function (element) {
+        window._formsjs_bootstrapSelectField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

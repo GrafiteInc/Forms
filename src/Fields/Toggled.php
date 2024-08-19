@@ -38,7 +38,7 @@ class Toggled extends Field
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_toggledField = function (element) {
+        window._formsjs_toggledField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _checkbox = element.parentNode;
                     _checkbox.classList.add('toggle-slider-wrapper')

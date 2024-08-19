@@ -51,7 +51,7 @@ class Summernote extends Field
     public static function js($id, $options)
     {
         return <<<JS
-            _formsjs_summernoteField = function (element) {
+            window._formsjs_summernoteField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _id = element.getAttribute('id');
                     $(document).ready(function() {

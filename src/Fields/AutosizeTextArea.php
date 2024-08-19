@@ -39,7 +39,7 @@ class AutosizeTextArea extends Field
     public static function js($id, $options)
     {
         return <<<JS
-                _formsjs_autosizeTextAreaField = function (element) {
+                window._formsjs_autosizeTextAreaField = function (element) {
                     if (! element.getAttribute('data-formsjs-rendered')) {
                         autosize(element);
 

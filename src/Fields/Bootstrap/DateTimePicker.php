@@ -103,7 +103,7 @@ CSS;
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_datetimePickerField = function (element) {
+        window._formsjs_datetimePickerField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 var _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                 let _dateTimeConfig = {

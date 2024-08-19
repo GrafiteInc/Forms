@@ -115,11 +115,11 @@ CSS;
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_reload_page = function () {
+        window._formsjs_reload_page = function () {
             window.location.reload();
         }
 
-        _formsjs_dropzoneField = function (element) {
+        window._formsjs_dropzoneField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                 let _fieldId = element.getAttribute('id');
