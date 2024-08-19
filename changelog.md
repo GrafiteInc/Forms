@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.27.0] - 2024-08-19
+
+### Changed
+- Moved to JS modules
+
 ## [v6.26.2] - 2024-07-04
 
 ### Fixed
