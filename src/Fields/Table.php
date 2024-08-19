@@ -150,7 +150,7 @@ HTML;
                 window._formsjs_tableActionBinding(_element);
             }
 
-            _formsjs_getTableRowTemplate = function (element) {
+            window._formsjs_getTableRowTemplate = function (element) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                 let _template = '';
                 let _id = element.getAttribute('name');
@@ -169,10 +169,10 @@ HTML;
                 return _template;
             }
 
-            _formsjs_tableField = function (element) {
+            window._formsjs_tableField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
-                    _tableRowTemplate = _formsjs_getTableRowTemplate(element);
-                    _tableLastRow = new DOMParser().parseFromString(_tableRowTemplate, "text/html").body.firstElementChild;
+                    var _tableRowTemplate = _formsjs_getTableRowTemplate(element);
+                    var _tableLastRow = new DOMParser().parseFromString(_tableRowTemplate, "text/html").body.firstElementChild;
 
                     if (element.value) {
                         let _tableValue = JSON.parse(element.value);
