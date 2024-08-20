@@ -57,7 +57,7 @@ class FormAssets
     public function addScripts($scripts)
     {
         foreach ($scripts as $script) {
-            $this->scripts[] = '<script type="module" src="' . $script . '"></script>';
+            $this->scripts[] = '<script src="' . $script . '"></script>';
         }
 
         return $this;
@@ -130,7 +130,9 @@ class FormAssets
 
             $function = "window.FormsJS = () => { {$js} }";
 
-            $output .= "<!-- Form Scripts --><script type=\"module\" {$nonce}>\n{$function}\nwindow.FormsJS();\n</script>\n";
+            $output .= "<!-- Form Scripts --><script type=\"module\" {$nonce}>\n{$function}\n
+            document.addEventListener('DOMContentLoaded', (event) => { window.FormsJS(); });
+            \n</script>\n";
         }
 
         return $output;
