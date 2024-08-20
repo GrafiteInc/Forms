@@ -130,9 +130,7 @@ class FormAssets
 
             $function = "window.FormsJS = () => { {$js} }";
 
-            $output .= "<!-- Form Scripts --><script type=\"module\" {$nonce}>\n{$function}\n
-            document.addEventListener('DOMContentLoaded', (event) => { window.FormsJS(); });
-            \n</script>\n";
+            $output .= "<!-- Form Scripts --><script type=\"module\" {$nonce}>\n{$function}\nwindow.FormsJS();\n</script>\n";
         }
 
         return $output;

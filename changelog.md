@@ -3,11 +3,6 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
-## [v6.27.3] - 2024-08-20
-
-### Fixed
-- Issue with DomContentLoaded
-
 ## [v6.27.2] - 2024-08-20
 
 ### Fixed
