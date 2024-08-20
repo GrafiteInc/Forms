@@ -88,7 +88,7 @@ HTML;
     public static function js($id, $options)
     {
         return <<<JS
-        _formsjs_addressGeoapifyField = function (element) {
+        window._formsjs_addressGeoapifyField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

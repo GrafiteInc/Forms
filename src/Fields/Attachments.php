@@ -58,7 +58,7 @@ HTML;
         $badge = config('forms.html.badge-tag', 'badge badge-primary float-end');
 
         return <<<JS
-            let _formsjs_attachmentBindings = function (element) {
+            window._formsjs_attachmentBindings = function (element) {
                 element.addEventListener('change', function () {
                     let _id = element.getAttribute('id');
                     let _class = element.getAttribute('class');
@@ -87,7 +87,7 @@ HTML;
                 });
             }
 
-            _formsjs_attachmentsList = function (element) {
+            window._formsjs_attachmentsList = function (element) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                 let attachments = _formsjs_attachments;
 
@@ -150,7 +150,7 @@ HTML;
                 element.parentNode.parentNode.querySelector('.attachments-list').appendChild(filesElement);
             }
 
-            _formsjs_AttachmentsField = function (element) {
+            window._formsjs_AttachmentsField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
                     _formsjs_attachments = [];
