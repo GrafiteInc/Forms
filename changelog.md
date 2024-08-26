@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v6.27.4] - 2024-08-26
+
+### Fixed
+- Issue with PasswordWithReveal
+
 ## [v6.27.3] - 2024-08-20
 
 ### Fixed
