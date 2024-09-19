@@ -76,7 +76,7 @@ class BaseForm extends HtmlForm
         }
 
         $this->html = $this->open($options);
-
+        $this->setUp();
         $fields = $this->parseFields($this->fields());
         $this->builder->setSections($this->setSections($fields));
 

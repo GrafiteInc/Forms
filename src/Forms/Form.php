@@ -212,6 +212,17 @@ class Form
     }
 
     /**
+     * This function returns nothing and is meant
+     * for setting up details of the form
+     *
+     * @return void
+     */
+    public function setUp()
+    {
+        // Return nothing please.
+    }
+
+    /**
      * Generate a button form based on method and route
      *
      * @param string $method

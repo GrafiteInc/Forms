@@ -186,7 +186,7 @@ class ModelForm extends HtmlForm
         }
 
         $this->html = $this->open($options);
-
+        $this->setUp();
         $fields = $this->parseFields($this->fields());
         $this->builder->setSections($this->setSections($fields));
 
@@ -260,7 +260,7 @@ class ModelForm extends HtmlForm
         }
 
         $this->html = $this->model($this->instance, $options);
-
+        $this->setUp();
         $fields = $this->parseFields($this->fields());
         $this->builder->setSections($this->setSections($fields));
 
