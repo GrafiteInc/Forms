@@ -2,9 +2,9 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
-use Grafite\Forms\Fields\Bootstrap\Select;
+use Grafite\Forms\Fields\Bootstrap\TomSelect;
 
-class Country extends Select
+class Country extends TomSelect
 {
     protected static function getType()
     {

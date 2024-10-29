@@ -2,9 +2,9 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
-use Grafite\Forms\Fields\Bootstrap\Select;
+use Grafite\Forms\Fields\Bootstrap\TomSelect;
 
-class HasMany extends Select
+class HasMany extends TomSelect
 {
     protected static function getType()
     {
@@ -14,9 +14,7 @@ class HasMany extends Select
     protected static function getAttributes()
     {
         return [
-            'class' => 'selectpicker',
             'multiple' => true,
-            'data-size' => 8,
         ];
     }
 }
