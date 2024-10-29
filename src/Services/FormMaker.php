@@ -515,9 +515,7 @@ class FormMaker
 
         foreach ($tableColumns as $column) {
             if (! in_array($column, $badColumns)) {
-                $type = DB::connection($this->connection)
-                    ->getDoctrineColumn(DB::connection($this->connection)->getTablePrefix() . $table, $column)
-                    ->getType()->getName();
+                $type = Schema::connection($this->connection)->getColumnType(DB::connection($this->connection)->getTablePrefix() . $table, $column);
                 $tableTypeColumns[$column]['type'] = $type;
             }
         }
@@ -542,6 +540,7 @@ class FormMaker
             'decimal' => 'decimal',
             'boolean' => 'number',
             'string' => 'text',
+            'varchar' => 'text',
             'guid' => 'text',
             'text' => 'textarea',
             'date' => 'date',
