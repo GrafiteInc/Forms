@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.0.1] - 2024-10-30
+
+### Fixed
+- Incorrect method name
+
 ## [v7.0.0] - 2024-10-30
 
 ### Added
