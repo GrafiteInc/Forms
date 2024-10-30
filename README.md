@@ -14,14 +14,15 @@ The Forms package lets you generate forms as well as fields with standard make c
 
 ## Requirements
 
-1. PHP 7.3+|8.0+
+1. PHP 8.2+
 2. OpenSSL
 
 ## Compatibility and Support
 
 | Laravel Version | Package Tag | Supported |
 |-----------------|-------------|-----------|
-| ^7.x - ^11.x | 6.x | yes |
+| ^11.x | 7.x | yes |
+| ^7.x - 11.x | 6.x | no |
 | ^7.x - ^8.x | 5.x | no |
 | ^7.x - ^8.x | 4.x | no |
 | ^7.x | 3.x | no |
