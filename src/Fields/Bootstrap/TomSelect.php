@@ -84,7 +84,7 @@ CSS;
 
     public static function onLoadJs($id, $options)
     {
-        return '_formsjs_bootstrapSelectField';
+        return '_formsjs_bootstrapTomSelectField';
     }
 
     public static function onLoadJsData($id, $options)
@@ -99,7 +99,7 @@ CSS;
     public static function js($id, $options)
     {
         return <<<JS
-        window._formsjs_bootstrapSelectField = function (element) {
+        window._formsjs_bootstrapTomSelectField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
