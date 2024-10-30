@@ -351,6 +351,32 @@ HTML;
                     let _instance = '_formsjs_'+ _id + '_Quill';
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
+                    window._formsjs_get_video_url = function (url) {
+                        let match = url.match(/^(?:(https?):\/\/)?(?:(?:www|m)\.)?youtube\.com\/watch.*v=([a-zA-Z0-9_-]+)/) ||
+                            url.match(/^(?:(https?):\/\/)?(?:(?:www|m)\.)?youtu\.be\/([a-zA-Z0-9_-]+)/) ||
+                            url.match(/^.*(youtu.be\/|v\/|e\/|u\/\w+\/|embed\/|v=)([^#\&\?]*).*/);
+
+                        if (match && match[2].length === 11) {
+                            return ('https') + '://www.youtube.com/embed/' + match[2] + '?showinfo=0';
+                        }
+
+                        if (match = url.match(/^(?:(https?):\/\/)?(?:www\.)?vimeo\.com\/(\d+)/)) { // eslint-disable-line no-cond-assign
+                            return (match[1] || 'https') + '://player.vimeo.com/video/' + match[2] + '/';
+                        }
+
+                        return null;
+                    }
+
+                    window._formsjs_quill_video_embed = function () {
+                        let url = prompt("Enter Video URL: ");
+                        url = _formsjs_get_video_url(url);
+                        let range = this.quill.getSelection(true);
+
+                        if (url != null) {
+                            this.quill.insertEmbed(range, 'video', url);
+                        }
+                    }
+
                     window._formsjs_quill_file_upload = function () {
                         let _container = null;
                         if (this.constructor.name.includes('Keyboard')) {
@@ -462,6 +488,11 @@ HTML;
                                         key: 'i',
                                         ctrlKey: true,
                                         handler: window._formsjs_quill_file_upload,
+                                    },
+                                    video: {
+                                        key: 'e',
+                                        ctrlKey: true,
+                                        handler: window._formsjs_quill_video_embed,
                                     },
                                 }
                             }
