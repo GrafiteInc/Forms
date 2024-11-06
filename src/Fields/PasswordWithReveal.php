@@ -36,7 +36,7 @@ class PasswordWithReveal extends Field
         return <<<JS
             window._formsjs_passwordWithRevealField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
-                    let _selector = '.' + element.getAttribute('data-formsjs-onload-data')+'-'+element.getAttribute('id');
+                    let _selector = '.' + element.getAttribute('data-formsjs-onload-data');
                     PasswordRevealer(element, { trigger: { selector: _selector, eventListener: 'click' } }).init();
                 }
             }
