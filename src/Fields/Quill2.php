@@ -488,17 +488,24 @@ HTML;
                     }
 
                     // window.addEventListener('mention-hovered', (event) => {console.log('hovered: ', event)}, false);
+
                     window.addEventListener('mention-clicked', function (event) {
                         if (event.value.denotationChar === '^') {
-                            window.location = _config.mention_link_path.replace('{link}', event.value.id);
+                            if (_config.mention_link_path !== '{link}') {
+                                window.location = _config.mention_link_path.replace('{link}', event.value.id);
+                            }
                         }
 
                         if (event.value.denotationChar === '@') {
-                            window.location = _config.mention_at_path.replace('{at}', event.value.id);
+                            if (_config.mention_at_path !== '{at}') {
+                                window.location = _config.mention_at_path.replace('{at}', event.value.id);
+                            }
                         }
 
                         if (event.value.denotationChar === '#') {
-                            window.location = _config.mention_hash_path.replace('{hash}', event.value.id);
+                            if (_config.mention_hash_path !== '{hash}') {
+                                window.location = _config.mention_hash_path.replace('{hash}', event.value.id);
+                            }
                         }
                     }, false);
                 }
