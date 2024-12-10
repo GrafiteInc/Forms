@@ -25,7 +25,7 @@ class DateTimePicker extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.0.0-beta1/dist/css/tempus-dominus.css',
+            '//cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/css/tempus-dominus.css',
         ];
     }
 
@@ -33,7 +33,7 @@ class DateTimePicker extends Field
     {
         return [
             '//cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js',
-            '//cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.0.0-beta1/dist/js/tempus-dominus.min.js',
+            '//cdn.jsdelivr.net/npm/@eonasdan/tempus-dominus@6.9.11/dist/js/tempus-dominus.min.js',
             '//cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js',
         ];
     }

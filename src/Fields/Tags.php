@@ -24,14 +24,14 @@ class Tags extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/@yaireo/tagify@4.17.7/dist/tagify.css',
+            '//cdn.jsdelivr.net/npm/@yaireo/tagify@4.32.2/dist/tagify.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/@yaireo/tagify@4.17.7/dist/tagify.min.js',
+            '//cdn.jsdelivr.net/npm/@yaireo/tagify@4.32.2/dist/tagify.min.js',
         ];
     }
 

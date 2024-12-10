@@ -25,14 +25,14 @@ class Filepond extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/filepond@4.31.1/dist/filepond.min.css',
+            '//cdn.jsdelivr.net/npm/filepond@4.32.5/dist/filepond.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/filepond@4.31.1/dist/filepond.min.js',
+            '//cdn.jsdelivr.net/npm/filepond@4.32.5/dist/filepond.min.js',
             '//cdn.jsdelivr.net/npm/jquery-filepond@1.0.0/filepond.jquery.min.js',
         ];
     }

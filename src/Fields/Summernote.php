@@ -27,14 +27,14 @@ class Summernote extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.css',
+            '//cdn.jsdelivr.net/npm/summernote@0.9.1/dist/summernote-lite.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/summernote@0.8.20/dist/summernote-lite.min.js',
+            '//cdn.jsdelivr.net/npm/summernote@0.9.1/dist/summernote-lite.min.js',
         ];
     }
 
