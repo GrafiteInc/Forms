@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.0.3] - 2024-12-10
+
+### Changed
+- Updated various package versions
+
+### Fixed
+- Issue with quill links
+
 ## [v7.0.2] - 2024-11-06
 
 ### Fixed
