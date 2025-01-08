@@ -461,7 +461,7 @@ class HtmlForm extends Form
         $onSubmit = null;
 
         if ($this->disableOnSubmit) {
-            $processing = '<i class="spinner-border spinner-border-sm me-1"></i>';
+            $processing = '<i class="spinner-border spinner-border-sm"></i>';
             $onSubmit = "return window.FormsJS_validate_submission(this.form, {$processing});";
         }
 

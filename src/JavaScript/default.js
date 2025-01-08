@@ -69,9 +69,9 @@ window.FormsJS_validate_submission = function (_form, _processing) {
     };
 
     let _button = _form.querySelector('button[type="submit"]');
-    let _originalContent = _button.innerHTML;
-    _button.innerHTML = _processing + _originalContent;
-    _button.disabled = true;
+    let _width = _button.offsetWidth;
+    _button.style.width = _width + 'px';
+    _button.innerHTML = _processing;
 
     _form.submit();
 };
