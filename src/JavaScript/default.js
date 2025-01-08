@@ -31,7 +31,7 @@ window.FormsJS_disableOnSubmit = function (event) {
         _button = _target.innerHTML;
     }
 
-    _target.innerHTML = '<i class=\"fas fa-circle-notch fa-spin mr-2\"></i> ' + _button;
+    _target.innerHTML = '<i class=\"spinner-border spinner-border-sm me-1\"></i>';
     _target.disabled = true;
     _target.form.submit();
 }
