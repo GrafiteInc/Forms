@@ -31,7 +31,8 @@ window.FormsJS_disableOnSubmit = function (event) {
         _button = _target.innerHTML;
     }
 
-    _target.innerHTML = '<i class=\"spinner-border spinner-border-sm me-1\"></i>';
+    _target.style.width = _target.offsetWidth + 'px';
+    _target.innerHTML = '<i class=\"spinner-border spinner-border-sm\"></i>';
     _target.disabled = true;
     _target.form.submit();
 }
