@@ -28,6 +28,7 @@ class UserHistoryForm extends BaseForm
                 ]
             ])
             ->option('theme', true)
+            ->withoutLabel()
             ->option('upload_route', 'user.history'),
             Tags::make('qualities'),
         ];

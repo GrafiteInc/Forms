@@ -271,7 +271,15 @@ class FieldMaker
             $values[] = $option;
         }
 
-        return str_replace($keys, $values, $template);
+        $fieldHtml = str_replace($keys, $values, $template);
+
+        if (Str::contains($fieldHtml, '></label>')) {
+            $fieldHtmlAsArray = Str::of($fieldHtml)->explode("\n");
+            unset($fieldHtmlAsArray[1]);
+            $fieldHtml = $fieldHtmlAsArray->implode("\n");
+        }
+
+        return $fieldHtml;
     }
 
     protected function getOldValue($column)
