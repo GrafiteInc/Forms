@@ -137,7 +137,7 @@ CSS;
                 let _Datepicker = datepicker('#' + element.getAttribute('id'), {
                     startDay: _config.startDay,
                     id: _config.identity,
-                    dateSelected: (element.value) ? moment(element.value, _config.format).toDate() : null,
+                    dateSelected: (element.value) ? new Date(moment(element.value, _config.format).toDate()) : null,
                     formatter: (input, date, instance) => {
                         input.value = moment(date).format(_config.format);
                     }
