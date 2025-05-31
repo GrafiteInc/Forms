@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.0.8] - 2025-05-31
+
+### Chore
+- update of the readme
+- update readme with version change
+
+### Fix
+- minor issue with supported timezones
+
 ## [v7.0.7] - 2025-05-05
 
 ### Fix
