@@ -414,6 +414,8 @@ HTML;
                     window[_instance+'_atValues'] = _config.atValues;
                     window[_instance+'_hashtagValues'] = _config.hashValues;
                     window[_instance+'_linkValues'] = _config.linkValues;
+                    window[_instance+'_originalValue'] = element.value;
+
 
                     window[_instance] = new Quill('#'+_id+'_Editor', {
                         theme: _config.theme,
@@ -475,7 +477,11 @@ HTML;
                     document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
 
                     window[_instance].on('editor-change', function () {
-                        if (document.getElementById(_id).getAttribute('disabled') !== 'disabled') {
+                        if (
+                            document.getElementById(_id).getAttribute('disabled') !== 'disabled'
+                            && document.getElementById(_id).getAttribute('readonly') !== 'readonly'
+                            && document.getElementById(_id+'_Editor').firstChild.innerHTML !== window[_instance+'_originalValue']
+                        ) {
                             element.value = document.getElementById(_id+'_Editor').firstChild.innerHTML;
 
                             let event = new CustomEvent('grafite-form-change', { 'bubbles': true });
