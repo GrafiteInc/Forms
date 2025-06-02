@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.0.9] - 2025-06-02
+
+### Chore
+- update permissions
+- update readme
+
 ## [v7.0.8] - 2025-05-31
 
 ### Chore
