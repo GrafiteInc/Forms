@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.0.10] - 2025-06-02
+
+### Chore
+- Merge branch 'develop'
+
+### Fix
+- issue with triggering change when initiating
+
 ## [v7.0.9] - 2025-06-02
 
 ### Chore
