@@ -12,6 +12,6 @@ class DivOpen extends HtmlSnippet
     {
         $attributes = app(AttributeBuilder::class)->render($options['attributes']);
 
-        return new HtmlString("<div {$attributes}>");
+        return "<div {$attributes}>";
     }
 }

@@ -20,6 +20,6 @@ class Div extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty div');
 
-        return new HtmlString("<div {$attributes}>{$content}</div>");
+        return "<div {$attributes}>{$content}</div>";
     }
 }

@@ -12,6 +12,6 @@ class HrTag extends HtmlSnippet
     {
         $attributes = app(AttributeBuilder::class)->render($options['attributes']);
 
-        return new HtmlString("<hr {$attributes}>");
+        return "<hr {$attributes}>";
     }
 }

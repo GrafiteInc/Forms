@@ -20,6 +20,6 @@ class Span extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty span');
 
-        return new HtmlString("<span {$attributes}>{$content}</span>");
+        return "<span {$attributes}>{$content}</span>";
     }
 }

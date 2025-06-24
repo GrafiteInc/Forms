@@ -500,7 +500,7 @@ class HtmlForm extends Form
             }
         }
 
-        return $this->toHtmlString($html);
+        return $html;
     }
 
     /**

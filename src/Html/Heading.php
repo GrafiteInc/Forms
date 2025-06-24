@@ -25,6 +25,6 @@ class Heading extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty heading');
 
-        return new HtmlString("<h{$level} {$attributes}>{$content}</h{$level}>");
+        return "<h{$level} {$attributes}>{$content}</h{$level}>";
     }
 }

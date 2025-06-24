@@ -9,6 +9,6 @@ class DivClose extends HtmlSnippet
 {
     public static function render($options = [])
     {
-        return new HtmlString('</div>');
+        return '</div>';
     }
 }

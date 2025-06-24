@@ -22,6 +22,6 @@ class Link extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty button');
 
-        return new HtmlString("<a {$attributes}>{$content}</a>");
+        return "<a {$attributes}>{$content}</a>";
     }
 }

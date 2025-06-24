@@ -22,6 +22,6 @@ class Button extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty button');
 
-        return new HtmlString("<button {$attributes}>{$content}</button>");
+        return "<button {$attributes}>{$content}</button>";
     }
 }
