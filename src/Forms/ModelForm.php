@@ -185,6 +185,10 @@ class ModelForm extends HtmlForm
             $options['data-formsjs-onchange'] = "{$this->submitMethod}(event)";
         }
 
+        if ($this->submitViaAjax) {
+            $this->submitMethod = ($this->submitViaAjax) ? config('forms.global-ajax-method', 'ajax') : $options['data-formsjs-onclick'] ?? false;
+        }
+
         $this->html = $this->open($options);
         $this->setUp();
         $fields = $this->parseFields($this->fields());
@@ -257,6 +261,10 @@ class ModelForm extends HtmlForm
 
         if (in_array('change', $this->submitOn['update'] ?? []) || $this->submitOnChange) {
             $options['data-formsjs-onchange'] = "{$this->submitMethod}(event)";
+        }
+
+        if ($this->submitViaAjax) {
+            $this->submitMethod = ($this->submitViaAjax) ? config('forms.global-ajax-method', 'ajax') : $options['data-formsjs-onclick'] ?? false;
         }
 
         $this->html = $this->model($this->instance, $options);
@@ -333,6 +341,7 @@ class ModelForm extends HtmlForm
 
         $options['data-formsjs-confirm-message'] = (! empty($this->confirmMessage)) ? $this->confirmMessage : false;
         $options['data-formsjs-onclick'] = $this->getConfirmationOption($options);
+
         $options['type'] = 'submit';
 
         if ($this->formIsDisabled) {
@@ -350,7 +359,20 @@ class ModelForm extends HtmlForm
             $options['class'] = $this->buttonClasses['confirm'];
         }
 
-        $this->html .= $this->field->button($deleteButton, $options);
+        $ajaxMethod = config('forms.global-ajax-method', 'ajax');
+
+        if (isset($this->buttons['delete']) || ! is_null($this->submitMethod)) {
+            $submitMethod = $this->submitMethod;
+        }
+
+        if ($this->submitViaAjax) {
+            $submitMethod = ($this->submitViaAjax) ? $ajaxMethod . '(event)' : $options['data-formsjs-onclick'] ?? false;
+        }
+
+        $this->html .= $this->field->button($deleteButton, array_merge($options, [
+            'class' => $this->buttonClasses['delete'],
+            'data-formsjs-onclick' => $submitMethod,
+        ]));
 
         $this->html .= $this->close();
 
