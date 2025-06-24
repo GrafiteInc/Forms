@@ -725,7 +725,7 @@ class Form
 
         $centered = (config('forms.modal-centered')) ? 'modal-dialog-centered' : '';
 
-        $html = <<<Modal
+        return <<<Modal
             <div id="{$modalId}" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog {$centered} modal-dialog-scrollable" role="document">
                     <div class="modal-content">
@@ -750,8 +750,6 @@ class Form
                 {$triggerContent}
             </button>
 Modal;
-
-        return $this->toHtmlString($html);
     }
 
     /**
@@ -790,7 +788,7 @@ Modal;
      */
     public function __toString()
     {
-        return $this->toHtmlString($this->html);
+        return $this->html;
     }
 
     /**
@@ -800,7 +798,7 @@ Modal;
      */
     public function render()
     {
-        return $this->toHtmlString($this->html);
+        return $this->html;
     }
 
     /**
@@ -810,7 +808,7 @@ Modal;
      */
     public function renderForLivewire()
     {
-        return $this->toHtmlString("<div wire:ignore>{$this->html}</div>");
+        return "<div wire:ignore>{$this->html}</div>";
     }
 
     /**
