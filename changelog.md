@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.1.0] - 2025-06-24
+
+### Fix
+- issue with viaAjax being ignored
+
+### Refactor
+- quill2 update with better image uploads
+- improvement with htmlstring class
+
 ## [v7.0.10] - 2025-06-02
 
 ### Chore
