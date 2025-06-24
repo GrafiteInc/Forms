@@ -38,8 +38,8 @@ class Quill2 extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.bubble.css',
-            '//cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css',
+            '//cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css',
+            '//cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.css',
         ];
     }
@@ -47,9 +47,10 @@ class Quill2 extends Field
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js',
+            '//cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.js',
             '//cdn.jsdelivr.net/npm/quilljs-markdown@latest/dist/quilljs-markdown.js',
-            '//cdn.jsdelivr.net/npm/quill-image-drop-and-paste@1.3.0/dist/quill-image-drop-and-paste.min.js',
+            '//cdn.jsdelivr.net/npm/quill-image-drop-and-paste@2.0.1/dist/quill-image-drop-and-paste.min.js',
+            '//cdn.jsdelivr.net/gh/hunghg255/quill-resize-module/dist/quill-resize-image.min.js',
             '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.js',
             '//cdn.jsdelivr.net/npm/quill-magic-url@4.2.0/dist/index.min.js',
         ];
@@ -232,8 +233,7 @@ CSS;
         margin-top: -4px;
         line-height: 28px;
     }
-    .ql-editor ol li::before {
-    }
+
     .ql-editor li[data-list="checked"] {
         text-decoration: line-through;
         color: var(--bs-primary);
@@ -350,8 +350,25 @@ HTML;
                     let _id = element.getAttribute('id');
                     let _instance = '_formsjs_'+ _id + '_Quill';
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
+                    let QuillImageData = QuillImageDropAndPaste.ImageData;
 
-                    window._formsjs_quill_file_upload = function () {
+                    window._formsjs_quill_image_upload = function (route, formData, quill, range) {
+                        window.axios
+                            .post(route, formData)
+                            .then(response => {
+                                quill.enable(true);
+                                quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
+                                quill.setSelection(range.index + 1, Quill.sources.SILENT);
+                                _FileInput.value = '';
+                            })
+                            .catch(error => {
+                                console.log('Image upload failed');
+                                console.log(error);
+                                quill.enable(true);
+                            });
+                    }
+
+                    window._formsjs_quill_image_process = function (dataUrl, type, imageData) {
                         let _container = null;
                         if (this.constructor.name.includes('Keyboard')) {
                             _container = this.quill.getModule('toolbar').container;
@@ -368,44 +385,51 @@ HTML;
                             _FileInput.setAttribute('accept', 'image/png, image/gif, image/jpeg, image/bmp, image/x-icon');
                             _FileInput.classList.add('ql-image');
                             _FileInput.classList.add('ql-hidden');
-                            _FileInput.addEventListener('change', () => {
+                            _FileInput.addEventListener('change', (e) => {
                                 const files = _FileInput.files;
                                 const range = this.quill.getSelection(true);
 
-                                if (!files || !files.length) {
+                                if (! files || ! files.length) {
                                     console.log('No files selected');
                                     return;
                                 }
 
-                                const _FileFormData = new FormData();
-                                _FileFormData.append('image', files[0]);
+                                let _FileFormData = new FormData();
+                                    _FileFormData.append('image', files[0]);
 
                                 this.quill.enable(false);
 
-                                window.axios
-                                    .post(_config.route, _FileFormData)
-                                    .then(response => {
-                                        this.quill.enable(true);
-                                        let range = this.quill.getSelection(true);
-                                        this.quill.editor.insertEmbed(range.index, 'image', response.data.file.url);
-                                        this.quill.setSelection(range.index + 1, Quill.sources.SILENT);
-                                        _FileInput.value = '';
-                                    })
-                                    .catch(error => {
-                                        console.log('Image upload failed');
-                                        console.log(error);
-                                        this.quill.enable(true);
-                                    });
+                                window._formsjs_quill_image_upload(
+                                    _config.route,
+                                    _FileFormData,
+                                    this.quill,
+                                    range
+                                );
                             });
-                            _container.appendChild(_FileInput);
+
+                            if (imageData.dataUrl) {
+                                var file = imageData.toFile('quill-upload-image.png');
+
+                                let _FileFormData = new FormData();
+                                    _FileFormData.append('image', file);
+
+                                window._formsjs_quill_image_upload(
+                                    _config.route,
+                                    _FileFormData,
+                                    this.quill,
+                                    this.quill.getSelection(true)
+                                );
+                            } else {
+                                _container.appendChild(_FileInput);
+                                _FileInput.click();
+                            }
                         }
-                        _FileInput.click();
                     }
 
                     let _editor_toolbarOptions = {
                         container: _config.container,
                         handlers: {
-                            image: window._formsjs_quill_file_upload,
+                            image: window._formsjs_quill_image_process,
                         }
                     };
 
@@ -416,6 +440,7 @@ HTML;
                     window[_instance+'_linkValues'] = _config.linkValues;
                     window[_instance+'_originalValue'] = element.value;
 
+                    Quill.register("modules/resize", window.QuillResizeImage);
 
                     window[_instance] = new Quill('#'+_id+'_Editor', {
                         theme: _config.theme,
@@ -424,7 +449,12 @@ HTML;
                             magicUrl: true,
                             toolbar: _editor_toolbarOptions,
                             imageDropAndPaste: {
-                                handler: window._formsjs_quill_file_upload,
+                                handler: window._formsjs_quill_image_process,
+                            },
+                            resize: {
+                                locale: {
+                                    center: "center",
+                                },
                             },
                             mention: {
                                 allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
@@ -463,7 +493,7 @@ HTML;
                                     image: {
                                         key: 'i',
                                         ctrlKey: true,
-                                        handler: window._formsjs_quill_file_upload,
+                                        handler: window._formsjs_quill_image_process,
                                     },
                                 }
                             }
