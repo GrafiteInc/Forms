@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Html;
 
+use Illuminate\Support\HtmlString;
 use Grafite\Forms\Html\HtmlSnippet;
 use Grafite\Forms\Builders\AttributeBuilder;
 
@@ -19,6 +20,6 @@ class Span extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty span');
 
-        return "<span {$attributes}>{$content}</span>";
+        return new HtmlString("<span {$attributes}>{$content}</span>");
     }
 }

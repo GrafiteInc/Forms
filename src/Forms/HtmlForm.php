@@ -500,7 +500,7 @@ class HtmlForm extends Form
             }
         }
 
-        return $html;
+        return $this->toHtmlString($html);
     }
 
     /**
@@ -677,15 +677,5 @@ class HtmlForm extends Form
         }
 
         return $this;
-    }
-
-    /**
-     * Output html as string
-     *
-     * @return string
-     */
-    public function __toString()
-    {
-        return $this->html;
     }
 }

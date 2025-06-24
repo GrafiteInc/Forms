@@ -11,6 +11,7 @@ use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Builders\FieldBuilder;
 use Grafite\Forms\Builders\AttributeBuilder;
 use Grafite\Forms\Services\FormAssets;
+use Nette\Utils\Html;
 
 class Form
 {
@@ -716,7 +717,7 @@ class Form
         $triggerContent = $triggerContent ?? $this->triggerContent;
         $triggerClass = $triggerClass ?? $this->triggerClass;
 
-        $closeButton = '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>';
+        $closeButton = '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="false">&times;</span></button>';
 
         if (Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
             $closeButton = '<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>';
@@ -724,7 +725,7 @@ class Form
 
         $centered = (config('forms.modal-centered')) ? 'modal-dialog-centered' : '';
 
-        return <<<Modal
+        $html = <<<Modal
             <div id="{$modalId}" class="modal fade" tabindex="-1" role="dialog">
                 <div class="modal-dialog {$centered} modal-dialog-scrollable" role="document">
                     <div class="modal-content">
@@ -749,6 +750,8 @@ class Form
                 {$triggerContent}
             </button>
 Modal;
+
+        return $this->toHtmlString($html);
     }
 
     /**
@@ -787,7 +790,7 @@ Modal;
      */
     public function __toString()
     {
-        return $this->html;
+        return $this->toHtmlString($this->html);
     }
 
     /**
@@ -797,7 +800,7 @@ Modal;
      */
     public function render()
     {
-        return $this->html;
+        return $this->toHtmlString($this->html);
     }
 
     /**
@@ -807,7 +810,7 @@ Modal;
      */
     public function renderForLivewire()
     {
-        return "<div wire:ignore>{$this->html}</div>";
+        return $this->toHtmlString("<div wire:ignore>{$this->html}</div>");
     }
 
     /**

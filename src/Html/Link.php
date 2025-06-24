@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Html;
 
 use Attribute;
+use Illuminate\Support\HtmlString;
 use Grafite\Forms\Builders\AttributeBuilder;
 
 class Link extends HtmlSnippet
@@ -21,6 +22,6 @@ class Link extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty button');
 
-        return "<a {$attributes}>{$content}</a>";
+        return new HtmlString("<a {$attributes}>{$content}</a>");
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Html;
 
+use Illuminate\Support\HtmlString;
 use Grafite\Forms\Html\HtmlSnippet;
 use Grafite\Forms\Builders\AttributeBuilder;
 
@@ -11,6 +12,6 @@ class DivOpen extends HtmlSnippet
     {
         $attributes = app(AttributeBuilder::class)->render($options['attributes']);
 
-        return "<div {$attributes}>";
+        return new HtmlString("<div {$attributes}>");
     }
 }

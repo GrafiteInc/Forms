@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Html;
 
+use Illuminate\Support\HtmlString;
 use Grafite\Forms\Html\HtmlSnippet;
 use Grafite\Forms\Builders\AttributeBuilder;
 
@@ -24,6 +25,6 @@ class Heading extends HtmlSnippet
 
         throw_if(empty($content), 'You cannot have an empty heading');
 
-        return "<h{$level} {$attributes}>{$content}</h{$level}>";
+        return new HtmlString("<h{$level} {$attributes}>{$content}</h{$level}>");
     }
 }
