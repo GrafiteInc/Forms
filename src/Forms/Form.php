@@ -802,6 +802,28 @@ Modal;
     }
 
     /**
+     * Set a form as disabled to prevent submission, when callback is true.
+     *
+     * @return self
+     */
+    public function renderWhen($callback)
+    {
+        if (is_bool($callback) && ! $callback) {
+            return '';
+        }
+
+        if (is_callable($callback)) {
+            $result = $callback();
+
+            if (! $result) {
+                return '';
+            }
+        }
+
+        return $this->html;
+    }
+
+    /**
      * For Livewire components
      *
      * @return string

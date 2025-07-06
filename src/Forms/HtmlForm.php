@@ -611,6 +611,11 @@ class HtmlForm extends Form
         return $this;
     }
 
+    /**
+     * Set the form to submit via ajax.
+     *
+     * @return self
+     */
     public function viaAjax()
     {
         $this->submitViaAjax = true;
@@ -624,7 +629,7 @@ class HtmlForm extends Form
      * @param string $message
      * @param string $method
      *
-     * @return \Grafite\Forms\Forms\ModelForm
+     * @return self
      */
     public function confirm($message, $method = null)
     {
@@ -637,7 +642,7 @@ class HtmlForm extends Form
     /**
      * Set a form as disabled to prevent submission.
      *
-     * @return \Grafite\Forms\Forms\ModelForm
+     * @return \Grafite\Forms\Forms\HtmlForm
      */
     public function disable()
     {
@@ -650,7 +655,7 @@ class HtmlForm extends Form
      * Restrict a form to only the fields listed here.
      *
      * @param array $fields
-     * @return \Grafite\Forms\Forms\HtmlForm
+     * @return self
      */
     public function only($fields)
     {
@@ -666,7 +671,7 @@ class HtmlForm extends Form
     /**
      * Set a form as disabled to prevent submission, when callback is true.
      *
-     * @return \Grafite\Forms\Forms\ModelForm
+     * @return self
      */
     public function disabledWhen($callback)
     {
