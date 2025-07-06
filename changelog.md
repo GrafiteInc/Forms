@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.2.0] - 2025-07-06
+
+### Feature
+- new renderWhen method for forms
+
 ## [v7.1.2] - 2025-06-24
 
 ### Fix
