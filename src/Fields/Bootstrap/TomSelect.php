@@ -104,6 +104,12 @@ CSS;
                 let _id = element.getAttribute('id');
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
 
+                if (element.getAttribute('data-formsjs-onchange')) {
+                    _config['onChange'] = function (value) {
+                        element.closest('form').submit();
+                    }
+                }
+
                 new TomSelect(element, _config);
             }
         }
