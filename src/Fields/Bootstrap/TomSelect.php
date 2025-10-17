@@ -14,7 +14,7 @@ class TomSelect extends Field
     protected static function getAttributes()
     {
         return [
-            'class' => 'selectpicker',
+            'class' => 'form-select selectpicker',
             'multiple' => true,
             'data-size' => 8,
         ];
