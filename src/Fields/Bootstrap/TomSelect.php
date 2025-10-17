@@ -110,7 +110,13 @@ CSS;
                     }
                 }
 
-                new TomSelect(element, _config);
+                let _tomSelect = new TomSelect(element, _config);
+
+                if (window._tomSelect === undefined) {
+                    window._tomSelect = {};
+                }
+
+                window._tomSelect[_id] = _tomSelect;
             }
         }
 JS;
