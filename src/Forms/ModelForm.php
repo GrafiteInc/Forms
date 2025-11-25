@@ -359,14 +359,19 @@ class ModelForm extends HtmlForm
             $options['class'] = $this->buttonClasses['confirm'];
         }
 
-        $ajaxMethod = config('forms.global-ajax-method', 'ajax');
+        $submitMethod = null;
 
-        if (isset($this->buttons['delete']) || ! is_null($this->submitMethod)) {
+        if ($this->confirmMethod) {
+            $submitMethod = $this->confirmMethod;
+        }
+
+        if (! is_null($this->submitMethod)) {
             $submitMethod = $this->submitMethod;
         }
 
         if ($this->submitViaAjax) {
-            $submitMethod = ($this->submitViaAjax) ? $ajaxMethod . '(event)' : $options['data-formsjs-onclick'] ?? false;
+            $ajaxMethod = config('forms.global-ajax-method', 'ajax');
+            $submitMethod = ($this->submitViaAjax) ? $options['data-formsjs-onclick'] ?? false : $ajaxMethod . '(event)';
         }
 
         $this->html .= $this->field->button($deleteButton, array_merge($options, [
