@@ -95,7 +95,7 @@ class AutoSuggestSelect extends Field
 
                         /*append the DIV element as a child of the autocomplete container:*/
                         _altInput.parentNode.appendChild(a);
-                        let _itemCount = Object.keys(arr).length
+                        let _itemCount = Object.keys(arr).length;
 
                         Object.keys(arr).forEach(key => {
                             if (arr[key].substr(0, val.length).toUpperCase() == val.toUpperCase()) {
@@ -111,7 +111,7 @@ class AutoSuggestSelect extends Field
                                     formCloseAllSelectLists();
 
                                     if (a.childNodes.length > 0) {
-                                        _altInput.setAttribute('class', inp.getAttribute('class'))
+                                        _altInput.setAttribute('class', inp.getAttribute('class'));
                                         let _formElementStyle = getComputedStyle(_altInput);
                                         let border = "border: " + _formElementStyle.border + "; ";
                                         let width = "width:"+ _altInput.offsetWidth + "px; ";
@@ -191,7 +191,7 @@ class AutoSuggestSelect extends Field
                         }
 
                         if (_list && _list.childNodes.length > 0) {
-                            _altInput.setAttribute('class', inp.getAttribute('class'))
+                            _altInput.setAttribute('class', inp.getAttribute('class'));
                             let _formElementStyle = getComputedStyle(_altInput);
                             let border = "border: " + _formElementStyle.border + "; ";
                             let width = "width:"+ _altInput.offsetWidth + "px; ";

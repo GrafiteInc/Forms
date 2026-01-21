@@ -366,7 +366,7 @@ HTML;
                                 console.log(error);
                                 quill.enable(true);
                             });
-                    }
+                    };
 
                     window._formsjs_quill_image_process = function (dataUrl, type, imageData) {
                         let _container = null;
@@ -392,7 +392,7 @@ HTML;
                                 if (! files || ! files.length) {
                                     console.log('No files selected');
                                     return;
-                                }
+                                };
 
                                 let _FileFormData = new FormData();
                                     _FileFormData.append('image', files[0]);
@@ -424,7 +424,7 @@ HTML;
                                 _FileInput.click();
                             }
                         }
-                    }
+                    };
 
                     let _editor_toolbarOptions = {
                         container: _config.container,
