@@ -139,7 +139,7 @@ class AutoSuggest extends Field
                     if (a.childNodes.length === 0) {
                         a.style.display = 'none';
                     }
-                }
+                };
 
                 document.addEventListener("click", function (e) {
                     formCloseAllLists(e.target);

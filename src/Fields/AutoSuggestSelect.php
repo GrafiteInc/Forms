@@ -126,7 +126,7 @@ class AutoSuggestSelect extends Field
                         if (a.childNodes.length === 0) {
                             a.style.display = 'none';
                         }
-                    }
+                    };
 
                     document.addEventListener("click", function (e) {
                         formCloseAllSelectLists(e.target);

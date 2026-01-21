@@ -243,7 +243,7 @@ CSS;
                             x[i].classList.add("simple-select-hide");
                         }
                     }
-                }
+                };
 
                 document.addEventListener("click", _formsjs_closeAllBsSimpleSelect);
                 document.addEventListener("keyup", function (e) {

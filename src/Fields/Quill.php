@@ -504,7 +504,7 @@ HTML;
 
                     if (_config.markdown) {
                         new QuillMarkdown(window[_instance]);
-                    }
+                    };
 
                     document.getElementById(_id+'_Editor').firstChild.innerHTML = element.value;
                     window[_instance].on('editor-change', function () {

@@ -245,7 +245,7 @@ CSS;
                             x[i].classList.add("simple-datalist-hide");
                         }
                     }
-                }
+                };
 
                 // document.addEventListener("click", _formsjs_closeAllBsSimpleDatalist);
                 document.addEventListener("keyup", function (e) {

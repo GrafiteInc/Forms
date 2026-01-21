@@ -41,7 +41,7 @@ class Toggled extends Field
         window._formsjs_toggledField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _checkbox = element.parentNode;
-                    _checkbox.classList.add('toggle-slider-wrapper')
+                    _checkbox.classList.add('toggle-slider-wrapper');
                 let _toggle = document.createElement("span");
                     _toggle.classList.add('toggle_slider');
                     _toggle.classList.add('slider');

@@ -121,16 +121,16 @@ class FormAssets
         if (in_array($type, ['all', 'scripts'])) {
             $output .= collect($this->scripts)->unique()->implode("\n");
             $coreJavaScript = file_get_contents(__DIR__ . '/../JavaScript/core.js');
-            $js = collect($this->js)->push($coreJavaScript)->unique()->implode("\n");
+            $js = collect($this->js)->push($coreJavaScript)->unique()->implode("\n;");
 
             if (app()->environment('production')) {
                 $minifierJS = new JS();
                 $js = $minifierJS->add($js)->minify();
             }
 
-            $function = "window.FormsJS = () => { {$js} }";
+            $function = "window.FormsJS = () => { {$js} };";
 
-            $output .= "<!-- Form Scripts --><script type=\"module\" {$nonce}>\n{$function}\nwindow.FormsJS();\n</script>\n";
+            $output .= "<!-- Form Scripts --><script type=\"module\" {$nonce}>\n{$function}\n window.FormsJS();\n</script>\n";
         }
 
         return $output;
