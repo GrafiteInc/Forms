@@ -50,7 +50,7 @@ php artisan vendor:publish --provider="Grafite\Forms\FormsProvider"
 
 ## Documentation
 
-[https://docs.grafite.ca/utilities/forms](https://docs.grafite.ca/utilities/forms)
+[https://documentation.grafite.ca/docs/utilities-forms](https://documentation.grafite.ca/docs/utilities-forms)
 
 ## Upgrading from 3.x to 4.x (Renaming)
 The package was renamed in version 3 to 4. This means that the following would need to be changed on your code base:
