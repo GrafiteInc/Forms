@@ -3,6 +3,15 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.2.4] - 2026-01-22
+
+### Fix
+- support for JS compression
+- support for JS compressions
+
+### Chore
+- update readme
+
 ## [v7.2.3] - 2025-11-25
 
 ### Fix
