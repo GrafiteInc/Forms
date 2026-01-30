@@ -3,23 +3,23 @@
 namespace Grafite\Forms\Forms;
 
 use Exception;
-use Illuminate\Routing\UrlGenerator;
-use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Builders\FieldBuilder;
+use Grafite\Forms\Services\FormMaker;
+use Illuminate\Routing\UrlGenerator;
 
 class HtmlForm extends Form
 {
     /**
      * Simple wrapper for cards
      *
-     * @var boolean
+     * @var bool
      */
     public $isCardForm = false;
 
     /**
      * Override the right alignment of buttons
      *
-     * @var boolean
+     * @var bool
      */
     public $buttonsJustified = false;
 
@@ -27,14 +27,14 @@ class HtmlForm extends Form
      * Hide the forms buttons
      * this is only needed, when we do form submissions by other events.
      *
-     * @var boolean
+     * @var bool
      */
     public $hideButtons = false;
 
     /**
      * Disable buttons after submit
      *
-     * @var boolean
+     * @var bool
      */
     public $disableOnSubmit = false;
 
@@ -48,7 +48,7 @@ class HtmlForm extends Form
     /**
      * The form validation
      *
-     * @var boolean
+     * @var bool
      */
     public $withJsValidation = false;
 
@@ -83,21 +83,21 @@ class HtmlForm extends Form
     /**
      * Maximum columns in a row
      *
-     * @var integer
+     * @var int
      */
     public $maxColumns = 6;
 
     /**
      * Whether or not the form has files
      *
-     * @var boolean
+     * @var bool
      */
     public $hasFiles = false;
 
     /**
      * Whether or not the form should be disabled
      *
-     * @var boolean
+     * @var bool
      */
     public $formIsDisabled = false;
 
@@ -118,14 +118,14 @@ class HtmlForm extends Form
     /**
      * If the submit should occur on keydown
      *
-     * @var boolean
+     * @var bool
      */
     public $submitOnKeydown = false;
 
     /**
      * If the submit should occur on change
      *
-     * @var boolean
+     * @var bool
      */
     public $submitOnChange = false;
 
@@ -133,9 +133,7 @@ class HtmlForm extends Form
      * The route prefix, generally single form of model
      *
      * @var string
-
-     * Form fields as array
-     *
+     *             Form fields as array
      * @var array
      */
     public $fields = [];
@@ -308,24 +306,24 @@ class HtmlForm extends Form
                 $lastRowInForm .= "<div class=\"{$cardFooter}\">";
             }
 
-            $lastRowInForm .= '<div class="' . $formButtonRow . '">
-            <div class="' . $formButtonColumn . ' ' . $rowAlignment . '">';
+            $lastRowInForm .= '<div class="'.$formButtonRow.'">
+            <div class="'.$formButtonColumn.' '.$rowAlignment.'">';
 
             foreach ($this->getExtraButtons() as $button => $buttonText) {
                 if (isset($this->buttonLinks[$button])) {
-                    $lastRowInForm .= '<a class="' . $this->buttonClasses[$button]
-                        . '" href="' . url($this->buttonLinks[$button]) . '">' . $this->buttons[$button] . '</a>';
+                    $lastRowInForm .= '<a class="'.$this->buttonClasses[$button]
+                        .'" href="'.url($this->buttonLinks[$button]).'">'.$this->buttons[$button].'</a>';
                 }
 
                 if (isset($this->buttonActions[$button])) {
-                    $lastRowInForm .= '<button class="' . $this->buttonClasses[$button]
-                        . '" data-formsjs-onclick="' . $this->buttonActions[$button] . '">' . $this->buttons[$button] . '</button>';
+                    $lastRowInForm .= '<button class="'.$this->buttonClasses[$button]
+                        .'" data-formsjs-onclick="'.$this->buttonActions[$button].'">'.$this->buttons[$button].'</button>';
                 }
             }
 
             if (isset($this->buttons['cancel'])) {
-                $lastRowInForm .= '<a class="' . $this->buttonClasses['cancel']
-                    . '" href="' . url($this->buttonLinks['cancel']) . '">' . $this->buttons['cancel'] . '</a>';
+                $lastRowInForm .= '<a class="'.$this->buttonClasses['cancel']
+                    .'" href="'.url($this->buttonLinks['cancel']).'">'.$this->buttons['cancel'].'</a>';
             }
 
             $lastRowInForm .= $this->formSubmitHtml();
@@ -369,7 +367,7 @@ class HtmlForm extends Form
     /**
      * Set the form options
      *
-     * @param array $values
+     * @param  array  $values
      * @return self
      */
     public function setOptions($values)
@@ -418,8 +416,7 @@ class HtmlForm extends Form
     /**
      * Parse the fields to get proper config
      *
-     * @param array $formFields
-     *
+     * @param  array  $formFields
      * @return array
      */
     protected function parseFields($formFields)
@@ -467,11 +464,11 @@ class HtmlForm extends Form
 
         if ($this->columns === 'steps') {
             $html .= $this->field->button($this->buttons['previous'], [
-                'class' => $this->buttonClasses['previous'] . ' form-previous-btn',
+                'class' => $this->buttonClasses['previous'].' form-previous-btn',
                 'data-formsjs-onclick' => 'window.FormJS_previous_step(event)',
             ]);
             $html .= $this->field->button($this->buttons['next'], [
-                'class' => $this->buttonClasses['next'] . ' form-next-btn',
+                'class' => $this->buttonClasses['next'].' form-next-btn',
                 'data-formsjs-onclick' => 'window.FormJS_next_step(event)',
             ]);
         }
@@ -626,9 +623,8 @@ class HtmlForm extends Form
     /**
      * Set the confirmation message for delete forms
      *
-     * @param string $message
-     * @param string $method
-     *
+     * @param  string  $message
+     * @param  string  $method
      * @return self
      */
     public function confirm($message, $method = null)
@@ -654,7 +650,7 @@ class HtmlForm extends Form
     /**
      * Restrict a form to only the fields listed here.
      *
-     * @param array $fields
+     * @param  array  $fields
      * @return self
      */
     public function only($fields)

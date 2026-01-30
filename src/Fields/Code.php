@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Code extends Field
 {
     protected static function getType()
@@ -14,7 +12,7 @@ class Code extends Field
     protected static function getAttributes()
     {
         return [
-            'style' => 'height: 200px;'
+            'style' => 'height: 200px;',
         ];
     }
 
@@ -40,7 +38,7 @@ class Code extends Field
         return [
             '//cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js',
             '//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/xml/xml.min.js',
-            "//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/css/css.min.js",
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/css/css.min.js',
             "//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/$mode/$mode.min.js",
         ];
     }
@@ -60,7 +58,7 @@ class Code extends Field
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_codeField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

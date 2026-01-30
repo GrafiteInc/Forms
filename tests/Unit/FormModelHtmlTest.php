@@ -2,14 +2,14 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Fields\Email;
-use Grafite\Forms\Traits\HasForm;
+use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Forms\ModelForm;
+use Grafite\Forms\Traits\HasForm;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Foundation\Auth\User;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Database\Eloquent\Model;
+use Tests\TestCase;
 
 class CarForm extends ModelForm
 {
@@ -30,7 +30,7 @@ class CarForm extends ModelForm
                 'visible' => true,
                 'sortable' => true,
             ]),
-            Email::make('email')
+            Email::make('email'),
         ];
     }
 }
@@ -55,7 +55,7 @@ class UserFormWithHtml extends ModelForm
     public $confirmMessage = 'Are you sure you want to delete this?';
 
     public $buttons = [
-        'submit' => 'Save'
+        'submit' => 'Save',
     ];
 
     public $buttonClasses = [
@@ -64,6 +64,7 @@ class UserFormWithHtml extends ModelForm
     ];
 
     public $formClass = 'formy-informer';
+
     public $formDeleteClass = 'formy-deleter';
 
     public function fields()
@@ -73,14 +74,14 @@ class UserFormWithHtml extends ModelForm
                 'visible' => true,
                 'sortable' => true,
             ]),
-            Email::make('email')
+            Email::make('email'),
         ];
     }
 }
 
 class FormModelHtmlTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -117,14 +118,14 @@ class FormModelHtmlTest extends TestCase
         $this->form = app(UserFormWithHtml::class);
     }
 
-    public function testCarForm()
+    public function test_car_form()
     {
         $form = (new Car)->form()->create();
 
         $this->assertStringContainsString('<label class="control-label" for="Name">Name</label>', $form);
     }
 
-    public function testCarFormHasId()
+    public function test_car_form_has_id()
     {
         $form = (new Car)->form()->create();
 
@@ -132,34 +133,34 @@ class FormModelHtmlTest extends TestCase
         $this->assertNotNull($form->getFormId());
     }
 
-    public function testCarFormAsModal()
+    public function test_car_form_as_modal()
     {
         $form = (new Car)->form()->create()->asModal();
 
         $this->assertStringContainsString('<h5 class="modal-title">Car Thingy</h5>', $form);
-        $this->assertStringContainsString("btn btn-obtuse", $form);
-        $this->assertStringContainsString("Design a new Car!", $form);
-        $this->assertStringContainsString("data-toggle", $form);
-        $this->assertStringContainsString("data-target", $form);
-        $this->assertStringContainsString("data-bs-target", $form);
-        $this->assertStringContainsString("data-bs-toggle", $form);
+        $this->assertStringContainsString('btn btn-obtuse', $form);
+        $this->assertStringContainsString('Design a new Car!', $form);
+        $this->assertStringContainsString('data-toggle', $form);
+        $this->assertStringContainsString('data-target', $form);
+        $this->assertStringContainsString('data-bs-target', $form);
+        $this->assertStringContainsString('data-bs-toggle', $form);
     }
 
-    public function testCarFormAsModalWithCustomOptions()
+    public function test_car_form_as_modal_with_custom_options()
     {
         $form = (new Car)->form()->create()->asModal('make new button now', 'btn w-100', 'this model of car is the best', 'New Car Builder Tool');
 
         $this->assertStringContainsString('<h5 class="modal-title">New Car Builder Tool</h5>', $form);
-        $this->assertStringContainsString("btn w-100", $form);
-        $this->assertStringContainsString("this model of car is the best", $form);
-        $this->assertStringContainsString("make new button now", $form);
-        $this->assertStringContainsString("data-toggle", $form);
-        $this->assertStringContainsString("data-target", $form);
-        $this->assertStringContainsString("data-bs-target", $form);
-        $this->assertStringContainsString("data-bs-toggle", $form);
+        $this->assertStringContainsString('btn w-100', $form);
+        $this->assertStringContainsString('this model of car is the best', $form);
+        $this->assertStringContainsString('make new button now', $form);
+        $this->assertStringContainsString('data-toggle', $form);
+        $this->assertStringContainsString('data-target', $form);
+        $this->assertStringContainsString('data-bs-target', $form);
+        $this->assertStringContainsString('data-bs-toggle', $form);
     }
 
-    public function testIndex()
+    public function test_index()
     {
         $form = $this->form->index();
 
@@ -172,7 +173,7 @@ class FormModelHtmlTest extends TestCase
         $this->assertStringContainsString('http://localhost?page=2', $form);
     }
 
-    public function testIndexToJson()
+    public function test_index_to_json()
     {
         $form = $this->form->index()->toJson();
 
@@ -182,7 +183,7 @@ class FormModelHtmlTest extends TestCase
         $this->assertStringContainsString('page=2', $form);
     }
 
-    public function testIndexSearchForm()
+    public function test_index_search_form()
     {
         $form = $this->form->index()->search('users.search', 'Search Me', 'Search Waht?', 'get');
 

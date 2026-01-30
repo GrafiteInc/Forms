@@ -2,16 +2,20 @@
 
 namespace Grafite\Forms\Services;
 
-use Grafite\Forms\Services\FieldMaker;
-
 class HtmlConfigProcessor
 {
     public $name;
+
     public $options = [];
+
     public $type;
+
     public $content;
+
     public $attributes;
+
     public $level;
+
     public $instance;
 
     public function __construct($name, $options)
@@ -71,7 +75,7 @@ class HtmlConfigProcessor
     public function disabled()
     {
         $this->attributes = array_merge($this->attributes, [
-            'disabled' => true
+            'disabled' => true,
         ]);
 
         return $this;
@@ -80,7 +84,7 @@ class HtmlConfigProcessor
     public function cssClass($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'class' => $value
+            'class' => $value,
         ]);
 
         return $this;
@@ -96,7 +100,7 @@ class HtmlConfigProcessor
     public function href($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'href' => $value
+            'href' => $value,
         ]);
 
         return $this;
@@ -112,7 +116,7 @@ class HtmlConfigProcessor
     public function id($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'id' => $value
+            'id' => $value,
         ]);
 
         return $this;
@@ -121,7 +125,7 @@ class HtmlConfigProcessor
     public function style($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'style' => $value
+            'style' => $value,
         ]);
 
         return $this;
@@ -130,7 +134,7 @@ class HtmlConfigProcessor
     public function data($key, $value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'data-' . $key => $value
+            'data-'.$key => $value,
         ]);
 
         return $this;
@@ -139,7 +143,7 @@ class HtmlConfigProcessor
     public function hidden($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'hidden' => $value
+            'hidden' => $value,
         ]);
 
         return $this;
@@ -148,7 +152,7 @@ class HtmlConfigProcessor
     public function title($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'title' => $value
+            'title' => $value,
         ]);
 
         return $this;
@@ -157,7 +161,7 @@ class HtmlConfigProcessor
     public function onClick($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'data-formsjs-onclick' => $value
+            'data-formsjs-onclick' => $value,
         ]);
 
         return $this;

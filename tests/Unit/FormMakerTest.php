@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Grafite\Forms\Fields\Text;
 use Grafite\Forms\Fields\TextArea;
-use Illuminate\Database\Eloquent\Model;
 use Grafite\Forms\Services\FormMaker;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Tests\TestCase;
 
 class Entry extends Model
 {
@@ -26,7 +26,7 @@ class Entry extends Model
             ],
             'created_at' => \Carbon\Carbon::create(1999, 1, 1, 6, 15, 0),
             'updated_at' => \Carbon\Carbon::create(1999, 1, 1, 6, 15, 0),
-            'deleted_at' => null
+            'deleted_at' => null,
         ];
     }
 }
@@ -37,14 +37,14 @@ class FormMakerTest extends TestCase
 
     protected $formMaker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->formMaker = app(FormMaker::class);
     }
 
-    public function testSetConnection()
+    public function test_set_connection()
     {
         $test = $this->formMaker->setConnection('alternate');
 
@@ -52,7 +52,7 @@ class FormMakerTest extends TestCase
         $this->assertEquals('alternate', $test->connection);
     }
 
-    public function testFromTable()
+    public function test_from_table()
     {
         $test = $this->formMaker->setConnection('testbench')->fromTable('entries');
 
@@ -60,7 +60,7 @@ class FormMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea class="form-control" id="Details" name="details"></textarea></div>', $test);
     }
 
-    public function testFromFields()
+    public function test_from_fields()
     {
         $test = $this->formMaker->fromFields([
             Text::make('name'),
@@ -71,7 +71,7 @@ class FormMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea class="form-control" id="Details" rows="5" name="details"></textarea></div>', $test);
     }
 
-    public function testFromTableSimulated()
+    public function test_from_table_simulated()
     {
         $entry = app(Entry::class)->create([
             'name' => 'test entry',
@@ -86,7 +86,7 @@ class FormMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value="test entry"></div><div class="form-group"><label class="control-label" for="Details">Details</label><textarea class="form-control" id="Details" name="details">this entry is written in [markdown](http://markdown.com)</textarea></div>', $test);
     }
 
-    public function testFromObject()
+    public function test_from_object()
     {
         $testObject = [
             'attributes' => [

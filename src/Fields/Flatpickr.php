@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Flatpickr extends Field
 {
     protected static function getType()
@@ -39,7 +37,7 @@ class Flatpickr extends Field
 
     public static function styles($id, $options)
     {
-        return <<<CSS
+        return <<<'CSS'
 .flatpickr-current-month .flatpickr-monthDropdown-months {
     appearance: none !important;
     -webkit-appearance: none !important;
@@ -139,7 +137,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_FlatpickrField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

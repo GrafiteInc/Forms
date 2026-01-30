@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Number extends Field
 {
     protected static function getType()

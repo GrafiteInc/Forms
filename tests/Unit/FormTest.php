@@ -2,13 +2,13 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Grafite\Forms\Forms\Form;
 use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class FormTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -21,11 +21,11 @@ class FormTest extends TestCase
         $this->form = app(Form::class);
     }
 
-    public function testOpen()
+    public function test_open()
     {
         $form = $this->form->open([
             'url' => [
-                'somewhere/special'
+                'somewhere/special',
             ],
             'files' => true,
         ]);
@@ -35,28 +35,28 @@ class FormTest extends TestCase
         $this->assertStringContainsString('enctype="multipart/form-data"', $form);
     }
 
-    public function testClose()
+    public function test_close()
     {
         $form = $this->form->close();
 
         $this->assertStringContainsString('</form>', $form);
     }
 
-    public function testToken()
+    public function test_token()
     {
         $form = $this->form->token();
 
         $this->assertStringContainsString('name="_token"', $form);
     }
 
-    public function testConfirm()
+    public function test_confirm()
     {
         $form = $this->form->confirm('Are you sure?');
 
         $this->assertStringContainsString('Are you sure?', $form->confirmMessage);
     }
 
-    public function testAction()
+    public function test_action()
     {
         $form = $this->form->action('post', 'going.somewhere');
 
@@ -66,7 +66,7 @@ class FormTest extends TestCase
         $this->assertStringContainsString('btn btn-primary', (string) $form);
     }
 
-    public function testActionWithConfirm()
+    public function test_action_with_confirm()
     {
         $form = $this->form->confirm('Are you sure?')->action('post', 'going.somewhere');
 

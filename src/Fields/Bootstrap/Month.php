@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
-use Grafite\Forms\Fields\Bootstrap\Select;
-
 class Month extends Select
 {
     protected static function getType()

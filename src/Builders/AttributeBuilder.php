@@ -9,8 +9,7 @@ class AttributeBuilder
     /**
      * Build an HTML attribute string from an array.
      *
-     * @param array $attributes
-     *
+     * @param  array  $attributes
      * @return string
      */
     public function render($attributes, $name = null, $livewireEnabled = false, $livewireOnKeydown = false, $livewireOnChange = false)
@@ -52,9 +51,8 @@ class AttributeBuilder
     /**
      * Build a single attribute element.
      *
-     * @param string $key
-     * @param string $value
-     *
+     * @param  string  $key
+     * @param  string  $value
      * @return string
      */
     public function attributeElement($key, $value)
@@ -68,11 +66,11 @@ class AttributeBuilder
         }
 
         if (is_array($value) && $key === 'class') {
-            return 'class="' . implode(' ', $value) . '"';
+            return 'class="'.implode(' ', $value).'"';
         }
 
         if (! is_null($value)) {
-            return $key . '="' . e($value, false) . '"';
+            return $key.'="'.e($value, false).'"';
         }
     }
 

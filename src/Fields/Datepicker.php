@@ -3,7 +3,6 @@
 namespace Grafite\Forms\Fields;
 
 use Illuminate\Support\Str;
-use Grafite\Forms\Fields\Field;
 
 class Datepicker extends Field
 {
@@ -129,7 +128,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_DatepickerField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

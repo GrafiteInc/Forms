@@ -5,30 +5,55 @@ namespace Grafite\Forms\Services;
 class FieldConfigProcessor
 {
     public $id;
+
     public $name;
+
     public $factory;
+
     public $customOptions = [];
+
     public $options = [];
+
     public $type;
+
     public $legend;
+
     public $label;
+
     public $model;
+
     public $null_value;
+
     public $null_label;
+
     public $model_options;
+
     public $before;
+
     public $after;
+
     public $view;
+
     public $template;
+
     public $attributes;
+
     public $format;
+
     public $visible;
+
     public $sortable;
+
     public $wrapper;
+
     public $table_class;
+
     public $label_class;
+
     public $instance;
+
     public $fieldInstance;
+
     public $assets;
 
     public function __construct($name, $options, $fieldInstance)
@@ -312,7 +337,7 @@ JS;
     public function cssClass($value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'class' => $value
+            'class' => $value,
         ]);
 
         return $this;
@@ -521,7 +546,7 @@ JS;
     public function data($key, $value)
     {
         $this->attributes = array_merge($this->attributes, [
-            'data-' . $key => $value,
+            'data-'.$key => $value,
         ]);
 
         return $this;

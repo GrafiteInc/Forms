@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Grafite\Forms\Html\Link;
-use Grafite\Forms\Html\Button;
-use Grafite\Forms\Forms\BaseForm;
 use Grafite\Forms\Fields\Password;
+use Grafite\Forms\Forms\BaseForm;
+use Grafite\Forms\Html\Button;
+use Grafite\Forms\Html\Link;
 use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class UserSecurityForm extends BaseForm
 {
@@ -34,7 +34,7 @@ class UserSecurityForm extends BaseForm
 
 class FormBaseTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -47,7 +47,7 @@ class FormBaseTest extends TestCase
         $this->form = app(UserSecurityForm::class);
     }
 
-    public function testMake()
+    public function test_make()
     {
         $form = $this->form->make();
 
@@ -60,7 +60,7 @@ class FormBaseTest extends TestCase
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input class="form-control" id="Password" name="password" type="password" value=""></div>', $form);
     }
 
-    public function testMakeRenderedFields()
+    public function test_make_rendered_fields()
     {
         $form = $this->form->make()->renderedFields();
 

@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Fields\Email;
+use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Fields\Quill;
-use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Forms\ModelForm;
+use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class UserForm extends ModelForm
 {
@@ -19,7 +19,7 @@ class UserForm extends ModelForm
 
     public $buttons = [
         'submit' => 'Save',
-        'cancel' => 'Cancel'
+        'cancel' => 'Cancel',
     ];
 
     public $buttonClasses = [
@@ -28,20 +28,21 @@ class UserForm extends ModelForm
     ];
 
     public $formClass = 'formy-informer';
+
     public $formDeleteClass = 'formy-deleter';
 
     public function fields()
     {
         return [
             Name::make('name', [
-                'value' => $this->getSpecialName()
+                'value' => $this->getSpecialName(),
             ]),
             Email::make('email'),
             Quill::make('history', [
                 'toolbars' => [
                     'basic',
-                ]
-            ])->option('upload_route', 'users.store')
+                ],
+            ])->option('upload_route', 'users.store'),
         ];
     }
 
@@ -57,7 +58,7 @@ class UserForm extends ModelForm
 
 class FormModelTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -73,7 +74,7 @@ class FormModelTest extends TestCase
         $this->form = app(UserForm::class);
     }
 
-    public function testCreate()
+    public function test_create()
     {
         $form = $this->form->create();
 
@@ -90,9 +91,9 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
 
-    public function testUpdate()
+    public function test_update()
     {
-        $user = new User();
+        $user = new User;
 
         $form = $this->form->edit($user);
 
@@ -101,9 +102,9 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('class="submit-button', $form);
     }
 
-    public function testUpdateIsDisabled()
+    public function test_update_is_disabled()
     {
-        $user = new User();
+        $user = new User;
 
         $form = $this->form->disable()->edit($user);
 
@@ -113,9 +114,9 @@ class FormModelTest extends TestCase
         $this->assertStringNotContainsString('class="submit-button', $form);
     }
 
-    public function testUpdateIsDisabledWhen()
+    public function test_update_is_disabled_when()
     {
-        $user = new User();
+        $user = new User;
 
         $form = $this->form->disabledWhen(function () {
             return true;
@@ -127,9 +128,9 @@ class FormModelTest extends TestCase
         $this->assertStringNotContainsString('class="submit-button', $form);
     }
 
-    public function testDelete()
+    public function test_delete()
     {
-        $user = new User();
+        $user = new User;
 
         $form = $this->form->delete($user);
 
@@ -140,9 +141,9 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('class="deleter-button', $form);
     }
 
-    public function testRenderedFieldsForEdit()
+    public function test_rendered_fields_for_edit()
     {
-        $user = new User();
+        $user = new User;
 
         $form = $this->form->edit($user)->renderedFields();
 
@@ -152,7 +153,7 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Email">Email</label><input class="form-control" id="Email" name="email" type="email" value=""></div>', $form);
     }
 
-    public function testRenderedFieldsForCreateAsModal()
+    public function test_rendered_fields_for_create_as_modal()
     {
         $this->form = app(UserForm::class);
         $this->form->deleteAsModal = true;
@@ -171,7 +172,7 @@ class FormModelTest extends TestCase
         $this->assertStringContainsString('data-toggle="modal"', $form);
     }
 
-    public function testRenderedFieldsForCreate()
+    public function test_rendered_fields_for_create()
     {
         $form = $this->form->create()->renderedFields();
 

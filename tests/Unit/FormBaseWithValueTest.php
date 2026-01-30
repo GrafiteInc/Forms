@@ -1,19 +1,18 @@
 <?php
 
-
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Grafite\Forms\Fields\Email;
 use Grafite\Forms\Forms\BaseForm;
 use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class UserWithValueForm extends BaseForm
 {
     public $route = 'user.settings';
 
     public $buttons = [
-        'submit' => 'Save'
+        'submit' => 'Save',
     ];
 
     public function fields()
@@ -28,7 +27,7 @@ class UserWithValueForm extends BaseForm
 
 class FormBaseWithValueTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -41,7 +40,7 @@ class FormBaseWithValueTest extends TestCase
         $this->form = app(UserWithValueForm::class);
     }
 
-    public function testMake()
+    public function test_make()
     {
         $form = $this->form->make();
 

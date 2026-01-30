@@ -53,21 +53,20 @@ class WizardForm extends HtmlForm
     {
         parent::__construct();
 
-        $this->buttonClasses['submit'] = 'form-submit-btn ' . config('forms.buttons.submit', 'btn btn-primary');
+        $this->buttonClasses['submit'] = 'form-submit-btn '.config('forms.buttons.submit', 'btn btn-primary');
     }
 
     /**
      * Set the route
      *
-     * @param string $name
-     * @param mixed $parameters
-     *
+     * @param  string  $name
+     * @param  mixed  $parameters
      * @return \Grafite\Forms\Forms\BaseForm
      */
     public function setRoute($name, $parameters = [])
     {
         if (is_array($parameters)) {
-            $this->route = array_merge([ $name ], $parameters);
+            $this->route = array_merge([$name], $parameters);
         } else {
             $this->route = [
                 $name,
@@ -141,9 +140,9 @@ class WizardForm extends HtmlForm
         $html = '<div class="form-progress-bar">';
 
         foreach (array_keys($this->steps($this->fieldsForSteps)) as $key => $title) {
-            $htmlTitle = (is_numeric($title)) ? '' : 'title="' . $title . '"';
+            $htmlTitle = (is_numeric($title)) ? '' : 'title="'.$title.'"';
             $html .= '<div class="form-step">';
-            $html .= '<span ' . $htmlTitle . ' class="form-bullet" data-bullet="' . $key . '">' . ($key + 1) . '</span>';
+            $html .= '<span '.$htmlTitle.' class="form-bullet" data-bullet="'.$key.'">'.($key + 1).'</span>';
             $html .= '</div>';
         }
         $html .= '</div>';
@@ -153,7 +152,7 @@ class WizardForm extends HtmlForm
 
     public function scripts()
     {
-        return <<<JS
+        return <<<'JS'
 window.FormsJS_steps = function () {
     let _steps = document.querySelectorAll('.form_step');
 

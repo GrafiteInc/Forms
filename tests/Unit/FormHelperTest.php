@@ -1,13 +1,12 @@
 <?php
 
-
 namespace Tests\Unit;
 
 use Tests\TestCase;
 
 class FormHelperTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -16,7 +15,7 @@ class FormHelperTest extends TestCase
         ]);
     }
 
-    public function testSingleField()
+    public function test_single_field()
     {
         $field = form()->makeField(\Grafite\Forms\Fields\Text::class, 'name');
 

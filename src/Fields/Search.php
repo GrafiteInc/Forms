@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Search extends Field
 {
     protected static function getType()

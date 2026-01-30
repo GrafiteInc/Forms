@@ -35,15 +35,14 @@ class ModalForm extends HtmlForm
     /**
      * Set the route
      *
-     * @param string $name
-     * @param array $parameters
-     *
+     * @param  string  $name
+     * @param  array  $parameters
      * @return \Grafite\Forms\Forms\BaseForm
      */
     public function setRoute($name, $parameters = [])
     {
         if (is_array($parameters)) {
-            $this->route = array_merge([ $name ], $parameters);
+            $this->route = array_merge([$name], $parameters);
         } else {
             $this->route = [
                 $name,

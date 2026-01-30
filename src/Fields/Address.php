@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Address extends Field
 {
     protected static function getType()
@@ -37,7 +35,7 @@ class Address extends Field
 
     public static function styles($id, $options)
     {
-        return <<<CSS
+        return <<<'CSS'
             .geoapify-autocomplete-input {
                 border: none;
                 padding: 0;
@@ -61,7 +59,7 @@ CSS;
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div id="{id}_autocompleteAddress" class="position-relative form-control"></div>
@@ -87,7 +85,7 @@ HTML;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_addressGeoapifyField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');

@@ -42,7 +42,7 @@ class TomSelect extends Field
 
     public static function styles($id, $options)
     {
-        return <<<CSS
+        return <<<'CSS'
 :root {
     .ts-wrapper.form-control:not(.disabled) .ts-control, .ts-wrapper.form-control:not(.disabled).single.input-active .ts-control, .ts-wrapper.form-select:not(.disabled) .ts-control, .ts-wrapper.form-select:not(.disabled).single.input-active .ts-control {
         line-height: 1.5rem !important;
@@ -98,7 +98,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_bootstrapTomSelectField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');

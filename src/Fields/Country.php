@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\AutoSuggestSelect;
-
 class Country extends AutoSuggestSelect
 {
     protected static function getOptions()

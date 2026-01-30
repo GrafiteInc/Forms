@@ -2,8 +2,8 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
-use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
+use Illuminate\Support\Str;
 
 class Select extends Field
 {
@@ -48,7 +48,7 @@ class Select extends Field
     {
         $color = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'var(--bs-gray-400)' : 'rgba(0, 0, 0, .1)';
         $borderLight = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? "1px solid $color !important" : "1px solid $color !important";
-        $borderDark = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? "2px solid #444 !important" : "1px solid #444 !important";
+        $borderDark = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? '2px solid #444 !important' : '1px solid #444 !important';
 
         $themes['light'] = <<<CSS
     .bootstrap-select button.dropdown-toggle, button.dropdown-toggle:active {
@@ -155,7 +155,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_bootstrapSelect_addInpKeyPress = function (t, ev, id) {
             ev.stopPropagation();
 
@@ -182,7 +182,7 @@ CSS;
             let o = $('option', p).eq(-2);
                 o.before( $("<option>", {"text": txt, "value": txt}) );
 
-            $(`#\${id}`).selectpicker('destroy')
+            $(`#${id}`).selectpicker('destroy')
                 .selectpicker()
                 .selectpicker('val', txt)
                 .parent().css({
@@ -200,7 +200,7 @@ CSS;
                     formsWithInputWhiteList.span = ['data-formsjs-onclick'];
 
                 if (_config.with_add_item) {
-                    let content = `<input type="text" class="bss-input" onkeydown="event.stopPropagation();" onkeypress="_formsjs_bootstrapSelect_addInpKeyPress(this, event, '\${_id}')" onclick="event.stopPropagation()" placeholder="\${_config.add_item_placeholder}"> <span class="fas fa-plus addnewicon" onclick="_formsjs_bootstrapSelect_addSelectItem(this, event, '\${_id}');"></span>`;
+                    let content = `<input type="text" class="bss-input" onkeydown="event.stopPropagation();" onkeypress="_formsjs_bootstrapSelect_addInpKeyPress(this, event, '${_id}')" onclick="event.stopPropagation()" placeholder="${_config.add_item_placeholder}"> <span class="fas fa-plus addnewicon" onclick="_formsjs_bootstrapSelect_addSelectItem(this, event, '${_id}');"></span>`;
 
                     let divider = $('<option/>')
                         .addClass('divider')

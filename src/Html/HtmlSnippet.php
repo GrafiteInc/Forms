@@ -25,11 +25,11 @@ class HtmlSnippet
     public static function make($content = null, $name = null): HtmlConfigProcessor
     {
         if (is_null($name)) {
-            $name = 'html-snippet-' . Str::uuid();
+            $name = 'html-snippet-'.Str::uuid();
         }
 
         $options = [
-            'instance' => new static(),
+            'instance' => new static,
             'type' => 'html',
             'content' => $content,
         ];

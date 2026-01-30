@@ -7,7 +7,7 @@ trait HasLivewire
     /**
      * Set if the form is using livewire
      *
-     * @param bool $livewire
+     * @param  bool  $livewire
      */
     public function setLivewire($livewire)
     {
@@ -19,7 +19,7 @@ trait HasLivewire
     /**
      * Set if the form is using livewire on keydown
      *
-     * @param bool $onKeyDown
+     * @param  bool  $onKeyDown
      */
     public function setLivewireOnKeydown($onKeyDown)
     {
@@ -31,7 +31,7 @@ trait HasLivewire
     /**
      * Set if the form is using livewire on change
      *
-     * @param bool $onChange
+     * @param  bool  $onChange
      */
     public function setLivewireOnChange($onChange)
     {

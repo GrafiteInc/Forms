@@ -12,10 +12,10 @@ trait HasIndex
     public $items;
 
     /**
-    * The headers with sort for the model index
-    *
-    * @return string
-    */
+     * The headers with sort for the model index
+     *
+     * @return string
+     */
     public function indexHeaders()
     {
         $headers = '';
@@ -40,7 +40,7 @@ trait HasIndex
                     $order = 'desc';
                 }
 
-                $sortLink = request()->url() . '?' . http_build_query(array_merge(
+                $sortLink = request()->url().'?'.http_build_query(array_merge(
                     request()->all(),
                     [
                         'sort_by' => strtolower($header),
@@ -75,7 +75,7 @@ trait HasIndex
     /**
      * The index body for the model
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return string
      */
     public function indexBody($query = null)
@@ -149,7 +149,7 @@ trait HasIndex
     /**
      * The index method for the model
      *
-     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param  \Illuminate\Database\Eloquent\Builder  $query
      * @return string
      */
     public function index($query = null)

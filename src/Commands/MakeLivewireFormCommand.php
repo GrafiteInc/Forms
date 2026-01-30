@@ -19,12 +19,12 @@ class MakeLivewireFormCommand extends BaseCommand
     protected $description = 'Create a new livewire form';
 
     /**
-         * Get the stub file for the generator.
-         *
-         * @return string
-         */
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/livewire-form.stub';
+        return __DIR__.'/stubs/livewire-form.stub';
     }
 }

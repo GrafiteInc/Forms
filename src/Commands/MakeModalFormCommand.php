@@ -19,12 +19,12 @@ class MakeModalFormCommand extends BaseCommand
     protected $description = 'Create a new modal form';
 
     /**
-         * Get the stub file for the generator.
-         *
-         * @return string
-         */
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/modal-form.stub';
+        return __DIR__.'/stubs/modal-form.stub';
     }
 }

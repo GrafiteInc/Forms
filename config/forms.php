@@ -96,6 +96,6 @@ return [
         'horizontal-class' => 'form-horizontal',
         'label-column' => 'col-md-2 col-form-label pt-0',
         'input-column' => 'col-md-10',
-    ]
+    ],
 
 ];

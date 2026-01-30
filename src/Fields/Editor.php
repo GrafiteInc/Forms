@@ -21,7 +21,7 @@ class Editor extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
         <div class="{rowClass}">
             <label for="{id}" class="{labelClass}">{name}</label>
             <div class="{fieldClass}">
@@ -37,7 +37,7 @@ HTML;
     {
         $themes = [];
 
-        $themes['light'] = <<<CSS
+        $themes['light'] = <<<'CSS'
     .editor_js_container {
         border-radius: 4px;
         border: 1px solid #ced4da;
@@ -47,7 +47,7 @@ HTML;
     }
 CSS;
 
-        $themes['dark'] = <<<CSS
+        $themes['dark'] = <<<'CSS'
     .editor_js_container {
         border-radius: 4px;
         border: 2px solid #333;
@@ -142,7 +142,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_editorField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

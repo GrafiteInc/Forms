@@ -24,9 +24,9 @@ class FormSearch extends Component
     public function __construct(
         $index,
         $route,
-        $content = "",
-        $placeholder = "",
-        $method = "post"
+        $content = '',
+        $placeholder = '',
+        $method = 'post'
     ) {
         $this->index = $index;
         $this->route = $route;

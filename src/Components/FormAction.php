@@ -7,14 +7,23 @@ use Illuminate\View\Component;
 class FormAction extends Component
 {
     public $route;
+
     public $method;
+
     public $content;
+
     public $options;
+
     public $confirm;
+
     public $confirmMessage;
+
     public $confirmMethod;
+
     public $payload;
+
     public $disableOnSubmit;
+
     public $submitViaAjax;
 
     /**
@@ -24,13 +33,13 @@ class FormAction extends Component
      */
     public function __construct(
         $route,
-        $content = "",
+        $content = '',
         $payload = [],
-        $method = "post",
+        $method = 'post',
         $options = [],
         $confirm = false,
-        $confirmMessage = "Are you sure you want to complete this action?",
-        $confirmMethod = "confirm",
+        $confirmMessage = 'Are you sure you want to complete this action?',
+        $confirmMethod = 'confirm',
         $disableOnSubmit = false,
         $submitViaAjax = false
     ) {

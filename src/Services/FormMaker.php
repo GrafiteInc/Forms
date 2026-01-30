@@ -2,33 +2,46 @@
 
 namespace Grafite\Forms\Services;
 
-use Illuminate\Support\Str;
-use Illuminate\Support\Facades\DB;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Traits\HasLivewire;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Str;
 
 /**
  * FormMaker helper to make table and object form mapping easy.
  */
 class FormMaker
 {
-    use HasLivewire;
     use HasErrorBag;
+    use HasLivewire;
 
     protected $columns = 1;
+
     protected $maxColumns = 6;
+
     protected $sections = [];
+
     protected $steps = [];
+
     protected $orientation;
+
     protected $withJsValidation = false;
+
     protected $fieldMaker;
+
     protected $fieldAssets;
+
     public $formAssets;
+
     public $connection;
+
     public $errorBag;
+
     public $withLivewire = false;
+
     public $livewireOnKeydown = false;
+
     public $livewireOnChange = false;
 
     public function __construct()
@@ -45,7 +58,7 @@ class FormMaker
     /**
      * Set the form maker connection.
      *
-     * @param string $connection
+     * @param  string  $connection
      */
     public function setConnection($connection)
     {
@@ -57,7 +70,7 @@ class FormMaker
     /**
      * Set the columns of the form
      *
-     * @param int $columns
+     * @param  int  $columns
      */
     public function setColumns($columns)
     {
@@ -69,7 +82,7 @@ class FormMaker
     /**
      * Set the columns of the form
      *
-     * @param int $maxColumns
+     * @param  int  $maxColumns
      */
     public function setMaxColumns($maxColumns)
     {
@@ -81,7 +94,7 @@ class FormMaker
     /**
      * Set the sections of the form
      *
-     * @param array $sections
+     * @param  array  $sections
      */
     public function setSections($sections)
     {
@@ -93,7 +106,7 @@ class FormMaker
     /**
      * Set the steps of the form
      *
-     * @param array $steps
+     * @param  array  $steps
      */
     public function setSteps($steps)
     {
@@ -105,7 +118,7 @@ class FormMaker
     /**
      * Set the columns of the form
      *
-     * @param int $columns
+     * @param  int  $columns
      */
     public function setOrientation($orientation)
     {
@@ -117,7 +130,7 @@ class FormMaker
     /**
      * Set if the form uses js validation
      *
-     * @param bool $withJsValidation
+     * @param  bool  $withJsValidation
      */
     public function setJsValidation($withJsValidation)
     {
@@ -129,9 +142,8 @@ class FormMaker
     /**
      * Generate a form from a table.
      *
-     * @param string $table Table name
-     * @param array  $fields Field configs
-     *
+     * @param  string  $table  Table name
+     * @param  array  $fields  Field configs
      * @return string
      */
     public function fromTable($table, $fields = [])
@@ -167,9 +179,8 @@ class FormMaker
     /**
      * Generate a form from just the fields.
      *
-     * @param string $table Table name
-     * @param array  $fields Field configs
-     *
+     * @param  string  $table  Table name
+     * @param  array  $fields  Field configs
      * @return string
      */
     public function fromFields($fields = [])
@@ -200,9 +211,8 @@ class FormMaker
     /**
      * Build the form from an object.
      *
-     * @param object $object An object to base the form off
-     * @param array  $fields Field configs
-     *
+     * @param  object  $object  An object to base the form off
+     * @param  array  $fields  Field configs
      * @return string
      */
     public function fromObject($object, $fields = [])
@@ -242,8 +252,8 @@ class FormMaker
     /**
      * In cases where data is unknown
      *
-     * @param array $fields
-     * @param array|object $data
+     * @param  array  $fields
+     * @param  array|object  $data
      * @return string
      */
     public function fromFieldsOrObject($fields, $data)
@@ -258,8 +268,7 @@ class FormMaker
     /**
      * Cleanup the ID and TimeStamp columns.
      *
-     * @param array $columns
-     *
+     * @param  array  $columns
      * @return array
      */
     public function cleanupIdAndTimeStamps($columns)
@@ -272,9 +281,8 @@ class FormMaker
     /**
      * Build based on the columns wanted
      *
-     * @param array  $formBuild
-     * @param string $columns
-     *
+     * @param  array  $formBuild
+     * @param  string  $columns
      * @return string
      */
     private function buildUsingColumns($formBuild)
@@ -309,7 +317,7 @@ class FormMaker
     /**
      * Set the assets of the form for render
      *
-     * @param array $columnConfig
+     * @param  array  $columnConfig
      * @return void
      */
     public function setAssets($columnConfig)
@@ -325,7 +333,7 @@ class FormMaker
     /**
      * Set the form JavaScript
      *
-     * @param array $scripts
+     * @param  array  $scripts
      * @return self
      */
     public function setFormJs($scripts)
@@ -340,7 +348,7 @@ class FormMaker
     /**
      * Set the form styles
      *
-     * @param string $styles
+     * @param  string  $styles
      * @return self
      */
     public function setFormStyles($styles)
@@ -362,10 +370,10 @@ class FormMaker
         $ajaxMethod = config('forms.global-ajax-method', 'ajax');
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
 
-        $defaultJavaScript = file_get_contents(__DIR__ . '/../JavaScript/default.js');
+        $defaultJavaScript = file_get_contents(__DIR__.'/../JavaScript/default.js');
         $defaultJavaScript = Str::of($defaultJavaScript)->replace('_ajaxMethod', $ajaxMethod);
 
-        $validationJavaScript = file_get_contents(__DIR__ . '/../JavaScript/validation.js');
+        $validationJavaScript = file_get_contents(__DIR__.'/../JavaScript/validation.js');
         $formValidation = Str::of($validationJavaScript)->replace('_formValidationClass', $formValidationClass);
 
         if ($this->withJsValidation) {
@@ -378,8 +386,7 @@ class FormMaker
     /**
      * Get table columns as fields
      *
-     * @param string $table
-     *
+     * @param  string  $table
      * @return array
      */
     public function getTableAsFields($table)
@@ -402,9 +409,9 @@ class FormMaker
     /**
      * Build a section of fields
      *
-     * @param array $fields
-     * @param int|null $columns
-     * @param string $label
+     * @param  array  $fields
+     * @param  int|null  $columns
+     * @param  string  $label
      * @return string
      */
     private function buildSection($fields, $columns, $label = null)
@@ -434,22 +441,22 @@ class FormMaker
         $headerSpacing = config('forms.form.sections.header-spacing', 'mt-2 mb-2');
 
         if (! is_null($label)) {
-            $newFormBuild[] = '<div class="' . $rowClass . '">';
-            $newFormBuild[] = '<div class="' . $fullSizeColumn . '"><h4 class="' . $headerSpacing . '">' . $label . '</h4><hr></div>';
+            $newFormBuild[] = '<div class="'.$rowClass.'">';
+            $newFormBuild[] = '<div class="'.$fullSizeColumn.'"><h4 class="'.$headerSpacing.'">'.$label.'</h4><hr></div>';
             $newFormBuild[] = '</div>';
         }
 
         foreach ($formChunks as $chunk) {
-            $newFormBuild[] = '<div class="' . $rowClass . '">';
+            $newFormBuild[] = '<div class="'.$rowClass.'">';
 
             foreach ($chunk as $element) {
                 $class = '';
 
                 if (! Str::contains($element, 'type="hidden"')) {
-                    $class = $columnBase . (12 / $columns);
+                    $class = $columnBase.(12 / $columns);
                 }
 
-                $newFormBuild[] = '<div class="' . $class . '">';
+                $newFormBuild[] = '<div class="'.$class.'">';
                 $newFormBuild[] = $element;
                 $newFormBuild[] = '</div>';
             }
@@ -463,9 +470,9 @@ class FormMaker
     /**
      * Build a two column form using standard bootstrap classes
      *
-     * @param  array $formBuild
-     * @param  int $columns
-     * @param  bool $isStepped
+     * @param  array  $formBuild
+     * @param  int  $columns
+     * @param  bool  $isStepped
      * @return string
      */
     private function buildColumnForm($formBuild, $columns, $isStepped = false)
@@ -478,7 +485,7 @@ class FormMaker
 
         foreach ($this->steps as $step => $section) {
             if (count($this->steps) > 1) {
-                $formSections[] = '<div data-step="' . ($step + 1) . '" class="form_step">';
+                $formSections[] = '<div data-step="'.($step + 1).'" class="form_step">';
             }
 
             foreach ($section as $key => $fields) {
@@ -498,8 +505,7 @@ class FormMaker
     /**
      * Get Table Columns.
      *
-     * @param string $table Table name
-     *
+     * @param  string  $table  Table name
      * @return array
      */
     public function getTableColumns($table, $allColumns = false)
@@ -515,7 +521,7 @@ class FormMaker
 
         foreach ($tableColumns as $column) {
             if (! in_array($column, $badColumns)) {
-                $type = Schema::connection($this->connection)->getColumnType(DB::connection($this->connection)->getTablePrefix() . $table, $column);
+                $type = Schema::connection($this->connection)->getColumnType(DB::connection($this->connection)->getTablePrefix().$table, $column);
                 $tableTypeColumns[$column]['type'] = $type;
             }
         }
@@ -526,7 +532,7 @@ class FormMaker
     /**
      * A list of normalized types
      *
-     * @param string $type
+     * @param  string  $type
      * @return string
      */
     public function getNormalizedType($type)

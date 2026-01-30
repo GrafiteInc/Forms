@@ -35,7 +35,7 @@ class SimpleSelect extends Field
 
     public static function styles($id, $options)
     {
-        return <<<CSS
+        return <<<'CSS'
 .bs-select {
     position: relative;
     width: 100%;
@@ -150,7 +150,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_bootstrapCustomSelectField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');

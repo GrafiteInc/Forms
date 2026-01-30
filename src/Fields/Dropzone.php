@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Dropzone extends Field
 {
     protected static function getType()
@@ -14,7 +12,7 @@ class Dropzone extends Field
     protected static function getAttributes()
     {
         return [
-            'class' => 'dropzone'
+            'class' => 'dropzone',
         ];
     }
 
@@ -39,7 +37,7 @@ class Dropzone extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="dropzone-wrapper">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -55,7 +53,7 @@ HTML;
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
-            $darkTheme = <<<CSS
+            $darkTheme = <<<'CSS'
 @media (prefers-color-scheme: dark) {
     .dropzone {
         border-radius: 4px;
@@ -67,7 +65,7 @@ CSS;
         }
 
         if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
-            $darkTheme = <<<CSS
+            $darkTheme = <<<'CSS'
     .dropzone {
         border-radius: 4px;
         border: 1px solid #333;
@@ -114,7 +112,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_reload_page = function () {
             window.location.reload();
         }

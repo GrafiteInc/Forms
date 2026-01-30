@@ -3,7 +3,6 @@
 namespace Grafite\Forms\Fields;
 
 use Illuminate\Support\Str;
-use Grafite\Forms\Fields\Field;
 
 class FileWithPreview extends Field
 {
@@ -24,7 +23,7 @@ class FileWithPreview extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -46,7 +45,7 @@ HTML;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_fileWithPreviewField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

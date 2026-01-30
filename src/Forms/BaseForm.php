@@ -21,19 +21,18 @@ class BaseForm extends HtmlForm
     /**
      * Set the route
      *
-     * @param string $name
-     * @param mixed $parameters
-     *
+     * @param  string  $name
+     * @param  mixed  $parameters
      * @return \Grafite\Forms\Forms\BaseForm
      */
     public function setRoute($name, $parameters = [])
     {
         if (is_array($parameters)) {
-            $this->route = array_merge([ $name ], $parameters);
+            $this->route = array_merge([$name], $parameters);
         } else {
             $this->route = [
                 $name,
-                $parameters
+                $parameters,
             ];
         }
 
@@ -56,7 +55,7 @@ class BaseForm extends HtmlForm
             'method' => $this->method,
             'files' => $this->hasFiles,
             'class' => $this->formClass,
-            'id' => $this->formId
+            'id' => $this->formId,
         ];
 
         if ($this->withLivewire) {
@@ -72,7 +71,7 @@ class BaseForm extends HtmlForm
         }
 
         if ($this->submitViaAjax) {
-            $options['data-formsjs-submit'] = "ajax(event)";
+            $options['data-formsjs-submit'] = 'ajax(event)';
         }
 
         $this->html = $this->open($options);
@@ -98,7 +97,7 @@ class BaseForm extends HtmlForm
         $this->html .= $this->renderedFields;
 
         if ($this->isCardForm) {
-            $this->html .= "</div>";
+            $this->html .= '</div>';
         }
 
         $this->html .= $this->formButtonsAndClose();

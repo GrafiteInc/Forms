@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class GrapesJs extends Field
 {
     protected static function getType()
@@ -41,7 +39,7 @@ class GrapesJs extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -55,7 +53,7 @@ HTML;
 
     public static function styles($id, $options)
     {
-        return <<<CSS
+        return <<<'CSS'
             .gjs-select {
                 max-height: 25px;
             }
@@ -74,7 +72,7 @@ HTML;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
                 window._formsjs_grapesjsField = function (element) {
                     if (! element.getAttribute('data-formsjs-rendered')) {
                         let _id = element.getAttribute('id');
@@ -94,7 +92,7 @@ HTML;
                             storageManager: {
                                 type: 'local',
                                 options: {
-                                    local: { key: `gjsProject-\${_id}` }
+                                    local: { key: `gjsProject-${_id}` }
                                 }
                             },
                             plugins: [
@@ -126,7 +124,7 @@ HTML;
                         });
 
                         element.form.addEventListener('submit', function (event) {
-                            localStorage.removeItem(`gjsProject-\${_id}`);
+                            localStorage.removeItem(`gjsProject-${_id}`);
                         });
                     }
                 }

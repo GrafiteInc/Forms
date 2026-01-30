@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Table extends Field
 {
     protected static function getType()
@@ -26,7 +24,7 @@ class Table extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="form-group mb-3">
     <label for="{id}" class="{labelClass}">{name}</label>
     {field}
@@ -49,16 +47,16 @@ HTML;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_tableActionBinding = function (element) {
                 let _id = element.getAttribute('name');
 
-                document.querySelectorAll(`.\${_id}-add-item`).forEach(function (_item) {
+                document.querySelectorAll(`.${_id}-add-item`).forEach(function (_item) {
                     _item.removeEventListener('click', _formsjs_tableAddItem);
                     _item.addEventListener('click', _formsjs_tableAddItem);
                 });
 
-                document.querySelectorAll(`.\${_id}-remove-item`).forEach(function (_item) {
+                document.querySelectorAll(`.${_id}-remove-item`).forEach(function (_item) {
                     _item.removeEventListener('click', _formsjs_tableRemoveRow);
                     _item.addEventListener('click', _formsjs_tableRemoveRow);
                 });
@@ -69,8 +67,8 @@ HTML;
                 let _nextItem = _template.cloneNode(true);
                     _nextItem.setAttribute('data-item-number', _index);
                     _nextItem.querySelector('.input-group-text').innerHTML = (_index + 1);
-                    _nextItem.querySelectorAll(`.\${_id}-item-input`).forEach(function (_input, index) {
-                        _input.setAttribute('name', `\${_id}[\${_index}][]`);
+                    _nextItem.querySelectorAll(`.${_id}-item-input`).forEach(function (_input, index) {
+                        _input.setAttribute('name', `${_id}[${_index}][]`);
                         if (typeof item[index] != 'undefined') {
                             _input.value = item[index];
                         }
@@ -80,10 +78,10 @@ HTML;
                         }
                     });
 
-                    _nextItem.querySelectorAll(`.\${_id}-remove-item`).forEach(function (_input) {
+                    _nextItem.querySelectorAll(`.${_id}-remove-item`).forEach(function (_input) {
                         _input.setAttribute('data-item-number', _index);
                     });
-                    _nextItem.querySelectorAll(`.\${_id}-add-item`).forEach(function (_input) {
+                    _nextItem.querySelectorAll(`.${_id}-add-item`).forEach(function (_input) {
                         _input.setAttribute('data-item-number', _index);
                     });
 
@@ -100,7 +98,7 @@ HTML;
                 let _element = e.target.parentNode.closest('.form-group').querySelector('input[data-formsjs-onload]');
                 let _id = _element.getAttribute('name');
 
-                document.querySelector(`.\${_id}-item-row[data-item-number="\${_number}"]`).remove();
+                document.querySelector(`.${_id}-item-row[data-item-number="${_number}"]`).remove();
                 let _name = _element.getAttribute('id').toLowerCase() + '-item-row';
 
                 document.querySelectorAll('.' + _name).forEach(function (node, index) {
@@ -156,13 +154,13 @@ HTML;
                 let _id = element.getAttribute('name');
 
                 [0].forEach (function (_row) {
-                    _template += `<div class="input-group mb-2 \${_id}-item-row" data-item-number="\${_row}">`;
-                    _template += `<div class="input-group-text">\${_row}</div>`;
+                    _template += `<div class="input-group mb-2 ${_id}-item-row" data-item-number="${_row}">`;
+                    _template += `<div class="input-group-text">${_row}</div>`;
                     [...Array(_config.columns).keys()].forEach (function (_column) {
-                        _template += `<input name="\${_id}[\${_row}][]" type="text" class="form-control \${_id}-item-input">`;
+                        _template += `<input name="${_id}[${_row}][]" type="text" class="form-control ${_id}-item-input">`;
                     });
-                    _template += `<button class="btn btn-outline-warning \${_id}-remove-item" type="button" data-item-number="\${_row}"><span class="fa fa-minus"></span></button>`;
-                    _template += `<button class="btn btn-outline-primary \${_id}-add-item" type="button" data-item-number="\${_row}"><span class="fa fa-plus"></span></button>`;
+                    _template += `<button class="btn btn-outline-warning ${_id}-remove-item" type="button" data-item-number="${_row}"><span class="fa fa-minus"></span></button>`;
+                    _template += `<button class="btn btn-outline-primary ${_id}-add-item" type="button" data-item-number="${_row}"><span class="fa fa-plus"></span></button>`;
                     _template += `</div>`;
                 });
 

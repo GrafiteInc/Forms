@@ -25,8 +25,8 @@ class FormDelete extends Component
         $form,
         $item,
         $confirm = false,
-        $confirmMessage = "Are you sure you want to delete this item?",
-        $confirmMethod = "confirm"
+        $confirmMessage = 'Are you sure you want to delete this item?',
+        $confirmMethod = 'confirm'
     ) {
         $this->item = $item;
         $this->form = $form;

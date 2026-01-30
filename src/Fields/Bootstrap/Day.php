@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
-use Grafite\Forms\Fields\Bootstrap\TomSelect;
-
 class Day extends TomSelect
 {
     protected static function getType()

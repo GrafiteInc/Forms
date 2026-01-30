@@ -61,7 +61,7 @@ class Quill2 extends Field
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
-            $darkTheme = <<<CSS
+            $darkTheme = <<<'CSS'
     @media (prefers-color-scheme: dark) {
         .ql-container.ql-snow {
             border: 1px solid #111;
@@ -128,7 +128,7 @@ CSS;
         }
 
         if (isset($options['theme']) && is_string($options['theme']) && $options['theme'] === 'dark') {
-            $darkTheme = <<<CSS
+            $darkTheme = <<<'CSS'
     .ql-container.ql-snow {
         border: 1px solid #111;
     }
@@ -254,7 +254,7 @@ CSS;
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -318,7 +318,7 @@ HTML;
             ($toolbars->contains('colors')) ? [['color' => []], ['background' => []]] : [],
             ($toolbars->contains('image')) ? ['image'] : [],
             ($toolbars->contains('video')) ? ['video'] : [],
-            ['clean']
+            ['clean'],
         ];
 
         return json_encode([

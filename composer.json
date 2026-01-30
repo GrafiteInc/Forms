@@ -27,7 +27,8 @@
         "phpunit/phpunit": "^10.5",
         "mockery/mockery": "^1.0",
         "mikey179/vfsstream": "^1.6",
-        "orchestra/testbench": "^9.0|^10.0"
+        "orchestra/testbench": "^9.0|^10.0",
+        "laravel/pint": "^1.10"
     },
     "autoload": {
         "psr-4": {
@@ -57,10 +58,9 @@
         }
     },
     "scripts": {
-        "check-style": "phpcs -p --standard=PSR12 src --extensions=php",
-        "fix-style": "phpcbf -p --standard=PSR12 src --extensions=php",
+        "check-style": "vendor/bin/pint --test",
+        "fix-style": "vendor/bin/pint",
         "insights": "vendor/bin/phpinsights",
-        "analyse": "vendor/bin/phpstan analyse ./src --memory-limit=2G --error-format=table",
         "test": "XDEBUG_MODE=coverage ./vendor/bin/phpunit --coverage-clover clover.xml && php coverage-checker.php clover.xml 50"
     }
 }

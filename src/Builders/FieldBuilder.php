@@ -4,30 +4,32 @@ namespace Grafite\Forms\Builders;
 
 use DateTime;
 use Exception;
-use Illuminate\Support\Str;
-use Illuminate\Support\HtmlString;
 use Grafite\Forms\Traits\HasLivewire;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 
 class FieldBuilder
 {
     use HasLivewire;
 
     public $withLivewire = false;
+
     public $livewireOnKeydown = false;
+
     public $livewireOnChange = false;
+
     public $attributeBuilder;
 
     public function __construct()
     {
-        $this->attributeBuilder = new AttributeBuilder();
+        $this->attributeBuilder = new AttributeBuilder;
     }
 
     /**
      * Create a submit button element.
      *
-     * @param  string $value
+     * @param  string  $value
      * @param  array  $options
-     *
      * @return \Illuminate\Support\HtmlString
      */
     public function submit($value = null, $options = [])
@@ -38,9 +40,8 @@ class FieldBuilder
     /**
      * Make an html button
      *
-     * @param string $value
-     * @param array $options
-     *
+     * @param  string  $value
+     * @param  array  $options
      * @return \Illuminate\Support\HtmlString
      */
     public function button($value = null, $options = [])
@@ -49,17 +50,16 @@ class FieldBuilder
             $options['type'] = 'button';
         }
 
-        return '<button ' . $this->attributeBuilder->render($options, null, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange) . '>' . $value . '</button>';
+        return '<button '.$this->attributeBuilder->render($options, null, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange).'>'.$value.'</button>';
     }
 
     /**
      * Make an input string
      *
-     * @param string $type
-     * @param string $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $type
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeInput($type, $name, $value, $options = [])
@@ -80,17 +80,16 @@ class FieldBuilder
 
         $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        return '<input ' . $attributes . ' name="' . $name . '" type="' . $type . '" value="' . e($value) . '">';
+        return '<input '.$attributes.' name="'.$name.'" type="'.$type.'" value="'.e($value).'">';
     }
 
     /**
      * Make an field string
      *
-     * @param string $type
-     * @param string $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $type
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeField($type, $name, $value, $options = [])
@@ -102,16 +101,15 @@ class FieldBuilder
 
         $attributes = $this->attributeBuilder->render($options, $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        return '<' . $type . ' ' . $attributes . ' name="' . $name . '" value="' . e($value) . '"></' . $type . '>';
+        return '<'.$type.' '.$attributes.' name="'.$name.'" value="'.e($value).'"></'.$type.'>';
     }
 
     /**
      * Make text input.
      *
-     * @param array  $config
-     * @param string $population
-     * @param mixed $custom
-     *
+     * @param  array  $config
+     * @param  string  $population
+     * @param  mixed  $custom
      * @return string
      */
     public function makeCustomFile($name, $value, $options)
@@ -122,7 +120,7 @@ class FieldBuilder
             (isset($options['multiple']) && $options['multiple']) ||
             (isset($options['attributes']['multiple']) && $options['attributes']['multiple'])
         ) {
-            $name = $name . '[]';
+            $name = $name.'[]';
             $labelText = ($labelText === 'Choose file') ? 'Choose files' : $labelText;
         }
 
@@ -132,13 +130,13 @@ class FieldBuilder
         $customFileClass = config('forms.form.custom-file-input-class', 'custom-file-input');
         $customFileWrapperClass = config('forms.form.custom-file-wrapper-class', 'custom-file');
 
-        $label = '<label class="' . $fileLabel . '" for="' . $options['attributes']['id'] . '">' . $labelText . '</label>';
-        $options['attributes']['class'] = $options['attributes']['class'] . ' ' . $customFileClass;
+        $label = '<label class="'.$fileLabel.'" for="'.$options['attributes']['id'].'">'.$labelText.'</label>';
+        $options['attributes']['class'] = $options['attributes']['class'].' '.$customFileClass;
 
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        $input = '<div class="' . $customFileWrapperClass . '">';
-        $input .= '<input ' . $attributes . ' type="file" name="' . $name . '">';
+        $input = '<div class="'.$customFileWrapperClass.'">';
+        $input .= '<input '.$attributes.' type="file" name="'.$name.'">';
 
         if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
             $input .= $label;
@@ -152,26 +150,24 @@ class FieldBuilder
     /**
      * Make a textarea.
      *
-     * @param string  $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeTextarea($name, $value, $options)
     {
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        return '<textarea ' . $attributes . ' name="' . $name . '">' . e($value) . '</textarea>';
+        return '<textarea '.$attributes.' name="'.$name.'">'.e($value).'</textarea>';
     }
 
     /**
      * Make a inline checkbox.
      *
-     * @param string  $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeCheckboxInline($name, $value, $options)
@@ -184,10 +180,9 @@ class FieldBuilder
     /**
      * Make a inline radio.
      *
-     * @param string $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeRadioInline($name, $value, $options)
@@ -200,10 +195,9 @@ class FieldBuilder
     /**
      * Make a select.
      *
-     * @param string $name
-     * @param mixed $selected
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $selected
+     * @param  array  $options
      * @return string
      */
     public function makeSelect($name, $selected, $options)
@@ -254,8 +248,8 @@ class FieldBuilder
             }
 
             foreach ($options['options'] as $group => $groupOptions) {
-                $label = !empty($group) ? $group : 'Undefined';
-                $selectOptions .= '<optgroup label="' . $label . '">';
+                $label = ! empty($group) ? $group : 'Undefined';
+                $selectOptions .= '<optgroup label="'.$label.'">';
                 foreach ($groupOptions as $key => $value) {
                     if (is_array($value)) {
                         $key = $value[$options['customOptions']['group_option_key']];
@@ -263,7 +257,7 @@ class FieldBuilder
                     }
 
                     $selectedValue = $this->getOptionSelectedValue($selected, $value, $groupOptions);
-                    $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
+                    $selectOptions .= '<option value="'.$value.'"'.$selectedValue.'>'.$key.'</option>';
                 }
 
                 $selectOptions .= '</optgroup>';
@@ -271,22 +265,21 @@ class FieldBuilder
         } else {
             foreach ($options['options'] as $key => $value) {
                 $selectedValue = $this->getOptionSelectedValue($selected, $value, $options);
-                $selectOptions .= '<option value="' . $value . '"' . $selectedValue . '>' . $key . '</option>';
+                $selectOptions .= '<option value="'.$value.'"'.$selectedValue.'>'.$key.'</option>';
             }
         }
 
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        return '<select ' . $attributes . ' name="' . $name . '">' . $selectOptions . '</select>';
+        return '<select '.$attributes.' name="'.$name.'">'.$selectOptions.'</select>';
     }
 
     /**
      * Make a datalist.
      *
-     * @param string $name
-     * @param mixed $selected
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $selected
+     * @param  array  $options
      * @return string
      */
     public function makeDatalist($name, $selected, $options)
@@ -294,21 +287,20 @@ class FieldBuilder
         $selectOptions = '';
 
         foreach ($options['options'] as $value) {
-            $selectOptions .= '<option value="' . $value . '">';
+            $selectOptions .= '<option value="'.$value.'">';
         }
 
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        return '<input type="search" ' . $attributes . ' name="' . $name . '" list="' . $options['attributes']['id'] . '-list"><datalist id="' . $options['attributes']['id'] . '-list">' . $selectOptions . '</datalist>';
+        return '<input type="search" '.$attributes.' name="'.$name.'" list="'.$options['attributes']['id'].'-list"><datalist id="'.$options['attributes']['id'].'-list">'.$selectOptions.'</datalist>';
     }
 
     /**
      * Make a checkbox.
      *
-     * @param string $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeCheckInput($name, $value, $options)
@@ -316,7 +308,7 @@ class FieldBuilder
         $customClasses = $options['attributes']['class'] ?? '';
         $customLabelClasses = $options['label_class'] ?? '';
 
-        $options['attributes']['class'] = Str::of(config('forms.form.check-input-class', 'form-check-input') . ' ' . $customClasses)->trim();
+        $options['attributes']['class'] = Str::of(config('forms.form.check-input-class', 'form-check-input').' '.$customClasses)->trim();
 
         if (Str::contains($options['type'], '-inline')) {
             $options['check-inline'] = true;
@@ -339,7 +331,7 @@ class FieldBuilder
         }
 
         if ($options['type'] === 'switch') {
-            $formClass = $formClass . ' ' . config('forms.form.check-switch-class', 'custom-switch');
+            $formClass = $formClass.' '.config('forms.form.check-switch-class', 'custom-switch');
         }
 
         $fieldWrapper = "<div class=\"{$formClass}\">";
@@ -356,7 +348,7 @@ class FieldBuilder
             $label = $this->getNestedFieldLabel($label)[0];
         }
 
-        $labelClass = Str::of(config('forms.form.label-check-class', 'form-check-label') . ' ' . $customLabelClasses)->trim();
+        $labelClass = Str::of(config('forms.form.label-check-class', 'form-check-label').' '.$customLabelClasses)->trim();
 
         if (! Str::of(config('forms.bootstrap-version'))->startsWith('5') && $options['type'] === 'switch') {
             $labelClass = 'custom-control-label';
@@ -364,16 +356,15 @@ class FieldBuilder
 
         $fieldLabel = "<label class=\"{$labelClass}\" for=\"{$options['attributes']['id']}\">{$label}</label>";
 
-        return $fieldWrapper . $field . $fieldLabel . '</div>';
+        return $fieldWrapper.$field.$fieldLabel.'</div>';
     }
 
     /**
      * Make a checkbox.
      *
-     * @param string $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeCheckbox($name, $value, $options)
@@ -381,16 +372,15 @@ class FieldBuilder
         $checked = $this->isChecked($name, $value, $options);
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        return '<input ' . $attributes . ' type="checkbox" name="' . $name . '"' . $checked . '>';
+        return '<input '.$attributes.' type="checkbox" name="'.$name.'"'.$checked.'>';
     }
 
     /**
      * Make a radio.
      *
-     * @param string $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeRadio($name, $value, $options)
@@ -398,16 +388,15 @@ class FieldBuilder
         $checked = $this->isChecked($name, $value, $options);
         $attributes = $this->attributeBuilder->render($options['attributes'], $name, $this->withLivewire, $this->livewireOnKeydown, $this->livewireOnChange);
 
-        return '<input ' . $attributes . ' type="radio" name="' . $name . '"' . $checked . '>';
+        return '<input '.$attributes.' type="radio" name="'.$name.'"'.$checked.'>';
     }
 
     /**
      * Make a relationship input.
      *
-     * @param string $name
-     * @param mixed $value
-     * @param array $options
-     *
+     * @param  string  $name
+     * @param  mixed  $value
+     * @param  array  $options
      * @return string
      */
     public function makeRelationship($name, $value, $options)
@@ -461,10 +450,9 @@ class FieldBuilder
     /**
      * Check if a field is checked
      *
-     * @param mixed $value
-     * @param array $options
-     *
-     * @return boolean
+     * @param  mixed  $value
+     * @param  array  $options
+     * @return bool
      */
     public function isChecked($name, $value, $options)
     {
@@ -530,7 +518,6 @@ class FieldBuilder
     /**
      * Transform the string to an Html serializable object
      *
-     * @param $html
      *
      * @return \Illuminate\Support\HtmlString
      */

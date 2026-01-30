@@ -2,32 +2,33 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Grafite\Forms\Builders\AttributeBuilder;
+use Tests\TestCase;
 
 class AttributeBuilderTest extends TestCase
 {
     protected $app;
+
     protected $builder;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
         $this->builder = app(AttributeBuilder::class);
     }
 
-    public function testAttributes()
+    public function test_attributes()
     {
         $test = $this->builder->render([
-            'placeholder' => 'thing'
+            'placeholder' => 'thing',
         ]);
 
         $this->assertTrue(is_string($test));
         $this->assertEquals('placeholder="thing"', $test);
     }
 
-    public function testAttributeElement()
+    public function test_attribute_element()
     {
         $test = $this->builder->attributeElement('placeholder', 'thing');
 

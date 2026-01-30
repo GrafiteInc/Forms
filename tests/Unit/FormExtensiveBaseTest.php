@@ -2,23 +2,24 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
+use Grafite\Forms\Fields\Checkbox;
 use Grafite\Forms\Fields\Text;
 use Grafite\Forms\Forms\BaseForm;
 use Illuminate\Support\Facades\Route;
-use Grafite\Forms\Fields\Checkbox;
+use Tests\TestCase;
 
 class UserSampleForm extends BaseForm
 {
     public $formId = 'superman';
+
     public $route = 'user.sample';
 
     public $buttons = [
-        'submit' => 'Save <span class="fas fa-save"></span>'
+        'submit' => 'Save <span class="fas fa-save"></span>',
     ];
 
     public $buttonClasses = [
-        'submit' => 'superman'
+        'submit' => 'superman',
     ];
 
     public $formClass = 'batman';
@@ -34,10 +35,11 @@ class UserSampleForm extends BaseForm
 class UserSampleCreateForm extends BaseForm
 {
     public $formId = 'batman';
+
     public $route = 'user.sample';
 
     public $buttons = [
-        'submit' => 'Save'
+        'submit' => 'Save',
     ];
 
     public $buttonClasses = [
@@ -58,15 +60,15 @@ class UserSampleCreateForm extends BaseForm
         return [
             Text::make('name'),
             Checkbox::make('is_cool', [
-                'class' => 'batman-style'
-            ])
+                'class' => 'batman-style',
+            ]),
         ];
     }
 }
 
 class FormExtensiveBaseTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -79,7 +81,7 @@ class FormExtensiveBaseTest extends TestCase
         $this->form = app(UserSampleForm::class);
     }
 
-    public function testMake()
+    public function test_make()
     {
         $form = $this->form->make();
 
@@ -92,7 +94,7 @@ class FormExtensiveBaseTest extends TestCase
         $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><button class="superman" type="submit">Save <span class="fas fa-save"></span></button></div></div></form>', $form);
     }
 
-    public function testMakeWithExtras()
+    public function test_make_with_extras()
     {
         $this->form->isCardForm = true;
         $this->form->disableOnSubmit = true;
@@ -111,7 +113,7 @@ class FormExtensiveBaseTest extends TestCase
         $this->assertStringContainsString('<div class="col-md-12 d-flex justify-content-end"><button class="superman" type="submit" data-formsjs-onclick="return window.FormsJS_validate_submission(this.form, &lt;i class=&quot;spinner-border spinner-border-sm&quot;&gt;&lt;/i&gt;);">Save <span class="fas fa-save"></span></button>', $form);
     }
 
-    public function testMakeWithClassChanges()
+    public function test_make_with_class_changes()
     {
         $form = app(UserSampleCreateForm::class)->make();
 

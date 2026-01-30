@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Html;
 
-use Illuminate\Support\HtmlString;
-use Grafite\Forms\Html\HtmlSnippet;
 use Grafite\Forms\Builders\AttributeBuilder;
 
 class Heading extends HtmlSnippet

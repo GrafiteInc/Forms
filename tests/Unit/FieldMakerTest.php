@@ -2,19 +2,19 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Grafite\Forms\Fields\Text;
-use Grafite\Forms\Fields\Range;
-use Grafite\Forms\Fields\Table;
+use Grafite\Forms\Fields\Checkbox;
+use Grafite\Forms\Fields\HasMany;
 use Grafite\Forms\Fields\HasOne;
 use Grafite\Forms\Fields\Number;
+use Grafite\Forms\Fields\Range;
 use Grafite\Forms\Fields\Rating;
 use Grafite\Forms\Fields\Select;
-use Grafite\Forms\Fields\HasMany;
-use Grafite\Forms\Fields\Checkbox;
+use Grafite\Forms\Fields\Table;
+use Grafite\Forms\Fields\Text;
 use Grafite\Forms\Fields\TextArea;
 use Grafite\Forms\Services\FieldMaker;
 use Illuminate\Database\Eloquent\Model;
+use Tests\TestCase;
 
 class User extends Model
 {
@@ -78,9 +78,10 @@ class Job extends Model
 class FieldMakerTest extends TestCase
 {
     protected $app;
+
     protected $fieldMaker;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -88,7 +89,7 @@ class FieldMakerTest extends TestCase
         $this->fieldMaker = app(FieldMaker::class);
     }
 
-    public function testMakeText()
+    public function test_make_text()
     {
         $config = Text::make('name')->toArray();
         $field = $this->fieldMaker->make('name', $config);
@@ -96,7 +97,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value=""></div>', $field);
     }
 
-    public function testMakeTextWithObject()
+    public function test_make_text_with_object()
     {
         $config = Text::make('name')->toArray();
         $field = $this->fieldMaker->make('name', $config, $this->user);
@@ -104,7 +105,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Name">Name</label><input class="form-control" id="Name" name="name" type="text" value="joe"></div>', $field);
     }
 
-    public function testCreateCheckboxArray()
+    public function test_create_checkbox_array()
     {
         $object = (object) ['gender[male]' => 'on'];
 
@@ -115,7 +116,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><div class="form-check"><input class="form-check-input" id="Gender[male]" type="checkbox" name="gender[male]" checked><label class="form-check-label" for="Gender[male]">Male</label></div></div>', $field);
     }
 
-    public function testCreateMultipleSelect()
+    public function test_create_multiple_select()
     {
         $object = (object) ['countries' => json_encode(['Canada', 'America'])];
         $config = Select::make('countries', [
@@ -133,7 +134,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Countries">Countries</label><select class="form-select" id="Countries" multiple name="countries[]"><option value="Canada">Canada</option><option value="America">America</option><option value="UK">UK</option><option value="Ireland">Ireland</option></select></div>', $field);
     }
 
-    public function testCreateMultipleNestedString()
+    public function test_create_multiple_nested_string()
     {
         $entry = app(Entry::class)->create([
             'name' => 'test entry',
@@ -151,7 +152,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="MetaId">Meta Id</label><input class="form-control" id="MetaId" name="meta[user[id]]" type="number" value="1"></div>', $field);
     }
 
-    public function testCreateSingleNestedString()
+    public function test_create_single_nested_string()
     {
         $entry = app(Entry::class)->create([
             'name' => 'test entry',
@@ -166,7 +167,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Meta[created_at]">Created At</label><input class="form-control" id="Meta[created_at]" name="meta[created_at]" type="text" value="1999-01-01"></div>', $field);
     }
 
-    public function testCreateSpecialString()
+    public function test_create_special_string()
     {
         $entry = app(Entry::class)->create([
             'name' => 'test entry',
@@ -181,7 +182,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Details">Details</label><textarea class="form-control" id="Details" rows="5" name="details">this entry is written in [markdown](http://markdown.com)</textarea></div>', $field);
     }
 
-    public function testCreateRelationshipWithoutObject()
+    public function test_create_relationship_without_object()
     {
         $user = app(User::class)->create([
             'name' => 'Joe',
@@ -212,7 +213,7 @@ class FieldMakerTest extends TestCase
             'model_options' => [
                 'label' => 'name',
                 'value' => 'id',
-            ]
+            ],
         ])->toArray();
 
         $field = $this->fieldMaker->make('jobs', $config);
@@ -221,7 +222,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" multiple name="jobs[]"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
     }
 
-    public function testCreateRelationshipWithoutObjectWithForcedOptions()
+    public function test_create_relationship_without_object_with_forced_options()
     {
         $user = app(User::class)->create([
             'name' => 'Joe',
@@ -258,7 +259,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" multiple name="jobs[]"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
     }
 
-    public function testCreateRelationshipHasOne()
+    public function test_create_relationship_has_one()
     {
         $user = app(User::class)->create([
             'name' => 'Joe',
@@ -289,7 +290,7 @@ class FieldMakerTest extends TestCase
             'model_options' => [
                 'label' => 'name',
                 'value' => 'id',
-            ]
+            ],
         ])->toArray();
 
         $field = $this->fieldMaker->make('jobs', $config, $user);
@@ -298,7 +299,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" name="jobs"><option value="1">Worker</option><option value="2">BlackSmith</option><option value="3">Police</option><option value="4">Brogrammer</option></select></div>', $field);
     }
 
-    public function testCreateRelationshipCustom()
+    public function test_create_relationship_custom()
     {
         $user = app(User::class)->create([
             'name' => 'Joe',
@@ -329,7 +330,7 @@ class FieldMakerTest extends TestCase
             'model_options' => [
                 'method' => 'custom',
                 'params' => [
-                    'Bro'
+                    'Bro',
                 ],
                 'label' => 'name',
                 'value' => 'id',
@@ -342,7 +343,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Jobs">Jobs</label><select class="form-select" id="Jobs" name="jobs"><option value="4">Brogrammer</option></select></div>', $field);
     }
 
-    public function testCreateRelationshipCustomMultiple()
+    public function test_create_relationship_custom_multiple()
     {
         $user = app(User::class)->create([
             'name' => 'Joe',
@@ -380,7 +381,7 @@ class FieldMakerTest extends TestCase
         $this->assertEquals('<div class="form-group"><label class="control-label" for="Ideas">Ideas</label><select class="form-select" id="Ideas" multiple name="ideas[]"><option value="1" selected>Thing</option><option value="2" selected>Foo</option><option value="3">Bar</option><option value="4">Drink</option></select></div>', $field);
     }
 
-    public function testMakeTableWithObject()
+    public function test_make_table_with_object()
     {
         $config = Table::make('attributes')->toArray();
         $field = $this->fieldMaker->make('attributes', $config, $this->user);
@@ -394,7 +395,7 @@ class FieldMakerTest extends TestCase
         $this->assertStringContainsString('data-formsjs-onload-data="{&quot;columns&quot;:2}"', $field);
     }
 
-    public function testMakeRating()
+    public function test_make_rating()
     {
         $config = Rating::make('skills')->toArray();
         $field = $this->fieldMaker->make('skills', $config);
@@ -403,7 +404,7 @@ class FieldMakerTest extends TestCase
         $this->assertStringContainsString('data-formsjs-onload-data="fontawesome-stars-o"', $field);
     }
 
-    public function testMakeRange()
+    public function test_make_range()
     {
         $config = Range::make('skills')->toArray();
         $field = $this->fieldMaker->make('skills', $config);

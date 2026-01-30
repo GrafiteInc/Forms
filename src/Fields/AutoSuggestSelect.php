@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class AutoSuggestSelect extends Field
 {
     /**
@@ -18,7 +16,7 @@ class AutoSuggestSelect extends Field
 
     public static function onLoadJs($id, $options)
     {
-        return "_formsjs_autosuggestSelectField";
+        return '_formsjs_autosuggestSelectField';
     }
 
     public static function onLoadJsData($id, $options)
@@ -34,7 +32,7 @@ class AutoSuggestSelect extends Field
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_autosuggestSelectField = function (inp) {
                 if (! inp.getAttribute('data-formsjs-rendered')) {
                     let arr = JSON.parse(inp.getAttribute('data-formsjs-onload-data'));
@@ -206,13 +204,13 @@ JS;
     /**
      * Field related styles
      *
-     * @param string $id
-     * @param array $options
+     * @param  string  $id
+     * @param  array  $options
      * @return string|null
      */
     public static function styles($id, $options)
     {
-        return <<<CSS
+        return <<<'CSS'
 .form-autocomplete {
     position: relative;
     display: inline-block;

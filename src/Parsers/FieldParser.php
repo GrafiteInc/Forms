@@ -7,7 +7,7 @@ interface FieldParser
     /**
      * Parse the content and hand back the parser.
      *
-     * @param mixed $content
+     * @param  mixed  $content
      * @return self
      */
     public function parse($content);
@@ -15,7 +15,7 @@ interface FieldParser
     /**
      * Handle the parsing of the content
      *
-     * @param mixed $content
+     * @param  mixed  $content
      * @return self|void
      */
     public function handler($content);

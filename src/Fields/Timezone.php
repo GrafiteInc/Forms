@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\AutoSuggest;
-
 class Timezone extends AutoSuggest
 {
     protected static function getOptions()

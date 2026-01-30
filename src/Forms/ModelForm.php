@@ -3,8 +3,8 @@
 namespace Grafite\Forms\Forms;
 
 use Exception;
-use Illuminate\Support\Str;
 use Grafite\Forms\Forms\Concerns\HasIndex;
+use Illuminate\Support\Str;
 
 class ModelForm extends HtmlForm
 {
@@ -76,7 +76,7 @@ class ModelForm extends HtmlForm
     /**
      * Should the delete form act as a modal?
      *
-     * @var boolean
+     * @var bool
      */
     public $deleteAsModal = false;
 
@@ -308,7 +308,7 @@ class ModelForm extends HtmlForm
     public function delete($model = null)
     {
         if (! is_null($model)) {
-            $this->formId = 'Form_' . Str::random(10);
+            $this->formId = 'Form_'.Str::random(10);
             $this->routeParameterValues = [];
             $this->setInstance($model);
         }
@@ -321,7 +321,7 @@ class ModelForm extends HtmlForm
         }
 
         $buttonAlignClass = (Str::of(config('forms.bootstrap-version'))->startsWith('5')) ? 'float-end' : 'float-right';
-        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass . ' ' . $buttonAlignClass : $this->formDeleteClass;
+        $formDeleteClass = ($this->deleteAsModal) ? $this->formDeleteClass.' '.$buttonAlignClass : $this->formDeleteClass;
         $id = $this->instance->id;
         $instanceClass = Str::of(get_class($this->instance))->explode('\\')->last();
 
@@ -330,7 +330,7 @@ class ModelForm extends HtmlForm
             'method' => $this->methods['delete'],
             'class' => $formDeleteClass,
             'id' => $this->formId,
-            'wire:submit.prevent' => ($this->withLivewire) ? "delete($id, '$instanceClass')" : null
+            'wire:submit.prevent' => ($this->withLivewire) ? "delete($id, '$instanceClass')" : null,
         ];
 
         $this->html = $this->model($this->instance, $config);
@@ -371,7 +371,7 @@ class ModelForm extends HtmlForm
 
         if ($this->submitViaAjax) {
             $ajaxMethod = config('forms.global-ajax-method', 'ajax');
-            $submitMethod = ($this->submitViaAjax) ? $options['data-formsjs-onclick'] ?? false : $ajaxMethod . '(event)';
+            $submitMethod = ($this->submitViaAjax) ? $options['data-formsjs-onclick'] ?? false : $ajaxMethod.'(event)';
         }
 
         $this->html .= $this->field->button($deleteButton, array_merge($options, [
@@ -417,8 +417,8 @@ class ModelForm extends HtmlForm
     /**
      *  A basic search form for the Model
      *
-     * @param string $route
-     * @param string $placeholder
+     * @param  string  $route
+     * @param  string  $placeholder
      * @return string
      */
     public function search($route, $placeholder = 'Search', $submitValue = 'Search', $method = 'post')
@@ -429,14 +429,14 @@ class ModelForm extends HtmlForm
             'class' => config('forms.form.search-class', 'form-inline'),
         ]);
 
-        $form .= '<div class="' . config('forms.form.before-after-input-wrapper', 'input-group') . '">';
+        $form .= '<div class="'.config('forms.form.before-after-input-wrapper', 'input-group').'">';
         $form .= $this->field->makeInput('text', 'search', request('search'), [
             'placeholder' => $placeholder,
             'class' => config('forms.form.input-class', 'form-control'),
         ]);
 
         if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
-            $form .= '<div class="' . config('forms.form.input-group-after', 'input-group-append') . '">';
+            $form .= '<div class="'.config('forms.form.input-group-after', 'input-group-append').'">';
         }
 
         $form .= $this->field->button($submitValue, [
@@ -468,7 +468,7 @@ class ModelForm extends HtmlForm
     /**
      * Parse the fields for visible ones
      *
-     * @param array $fields
+     * @param  array  $fields
      * @return array
      */
     public function parseVisibleFields($fields)
@@ -491,7 +491,7 @@ class ModelForm extends HtmlForm
     /**
      * Set the model instance for a Form
      *
-     * @param \Illuminate\Database\Eloquent\Model $model
+     * @param  \Illuminate\Database\Eloquent\Model  $model
      * @return self
      */
     public function setInstance($model)
@@ -550,11 +550,11 @@ class ModelForm extends HtmlForm
         $onclick = false;
 
         if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
-            $onclick = "FormsJS_confirm(event)";
+            $onclick = 'FormsJS_confirm(event)';
         }
 
         if (! empty($this->confirmMessage) && is_null($this->confirmMethod) && $this->submitViaAjax) {
-            $onclick = "FormsJS_confirmForAjax(event)";
+            $onclick = 'FormsJS_confirmForAjax(event)';
         }
 
         if (! empty($this->confirmMessage) && ! is_null($this->confirmMethod)) {

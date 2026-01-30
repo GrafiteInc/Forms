@@ -3,7 +3,6 @@
 namespace Grafite\Forms\Fields;
 
 use Exception;
-use Grafite\Forms\Fields\Field;
 
 class Filepond extends Field
 {
@@ -39,7 +38,7 @@ class Filepond extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="filepond-wrapper mb-4">
     <label for="{id}" class="{labelClass}">{name}</label>
     {field}
@@ -51,7 +50,7 @@ HTML;
 
     public static function styles($id, $options)
     {
-        return <<<CSS
+        return <<<'CSS'
 .filepond-previews {
     border-radius: 4px;
     height: 250px;
@@ -72,7 +71,7 @@ CSS;
     public static function onLoadJsData($id, $options)
     {
         if (empty($options['process_url'])) {
-            throw new Exception("Must have route for file uploads.", 1);
+            throw new Exception('Must have route for file uploads.', 1);
         }
 
         return json_encode([

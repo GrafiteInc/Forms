@@ -2,15 +2,19 @@
 
 namespace Grafite\Forms\Services;
 
-use MatthiasMullie\Minify\JS;
 use MatthiasMullie\Minify\CSS;
+use MatthiasMullie\Minify\JS;
 
 class FormAssets
 {
     public $stylesheets = [];
+
     public $scripts = [];
+
     public $styles = [];
+
     public $js = [];
+
     public $fields = [];
 
     public function __construct()
@@ -36,13 +40,13 @@ class FormAssets
     /**
      * Add field stylesheets to a form
      *
-     * @param array $stylesheets
+     * @param  array  $stylesheets
      * @return self
      */
     public function addStylesheets($stylesheets)
     {
         foreach ($stylesheets as $sheet) {
-            $this->stylesheets[] = '<link href="' . $sheet . '" rel="stylesheet">';
+            $this->stylesheets[] = '<link href="'.$sheet.'" rel="stylesheet">';
         }
 
         return $this;
@@ -51,13 +55,13 @@ class FormAssets
     /**
      * Add field scripts to a form
      *
-     * @param array $scripts
+     * @param  array  $scripts
      * @return self
      */
     public function addScripts($scripts)
     {
         foreach ($scripts as $script) {
-            $this->scripts[] = '<script src="' . $script . '"></script>';
+            $this->scripts[] = '<script src="'.$script.'"></script>';
         }
 
         return $this;
@@ -66,7 +70,7 @@ class FormAssets
     /**
      * Add field Styles code to a form
      *
-     * @param string $styles
+     * @param  string  $styles
      * @return self
      */
     public function addStyles($styles)
@@ -81,7 +85,7 @@ class FormAssets
     /**
      * Add field JS code to a form
      *
-     * @param string $js
+     * @param  string  $js
      * @return self
      */
     public function addJs($js)
@@ -95,7 +99,7 @@ class FormAssets
 
     protected function compileStyles($type, $nonce)
     {
-        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
+        $nonce = $nonce ? ' nonce="'.$nonce.'"' : '';
         $output = '';
 
         if (in_array($type, ['all', 'styles'])) {
@@ -103,7 +107,7 @@ class FormAssets
             $styles = collect($this->styles)->unique()->implode("\n");
 
             if (app()->environment('production')) {
-                $minifierCSS = new CSS();
+                $minifierCSS = new CSS;
                 $styles = $minifierCSS->add($styles)->minify();
             }
 
@@ -115,16 +119,16 @@ class FormAssets
 
     protected function compileScripts($type, $nonce = false)
     {
-        $nonce = $nonce ? ' nonce="' . $nonce . '"' : '';
+        $nonce = $nonce ? ' nonce="'.$nonce.'"' : '';
         $output = '';
 
         if (in_array($type, ['all', 'scripts'])) {
             $output .= collect($this->scripts)->unique()->implode("\n");
-            $coreJavaScript = file_get_contents(__DIR__ . '/../JavaScript/core.js');
+            $coreJavaScript = file_get_contents(__DIR__.'/../JavaScript/core.js');
             $js = collect($this->js)->push($coreJavaScript)->unique()->implode("\n;");
 
             if (app()->environment('production')) {
-                $minifierJS = new JS();
+                $minifierJS = new JS;
                 $js = $minifierJS->add($js)->minify();
             }
 

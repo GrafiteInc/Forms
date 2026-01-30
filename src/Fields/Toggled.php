@@ -3,7 +3,6 @@
 namespace Grafite\Forms\Fields;
 
 use Illuminate\Support\Str;
-use Grafite\Forms\Fields\Field;
 
 class Toggled extends Field
 {
@@ -16,7 +15,7 @@ class Toggled extends Field
     {
         return [
             'label' => false,
-            'class' => ''
+            'class' => '',
         ];
     }
 
@@ -37,7 +36,7 @@ class Toggled extends Field
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_toggledField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _checkbox = element.parentNode;

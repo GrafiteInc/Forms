@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class CustomFile extends Field
 {
     protected static function getType()
@@ -19,7 +17,7 @@ class CustomFile extends Field
     protected static function getAttributes()
     {
         return [
-            'data-formsjs-onchange' => 'FormJS_customfileField(event)'
+            'data-formsjs-onchange' => 'FormJS_customfileField(event)',
         ];
     }
 
@@ -30,7 +28,7 @@ class CustomFile extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -43,7 +41,7 @@ HTML;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window.FormJS_customfileField = function (input) {
                 input.nextElementSibling.innerHTML = input.files[0].name;
             }

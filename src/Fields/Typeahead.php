@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Typeahead extends Field
 {
     /**
@@ -44,7 +42,7 @@ class Typeahead extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -75,7 +73,7 @@ HTML;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_typeaheadField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

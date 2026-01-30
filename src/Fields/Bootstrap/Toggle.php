@@ -31,14 +31,14 @@ class Toggle extends Field
     public static function stylesheets($options)
     {
         return [
-            "//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css",
+            '//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/css/bootstrap4-toggle.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js'
+            '//cdn.jsdelivr.net/gh/gitbrent/bootstrap4-toggle@3.6.1/js/bootstrap4-toggle.min.js',
         ];
     }
 
@@ -49,7 +49,7 @@ class Toggle extends Field
 
     public static function onLoadJsData($id, $options)
     {
-        $themeScript = "light";
+        $themeScript = 'light';
 
         if (isset($options['theme']) && is_bool($options['theme']) && $options['theme']) {
             $themeScript = "window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'";
@@ -71,7 +71,7 @@ class Toggle extends Field
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_toggleField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

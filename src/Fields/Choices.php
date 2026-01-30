@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Choices extends Field
 {
     protected static function getType()
@@ -26,14 +24,14 @@ class Choices extends Field
     public static function stylesheets($options)
     {
         return [
-            "//cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css",
+            '//cdn.jsdelivr.net/npm/choices.js/public/assets/styles/choices.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            "//cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js",
+            '//cdn.jsdelivr.net/npm/choices.js/public/assets/scripts/choices.min.js',
         ];
     }
 
@@ -51,7 +49,7 @@ class Choices extends Field
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_choicesField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 let _id = element.getAttribute('id');

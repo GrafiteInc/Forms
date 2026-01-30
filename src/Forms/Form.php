@@ -2,15 +2,15 @@
 
 namespace Grafite\Forms\Forms;
 
-use Illuminate\Support\Arr;
-use Illuminate\Support\Str;
-use Illuminate\Support\HtmlString;
-use Illuminate\Routing\UrlGenerator;
+use Grafite\Forms\Builders\AttributeBuilder;
+use Grafite\Forms\Builders\FieldBuilder;
+use Grafite\Forms\Services\FormAssets;
 use Grafite\Forms\Services\FormMaker;
 use Grafite\Forms\Traits\HasErrorBag;
-use Grafite\Forms\Builders\FieldBuilder;
-use Grafite\Forms\Builders\AttributeBuilder;
-use Grafite\Forms\Services\FormAssets;
+use Illuminate\Routing\UrlGenerator;
+use Illuminate\Support\Arr;
+use Illuminate\Support\HtmlString;
+use Illuminate\Support\Str;
 use Nette\Utils\Html;
 
 class Form
@@ -48,7 +48,7 @@ class Form
     /**
      * If we want to run the submission through an ajax call
      *
-     * @var boolean
+     * @var bool
      */
     public $submitViaAjax = null;
 
@@ -226,9 +226,9 @@ class Form
     /**
      * Generate a button form based on method and route
      *
-     * @param string $method
-     * @param string $route
-     * @param string $button
+     * @param  string  $method
+     * @param  string  $route
+     * @param  string  $button
      * @return self
      */
     public function action($method, $route, $button = 'Send', $options = [], $asModal = false, $disableOnSubmit = false, $submitViaAjax = false)
@@ -250,13 +250,13 @@ class Form
         if (! empty($this->confirmMessage) && is_null($this->confirmMethod)) {
             $options = array_merge($options, [
                 'data-formsjs-confirm-message' => $this->confirmMessage,
-                'data-formsjs-onclick' => "FormsJS_confirm(event)",
+                'data-formsjs-onclick' => 'FormsJS_confirm(event)',
             ]);
         }
 
         if (! empty($this->confirmMessage) && is_null($this->confirmMethod) && $submitViaAjax) {
             $options = array_merge($options, [
-                'data-formsjs-onclick' => "FormsJS_confirmForAjax(event)",
+                'data-formsjs-onclick' => 'FormsJS_confirmForAjax(event)',
             ]);
         }
 
@@ -284,7 +284,7 @@ class Form
 
         $ajaxMethod = config('forms.global-ajax-method', 'ajax');
 
-        $options['data-formsjs-onclick'] = ($submitViaAjax) ? $ajaxMethod . '(event)' : $options['data-formsjs-onclick'] ?? false;
+        $options['data-formsjs-onclick'] = ($submitViaAjax) ? $ajaxMethod.'(event)' : $options['data-formsjs-onclick'] ?? false;
 
         $this->html .= $this->field->button($button, $options);
 
@@ -294,7 +294,7 @@ class Form
             $this->html = $this->asModal();
         }
 
-        $defaultJavaScript = file_get_contents(__DIR__ . '/../JavaScript/default.js');
+        $defaultJavaScript = file_get_contents(__DIR__.'/../JavaScript/default.js');
         $defaultJavaScript = Str::of($defaultJavaScript)->replace('_ajaxMethod', $ajaxMethod);
 
         $this->assets->addJs($defaultJavaScript);
@@ -313,13 +313,13 @@ class Form
             return $this->formId;
         }
 
-        return 'Form_' . Str::random(10);
+        return 'Form_'.Str::random(10);
     }
 
     /**
      * Set the payload of an action form
      *
-     * @param array $values
+     * @param  array  $values
      * @return self
      */
     public function payload($values)
@@ -332,9 +332,8 @@ class Form
     /**
      * Set the confirmation message for delete forms
      *
-     * @param string $message
-     * @param string $method
-     *
+     * @param  string  $message
+     * @param  string  $method
      * @return self
      */
     public function confirm($message, $method = null)
@@ -348,10 +347,9 @@ class Form
     /**
      * Set the confirmation for a form as a modal
      *
-     * @param string $message
-     * @param string $buttonText
-     * @param string $buttonClass
-     *
+     * @param  string  $message
+     * @param  string  $buttonText
+     * @param  string  $buttonClass
      * @return self
      */
     public function confirmAsModal($message, $buttonText, $buttonClass = 'btn btn-primary')
@@ -414,8 +412,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array $options
-     *
+     * @param  array  $options
      * @return \Illuminate\Support\HtmlString
      */
     public function open($options)
@@ -443,7 +440,7 @@ class Form
 
         $attributes = app(AttributeBuilder::class)->render($attributes);
 
-        return $this->toHtmlString('<form ' . $attributes . '>' . $append);
+        return $this->toHtmlString('<form '.$attributes.'>'.$append);
     }
 
     /**
@@ -475,8 +472,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  string $method
-     *
+     * @param  string  $method
      * @return string
      */
     protected function getAppendage($method)
@@ -499,8 +495,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array|string $options
-     *
+     * @param  array|string  $options
      * @return string
      */
     protected function getUrlAction($options)
@@ -517,8 +512,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array|string $options
-     *
+     * @param  array|string  $options
      * @return string
      */
     protected function getRouteAction($options)
@@ -533,8 +527,7 @@ class Form
     /**
      * Get the action for an "action" option.
      *
-     * @param  array|string $options
-     *
+     * @param  array|string  $options
      * @return string
      */
     protected function getControllerAction($options)
@@ -551,7 +544,6 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  array $options
      *
      * @return string
      */
@@ -577,9 +569,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  mixed $model
-     * @param  array $options
-     *
+     * @param  mixed  $model
      * @return \Illuminate\Support\HtmlString
      */
     public function model($model, array $options = [])
@@ -594,8 +584,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  mixed $model
-     *
+     * @param  mixed  $model
      * @return void
      */
     public function setModel($model)
@@ -620,8 +609,7 @@ class Form
      *
      * cloned from LaravelCollective/html
      *
-     * @param  string $method
-     *
+     * @param  string  $method
      * @return string
      */
     protected function getMethod($method)
@@ -634,10 +622,9 @@ class Form
     /**
      * Set the values for the modal trigger
      *
-     * @param string $content
-     * @param string $class
-     * @param string $message
-     *
+     * @param  string  $content
+     * @param  string  $class
+     * @param  string  $message
      * @return self
      */
     public function setModal($content, $class, $message)
@@ -652,7 +639,7 @@ class Form
     /**
      * Set the form id
      *
-     * @param string $id
+     * @param  string  $id
      * @return self
      */
     public function id($id)
@@ -665,7 +652,7 @@ class Form
     /**
      * Set the modal title
      *
-     * @param string $content
+     * @param  string  $content
      * @return self
      */
     public function modalTitle($content)
@@ -678,7 +665,7 @@ class Form
     /**
      * Set the trigger css class
      *
-     * @param string $cssClass
+     * @param  string  $cssClass
      * @return self
      */
     public function triggerClass($cssClass)
@@ -691,7 +678,7 @@ class Form
     /**
      * Set the trigger Content
      *
-     * @param string $content
+     * @param  string  $content
      * @return self
      */
     public function triggerContent($content)
@@ -711,7 +698,7 @@ class Form
         $modalTitle = $modalTitle ?? $this->modalTitle;
         $title = $modalTitle ?? 'Confirmation';
 
-        $modalId = $this->getFormId() . '_Modal';
+        $modalId = $this->getFormId().'_Modal';
         $form = $this->html;
         $message = $message ?? $this->message;
         $triggerContent = $triggerContent ?? $this->triggerContent;
@@ -755,9 +742,9 @@ Modal;
     /**
      * Render a single field
      *
-     * @param string $field
-     * @param string $name
-     * @param array $options
+     * @param  string  $field
+     * @param  string  $name
+     * @param  array  $options
      * @return string
      */
     public function makeField($field, $name, $options = [])
@@ -772,7 +759,6 @@ Modal;
      *
      * cloned from LaravelCollective/html
      *
-     * @param $html
      *
      * @return \Illuminate\Support\HtmlString
      */

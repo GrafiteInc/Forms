@@ -32,18 +32,17 @@ class MakeFieldCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/field.stub';
+        return __DIR__.'/stubs/field.stub';
     }
 
     /**
      * Get the default namespace for the class.
      *
-     * @param string $rootNamespace
-     *
+     * @param  string  $rootNamespace
      * @return string
      */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return $rootNamespace . '\View\Forms\Fields';
+        return $rootNamespace.'\View\Forms\Fields';
     }
 }

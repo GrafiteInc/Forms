@@ -45,7 +45,7 @@ class Trix extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="{rowClass}">
     <label for="{id}" class="{labelClass}">{name}</label>
     <div class="{fieldClass}">
@@ -80,7 +80,7 @@ HTML;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_trixField = function (element) {
                 element.addEventListener('grafite-form-change', function (event) {
                     let _method = element.form.getAttribute('data-formsjs-onchange');

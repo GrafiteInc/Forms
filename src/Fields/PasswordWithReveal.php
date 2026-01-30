@@ -28,12 +28,12 @@ class PasswordWithReveal extends Field
 
     public static function onLoadJsData($id, $options)
     {
-        return $options['toggle-selector'] ?? 'PasswordRevealer-trigger-' . $id;
+        return $options['toggle-selector'] ?? 'PasswordRevealer-trigger-'.$id;
     }
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
             window._formsjs_passwordWithRevealField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _selector = '.' + element.getAttribute('data-formsjs-onload-data');

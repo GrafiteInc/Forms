@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Grafite\Forms\Fields\Tags;
 use Grafite\Forms\Fields\Quill;
+use Grafite\Forms\Fields\Tags;
 use Grafite\Forms\Forms\BaseForm;
-use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Services\FormAssets;
+use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class UserHistoryForm extends BaseForm
 {
@@ -16,7 +16,7 @@ class UserHistoryForm extends BaseForm
     public $route = 'user.history';
 
     public $buttons = [
-        'submit' => 'Save'
+        'submit' => 'Save',
     ];
 
     public function fields()
@@ -24,12 +24,12 @@ class UserHistoryForm extends BaseForm
         return [
             Quill::make('history', [
                 'toolbars' => [
-                    'basic'
-                ]
+                    'basic',
+                ],
             ])
-            ->option('theme', true)
-            ->withoutLabel()
-            ->option('upload_route', 'user.history'),
+                ->option('theme', true)
+                ->withoutLabel()
+                ->option('upload_route', 'user.history'),
             Tags::make('qualities'),
         ];
     }
@@ -41,16 +41,17 @@ class UserHistoryForm extends BaseForm
 
     public function styles()
     {
-        return ".hello { color: red; }";
+        return '.hello { color: red; }';
     }
 }
 
 class FormAssetsTest extends TestCase
 {
     protected $form;
+
     protected $formAssets;
 
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -65,7 +66,7 @@ class FormAssetsTest extends TestCase
         $this->form = app(UserHistoryForm::class);
     }
 
-    public function testMake()
+    public function test_make()
     {
         $form = $this->form->make();
 
@@ -75,18 +76,18 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString('History', $form);
     }
 
-    public function testMakeFormScriptsAndStyles()
+    public function test_make_form_scripts_and_styles()
     {
         $this->form->make();
 
         $assets = $this->formAssets->render();
 
         $this->assertStringContainsString("console.log('hello world')", $assets);
-        $this->assertStringContainsString("@media (prefers-color-scheme: dark)", $assets);
-        $this->assertStringContainsString(".hello { color: red; }", $assets);
+        $this->assertStringContainsString('@media (prefers-color-scheme: dark)', $assets);
+        $this->assertStringContainsString('.hello { color: red; }', $assets);
     }
 
-    public function testMakeFormScripts()
+    public function test_make_form_scripts()
     {
         $this->form->make();
 
@@ -95,7 +96,7 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString("console.log('hello world')", $assets);
     }
 
-    public function testAssetCounts()
+    public function test_asset_counts()
     {
         $this->form->make();
 
@@ -105,7 +106,7 @@ class FormAssetsTest extends TestCase
         $this->assertEquals(5, count($this->formAssets->js));
     }
 
-    public function testAssetContents()
+    public function test_asset_contents()
     {
         $this->form->make();
 
@@ -118,7 +119,7 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString('Tagify', $assets);
     }
 
-    public function testAssetDefaultContents()
+    public function test_asset_default_contents()
     {
         $this->form->make();
 

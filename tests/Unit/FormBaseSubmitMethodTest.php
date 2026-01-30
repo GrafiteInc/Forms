@@ -2,10 +2,10 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
 use Grafite\Forms\Fields\Password;
-use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Forms\BaseForm;
+use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class UserSecurityAjaxForm extends BaseForm
 {
@@ -14,7 +14,7 @@ class UserSecurityAjaxForm extends BaseForm
     public $submitMethod = 'ajax';
 
     public $buttons = [
-        'submit' => 'Save'
+        'submit' => 'Save',
     ];
 
     public function fields()
@@ -27,7 +27,7 @@ class UserSecurityAjaxForm extends BaseForm
 
 class FormBaseSubmitMethodTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -40,13 +40,13 @@ class FormBaseSubmitMethodTest extends TestCase
         $this->form = app(UserSecurityAjaxForm::class);
     }
 
-    public function testMake()
+    public function test_make()
     {
         $form = $this->form->make();
 
         $this->assertStringContainsString('http://localhost/user/security', $form);
         $this->assertStringContainsString('method="POST"', $form);
-        $this->assertStringContainsString("ajax(event)", $form);
+        $this->assertStringContainsString('ajax(event)', $form);
         $this->assertStringContainsString('type="button"', $form);
 
         $this->assertStringContainsString('<div class="form-group"><label class="control-label" for="Password">Password</label><input class="form-control" id="Password" name="password" type="password" value=""></div>', $form);

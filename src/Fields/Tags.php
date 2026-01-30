@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Tags extends Field
 {
     protected static function getType()
@@ -55,7 +53,7 @@ EOT;
 
     public static function onLoadJs($id, $options)
     {
-        return "_formsjs_tagify";
+        return '_formsjs_tagify';
     }
 
     public static function onLoadJsData($id, $options)
@@ -65,7 +63,7 @@ EOT;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_tagify = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 new Tagify (element, {

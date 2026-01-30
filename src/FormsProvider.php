@@ -2,21 +2,21 @@
 
 namespace Grafite\Forms;
 
-use Grafite\Forms\Components\Form;
-use Grafite\Forms\Components\FormBase;
-use Grafite\Forms\Services\FormAssets;
-use Grafite\Forms\Components\FormModal;
-use Grafite\Forms\Components\FormModel;
-use Illuminate\Support\ServiceProvider;
-use Grafite\Forms\Components\FormAction;
-use Grafite\Forms\Components\FormDelete;
-use Grafite\Forms\Components\FormSearch;
-use Grafite\Forms\Commands\MakeFieldCommand;
 use Grafite\Forms\Commands\MakeBaseFormCommand;
+use Grafite\Forms\Commands\MakeFieldCommand;
+use Grafite\Forms\Commands\MakeLivewireFormCommand;
 use Grafite\Forms\Commands\MakeModalFormCommand;
 use Grafite\Forms\Commands\MakeModelFormCommand;
 use Grafite\Forms\Commands\MakeWizardFormCommand;
-use Grafite\Forms\Commands\MakeLivewireFormCommand;
+use Grafite\Forms\Components\Form;
+use Grafite\Forms\Components\FormAction;
+use Grafite\Forms\Components\FormBase;
+use Grafite\Forms\Components\FormDelete;
+use Grafite\Forms\Components\FormModal;
+use Grafite\Forms\Components\FormModel;
+use Grafite\Forms\Components\FormSearch;
+use Grafite\Forms\Services\FormAssets;
+use Illuminate\Support\ServiceProvider;
 
 class FormsProvider extends ServiceProvider
 {
@@ -28,19 +28,19 @@ class FormsProvider extends ServiceProvider
     public function boot()
     {
         $this->publishes([
-            __DIR__ . '/../config/forms.php' => base_path('config/forms.php'),
+            __DIR__.'/../config/forms.php' => base_path('config/forms.php'),
         ]);
 
         $this->app['blade.compiler']->directive('forms', function ($nonce) {
-            return "<?php echo app('" . FormAssets::class . "')->render('all', {$nonce}); ?>";
+            return "<?php echo app('".FormAssets::class."')->render('all', {$nonce}); ?>";
         });
 
         $this->app['blade.compiler']->directive('formScripts', function ($nonce) {
-            return "<?php echo app('" . FormAssets::class . "')->render('scripts', {$nonce}); ?>";
+            return "<?php echo app('".FormAssets::class."')->render('scripts', {$nonce}); ?>";
         });
 
         $this->app['blade.compiler']->directive('formStyles', function ($nonce) {
-            return "<?php echo app('" . FormAssets::class . "')->render('styles', {$nonce}); ?>";
+            return "<?php echo app('".FormAssets::class."')->render('styles', {$nonce}); ?>";
         });
 
         $this->app['blade.compiler']->component('f', Form::class);

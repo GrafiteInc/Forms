@@ -19,12 +19,12 @@ class MakeWizardFormCommand extends BaseCommand
     protected $description = 'Create a new wizard form';
 
     /**
-         * Get the stub file for the generator.
-         *
-         * @return string
-         */
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/wizard-form.stub';
+        return __DIR__.'/stubs/wizard-form.stub';
     }
 }

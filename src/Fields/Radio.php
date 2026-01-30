@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Radio extends Field
 {
     protected static function getType()
@@ -14,7 +12,7 @@ class Radio extends Field
     protected static function getAttributes()
     {
         return [
-            'class' => 'form-check-input'
+            'class' => 'form-check-input',
         ];
     }
 

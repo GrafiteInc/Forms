@@ -2,8 +2,8 @@
 
 namespace Grafite\Forms\Fields;
 
-use Illuminate\Support\Str;
 use Grafite\Forms\Services\FieldConfigProcessor;
+use Illuminate\Support\Str;
 
 class Field
 {
@@ -84,14 +84,12 @@ class Field
     /**
      * Make a field config for the FieldMaker
      *
-     * @param string $name
-     * @param array $options
-     *
-     * @return \Grafite\Forms\Services\FieldConfigProcessor
+     * @param  string  $name
+     * @param  array  $options
      */
     public static function make($name, $options = []): FieldConfigProcessor
     {
-        $field = new static();
+        $field = new static;
         $options = static::parseOptions($options);
         $options['type'] = static::getType() ?? 'text';
 
@@ -119,8 +117,7 @@ class Field
     /**
      * Parse the options
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return array
      */
     protected static function parseOptions($options)
@@ -141,8 +138,7 @@ class Field
     /**
      * Parse attributes for defaults
      *
-     * @param array $options
-     *
+     * @param  array  $options
      * @return array
      */
     protected static function parseAttributes($options)
@@ -157,9 +153,8 @@ class Field
     /**
      * Get the wrappers for the input fields
      *
-     * @param array $options
-     * @param string $key
-     *
+     * @param  array  $options
+     * @param  string  $key
      * @return mixed
      */
     protected static function getWrappers($options, $key)
@@ -167,7 +162,7 @@ class Field
         $groupTextClass = config('forms.form.input-group-text', 'input-group-text');
 
         if (isset($options[$key])) {
-            $content = '<span class="' . $groupTextClass . '">' . $options[$key] . '</span>';
+            $content = '<span class="'.$groupTextClass.'">'.$options[$key].'</span>';
 
             if (Str::of($options[$key])->contains('<button')) {
                 $content = $options[$key];
@@ -183,7 +178,7 @@ class Field
                     $class = config('forms.form.input-group-before', 'input-group-prepend');
                 }
 
-                $content = '<div class="' . $class . '">' . $content . '</div>';
+                $content = '<div class="'.$class.'">'.$content.'</div>';
             }
 
             return $content;
@@ -226,7 +221,7 @@ class Field
     /**
      * Field related stylesheets
      *
-     * @param array $options
+     * @param  array  $options
      * @return array
      */
     public static function stylesheets($options)
@@ -237,8 +232,8 @@ class Field
     /**
      * Field related styles
      *
-     * @param string $id
-     * @param array $options
+     * @param  string  $id
+     * @param  array  $options
      * @return string|null
      */
     public static function styles($id, $options)
@@ -249,7 +244,7 @@ class Field
     /**
      * Field related scripts
      *
-     * @param array $options
+     * @param  array  $options
      * @return array
      */
     public static function scripts($options)
@@ -263,8 +258,8 @@ class Field
      * which resolves times when we have to dynamically load content
      *  ex: window._formsjs_fieldMethod(field)
      *
-     * @param string $id
-     * @param array $options
+     * @param  string  $id
+     * @param  array  $options
      * @return string|null
      */
     public static function js($id, $options)
@@ -275,8 +270,8 @@ class Field
     /**
      * Field related JavaScript when the element is generated in the DOM
      *
-     * @param string $id
-     * @param array $options
+     * @param  string  $id
+     * @param  array  $options
      * @return string|null
      */
     public static function onLoadJs($id, $options)
@@ -287,8 +282,8 @@ class Field
     /**
      * Field related JavaScript Data for when the element is loaded in the DOM
      *
-     * @param string $id
-     * @param array $options
+     * @param  string  $id
+     * @param  array  $options
      * @return string|null
      */
     public static function onLoadJsData($id, $options)

@@ -37,9 +37,9 @@ class MakeModelFormCommand extends BaseCommand
     /**
      * Build the class with the given name.
      *
-     * @param string $name
-     *
+     * @param  string  $name
      * @return string
+     *
      * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
      */
     protected function buildClass($name)
@@ -58,7 +58,7 @@ class MakeModelFormCommand extends BaseCommand
      */
     protected function getStub()
     {
-        return __DIR__ . '/stubs/form.stub';
+        return __DIR__.'/stubs/form.stub';
     }
 
     /**
@@ -70,6 +70,7 @@ class MakeModelFormCommand extends BaseCommand
     {
         $this->routePrefix = $this->argument('name');
         $this->modelName = ucfirst($this->routePrefix);
-        return ucfirst(trim($this->argument('name'))) . ucfirst($this->type);
+
+        return ucfirst(trim($this->argument('name'))).ucfirst($this->type);
     }
 }

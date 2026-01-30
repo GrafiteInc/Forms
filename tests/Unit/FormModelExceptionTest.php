@@ -2,12 +2,12 @@
 
 namespace Tests\Unit;
 
-use Tests\TestCase;
-use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Fields\Email;
+use Grafite\Forms\Fields\Name;
 use Grafite\Forms\Fields\Quill;
-use Illuminate\Support\Facades\Route;
 use Grafite\Forms\Forms\ModelForm;
+use Illuminate\Support\Facades\Route;
+use Tests\TestCase;
 
 class UserExceptionForm extends ModelForm
 {
@@ -19,7 +19,7 @@ class UserExceptionForm extends ModelForm
 
     public $buttons = [
         'submit' => 'Save',
-        'cancel' => 'Cancel'
+        'cancel' => 'Cancel',
     ];
 
     public $buttonClasses = [
@@ -28,21 +28,22 @@ class UserExceptionForm extends ModelForm
     ];
 
     public $formClass = 'formy-informer';
+
     public $formDeleteClass = 'formy-deleter';
 
     public function fields()
     {
         return [
             Name::make('name', [
-                'value' => $this->getSpecialName()
+                'value' => $this->getSpecialName(),
             ]),
             Email::make('email'),
             Quill::make('history', [
                 'toolbars' => [
                     'basic',
-                    'image'
-                ]
-            ])
+                    'image',
+                ],
+            ]),
         ];
     }
 
@@ -58,7 +59,7 @@ class UserExceptionForm extends ModelForm
 
 class FormModelExceptionTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -74,10 +75,10 @@ class FormModelExceptionTest extends TestCase
         $this->form = app(UserExceptionForm::class);
     }
 
-    public function testNoImageRoute()
+    public function test_no_image_route()
     {
         $this->expectException(\Exception::class);
-        $this->expectExceptionMessage("You need to set an `upload_route` for handling image uploads to Quill.");
+        $this->expectExceptionMessage('You need to set an `upload_route` for handling image uploads to Quill.');
 
         $this->form->create();
     }

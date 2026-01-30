@@ -2,8 +2,8 @@
 
 namespace Grafite\Forms\Fields\Bootstrap;
 
-use Illuminate\Support\Str;
 use Grafite\Forms\Fields\Field;
+use Illuminate\Support\Str;
 
 class DateTimePicker extends Field
 {
@@ -45,7 +45,7 @@ class DateTimePicker extends Field
         $darkTheme = '';
 
         if (! isset($options['theme']) || (is_bool($options['theme']) && $options['theme'])) {
-            $darkTheme = <<<CSS
+            $darkTheme = <<<'CSS'
 @media (prefers-color-scheme: dark) {
     .tempus-dominus-widget {
         border: 2px solid #333;
@@ -102,7 +102,7 @@ CSS;
 
     public static function js($id, $options)
     {
-        return <<<JS
+        return <<<'JS'
         window._formsjs_datetimePickerField = function (element) {
             if (! element.getAttribute('data-formsjs-rendered')) {
                 var _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));

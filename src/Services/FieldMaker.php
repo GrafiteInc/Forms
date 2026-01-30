@@ -2,16 +2,16 @@
 
 namespace Grafite\Forms\Services;
 
-use Illuminate\Support\Str;
+use Grafite\Forms\Builders\AttributeBuilder;
+use Grafite\Forms\Builders\FieldBuilder;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Traits\HasLivewire;
-use Grafite\Forms\Builders\FieldBuilder;
-use Grafite\Forms\Builders\AttributeBuilder;
+use Illuminate\Support\Str;
 
 class FieldMaker
 {
-    use HasLivewire;
     use HasErrorBag;
+    use HasLivewire;
 
     protected $builder;
 
@@ -109,7 +109,7 @@ class FieldMaker
         $before = $this->before($columnConfig);
         $after = $this->after($columnConfig);
 
-        $fieldString = $before . $field . $after;
+        $fieldString = $before.$field.$after;
 
         if ($this->orientation === 'horizontal') {
             $labelColumn = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
@@ -138,7 +138,7 @@ class FieldMaker
         }
 
         if (! empty($errors)) {
-            $class .= ' ' . config('forms.form.error-class', 'has-error');
+            $class .= ' '.config('forms.form.error-class', 'has-error');
         }
 
         $id = $columnConfig['attributes']['id'] ?? $this->stripArrayHandles($column);
@@ -160,10 +160,10 @@ class FieldMaker
             return "{$label}{$fieldString}{$errors}";
         }
 
-        $fieldAndLabel = $label . $fieldString;
+        $fieldAndLabel = $label.$fieldString;
 
         if (Str::of($fieldGroup)->contains('form-floating')) {
-            $fieldAndLabel = $fieldString . $label;
+            $fieldAndLabel = $fieldString.$label;
         }
 
         return "<div class=\"{$fieldGroup}\">{$fieldAndLabel}{$errors}</div>";
@@ -221,7 +221,7 @@ class FieldMaker
 
         if (! is_null($this->errorBag)) {
             $errors = $this->errorBag;
-            $column = 'data.' . $column;
+            $column = 'data.'.$column;
         }
 
         if (! is_object($errors)) {
@@ -244,7 +244,7 @@ class FieldMaker
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
             $class = config('forms.form.before-after-input-wrapper', 'input-group');
-            $prefix = '<div class="' . $class . '">' . $columnConfig['before'];
+            $prefix = '<div class="'.$class.'">'.$columnConfig['before'];
         }
 
         return $prefix;
@@ -255,7 +255,7 @@ class FieldMaker
         $suffix = '';
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
-            $suffix = $columnConfig['after'] . '</div>';
+            $suffix = $columnConfig['after'].'</div>';
         }
 
         return $suffix;
@@ -329,10 +329,10 @@ class FieldMaker
             $currentClass = $columnConfig['attributes']['class'] ?? ' ';
 
             $columnConfig['attributes']['class'] = $currentClass
-                . ' '
-                . config('forms.form.input-class', 'form-control')
-                . ' '
-                . config('forms.form.invalid-input-class', 'is-invalid');
+                .' '
+                .config('forms.form.input-class', 'form-control')
+                .' '
+                .config('forms.form.invalid-input-class', 'is-invalid');
         }
 
         return $columnConfig;
@@ -355,7 +355,7 @@ class FieldMaker
         }
 
         if ($this->orientation === 'horizontal') {
-            $fieldGroupClass .= ' ' . config('forms.form.sections.row-class', 'row');
+            $fieldGroupClass .= ' '.config('forms.form.sections.row-class', 'row');
         }
 
         return $fieldGroupClass;
@@ -375,7 +375,7 @@ class FieldMaker
         }
 
         if (in_array($columnConfig['type'], $this->special)) {
-            $method = 'make' . ucfirst(Str::camel($columnConfig['type']));
+            $method = 'make'.ucfirst(Str::camel($columnConfig['type']));
             $field = $this->builder->$method(
                 $column,
                 $value,
@@ -390,7 +390,7 @@ class FieldMaker
             $fieldClass = '';
 
             if ($this->orientation === 'horizontal') {
-                $rowClass = config('forms.form.group-class', 'form-group') . ' ' . config('forms.form.sections.row-class', 'row');
+                $rowClass = config('forms.form.group-class', 'form-group').' '.config('forms.form.sections.row-class', 'row');
                 $labelClass = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
                 $fieldClass = config('forms.form.input-column', 'col-md-10');
             }
@@ -407,7 +407,7 @@ class FieldMaker
                 'errors' => $errors,
                 'attributes' => app(AttributeBuilder::class)->render($options['attributes'], $name),
                 'id' => $options['attributes']['id'],
-                'name' => $name
+                'name' => $name,
             ]);
         }
 

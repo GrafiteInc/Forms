@@ -6,7 +6,7 @@ use Tests\TestCase;
 
 class MakeModelFormCommandTest extends TestCase
 {
-    public function setUp(): void
+    protected function setUp(): void
     {
         parent::setUp();
 
@@ -15,11 +15,11 @@ class MakeModelFormCommandTest extends TestCase
         @unlink($this->path);
 
         $this->artisan('make:model-form', [
-            'name' => 'User'
+            'name' => 'User',
         ]);
     }
 
-    public function testFileHasBeenGenerated()
+    public function test_file_has_been_generated()
     {
         $this->assertTrue(file_exists($this->path));
 

@@ -2,8 +2,6 @@
 
 namespace Grafite\Forms\Fields;
 
-use Grafite\Forms\Fields\Field;
-
 class Attachments extends Field
 {
     protected static function getType()
@@ -28,7 +26,7 @@ class Attachments extends Field
 
     public static function getTemplate($options)
     {
-        return <<<HTML
+        return <<<'HTML'
 <div class="form-group">
     <label for="{id}" class="{labelClass}">{name}</label>
     {field}

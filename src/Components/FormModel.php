@@ -7,8 +7,11 @@ use Illuminate\View\Component;
 class FormModel extends Component
 {
     public $form;
+
     public $action;
+
     public $model;
+
     public $modal;
 
     /**
