@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.3.0] - 2026-02-04
+
+### Feature
+- new monaco field
+
+### Chore
+- fix styles
+
 ## [v7.2.4] - 2026-01-22
 
 ### Fix
