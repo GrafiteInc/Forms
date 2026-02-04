@@ -69,7 +69,8 @@ class FieldBuilder
             $value = $value->format($options['format'] ?? 'Y-m-d');
         }
 
-        if (isset($options['value']) && is_null($value)) {
+        // If a value is set in attributes, it takes precedence (overwrites the default value)
+        if (isset($options['value']) && ! is_null($options['value'])) {
             $value = $options['value'];
             unset($options['value']);
         }
