@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.3.1] - 2026-02-04
+
+### Fix
+- issue with value overwrites
+
 ## [v7.3.0] - 2026-02-04
 
 ### Feature
