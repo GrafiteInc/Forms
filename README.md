@@ -5,7 +5,7 @@
 [![Build Status](https://github.com/GrafiteInc/Forms/actions/workflows/php-package-tests.yml/badge.svg?branch=main)](https://github.com/GrafiteInc/Forms/actions/workflows/php-package-tests.yml)
 [![Maintainability](https://qlty.sh/badges/ef75617b-01e2-4fcc-bd91-d8f13487e97a/maintainability.svg)](https://qlty.sh/gh/GrafiteInc/projects/Forms)
 [![Packagist](https://img.shields.io/packagist/dt/grafite/forms.svg)](https://packagist.org/packages/grafite/forms)
-[![license](https://img.shields.io/github/license/mashape/apistatus.svg)](https://packagist.org/packages/grafite/forms)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
 The Forms package lets you generate forms as well as fields with standard make commands. Inside your forms for models you can specify the fields that need to be generated and then simply pass the form to the view. No more writing html forms, error handling etc. It can handle Eloquent relationships and easily work with ajax requests for more dynamic form submissions.
 
