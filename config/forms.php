@@ -8,7 +8,7 @@
 
 return [
 
-    'bootstrap-version' => '4.6',
+    'bootstrap-version' => '5.4',
 
     'modal-centered' => true,
 
@@ -29,7 +29,7 @@ return [
         'sortable-icon-down' => '<span class="fas fa-fw fa-arrow-down"></span>',
         'list-group' => 'list-group list-group-flush',
         'list-group-item' => 'list-group-item',
-        'badge-tag' => 'badge badge-primary float-end',
+        'badge-tag' => 'badge bg-primary mt-1 float-end',
     ],
 
     'form' => [
