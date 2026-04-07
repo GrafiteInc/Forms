@@ -26,14 +26,14 @@ class Datepicker extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/js-datepicker@5.18.2/dist/datepicker.min.css',
+            '//cdn.jsdelivr.net/npm/js-datepicker@5.18.4/dist/datepicker.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/js-datepicker@5.18.2/dist/datepicker.min.js',
+            '//cdn.jsdelivr.net/npm/js-datepicker@5.18.4/dist/datepicker.min.js',
             '//cdn.jsdelivr.net/npm/moment@2.30.1/moment.min.js',
         ];
     }

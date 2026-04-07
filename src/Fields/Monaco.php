@@ -40,7 +40,7 @@ HTML;
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs/loader.js',
+            '//cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs/loader.js',
         ];
     }
 
@@ -71,7 +71,7 @@ HTML;
                 let _containerId = 'Monaco_' + element.getAttribute('id');
                 let _container = document.getElementById(_containerId);
 
-                require.config({ paths: { 'vs': '//cdn.jsdelivr.net/npm/monaco-editor@0.52.2/min/vs' }});
+                require.config({ paths: { 'vs': '//cdn.jsdelivr.net/npm/monaco-editor@0.55.1/min/vs' }});
 
                 require(['vs/editor/editor.main'], function() {
                     let _editor = monaco.editor.create(_container, {

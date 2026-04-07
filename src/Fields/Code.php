@@ -26,8 +26,8 @@ class Code extends Field
         $theme = $options['theme'] ?? 'default';
 
         return [
-            "//cdn.jsdelivr.net/npm/codemirror@5.65.16/theme/$theme.min.css",
-            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.css',
+            "//cdn.jsdelivr.net/npm/codemirror@5.65.21/theme/$theme.min.css",
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.21/lib/codemirror.min.css',
         ];
     }
 
@@ -36,10 +36,10 @@ class Code extends Field
         $mode = $options['mode'] ?? 'htmlmixed';
 
         return [
-            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/lib/codemirror.min.js',
-            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/xml/xml.min.js',
-            '//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/css/css.min.js',
-            "//cdn.jsdelivr.net/npm/codemirror@5.65.16/mode/$mode/$mode.min.js",
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.21/lib/codemirror.min.js',
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.21/mode/xml/xml.min.js',
+            '//cdn.jsdelivr.net/npm/codemirror@5.65.21/mode/css/css.min.js',
+            "//cdn.jsdelivr.net/npm/codemirror@5.65.21/mode/$mode/$mode.min.js",
         ];
     }
 

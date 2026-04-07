@@ -24,14 +24,14 @@ class GrapesJs extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/grapesjs@0.21.10/dist/css/grapes.min.css',
+            '//cdn.jsdelivr.net/npm/grapesjs@0.22.14/dist/css/grapes.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/grapesjs@0.21.10/dist/grapes.min.js',
+            '//cdn.jsdelivr.net/npm/grapesjs@0.22.14/dist/grapes.min.js',
             '//cdn.jsdelivr.net/npm/grapesjs-blocks-basic@1.0.2/dist/index.min.js',
             '//cdn.jsdelivr.net/npm/grapesjs-preset-webpage@1.0.3/dist/index.min.js',
         ];

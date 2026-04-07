@@ -151,7 +151,7 @@ HTML;
             window._formsjs_AttachmentsField = function (element) {
                 if (! element.getAttribute('data-formsjs-rendered')) {
                     let _config = JSON.parse(element.getAttribute('data-formsjs-onload-data'));
-                    _formsjs_attachments = [];
+                    window._formsjs_attachments = [];
 
                     _formsjs_attachmentsList(element);
                     _formsjs_attachmentBindings(element);

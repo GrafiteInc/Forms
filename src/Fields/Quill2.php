@@ -342,8 +342,10 @@ HTML;
             window._formsjs_quillField = function (element) {
                 element.addEventListener('grafite-form-change', function (event) {
                     let _method = element.form.getAttribute('data-formsjs-onchange');
+                    if (_method) {
                         _method = _method.replace('(event)', '');
-                    window[_method](event);
+                        window[_method](event);
+                    }
                 });
 
                 if (! element.getAttribute('data-formsjs-rendered')) {

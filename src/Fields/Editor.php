@@ -164,7 +164,7 @@ CSS;
                                 inlineToolbar: true,
                             },
                             list: {
-                                class: List,
+                                class: EditorjsList,
                                 inlineToolbar: true,
                             },
                             embed: Embed,

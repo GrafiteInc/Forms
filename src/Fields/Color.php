@@ -13,11 +13,24 @@ class Color extends Field
     {
         return [
             'before' => 'Color',
+            'class' => 'form-control forms-color-selector',
         ];
     }
 
     protected static function getFactory()
     {
         return 'safeColorName';
+    }
+
+    public static function js($id, $options)
+    {
+        return <<<'JS'
+            document.addEventListener("DOMContentLoaded", function () {
+                let colorInputs = document.querySelectorAll('.forms-color-selector');
+                colorInputs.forEach(function (input) {
+                    input.style.height = input.parentNode.offsetHeight + 'px';
+                });
+            });
+JS;
     }
 }
