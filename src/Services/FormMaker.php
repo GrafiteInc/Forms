@@ -369,12 +369,14 @@ class FormMaker
     {
         $ajaxMethod = config('forms.global-ajax-method', 'ajax');
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
+        $validationErrorFeedbackClass = config('forms.form.invalid-feedback', 'invalid-feedback');
 
         $defaultJavaScript = file_get_contents(__DIR__.'/../JavaScript/default.js');
         $defaultJavaScript = Str::of($defaultJavaScript)->replace('_ajaxMethod', $ajaxMethod);
 
         $validationJavaScript = file_get_contents(__DIR__.'/../JavaScript/validation.js');
         $formValidation = Str::of($validationJavaScript)->replace('_formValidationClass', $formValidationClass);
+        $formValidation = Str::of($formValidation)->replace('_validationErrorFeedbackClass', $validationErrorFeedbackClass);
 
         if ($this->withJsValidation) {
             $this->formAssets->addJs($formValidation);
