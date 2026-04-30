@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.4.1] - 2026-04-30
+
+### Chore
+- version bump
+
+### Fix
+- issue where input can be removed
+
 ## [v7.4.0] - 2026-04-07
 
 ### Feature
