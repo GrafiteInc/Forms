@@ -26,12 +26,12 @@ class User extends Model
 
     public function jobs()
     {
-        return $this->hasOne(\Tests\Unit\Job::class);
+        return $this->hasOne(Job::class);
     }
 
     public function ideas()
     {
-        return $this->belongsToMany(\Tests\Unit\Idea::class);
+        return $this->belongsToMany(Idea::class);
     }
 
     public function getNameAttribute()
@@ -190,7 +190,7 @@ class FieldMakerTest extends TestCase
             'password' => 'password',
         ]);
 
-        $job = app(\Tests\Unit\Job::class)->create([
+        $job = app(Job::class)->create([
             'name' => 'Worker',
             'user_id' => 1,
         ]);
@@ -198,18 +198,18 @@ class FieldMakerTest extends TestCase
         $user->job_id = $job->id;
         $user->save();
 
-        app(\Tests\Unit\Job::class)->create([
+        app(Job::class)->create([
             'name' => 'BlackSmith',
         ]);
-        app(\Tests\Unit\Job::class)->create([
+        app(Job::class)->create([
             'name' => 'Police',
         ]);
-        app(\Tests\Unit\Job::class)->create([
+        app(Job::class)->create([
             'name' => 'Brogrammer',
         ]);
 
         $config = HasMany::make('jobs', [
-            'model' => \Tests\Unit\Job::class,
+            'model' => Job::class,
             'model_options' => [
                 'label' => 'name',
                 'value' => 'id',
@@ -351,24 +351,24 @@ class FieldMakerTest extends TestCase
             'password' => 'password',
         ]);
 
-        $idea1 = app(\Tests\Unit\Idea::class)->create([
+        $idea1 = app(Idea::class)->create([
             'name' => 'Thing',
         ]);
-        $idea2 = app(\Tests\Unit\Idea::class)->create([
+        $idea2 = app(Idea::class)->create([
             'name' => 'Foo',
         ]);
 
-        app(\Tests\Unit\Idea::class)->create([
+        app(Idea::class)->create([
             'name' => 'Bar',
         ]);
-        app(\Tests\Unit\Idea::class)->create([
+        app(Idea::class)->create([
             'name' => 'Drink',
         ]);
 
         $user->ideas()->attach([$idea1->id, $idea2->id]);
 
         $config = HasMany::make('ideas', [
-            'model' => \Tests\Unit\Idea::class,
+            'model' => Idea::class,
             'model_options' => [
                 'label' => 'name',
                 'value' => 'id',

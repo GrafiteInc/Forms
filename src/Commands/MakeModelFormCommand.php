@@ -2,6 +2,7 @@
 
 namespace Grafite\Forms\Commands;
 
+use Illuminate\Contracts\Filesystem\FileNotFoundException;
 use Illuminate\Support\Str;
 
 class MakeModelFormCommand extends BaseCommand
@@ -40,7 +41,7 @@ class MakeModelFormCommand extends BaseCommand
      * @param  string  $name
      * @return string
      *
-     * @throws \Illuminate\Contracts\Filesystem\FileNotFoundException
+     * @throws FileNotFoundException
      */
     protected function buildClass($name)
     {

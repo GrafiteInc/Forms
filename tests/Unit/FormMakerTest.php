@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Carbon\Carbon;
 use Grafite\Forms\Fields\Text;
 use Grafite\Forms\Fields\TextArea;
 use Grafite\Forms\Services\FormMaker;
@@ -24,8 +25,8 @@ class Entry extends Model
             'user' => (object) [
                 'id' => 1,
             ],
-            'created_at' => \Carbon\Carbon::create(1999, 1, 1, 6, 15, 0),
-            'updated_at' => \Carbon\Carbon::create(1999, 1, 1, 6, 15, 0),
+            'created_at' => Carbon::create(1999, 1, 1, 6, 15, 0),
+            'updated_at' => Carbon::create(1999, 1, 1, 6, 15, 0),
             'deleted_at' => null,
         ];
     }

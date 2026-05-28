@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Components;
 
 use Illuminate\View\Component;
+use Illuminate\View\View;
 
 class FormSearch extends Component
 {
@@ -38,7 +39,7 @@ class FormSearch extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\View\View|string
+     * @return View|string
      */
     public function render()
     {

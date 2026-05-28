@@ -2,6 +2,7 @@
 
 namespace Tests;
 
+use Grafite\Forms\FormsProvider;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\View;
 use Orchestra\Testbench\TestCase as OrchestraTestCase;
@@ -26,7 +27,7 @@ abstract class TestCase extends OrchestraTestCase
     protected function getPackageProviders($app)
     {
         return [
-            \Grafite\Forms\FormsProvider::class,
+            FormsProvider::class,
         ];
     }
 

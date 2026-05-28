@@ -4,6 +4,8 @@ namespace Grafite\Forms\Forms;
 
 use Exception;
 use Grafite\Forms\Forms\Concerns\HasIndex;
+use Grafite\Forms\Services\FormMaker;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Str;
 
 class ModelForm extends HtmlForm
@@ -27,7 +29,7 @@ class ModelForm extends HtmlForm
     /**
      * Model instance
      *
-     * @var \Illuminate\Database\Eloquent\Model|null
+     * @var Model|null
      */
     public $instance = null;
 
@@ -127,7 +129,7 @@ class ModelForm extends HtmlForm
     /**
      * The form builder
      *
-     * @var \Grafite\Forms\Services\FormMaker
+     * @var FormMaker
      */
     protected $builder;
 
@@ -156,7 +158,7 @@ class ModelForm extends HtmlForm
     /**
      * A create form for a model
      *
-     * @return \Grafite\Forms\Forms\ModelForm
+     * @return ModelForm
      */
     public function create()
     {
@@ -225,7 +227,7 @@ class ModelForm extends HtmlForm
     /**
      * The edit form for a model
      *
-     * @return \Grafite\Forms\Forms\ModelForm
+     * @return ModelForm
      */
     public function edit($model = null)
     {
@@ -303,7 +305,7 @@ class ModelForm extends HtmlForm
     /**
      * A delete form for a model
      *
-     * @return \Grafite\Forms\Forms\ModelForm
+     * @return ModelForm
      */
     public function delete($model = null)
     {
@@ -491,7 +493,7 @@ class ModelForm extends HtmlForm
     /**
      * Set the model instance for a Form
      *
-     * @param  \Illuminate\Database\Eloquent\Model  $model
+     * @param  Model  $model
      * @return self
      */
     public function setInstance($model)

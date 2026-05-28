@@ -90,14 +90,14 @@ class Form
     /**
      * The Field Builder
      *
-     * @var \Grafite\Forms\Builders\FieldBuilder
+     * @var FieldBuilder
      */
     public $field;
 
     /**
      * The Asset Builder
      *
-     * @var \Grafite\Forms\Services\FormAssets
+     * @var FormAssets
      */
     public $assets;
 
@@ -413,7 +413,7 @@ class Form
      * cloned from LaravelCollective/html
      *
      * @param  array  $options
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function open($options)
     {
@@ -570,7 +570,7 @@ class Form
      * cloned from LaravelCollective/html
      *
      * @param  mixed  $model
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function model($model, array $options = [])
     {
@@ -760,7 +760,7 @@ Modal;
      * cloned from LaravelCollective/html
      *
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     protected function toHtmlString($html)
     {

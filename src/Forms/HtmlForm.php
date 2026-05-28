@@ -176,7 +176,7 @@ class HtmlForm extends Form
     /**
      * The form builder
      *
-     * @var \Grafite\Forms\Services\FormMaker
+     * @var FormMaker
      */
     protected $builder;
 
@@ -638,7 +638,7 @@ class HtmlForm extends Form
     /**
      * Set a form as disabled to prevent submission.
      *
-     * @return \Grafite\Forms\Forms\HtmlForm
+     * @return HtmlForm
      */
     public function disable()
     {

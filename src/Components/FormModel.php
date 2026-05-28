@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Components;
 
 use Illuminate\View\Component;
+use Illuminate\View\View;
 
 class FormModel extends Component
 {
@@ -30,7 +31,7 @@ class FormModel extends Component
     /**
      * Get the view / forms that represent the component.
      *
-     * @return \Illuminate\View\View|string
+     * @return View|string
      */
     public function render()
     {

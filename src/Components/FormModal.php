@@ -3,6 +3,7 @@
 namespace Grafite\Forms\Components;
 
 use Illuminate\View\Component;
+use Illuminate\View\View;
 
 class FormModal extends Component
 {
@@ -54,7 +55,7 @@ class FormModal extends Component
     /**
      * Get the view / contents that represent the component.
      *
-     * @return \Illuminate\View\View|string
+     * @return View|string
      */
     public function render()
     {

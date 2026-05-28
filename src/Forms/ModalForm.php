@@ -37,7 +37,7 @@ class ModalForm extends HtmlForm
      *
      * @param  string  $name
      * @param  array  $parameters
-     * @return \Grafite\Forms\Forms\BaseForm
+     * @return BaseForm
      */
     public function setRoute($name, $parameters = [])
     {
@@ -56,7 +56,7 @@ class ModalForm extends HtmlForm
     /**
      * Create a form
      *
-     * @return \Grafite\Forms\Forms\BaseForm
+     * @return BaseForm
      */
     public function make()
     {

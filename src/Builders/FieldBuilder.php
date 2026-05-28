@@ -30,7 +30,7 @@ class FieldBuilder
      *
      * @param  string  $value
      * @param  array  $options
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function submit($value = null, $options = [])
     {
@@ -42,7 +42,7 @@ class FieldBuilder
      *
      * @param  string  $value
      * @param  array  $options
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     public function button($value = null, $options = [])
     {
@@ -520,7 +520,7 @@ class FieldBuilder
      * Transform the string to an Html serializable object
      *
      *
-     * @return \Illuminate\Support\HtmlString
+     * @return HtmlString
      */
     protected function toHtmlString($html)
     {

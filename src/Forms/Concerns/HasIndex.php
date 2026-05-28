@@ -2,6 +2,8 @@
 
 namespace Grafite\Forms\Forms\Concerns;
 
+use Illuminate\Database\Eloquent\Builder;
+
 trait HasIndex
 {
     /**
@@ -75,7 +77,7 @@ trait HasIndex
     /**
      * The index body for the model
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @return string
      */
     public function indexBody($query = null)
@@ -149,7 +151,7 @@ trait HasIndex
     /**
      * The index method for the model
      *
-     * @param  \Illuminate\Database\Eloquent\Builder  $query
+     * @param  Builder  $query
      * @return string
      */
     public function index($query = null)

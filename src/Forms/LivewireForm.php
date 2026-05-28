@@ -17,7 +17,7 @@ class LivewireForm extends HtmlForm
     /**
      * Create a form
      *
-     * @return \Grafite\Forms\Forms\BaseForm
+     * @return BaseForm
      */
     public function make($data = [])
     {
