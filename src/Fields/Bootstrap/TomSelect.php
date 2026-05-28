@@ -28,15 +28,15 @@ class TomSelect extends Field
     public static function stylesheets($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/tom-select@2.6.0/dist/css/tom-select.min.css',
-            '//cdn.jsdelivr.net/npm/tom-select@2.6.0/dist/css/tom-select.bootstrap5.min.css',
+            '//cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/css/tom-select.min.css',
+            '//cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/css/tom-select.bootstrap5.min.css',
         ];
     }
 
     public static function scripts($options)
     {
         return [
-            '//cdn.jsdelivr.net/npm/tom-select@2.6.0/dist/js/tom-select.complete.min.js',
+            '//cdn.jsdelivr.net/npm/tom-select@2.6.1/dist/js/tom-select.complete.min.js',
         ];
     }
 
@@ -47,35 +47,35 @@ class TomSelect extends Field
     .ts-wrapper.form-control:not(.disabled) .ts-control, .ts-wrapper.form-control:not(.disabled).single.input-active .ts-control, .ts-wrapper.form-select:not(.disabled) .ts-control, .ts-wrapper.form-select:not(.disabled).single.input-active .ts-control {
         line-height: 1.5rem !important;
         padding: 10px 16px;
-        background-color: var(--bs-tertiary-bg) !important;
+        /* background-color: var(--bs-tertiary-bg) !important; */
     }
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
         .ts-wrapper.form-select:not(.disabled) .ts-control, .ts-wrapper.form-select:not(.disabled).single.input-active .ts-control {
-            color: var(--bs-white);
-            background-color: var(--bs-tertiary-bg) !important;
+            /* color: var(--bs-white); */
+            /* background-color: var(--bs-tertiary-bg) !important; */
         }
 
         .ts-control, .ts-wrapper.single.input-active .ts-control {
-            background-color: var(--bs-tertiary-bg);
+            /* background-color: var(--bs-tertiary-bg); */
         }
 
         .ts-dropdown, .ts-dropdown.form-control, .ts-dropdown.form-select {
-            background-color: var(--bs-tertiary-bg);
+            /* background-color: var(--bs-tertiary-bg); */
         }
 
         .ts-dropdown .option {
-            color: var(--bs-white);
+            /* color: var(--bs-white); */
         }
 
         .ts-dropdown .option.active, .ts-dropdown .option.selected {
-            background-color: var(--bs-dark);
+            /* background-color: var(--bs-dark); */
         }
 
         .ts-control, .ts-control input, .ts-dropdown {
-            color: var(--bs-white);
+            /* color: var(--bs-white); */
         }
     }
 }
