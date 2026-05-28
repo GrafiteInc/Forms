@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.4.2] - 2026-05-28
+
+### Fix
+- code styles
+
+### Refactor
+- remove color controls
+
 ## [v7.4.1] - 2026-04-30
 
 ### Chore
