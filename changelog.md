@@ -3,6 +3,14 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.5.0] - 2026-06-23
+
+### Refactor
+- more performance improvements
+
+### Perf
+- optimize hot-path form rendering
+
 ## [v7.4.2] - 2026-05-28
 
 ### Fix
