@@ -44,6 +44,14 @@ class FormMaker
 
     public $livewireOnChange = false;
 
+    /**
+     * Cached raw contents of the default and validation JavaScript files.
+     * These files never change at runtime, so they are read from disk once.
+     *
+     * @var array<string, string>
+     */
+    protected static $javaScriptCache = [];
+
     public function __construct()
     {
         $this->fieldMaker = app(FieldMaker::class);
@@ -371,10 +379,9 @@ class FormMaker
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
         $validationErrorFeedbackClass = config('forms.form.invalid-feedback', 'invalid-feedback');
 
-        $defaultJavaScript = file_get_contents(__DIR__.'/../JavaScript/default.js');
-        $defaultJavaScript = Str::of($defaultJavaScript)->replace('_ajaxMethod', $ajaxMethod);
+        $defaultJavaScript = Str::of($this->readJavaScriptFile('default.js'))->replace('_ajaxMethod', $ajaxMethod);
 
-        $validationJavaScript = file_get_contents(__DIR__.'/../JavaScript/validation.js');
+        $validationJavaScript = $this->readJavaScriptFile('validation.js');
         $formValidation = Str::of($validationJavaScript)->replace('_formValidationClass', $formValidationClass);
         $formValidation = Str::of($formValidation)->replace('_validationErrorFeedbackClass', $validationErrorFeedbackClass);
 
@@ -383,6 +390,22 @@ class FormMaker
         }
 
         $this->formAssets->addJs($defaultJavaScript);
+    }
+
+    /**
+     * Read a bundled JavaScript file, caching its raw contents so the
+     * same file is only read from disk once per request.
+     *
+     * @param  string  $file
+     * @return string
+     */
+    protected function readJavaScriptFile($file)
+    {
+        if (! isset(static::$javaScriptCache[$file])) {
+            static::$javaScriptCache[$file] = file_get_contents(__DIR__.'/../JavaScript/'.$file);
+        }
+
+        return static::$javaScriptCache[$file];
     }
 
     /**

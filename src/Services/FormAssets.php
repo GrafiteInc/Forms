@@ -17,6 +17,14 @@ class FormAssets
 
     public $fields = [];
 
+    /**
+     * Cached contents of the core JavaScript file. The file never
+     * changes at runtime, so we only read it from disk once.
+     *
+     * @var string|null
+     */
+    protected static $coreJavaScript = null;
+
     public function __construct()
     {
         // Nothing here
@@ -124,8 +132,12 @@ class FormAssets
 
         if (in_array($type, ['all', 'scripts'])) {
             $output .= collect($this->scripts)->unique()->implode("\n");
-            $coreJavaScript = file_get_contents(__DIR__.'/../JavaScript/core.js');
-            $js = collect($this->js)->push($coreJavaScript)->unique()->implode("\n;");
+
+            if (is_null(static::$coreJavaScript)) {
+                static::$coreJavaScript = file_get_contents(__DIR__.'/../JavaScript/core.js');
+            }
+
+            $js = collect($this->js)->push(static::$coreJavaScript)->unique()->implode("\n;");
 
             if (app()->environment('production')) {
                 $minifierJS = new JS;
