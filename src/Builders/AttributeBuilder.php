@@ -210,12 +210,15 @@ class AttributeBuilder
                 $element = $this->attributeElement($key, $value);
 
                 if (! is_null($element)) {
-                    $html[] = $element;
+                    // Key by the rendered element so duplicates collapse on
+                    // insert (preserving first-seen order) instead of paying
+                    // for an array_unique sort afterwards.
+                    $html[$element] = true;
                 }
             }
         }
 
-        return implode(' ', array_unique($html));
+        return implode(' ', array_keys($html));
     }
 
     /**

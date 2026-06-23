@@ -2,7 +2,6 @@
 
 namespace Grafite\Forms\Services;
 
-use Grafite\Forms\Builders\AttributeBuilder;
 use Grafite\Forms\Builders\FieldBuilder;
 use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Traits\HasLivewire;
@@ -25,46 +24,70 @@ class FieldMaker
 
     public $livewireOnChange;
 
+    /**
+     * Per-instance memo of resolved config values. Config does not change
+     * within a request, so each key is resolved from the container once
+     * instead of on every field.
+     *
+     * @var array<string, mixed>
+     */
+    protected $configCache = [];
+
     protected $standard = [
-        'hidden',
-        'text',
-        'number',
-        'color',
-        'email',
-        'date',
-        'datetime-local',
-        'month',
-        'range',
-        'search',
-        'tel',
-        'time',
-        'url',
-        'week',
-        'password',
-        'time',
-        'image',
-        'file',
+        'hidden' => true,
+        'text' => true,
+        'number' => true,
+        'color' => true,
+        'email' => true,
+        'date' => true,
+        'datetime-local' => true,
+        'month' => true,
+        'range' => true,
+        'search' => true,
+        'tel' => true,
+        'time' => true,
+        'url' => true,
+        'week' => true,
+        'password' => true,
+        'image' => true,
+        'file' => true,
     ];
 
     protected $special = [
-        'select',
-        'datalist',
-        'custom-file',
-        'textarea',
-        'relationship',
+        'select' => true,
+        'datalist' => true,
+        'custom-file' => true,
+        'textarea' => true,
+        'relationship' => true,
     ];
 
     protected $specialSelect = [
-        'switch',
-        'checkbox',
-        'radio',
-        'checkbox-inline',
-        'radio-inline',
+        'switch' => true,
+        'checkbox' => true,
+        'radio' => true,
+        'checkbox-inline' => true,
+        'radio-inline' => true,
     ];
 
     public function __construct(FieldBuilder $fieldBuilder)
     {
         $this->builder = $fieldBuilder;
+    }
+
+    /**
+     * Resolve a config value once per instance.
+     *
+     * @param  string  $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    protected function cfg($key, $default = null)
+    {
+        if (! array_key_exists($key, $this->configCache)) {
+            $this->configCache[$key] = config($key, $default);
+        }
+
+        return $this->configCache[$key];
     }
 
     public function make(string $column, array $columnConfig, $object = null)
@@ -98,7 +121,7 @@ class FieldMaker
 
         $field = $this->makeField($columnConfig, $label, $column, $value, $errors);
 
-        if (in_array($columnConfig['type'], $this->specialSelect)) {
+        if (isset($this->specialSelect[$columnConfig['type']])) {
             $label = '';
         }
 
@@ -112,12 +135,12 @@ class FieldMaker
         $fieldString = $before.$field.$after;
 
         if ($this->orientation === 'horizontal') {
-            $labelColumn = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
-            $inputColumn = config('forms.form.input-column', 'col-md-10');
+            $labelColumn = $this->cfg('forms.form.label-column', 'col-md-2 col-form-label pt-0');
+            $inputColumn = $this->cfg('forms.form.input-column', 'col-md-10');
 
             $label = $this->label($column, $columnConfig, $labelColumn, $errors);
 
-            if (in_array($columnConfig['type'], $this->specialSelect)) {
+            if (isset($this->specialSelect[$columnConfig['type']])) {
                 $legend = $columnConfig['legend'] ?? $columnConfig['label'];
                 $label = "<legend class=\"{$labelColumn}\">{$legend}</legend>";
             }
@@ -134,11 +157,11 @@ class FieldMaker
         $label = $this->getLabel($column, $columnConfig);
 
         if (is_null($class)) {
-            $class = config('forms.form.label-class', 'control-label');
+            $class = $this->cfg('forms.form.label-class', 'control-label');
         }
 
         if (! empty($errors)) {
-            $class .= ' '.config('forms.form.error-class', 'has-error');
+            $class .= ' '.$this->cfg('forms.form.error-class', 'has-error');
         }
 
         $id = $columnConfig['attributes']['id'] ?? $this->stripArrayHandles($column);
@@ -152,7 +175,7 @@ class FieldMaker
 
     public function wrapField($fieldGroup, $label, $fieldString, $errors)
     {
-        if (Str::contains($fieldString, 'type="hidden"')) {
+        if (str_contains($fieldString, 'type="hidden"')) {
             return $fieldString;
         }
 
@@ -162,7 +185,7 @@ class FieldMaker
 
         $fieldAndLabel = $label.$fieldString;
 
-        if (Str::of($fieldGroup)->contains('form-floating')) {
+        if (str_contains($fieldGroup, 'form-floating')) {
             $fieldAndLabel = $fieldString.$label;
         }
 
@@ -196,9 +219,9 @@ class FieldMaker
 
     public function getLabel($column, $columnConfig)
     {
-        $label = Str::of($column)->title()->replace('_', ' ');
+        $label = str_replace('_', ' ', Str::title($column));
 
-        if (Str::contains($label, '[')) {
+        if (str_contains($label, '[')) {
             $label = $this->getNestedFieldLabel($label)[0];
         }
 
@@ -211,7 +234,7 @@ class FieldMaker
 
     public function getFieldErrors($column)
     {
-        $class = config('forms.form.invalid-feedback', 'invalid-feedback');
+        $class = $this->cfg('forms.form.invalid-feedback', 'invalid-feedback');
 
         $errors = collect([]);
 
@@ -243,7 +266,7 @@ class FieldMaker
         $prefix = '';
 
         if (isset($columnConfig['before']) || isset($columnConfig['after'])) {
-            $class = config('forms.form.before-after-input-wrapper', 'input-group');
+            $class = $this->cfg('forms.form.before-after-input-wrapper', 'input-group');
             $prefix = '<div class="'.$class.'">'.$columnConfig['before'];
         }
 
@@ -273,10 +296,10 @@ class FieldMaker
 
         $fieldHtml = str_replace($keys, $values, $template);
 
-        if (Str::contains($fieldHtml, '></label>')) {
-            $fieldHtmlAsArray = Str::of($fieldHtml)->explode("\n");
+        if (str_contains($fieldHtml, '></label>')) {
+            $fieldHtmlAsArray = explode("\n", $fieldHtml);
             unset($fieldHtmlAsArray[1]);
-            $fieldHtml = $fieldHtmlAsArray->implode("\n");
+            $fieldHtml = implode("\n", $fieldHtmlAsArray);
         }
 
         return $fieldHtml;
@@ -294,16 +317,16 @@ class FieldMaker
     protected function parseOptions($name, $options)
     {
         $default = [
-            'class' => config('forms.form.input-class', 'form-control'),
+            'class' => $this->cfg('forms.form.input-class', 'form-control'),
             'id' => ucfirst($name),
         ];
 
         if ($options['type'] === 'range') {
-            $default['class'] = config('forms.form.range-class', 'form-range');
+            $default['class'] = $this->cfg('forms.form.range-class', 'form-range');
         }
 
         if (in_array($options['type'], ['select', 'relationship'])) {
-            $default['class'] = config('forms.form.select-class', 'form-select');
+            $default['class'] = $this->cfg('forms.form.select-class', 'form-select');
         }
 
         $options['attributes'] = array_merge($default, $options['attributes'] ?? []);
@@ -330,9 +353,9 @@ class FieldMaker
 
             $columnConfig['attributes']['class'] = $currentClass
                 .' '
-                .config('forms.form.input-class', 'form-control')
+                .$this->cfg('forms.form.input-class', 'form-control')
                 .' '
-                .config('forms.form.invalid-input-class', 'is-invalid');
+                .$this->cfg('forms.form.invalid-input-class', 'is-invalid');
         }
 
         return $columnConfig;
@@ -347,15 +370,15 @@ class FieldMaker
                 return false;
             }
 
-            $fieldGroupClass = is_string($columnConfig['wrapper']) ? $columnConfig['wrapper'] : config('forms.form.group-class', 'form-group');
+            $fieldGroupClass = is_string($columnConfig['wrapper']) ? $columnConfig['wrapper'] : $this->cfg('forms.form.group-class', 'form-group');
         }
 
         if (! isset($columnConfig['wrapper'])) {
-            $fieldGroupClass = config('forms.form.group-class', 'form-group');
+            $fieldGroupClass = $this->cfg('forms.form.group-class', 'form-group');
         }
 
         if ($this->orientation === 'horizontal') {
-            $fieldGroupClass .= ' '.config('forms.form.sections.row-class', 'row');
+            $fieldGroupClass .= ' '.$this->cfg('forms.form.sections.row-class', 'row');
         }
 
         return $fieldGroupClass;
@@ -364,38 +387,38 @@ class FieldMaker
     protected function makeField($columnConfig, $label, $column, $value, $errors)
     {
         $field = null;
+        $options = $this->parseOptions($column, $columnConfig);
 
-        if (in_array($columnConfig['type'], $this->standard)) {
+        if (isset($this->standard[$columnConfig['type']])) {
             $field = $this->builder->makeInput(
                 $columnConfig['type'],
                 $column,
                 $value,
-                $this->parseOptions($column, $columnConfig)['attributes']
+                $options['attributes']
             );
         }
 
-        if (in_array($columnConfig['type'], $this->special)) {
+        if (isset($this->special[$columnConfig['type']])) {
             $method = 'make'.ucfirst(Str::camel($columnConfig['type']));
             $field = $this->builder->$method(
                 $column,
                 $value,
-                $this->parseOptions($column, $columnConfig)
+                $options
             );
         }
 
         if (isset($columnConfig['template'])) {
-            $options = $this->parseOptions($column, $columnConfig);
-            $rowClass = config('forms.form.group-class', 'form-group');
-            $labelClass = config('forms.form.label-class', 'control-label');
+            $rowClass = $this->cfg('forms.form.group-class', 'form-group');
+            $labelClass = $this->cfg('forms.form.label-class', 'control-label');
             $fieldClass = '';
 
             if ($this->orientation === 'horizontal') {
-                $rowClass = config('forms.form.group-class', 'form-group').' '.config('forms.form.sections.row-class', 'row');
-                $labelClass = config('forms.form.label-column', 'col-md-2 col-form-label pt-0');
-                $fieldClass = config('forms.form.input-column', 'col-md-10');
+                $rowClass = $this->cfg('forms.form.group-class', 'form-group').' '.$this->cfg('forms.form.sections.row-class', 'row');
+                $labelClass = $this->cfg('forms.form.label-column', 'col-md-2 col-form-label pt-0');
+                $fieldClass = $this->cfg('forms.form.input-column', 'col-md-10');
             }
 
-            $name = $options['label'] ?? Str::of($column)->title()->replace('_', ' ');
+            $name = $options['label'] ?? str_replace('_', ' ', Str::title($column));
 
             return $this->fieldTemplate($columnConfig['template'], [
                 'rowClass' => $rowClass,
@@ -405,15 +428,13 @@ class FieldMaker
                 'field' => $field,
                 'value' => $value,
                 'errors' => $errors,
-                'attributes' => app(AttributeBuilder::class)->render($options['attributes'], $name),
+                'attributes' => $this->builder->attributeBuilder->render($options['attributes'], $name),
                 'id' => $options['attributes']['id'],
                 'name' => $name,
             ]);
         }
 
         if (isset($columnConfig['view'])) {
-            $options = $this->parseOptions($column, $columnConfig);
-
             return view($columnConfig['view'], [
                 'label' => $label,
                 'field' => $field,
@@ -422,11 +443,11 @@ class FieldMaker
             ])->render();
         }
 
-        if (in_array($columnConfig['type'], $this->specialSelect)) {
+        if (isset($this->specialSelect[$columnConfig['type']])) {
             $field = $this->builder->makeCheckInput(
                 $column,
                 $value,
-                $this->parseOptions($column, $columnConfig)
+                $options
             );
         }
 
@@ -435,7 +456,7 @@ class FieldMaker
                 $columnConfig['type'],
                 $column,
                 $value,
-                $this->parseOptions($column, $columnConfig)['attributes']
+                $options['attributes']
             );
         }
 

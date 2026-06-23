@@ -139,7 +139,7 @@ class FieldBuilder
         $input = '<div class="'.$customFileWrapperClass.'">';
         $input .= '<input '.$attributes.' type="file" name="'.$name.'">';
 
-        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5')) {
+        if (! str_starts_with((string) config('forms.bootstrap-version'), '5')) {
             $input .= $label;
         }
 
@@ -309,13 +309,13 @@ class FieldBuilder
         $customClasses = $options['attributes']['class'] ?? '';
         $customLabelClasses = $options['label_class'] ?? '';
 
-        $options['attributes']['class'] = Str::of(config('forms.form.check-input-class', 'form-check-input').' '.$customClasses)->trim();
+        $options['attributes']['class'] = trim(config('forms.form.check-input-class', 'form-check-input').' '.$customClasses);
 
-        if (Str::contains($options['type'], '-inline')) {
+        if (str_contains($options['type'], '-inline')) {
             $options['check-inline'] = true;
         }
 
-        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5') && $options['type'] === 'switch') {
+        if (! str_starts_with((string) config('forms.bootstrap-version'), '5') && $options['type'] === 'switch') {
             $options['attributes']['class'] = 'custom-control-input';
         }
 
@@ -345,13 +345,13 @@ class FieldBuilder
 
         $label = str_replace('_', ' ', $label);
 
-        if (Str::contains($label, '[')) {
+        if (str_contains($label, '[')) {
             $label = $this->getNestedFieldLabel($label)[0];
         }
 
-        $labelClass = Str::of(config('forms.form.label-check-class', 'form-check-label').' '.$customLabelClasses)->trim();
+        $labelClass = trim(config('forms.form.label-check-class', 'form-check-label').' '.$customLabelClasses);
 
-        if (! Str::of(config('forms.bootstrap-version'))->startsWith('5') && $options['type'] === 'switch') {
+        if (! str_starts_with((string) config('forms.bootstrap-version'), '5') && $options['type'] === 'switch') {
             $labelClass = 'custom-control-label';
         }
 

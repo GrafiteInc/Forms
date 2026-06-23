@@ -25,6 +25,15 @@ class FormAssets
      */
     protected static $coreJavaScript = null;
 
+    /**
+     * Cache of minified output keyed by a hash of the raw source.
+     * Minification is CPU-heavy and the input is identical across
+     * renders, so the same source is only minified once per request.
+     *
+     * @var array<string, string>
+     */
+    protected static $minifyCache = [];
+
     public function __construct()
     {
         // Nothing here
@@ -105,6 +114,25 @@ class FormAssets
         return $this;
     }
 
+    /**
+     * Minify a source string, memoizing the result by content hash so
+     * identical source is only run through the minifier once per request.
+     *
+     * @param  string  $type
+     * @param  string  $source
+     * @return string
+     */
+    protected static function cachedMinify($type, $source, callable $minifier)
+    {
+        $key = $type.':'.md5($source);
+
+        if (! isset(static::$minifyCache[$key])) {
+            static::$minifyCache[$key] = $minifier($source);
+        }
+
+        return static::$minifyCache[$key];
+    }
+
     protected function compileStyles($type, $nonce)
     {
         $nonce = $nonce ? ' nonce="'.$nonce.'"' : '';
@@ -115,8 +143,9 @@ class FormAssets
             $styles = collect($this->styles)->unique()->implode("\n");
 
             if (app()->environment('production')) {
-                $minifierCSS = new CSS;
-                $styles = $minifierCSS->add($styles)->minify();
+                $styles = static::cachedMinify('css', $styles, function ($source) {
+                    return (new CSS)->add($source)->minify();
+                });
             }
 
             $output .= "<style {$nonce}>\n{$styles}\n</style>\n";
@@ -140,8 +169,9 @@ class FormAssets
             $js = collect($this->js)->push(static::$coreJavaScript)->unique()->implode("\n;");
 
             if (app()->environment('production')) {
-                $minifierJS = new JS;
-                $js = $minifierJS->add($js)->minify();
+                $js = static::cachedMinify('js', $js, function ($source) {
+                    return (new JS)->add($source)->minify();
+                });
             }
 
             $function = "window.FormsJS = () => { {$js} };";

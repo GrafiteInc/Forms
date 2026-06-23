@@ -6,7 +6,6 @@ use Grafite\Forms\Traits\HasErrorBag;
 use Grafite\Forms\Traits\HasLivewire;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Support\Str;
 
 /**
  * FormMaker helper to make table and object form mapping easy.
@@ -15,6 +14,27 @@ class FormMaker
 {
     use HasErrorBag;
     use HasLivewire;
+
+    /**
+     * Map of database column types to normalized form field types.
+     */
+    private const COLUMN_TYPES = [
+        'number' => 'number',
+        'smallint' => 'number',
+        'integer' => 'number',
+        'bigint' => 'number',
+        'float' => 'decimal',
+        'decimal' => 'decimal',
+        'boolean' => 'number',
+        'string' => 'text',
+        'varchar' => 'text',
+        'guid' => 'text',
+        'text' => 'textarea',
+        'date' => 'date',
+        'datetime' => 'datetime-local',
+        'datetimetz' => 'datetime-local',
+        'time' => 'time',
+    ];
 
     protected $columns = 1;
 
@@ -61,6 +81,30 @@ class FormMaker
         if (is_null($this->orientation)) {
             $this->orientation = config('forms.form.orientation', 'vertical');
         }
+    }
+
+    /**
+     * Per-instance memo of resolved config values. Config does not change
+     * within a request, so each key is resolved from the container once.
+     *
+     * @var array<string, mixed>
+     */
+    protected $configCache = [];
+
+    /**
+     * Resolve a config value once per instance.
+     *
+     * @param  string  $key
+     * @param  mixed  $default
+     * @return mixed
+     */
+    protected function cfg($key, $default = null)
+    {
+        if (! array_key_exists($key, $this->configCache)) {
+            $this->configCache[$key] = config($key, $default);
+        }
+
+        return $this->configCache[$key];
     }
 
     /**
@@ -379,11 +423,11 @@ class FormMaker
         $formValidationClass = config('forms.form.invalid-input-class', 'is-invalid');
         $validationErrorFeedbackClass = config('forms.form.invalid-feedback', 'invalid-feedback');
 
-        $defaultJavaScript = Str::of($this->readJavaScriptFile('default.js'))->replace('_ajaxMethod', $ajaxMethod);
+        $defaultJavaScript = str_replace('_ajaxMethod', $ajaxMethod, $this->readJavaScriptFile('default.js'));
 
         $validationJavaScript = $this->readJavaScriptFile('validation.js');
-        $formValidation = Str::of($validationJavaScript)->replace('_formValidationClass', $formValidationClass);
-        $formValidation = Str::of($formValidation)->replace('_validationErrorFeedbackClass', $validationErrorFeedbackClass);
+        $formValidation = str_replace('_formValidationClass', $formValidationClass, $validationJavaScript);
+        $formValidation = str_replace('_validationErrorFeedbackClass', $validationErrorFeedbackClass, $formValidation);
 
         if ($this->withJsValidation) {
             $this->formAssets->addJs($formValidation);
@@ -447,7 +491,7 @@ class FormMaker
         // We move all hidden fields to the bottom to not interfere
         // with the layout of columns.
         $fields = collect($fields)->sortBy(function ($element) {
-            if (Str::contains($element, 'type="hidden"')) {
+            if (str_contains($element, 'type="hidden"')) {
                 return 4;
             }
 
@@ -460,10 +504,10 @@ class FormMaker
             $formChunks = array_chunk($fields, $columns);
         }
 
-        $columnBase = config('forms.form.sections.column-base', 'col-md-');
-        $rowClass = config('forms.form.sections.row-class', 'row');
-        $fullSizeColumn = config('forms.form.sections.full-size-column', 'col-md-12');
-        $headerSpacing = config('forms.form.sections.header-spacing', 'mt-2 mb-2');
+        $columnBase = $this->cfg('forms.form.sections.column-base', 'col-md-');
+        $rowClass = $this->cfg('forms.form.sections.row-class', 'row');
+        $fullSizeColumn = $this->cfg('forms.form.sections.full-size-column', 'col-md-12');
+        $headerSpacing = $this->cfg('forms.form.sections.header-spacing', 'mt-2 mb-2');
 
         if (! is_null($label)) {
             $newFormBuild[] = '<div class="'.$rowClass.'">';
@@ -477,7 +521,7 @@ class FormMaker
             foreach ($chunk as $element) {
                 $class = '';
 
-                if (! Str::contains($element, 'type="hidden"')) {
+                if (! str_contains($element, 'type="hidden"')) {
                     $class = $columnBase.(12 / $columns);
                 }
 
@@ -535,19 +579,24 @@ class FormMaker
      */
     public function getTableColumns($table, $allColumns = false)
     {
-        $tableColumns = Schema::connection($this->connection)->getColumnListing($table);
+        // Resolve the schema builder and prefixed table name once instead
+        // of re-resolving the connection on every column.
+        $schema = Schema::connection($this->connection);
+        $prefixedTable = DB::connection($this->connection)->getTablePrefix().$table;
+
+        $tableColumns = $schema->getColumnListing($table);
 
         $tableTypeColumns = [];
-        $badColumns = ['id', 'created_at', 'updated_at', 'deleted_at'];
-
-        if ($allColumns) {
-            $badColumns = [];
-        }
+        $badColumns = $allColumns ? [] : [
+            'id' => true,
+            'created_at' => true,
+            'updated_at' => true,
+            'deleted_at' => true,
+        ];
 
         foreach ($tableColumns as $column) {
-            if (! in_array($column, $badColumns)) {
-                $type = Schema::connection($this->connection)->getColumnType(DB::connection($this->connection)->getTablePrefix().$table, $column);
-                $tableTypeColumns[$column]['type'] = $type;
+            if (! isset($badColumns[$column])) {
+                $tableTypeColumns[$column]['type'] = $schema->getColumnType($prefixedTable, $column);
             }
         }
 
@@ -562,25 +611,7 @@ class FormMaker
      */
     public function getNormalizedType($type)
     {
-        $columnTypes = [
-            'number' => 'number',
-            'smallint' => 'number',
-            'integer' => 'number',
-            'bigint' => 'number',
-            'float' => 'decimal',
-            'decimal' => 'decimal',
-            'boolean' => 'number',
-            'string' => 'text',
-            'varchar' => 'text',
-            'guid' => 'text',
-            'text' => 'textarea',
-            'date' => 'date',
-            'datetime' => 'datetime-local',
-            'datetimetz' => 'datetime-local',
-            'time' => 'time',
-        ];
-
-        return $columnTypes[$type];
+        return self::COLUMN_TYPES[$type];
     }
 
     protected function getColumns($columns, $fields)
