@@ -3,6 +3,12 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.6.0] - 2026-06-25
+
+### Feature
+- new helpers for tags field
+- signature field
+
 ## [v7.5.0] - 2026-06-23
 
 ### Refactor
