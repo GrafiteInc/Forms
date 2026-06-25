@@ -30,6 +30,7 @@ use Grafite\Forms\Fields\RadioInline;
 use Grafite\Forms\Fields\Range;
 use Grafite\Forms\Fields\Search;
 use Grafite\Forms\Fields\Select;
+use Grafite\Forms\Fields\Signature;
 use Grafite\Forms\Fields\Telephone;
 use Grafite\Forms\Fields\Text;
 use Grafite\Forms\Fields\TextArea;
@@ -304,6 +305,26 @@ class FieldTest extends TestCase
         $field = Dropzone::make('field')->option('route', 'user.history')->option('theme', 'dark');
 
         $this->assertStringContainsString('dropzone-wrapper', (string) $field);
+    }
+
+    public function test_signature()
+    {
+        $field = Signature::make('agreement_signature', [
+            'height' => 180,
+            'clear_label' => 'Reset Signature',
+        ])->toArray();
+
+        $this->assertEquals('hidden', $field['type']);
+        $this->assertContains('//cdn.jsdelivr.net/npm/signature_pad@5.0.10/dist/signature_pad.umd.min.js', $field['assets']['scripts']);
+        $this->assertStringContainsString('_formsjs_signatureField', $field['assets']['js']);
+        $this->assertStringContainsString('Signature_{id}', $field['template']);
+
+        $rendered = (string) Signature::make('agreement_signature', [
+            'clear_label' => 'Reset Signature',
+        ]);
+
+        $this->assertStringContainsString('Signature_Agreement_signature', $rendered);
+        $this->assertStringContainsString('Reset Signature', $rendered);
     }
 
     public function test_url()
