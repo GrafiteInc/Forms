@@ -14,6 +14,7 @@ use Grafite\Forms\Fields\Date;
 use Grafite\Forms\Fields\DatetimeLocal;
 use Grafite\Forms\Fields\Decimal;
 use Grafite\Forms\Fields\Dropzone;
+use Grafite\Forms\Fields\DualRange;
 use Grafite\Forms\Fields\Email;
 use Grafite\Forms\Fields\Field;
 use Grafite\Forms\Fields\File;
@@ -325,6 +326,37 @@ class FieldTest extends TestCase
 
         $this->assertStringContainsString('Signature_Agreement_signature', $rendered);
         $this->assertStringContainsString('Reset Signature', $rendered);
+    }
+
+    public function test_dual_range()
+    {
+        $field = DualRange::make('price', [
+            'min' => 0,
+            'max' => 500,
+            'step' => 5,
+            'lower_value' => 100,
+            'upper_value' => 400,
+            'prefix' => '$',
+        ])->toArray();
+
+        $this->assertEquals('hidden', $field['type']);
+        $this->assertStringContainsString('_formsjs_dualRangeField', $field['assets']['js']);
+        $this->assertStringContainsString('dual-range-input', $field['assets']['styles']);
+        $this->assertStringContainsString('DualRange_{id}', $field['template']);
+        $this->assertStringContainsString('"prefix":"$"', $field['attributes']['data-formsjs-onload-data']);
+        $this->assertEquals('_formsjs_dualRangeField', $field['attributes']['data-formsjs-onload']);
+
+        $rendered = (string) DualRange::make('price', [
+            'min' => 0,
+            'max' => 500,
+            'lower_value' => 100,
+            'upper_value' => 400,
+        ]);
+
+        $this->assertStringContainsString('DualRange_Price', $rendered);
+        $this->assertStringContainsString('type="range"', $rendered);
+        $this->assertStringContainsString('value="100"', $rendered);
+        $this->assertStringContainsString('value="400"', $rendered);
     }
 
     public function test_url()
