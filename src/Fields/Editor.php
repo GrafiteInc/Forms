@@ -105,7 +105,7 @@ CSS;
         return [
             '//cdn.jsdelivr.net/npm/@editorjs/editorjs@latest',
             '//cdn.jsdelivr.net/npm/@editorjs/header@latest',
-            '//cdn.jsdelivr.net/npm/@editorjs/paragraph@latest',
+            '//cdn.jsdelivr.net/npm/@editorjs/paragraph@2.11.7/dist/paragraph.umd.min.js',
             '//cdn.jsdelivr.net/npm/@editorjs/link@latest',
             '//cdn.jsdelivr.net/npm/@editorjs/underline@latest',
             '//cdn.jsdelivr.net/npm/@editorjs/table@latest',
