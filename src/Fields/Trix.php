@@ -83,9 +83,8 @@ HTML;
         return <<<'JS'
             window._formsjs_trixField = function (element) {
                 element.addEventListener('grafite-form-change', function (event) {
-                    let _method = element.form.getAttribute('data-formsjs-onchange');
-                        _method = _method.replace('(event)', '');
-                    window[_method](event);
+                    let _method = window._formsjs_resolve_method(element, 'data-formsjs-onchange');
+                    window._formsjs_call_method(_method, event);
                 });
 
                 if (! element.getAttribute('data-formsjs-rendered')) {

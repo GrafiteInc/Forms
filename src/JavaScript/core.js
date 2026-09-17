@@ -1,25 +1,45 @@
-window._formsjs_trigger_onchange_function = function (event) {
-    let _method = event.target.getAttribute("data-formsjs-onchange");
+// Resolve a data-formsjs-* handler name from the element or its parent form.
+// Returns null when neither declares one.
+window._formsjs_resolve_method = function (element, attribute) {
+    let _method = element.getAttribute(attribute);
 
     if (! _method) {
-        _method = event.target.closest("form").getAttribute("data-formsjs-onchange");
+        let _form = element.closest("form");
+        _method = _form ? _form.getAttribute(attribute) : null;
     }
 
-    _method = _method.replace("(event)", "");
+    return _method ? _method.replace("(event)", "") : null;
+};
 
-    window[_method](event);
+// Call a window-level handler only if it exists. Handlers can be missing when
+// markup arrives after the FormsJS bundle was compiled (e.g. a Livewire
+// re-render introduces a field whose JS was never emitted into the page).
+window._formsjs_call_method = function (_method, argument) {
+    if (! _method) {
+        return false;
+    }
+
+    if (typeof window[_method] !== "function") {
+        console.warn("FormsJS: handler \"" + _method + "\" is not defined on window", argument);
+
+        return false;
+    }
+
+    window[_method](argument);
+
+    return true;
+};
+
+window._formsjs_trigger_onchange_function = function (event) {
+    let _method = window._formsjs_resolve_method(event.target, "data-formsjs-onchange");
+
+    window._formsjs_call_method(_method, event);
 };
 
 window._formsjs_trigger_onkeydown_function = function (event) {
-    let _method = event.target.getAttribute("data-formsjs-onkeydown");
+    let _method = window._formsjs_resolve_method(event.target, "data-formsjs-onkeydown");
 
-    if (! _method) {
-        _method = event.target.closest("form").getAttribute("data-formsjs-onkeydown");
-    }
-
-    _method = _method.replace("(event)", "");
-
-    window[_method](event);
+    window._formsjs_call_method(_method, event);
 };
 
 window._formsjs_trigger_onclick_function = function (event) {
@@ -44,17 +64,27 @@ window._formsjs_trigger_onclick_function = function (event) {
             window.FormsJS_disableOnSubmit(event);
         } else if (_method.includes(".")) {
             let _path = _method.split(".");
-            if (_path.length == 2) {
-                window[_path[0]][_path[1]](event);
-            }
 
-            if (_path.length == 3) {
-                window[_path[0]][_path[1]][_path[2]](event);
-            }
-
-            if (_path.length == 4) {
+            if (_path.length > 3) {
                 throw new Error("Method nesting is too deep. Max of 3!");
             }
+
+            // Walk the path without throwing when an intermediate object is
+            // missing, and keep the parent so `this` is preserved on call.
+            let _context = window;
+            let _fn = _path.reduce(function (obj, key) {
+                _context = obj;
+
+                return obj ? obj[key] : undefined;
+            }, window);
+
+            if (typeof _fn !== "function") {
+                console.warn("FormsJS: handler \"" + _method + "\" is not defined on window", event);
+
+                return;
+            }
+
+            _fn.call(_context, event);
         } else if (typeof window[_method] === "function") {
             window[_method](event);
         }
@@ -65,8 +95,12 @@ window._formsjs_set_bindings = function () {
     document.querySelectorAll("[data-formsjs-onload]").forEach(function (element) {
         if (! element.hasAttribute("data-formsjs-rendered")) {
             let _method = element.getAttribute("data-formsjs-onload");
-                window[_method](element);
+
+            // Leave the element unrendered when the handler is missing so a
+            // later FormsJS() call can still initialize it.
+            if (window._formsjs_call_method(_method, element)) {
                 element.setAttribute("data-formsjs-rendered", true);
+            }
         }
     });
 

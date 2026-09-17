@@ -129,4 +129,18 @@ class FormAssetsTest extends TestCase
         $this->assertStringContainsString('.addEventListener', $assets);
         $this->assertStringContainsString('_fields', $assets);
     }
+
+    public function test_core_guards_dynamic_handler_calls()
+    {
+        $this->form->make();
+
+        $assets = $this->formAssets->render('scripts');
+
+        $this->assertStringContainsString('window._formsjs_resolve_method', $assets);
+        $this->assertStringContainsString('window._formsjs_call_method', $assets);
+        $this->assertStringContainsString('typeof window[_method] !== "function"', $assets);
+        $this->assertStringNotContainsString("_method = _method.replace('(event)', '');\n                    window[_method](event);", $assets);
+        $this->assertStringNotContainsString('window[_path[0]][_path[1]](event)', $assets);
+        $this->assertStringContainsString('_fn.call(_context, event)', $assets);
+    }
 }
