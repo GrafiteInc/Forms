@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.8.1] - 2026-09-19
+
+### Refactor
+- improved mention listing for quill
+
 ## [v7.8.0] - 2026-09-17
 
 ### Fix
