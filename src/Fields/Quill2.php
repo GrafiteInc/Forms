@@ -40,7 +40,7 @@ class Quill2 extends Field
         return [
             '//cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.bubble.css',
             '//cdn.jsdelivr.net/npm/quill@2.0.3/dist/quill.snow.css',
-            '//cdn.jsdelivr.net/npm/quill-mention@3.4.0/dist/quill.mention.min.css',
+            '//cdn.jsdelivr.net/npm/quill-mention@6.1.1/dist/quill.mention.min.css',
         ];
     }
 
@@ -246,6 +246,16 @@ CSS;
         background-color: var(--bs-primary);
         color: var(--bs-white);
         cursor: pointer;
+    }
+
+    .ql-mention-list-container {
+        width: 60% !important;
+    }
+
+    .ql-mention-list-item {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
     }
 
     {$darkTheme}
