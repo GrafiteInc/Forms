@@ -26,4 +26,3 @@ if (! function_exists('tags_to_string')) {
         return collect($tags)->values()->implode(', ');
     }
 }
-

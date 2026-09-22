@@ -425,7 +425,7 @@ class FieldTest extends TestCase
             'toolbars' => ['basic'],
         ]), true);
 
-        $this->assertEquals(25, $defaults['mentionMaxItems']);
+        $this->assertEquals(15, $defaults['mentionMaxItems']);
         $this->assertEquals(200, $defaults['mentionDebounce']);
     }
 
