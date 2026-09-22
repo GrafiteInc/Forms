@@ -26,6 +26,7 @@ use Grafite\Forms\Fields\Month;
 use Grafite\Forms\Fields\Number;
 use Grafite\Forms\Fields\Password;
 use Grafite\Forms\Fields\PasswordWithReveal;
+use Grafite\Forms\Fields\Pin;
 use Grafite\Forms\Fields\Quill2;
 use Grafite\Forms\Fields\Radio;
 use Grafite\Forms\Fields\RadioInline;
@@ -388,6 +389,35 @@ class FieldTest extends TestCase
         $this->assertStringContainsString('type="range"', $rendered);
         $this->assertStringContainsString('value="100"', $rendered);
         $this->assertStringContainsString('value="400"', $rendered);
+    }
+
+    public function test_pin()
+    {
+        $field = Pin::make('code', [
+            'length' => 4,
+            'mode' => 'alphanumeric',
+        ])->toArray();
+
+        $this->assertEquals('hidden', $field['type']);
+        $this->assertEquals('_formsjs_pinField', $field['attributes']['data-formsjs-onload']);
+        $this->assertStringContainsString('_formsjs_pinField', $field['assets']['js']);
+        $this->assertStringContainsString('forms-pin-input', $field['assets']['styles']);
+        $this->assertStringContainsString('Pin_{id}', $field['template']);
+        $this->assertStringContainsString('"length":4', $field['attributes']['data-formsjs-onload-data']);
+        $this->assertStringContainsString('[^A-Za-z0-9]', $field['attributes']['data-formsjs-onload-data']);
+        $this->assertArrayNotHasKey('length', $field['attributes']);
+        $this->assertArrayNotHasKey('mode', $field['attributes']);
+
+        $rendered = (string) Pin::make('code');
+
+        $this->assertStringContainsString('id="Pin_Code"', $rendered);
+        $this->assertStringContainsString('id="Pin_Code_0"', $rendered);
+        $this->assertStringContainsString('id="Pin_Code_5"', $rendered);
+        $this->assertStringNotContainsString('id="Pin_Code_6"', $rendered);
+        $this->assertStringContainsString('for="Pin_Code_0"', $rendered);
+        $this->assertStringContainsString('autocomplete="one-time-code"', $rendered);
+        $this->assertStringContainsString('inputmode="numeric"', $rendered);
+        $this->assertStringContainsString('maxlength="1"', $rendered);
     }
 
     public function test_url()
