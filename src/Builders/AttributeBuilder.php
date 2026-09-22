@@ -20,6 +20,7 @@ class AttributeBuilder
         'autoplay' => true,
         'bgcolor' => true,
         'border' => true,
+        'capture' => true,
         'charset' => true,
         'checked' => true,
         'cite' => true,

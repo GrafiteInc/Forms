@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Grafite\Forms\Fields\Bootstrap\Select2;
 use Grafite\Forms\Fields\Bootstrap\SimpleSelect;
+use Grafite\Forms\Fields\Capture;
 use Grafite\Forms\Fields\Checkbox;
 use Grafite\Forms\Fields\CheckboxInline;
 use Grafite\Forms\Fields\Code;
@@ -328,6 +329,74 @@ class FieldTest extends TestCase
 
         $this->assertStringContainsString('Signature_Agreement_signature', $rendered);
         $this->assertStringContainsString('Reset Signature', $rendered);
+    }
+
+    public function test_capture()
+    {
+        $field = Capture::make('profile_photo', [
+            'facing_mode' => 'environment',
+            'format' => 'image/png',
+            'width' => 640,
+            'height' => 480,
+        ])->toArray();
+
+        $this->assertEquals('hidden', $field['type']);
+        $this->assertStringContainsString('_formsjs_captureField', $field['assets']['js']);
+        $this->assertStringContainsString('forms-capture-wrapper', $field['assets']['styles']);
+        $this->assertStringContainsString('Capture_{id}_Video', $field['template']);
+        $this->assertStringContainsString('Capture_{id}_Fallback', $field['template']);
+        $this->assertEquals('_formsjs_captureField', $field['attributes']['data-formsjs-onload']);
+        $this->assertStringContainsString('"facingMode":"environment"', $field['attributes']['data-formsjs-onload-data']);
+        $this->assertStringContainsString('"format":"image\/png"', $field['attributes']['data-formsjs-onload-data']);
+        $this->assertStringContainsString('"fileName":"capture.png"', $field['attributes']['data-formsjs-onload-data']);
+        $this->assertStringContainsString('"asFile":false', $field['attributes']['data-formsjs-onload-data']);
+
+        $this->assertArrayNotHasKey('facing_mode', $field['attributes']);
+        $this->assertArrayNotHasKey('as_file', $field['attributes']);
+        $this->assertArrayNotHasKey('quality', $field['attributes']);
+
+        $rendered = (string) Capture::make('profile_photo', [
+            'width' => 640,
+            'height' => 480,
+        ]);
+
+        $this->assertStringContainsString('Capture_Profile_photo', $rendered);
+        $this->assertStringContainsString('type="hidden"', $rendered);
+        $this->assertStringContainsString('aspect-ratio: 640 / 480;', $rendered);
+
+        // The fallback picker must never be submitted alongside the hidden
+        // input, so it carries no name.
+        $this->assertStringContainsString('<input type="file" id="Capture_Profile_photo_Fallback"', $rendered);
+        $this->assertStringNotContainsString('name="profile_photo" type="file"', $rendered);
+    }
+
+    public function test_capture_as_file()
+    {
+        $field = Capture::make('profile_photo', [
+            'as_file' => true,
+            'facing_mode' => 'environment',
+        ])->toArray();
+
+        $this->assertEquals('file', $field['type']);
+        $this->assertEquals('image', $field['factory']);
+        $this->assertEquals('image/*', $field['attributes']['accept']);
+        $this->assertEquals('environment', $field['attributes']['capture']);
+        $this->assertStringContainsString('"asFile":true', $field['attributes']['data-formsjs-onload-data']);
+        $this->assertStringNotContainsString('Capture_{id}_Fallback', $field['template']);
+
+        $rendered = (string) Capture::make('profile_photo', [
+            'as_file' => true,
+            'facing_mode' => 'environment',
+        ]);
+
+        $this->assertStringContainsString('type="file"', $rendered);
+        $this->assertStringContainsString('accept="image/*"', $rendered);
+        $this->assertStringContainsString('capture="environment"', $rendered);
+        $this->assertStringContainsString('Capture_Profile_photo_Video', $rendered);
+
+        // The named file input is the fallback picker in file mode, so there
+        // is no second unnamed one.
+        $this->assertEquals(1, substr_count($rendered, 'type="file"'));
     }
 
     public function test_quill2_mention_limits()
