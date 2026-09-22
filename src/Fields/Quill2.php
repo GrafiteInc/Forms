@@ -13,6 +13,8 @@ class Quill2 extends Field
             'mention_link_path',
             'mention_at_path',
             'mention_hash_path',
+            'mention_max_items',
+            'mention_debounce',
             'quill_theme',
             'toolbars',
         ];
@@ -292,6 +294,8 @@ HTML;
         $mentionAtPath = $options['mention_at_path'] ?? '{at}';
         $mentionHashPath = $options['mention_hash_path'] ?? '{hash}';
         $mentionLinkPath = $options['mention_link_path'] ?? '{link}';
+        $mentionMaxItems = (int) ($options['mention_max_items'] ?? 15);
+        $mentionDebounce = (int) ($options['mention_debounce'] ?? 200);
 
         $mentions = $options['mention_ats'] ?? [];
         $hashValues = $options['mention_hashes'] ?? [];
@@ -337,6 +341,8 @@ HTML;
             'mention_at_path' => $mentionAtPath,
             'mention_hash_path' => $mentionHashPath,
             'mention_link_path' => $mentionLinkPath,
+            'mentionMaxItems' => $mentionMaxItems,
+            'mentionDebounce' => $mentionDebounce,
             'atValues' => $mentions,
             'hashValues' => $hashValues,
             'linkValues' => $links,
@@ -466,8 +472,13 @@ HTML;
                                 },
                             },
                             mention: {
+                                offsetTop: 50,
+                                minChars: 3,
                                 allowedChars: /^[A-Za-z\sÅÄÖåäö]*$/,
                                 mentionDenotationChars: ["@", "#", "^"],
+                                onClose: function () {
+                                    clearTimeout(window[_instance+'_mentionTimer']);
+                                },
                                 source: function(searchTerm, renderList, mentionChar) {
                                     let values;
 
@@ -483,18 +494,27 @@ HTML;
                                         values = window[_instance+'_linkValues'];
                                     }
 
-                                    if (searchTerm.length === 0) {
-                                        renderList(values, searchTerm);
-                                    } else {
+                                    values = values || [];
+
+                                    clearTimeout(window[_instance+'_mentionTimer']);
+
+                                    window[_instance+'_mentionTimer'] = setTimeout(function () {
+                                        if (searchTerm.length === 0) {
+                                            renderList(values.slice(0, _config.mentionMaxItems), searchTerm);
+                                            return;
+                                        }
+
+                                        const term = searchTerm.toLowerCase();
                                         const matches = [];
-                                        for (let i = 0; i < values.length; i++) {
-                                            if (~values[i].value.toLowerCase().indexOf(searchTerm.toLowerCase())) {
+
+                                        for (let i = 0; i < values.length && matches.length < _config.mentionMaxItems; i++) {
+                                            if (values[i].value.toLowerCase().indexOf(term) !== -1) {
                                                 matches.push(values[i]);
                                             }
-
-                                            renderList(matches, searchTerm);
                                         }
-                                    }
+
+                                        renderList(matches, searchTerm);
+                                    }, _config.mentionDebounce);
                                 }
                             },
                             keyboard: {

@@ -26,6 +26,7 @@ use Grafite\Forms\Fields\Month;
 use Grafite\Forms\Fields\Number;
 use Grafite\Forms\Fields\Password;
 use Grafite\Forms\Fields\PasswordWithReveal;
+use Grafite\Forms\Fields\Quill2;
 use Grafite\Forms\Fields\Radio;
 use Grafite\Forms\Fields\RadioInline;
 use Grafite\Forms\Fields\Range;
@@ -326,6 +327,36 @@ class FieldTest extends TestCase
 
         $this->assertStringContainsString('Signature_Agreement_signature', $rendered);
         $this->assertStringContainsString('Reset Signature', $rendered);
+    }
+
+    public function test_quill2_mention_limits()
+    {
+        $field = Quill2::make('history', [
+            'toolbars' => ['basic'],
+            'mention_ats' => [['id' => 1, 'value' => 'Anna']],
+            'mention_max_items' => 10,
+            'mention_debounce' => 50,
+        ])->toArray();
+
+        $this->assertArrayNotHasKey('mention_max_items', $field['attributes']);
+        $this->assertArrayNotHasKey('mention_debounce', $field['attributes']);
+        $this->assertStringContainsString('_mentionTimer', $field['assets']['js']);
+
+        $config = json_decode(Quill2::onLoadJsData('History', [
+            'toolbars' => ['basic'],
+            'mention_max_items' => 10,
+            'mention_debounce' => 50,
+        ]), true);
+
+        $this->assertEquals(10, $config['mentionMaxItems']);
+        $this->assertEquals(50, $config['mentionDebounce']);
+
+        $defaults = json_decode(Quill2::onLoadJsData('History', [
+            'toolbars' => ['basic'],
+        ]), true);
+
+        $this->assertEquals(25, $defaults['mentionMaxItems']);
+        $this->assertEquals(200, $defaults['mentionDebounce']);
     }
 
     public function test_dual_range()
