@@ -3,6 +3,13 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.9.0] - 2026-09-22
+
+### Feature
+- new capture field
+- pin field
+- reduce impact of mention searches
+
 ## [v7.8.1] - 2026-09-19
 
 ### Refactor
