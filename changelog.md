@@ -3,6 +3,11 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v7.9.2] - 2026-11-17
+
+### Feat(fields)
+- add StatusSelect field
+
 ## [v7.9.1] - 2026-09-22
 
 ### Fix
