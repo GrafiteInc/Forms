@@ -4,6 +4,7 @@ namespace Tests\Unit;
 
 use Grafite\Forms\Fields\Bootstrap\Select2;
 use Grafite\Forms\Fields\Bootstrap\SimpleSelect;
+use Grafite\Forms\Fields\Bootstrap\StatusSelect;
 use Grafite\Forms\Fields\Capture;
 use Grafite\Forms\Fields\Checkbox;
 use Grafite\Forms\Fields\CheckboxInline;
@@ -264,6 +265,56 @@ class FieldTest extends TestCase
         $this->assertStringContainsString('_formsjs_bootstrapCustomSelectField', $field['assets']['js']);
         $this->assertEquals('select', $field['type']);
         $this->assertEquals('joe', $field['options']['joe']);
+    }
+
+    public function test_status_select()
+    {
+        $indicators = [
+            'open' => ['color' => 'success', 'status' => 'Active'],
+            'closed' => ['color' => 'danger', 'status' => 'Inactive'],
+        ];
+
+        $field = StatusSelect::make('status', [
+            'options' => [
+                'Open' => 'open',
+                'Closed' => 'closed',
+            ],
+            'indicators' => $indicators,
+        ])->toArray();
+
+        $this->assertEquals('select', $field['type']);
+        $this->assertEquals('open', $field['options']['Open']);
+        $this->assertEquals('form-select', $field['attributes']['class']);
+        $this->assertEquals('_formsjs_statusSelectField', $field['attributes']['data-formsjs-onload']);
+        $this->assertEquals($indicators, json_decode($field['attributes']['data-formsjs-onload-data'], true));
+        $this->assertArrayNotHasKey('indicators', $field['attributes']);
+        $this->assertStringContainsString('window._formsjs_statusSelectField', $field['assets']['js']);
+        $this->assertStringContainsString('.status-select-dot', $field['assets']['styles']);
+
+        $rendered = (string) StatusSelect::make('status', [
+            'options' => [
+                'Open' => 'open',
+                'Closed' => 'closed',
+            ],
+            'indicators' => $indicators,
+        ]);
+
+        $this->assertStringContainsString('<select', $rendered);
+        $this->assertStringContainsString('class="form-select"', $rendered);
+        $this->assertStringContainsString('data-formsjs-onload="_formsjs_statusSelectField"', $rendered);
+        $this->assertStringContainsString('<option value="open">Open</option>', $rendered);
+        $this->assertStringNotContainsString('indicators=', $rendered);
+    }
+
+    public function test_status_select_without_indicators()
+    {
+        $field = StatusSelect::make('status', [
+            'options' => [
+                'Open' => 'open',
+            ],
+        ])->toArray();
+
+        $this->assertEquals('{}', $field['attributes']['data-formsjs-onload-data']);
     }
 
     public function test_select_with_options_method()
