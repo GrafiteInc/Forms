@@ -68,13 +68,17 @@ class DropdownSelect extends Field
     overflow-wrap: anywhere;
 }
 
+.dropdown-select .dropdown-select-menu .dropdown-item.dropdown-select-grouped-item {
+    padding-left: calc(var(--bs-dropdown-item-padding-x, 1rem) + 0.75rem);
+}
+
 .dropdown-select .dropdown-select-search {
     position: sticky;
     top: calc(-1 * var(--bs-dropdown-padding-y, 0.5rem));
     z-index: 1;
     margin-top: calc(-1 * var(--bs-dropdown-padding-y, 0.5rem));
     margin-bottom: 0.25rem;
-    padding: var(--bs-dropdown-padding-y, 0.5rem) var(--bs-dropdown-item-padding-x, 1rem);
+    padding: 0.75rem var(--bs-dropdown-item-padding-x, 1rem);
     background-color: var(--bs-dropdown-bg, #fff);
 }
 
@@ -161,11 +165,11 @@ CSS;
             let items = [];
             let groups = [];
 
-            let addItem = function (option, groupDisabled) {
+            let addItem = function (option, groupDisabled, grouped) {
                 let li = document.createElement('li');
                 let item = document.createElement('button');
                 item.type = 'button';
-                item.className = 'dropdown-item';
+                item.className = grouped ? 'dropdown-item dropdown-select-grouped-item' : 'dropdown-item';
                 item.setAttribute('data-value', option.value);
                 item.textContent = labelFor(option);
                 item.disabled = option.disabled || groupDisabled;
@@ -204,7 +208,7 @@ CSS;
                     let group = { header: header, entries: [] };
 
                     Array.from(child.children).forEach(function (option) {
-                        group.entries.push(addItem(option, child.disabled));
+                        group.entries.push(addItem(option, child.disabled, true));
                     });
 
                     groups.push(group);
