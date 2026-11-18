@@ -31,6 +31,21 @@ class CalendarPicker extends Field
         'week_start' => 0,
     ];
 
+    /**
+     * Bootstrap's dropdown Popper config. The fixed strategy lets the menu
+     * escape a scrollable modal body. When it fits neither below nor above
+     * the toggle (a phone, say), flip gives up, so preventOverflow's altAxis
+     * slides it back on screen, over the toggle if need be.
+     */
+    protected const POPPER = [
+        'strategy' => 'fixed',
+        'modifiers' => [
+            ['name' => 'offset', 'options' => ['offset' => [0, 4]]],
+            ['name' => 'flip', 'options' => ['padding' => 8]],
+            ['name' => 'preventOverflow', 'options' => ['altAxis' => true, 'tether' => false, 'padding' => 8]],
+        ],
+    ];
+
     protected static function getType()
     {
         return 'hidden';
@@ -109,6 +124,7 @@ class CalendarPicker extends Field
             'minute_step' => max(1, min(30, (int) static::setting($options, 'minute_step'))),
             'default_time' => (string) static::setting($options, 'default_time'),
             'week_start' => ((int) static::setting($options, 'week_start')) % 7,
+            'popper_config' => json_encode(static::POPPER),
         ];
     }
 
@@ -205,6 +221,10 @@ class CalendarPicker extends Field
 
 .calendar-picker-menu {
     min-width: 18rem;
+    max-height: calc(100vh - 1rem);
+    max-height: calc(100dvh - 1rem);
+    overflow-y: auto;
+    overscroll-behavior: contain;
     padding: .75rem;
 }
 

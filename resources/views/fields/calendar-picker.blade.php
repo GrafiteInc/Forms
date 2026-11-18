@@ -27,8 +27,7 @@
                 class="form-select text-start calendar-picker-toggle{{ $picker['invalid'] ? ' is-invalid' : '' }}"
                 data-bs-toggle="dropdown"
                 data-bs-auto-close="outside"
-                data-bs-offset="0,4"
-                data-bs-popper-config='{"strategy":"fixed"}'
+                data-bs-popper-config="{{ $picker['popper_config'] }}"
                 aria-haspopup="dialog"
                 aria-expanded="false"
             >

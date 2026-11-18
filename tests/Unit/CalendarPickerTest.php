@@ -39,7 +39,8 @@ class CalendarPickerTest extends TestCase
         $this->assertStringContainsString('data-calendar-picker-time="false"', $html);
         $this->assertStringContainsString('data-bs-toggle="dropdown"', $html);
         $this->assertStringContainsString('data-bs-auto-close="outside"', $html);
-        $this->assertStringContainsString('data-bs-popper-config=\'{"strategy":"fixed"}\'', $html);
+        $this->assertStringContainsString('data-bs-popper-config="{&quot;strategy&quot;:&quot;fixed&quot;', $html);
+        $this->assertStringContainsString('&quot;altAxis&quot;:true,&quot;tether&quot;:false', $html);
         $this->assertStringContainsString('class="dropdown-menu calendar-picker-menu" role="dialog" aria-label="Choose a date" wire:ignore></div>', $html);
         $this->assertStringStartsWith('<div class="'.config('forms.form.group-class', 'form-group').'">', $html);
         $this->assertStringNotContainsString('input-group', $html);
