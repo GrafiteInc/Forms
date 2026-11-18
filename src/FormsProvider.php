@@ -31,6 +31,13 @@ class FormsProvider extends ServiceProvider
             __DIR__.'/../config/forms.php' => base_path('config/forms.php'),
         ]);
 
+        // Views for fields that render through getView(), e.g. CalendarPicker.
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'forms');
+
+        $this->publishes([
+            __DIR__.'/../resources/views' => resource_path('views/vendor/forms'),
+        ], 'forms-views');
+
         $this->app['blade.compiler']->directive('forms', function ($nonce) {
             return "<?php echo app('".FormAssets::class."')->render('all', {$nonce}); ?>";
         });
