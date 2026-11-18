@@ -3,6 +3,25 @@ All notable changes to this project will be documented in this file.
 This project adheres to [Semantic Versioning](http://semver.org/).
 ----
 
+## [v8.0.0] - 2026-11-18
+
+### Docs(readme)
+- update PHP and Laravel requirements
+
+### Feat(fields)
+- add SearchableDropdownSelect field
+- add DropdownSelect field
+- add CalendarPicker field
+
+### Fix(calendar-picker)
+- improve dropdown positioning and overflow
+
+### Build(deps)!
+- drop Laravel 11 support
+
+### Ci(php-package-tests)
+- update PHP versions to 8.4
+
 ## [v7.9.2] - 2026-11-17
 
 ### Feat(fields)
