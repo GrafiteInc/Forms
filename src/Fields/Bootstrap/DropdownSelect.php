@@ -12,6 +12,9 @@ use Grafite\Forms\Fields\Field;
  * `change` listeners keep working. The dropdown is inserted directly after
  * the select so `.is-invalid ~ .invalid-feedback` validation styling still
  * applies. Selects with `multiple` are left as native selects.
+ *
+ * When the onload data contains `search: true` (see SearchableDropdownSelect)
+ * a filter box is added to the top of the menu.
  */
 class DropdownSelect extends Field
 {
@@ -65,6 +68,20 @@ class DropdownSelect extends Field
     overflow-wrap: anywhere;
 }
 
+.dropdown-select .dropdown-select-search {
+    position: sticky;
+    top: calc(-1 * var(--bs-dropdown-padding-y, 0.5rem));
+    z-index: 1;
+    margin-top: calc(-1 * var(--bs-dropdown-padding-y, 0.5rem));
+    margin-bottom: 0.25rem;
+    padding: var(--bs-dropdown-padding-y, 0.5rem) var(--bs-dropdown-item-padding-x, 1rem);
+    background-color: var(--bs-dropdown-bg, #fff);
+}
+
+.dropdown-select .dropdown-select-empty .dropdown-item-text {
+    color: var(--bs-secondary-color, #6c757d);
+}
+
 .is-invalid ~ .dropdown-select .dropdown-select-toggle {
     border-color: var(--bs-form-invalid-border-color, #dc3545);
 }
@@ -92,6 +109,18 @@ CSS;
             let labelFor = function (option) {
                 return (option && option.textContent.trim()) || ' ';
             };
+
+            let normalize = function (value) {
+                return value.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+            };
+
+            let config = {};
+
+            try {
+                config = JSON.parse(element.getAttribute('data-formsjs-onload-data')) || {};
+            } catch (error) {
+                config = {};
+            }
 
             let wrapper = document.createElement('div');
             wrapper.className = 'dropdown dropdown-select';
@@ -130,6 +159,7 @@ CSS;
             menu.className = 'dropdown-menu dropdown-select-menu';
 
             let items = [];
+            let groups = [];
 
             let addItem = function (option, groupDisabled) {
                 let li = document.createElement('li');
@@ -149,9 +179,13 @@ CSS;
                     element.dispatchEvent(new Event('change', { bubbles: true }));
                 });
 
-                items.push({ item: item, option: option });
+                let entry = { li: li, item: item, option: option, text: normalize(labelFor(option)) };
+
+                items.push(entry);
                 li.appendChild(item);
                 menu.appendChild(li);
+
+                return entry;
             };
 
             Array.from(element.children).forEach(function (child) {
@@ -167,9 +201,13 @@ CSS;
                     header.appendChild(h6);
                     menu.appendChild(header);
 
+                    let group = { header: header, entries: [] };
+
                     Array.from(child.children).forEach(function (option) {
-                        addItem(option, child.disabled);
+                        group.entries.push(addItem(option, child.disabled));
                     });
+
+                    groups.push(group);
                 } else if (child.tagName === 'OPTION') {
                     addItem(child, false);
                 }
@@ -203,6 +241,158 @@ CSS;
             }
 
             sync();
+
+            if (config.search) {
+                wrapper.classList.add('dropdown-select-searchable');
+
+                let searchItem = document.createElement('li');
+                searchItem.className = 'dropdown-select-search';
+
+                let search = document.createElement('input');
+                search.type = 'search';
+                search.className = 'form-control form-control-sm';
+                search.autocomplete = 'off';
+                search.placeholder = config.placeholder || 'Search...';
+                search.setAttribute('aria-label', config.placeholder || 'Search...');
+                searchItem.appendChild(search);
+                menu.prepend(searchItem);
+
+                let empty = document.createElement('li');
+                empty.className = 'dropdown-select-empty';
+                empty.hidden = true;
+
+                let emptyText = document.createElement('span');
+                emptyText.className = 'dropdown-item-text';
+                emptyText.textContent = config.noResults || 'No results found';
+                empty.appendChild(emptyText);
+                menu.appendChild(empty);
+
+                let filter = function () {
+                    let query = normalize(search.value);
+                    let matches = 0;
+
+                    items.forEach(function (entry) {
+                        let match = query === '' || entry.text.indexOf(query) !== -1;
+
+                        entry.li.hidden = ! match;
+
+                        if (match) {
+                            matches++;
+                        }
+                    });
+
+                    groups.forEach(function (group) {
+                        group.header.hidden = group.entries.every(function (entry) {
+                            return entry.li.hidden;
+                        });
+                    });
+
+                    empty.hidden = matches > 0;
+                };
+
+                let visibleItems = function () {
+                    return items.filter(function (entry) {
+                        return ! entry.li.hidden && ! entry.item.disabled;
+                    }).map(function (entry) {
+                        return entry.item;
+                    });
+                };
+
+                let isTypedCharacter = function (event) {
+                    return event.key.length === 1
+                        && event.key !== ' '
+                        && ! event.ctrlKey
+                        && ! event.metaKey
+                        && ! event.altKey;
+                };
+
+                search.addEventListener('input', filter);
+
+                search.addEventListener('keydown', function (event) {
+                    if (event.key === 'ArrowDown') {
+                        let first = visibleItems()[0];
+
+                        event.preventDefault();
+
+                        if (first) {
+                            first.focus();
+                        }
+                    } else if (event.key === 'Enter') {
+                        let first = visibleItems()[0];
+
+                        // Never let Enter in the search box submit the form.
+                        event.preventDefault();
+
+                        if (first) {
+                            first.click();
+                        }
+                    }
+                });
+
+                // Bootstrap handles dropdown arrow keys in a document capture listener and
+                // stops propagation, so menu keys are routed through one window capture
+                // listener that runs first.
+                if (! window._formsjs_dropdownSelectKeydown) {
+                    window._formsjs_dropdownSelectKeydown = true;
+
+                    window.addEventListener('keydown', function (event) {
+                        let target = event.target.closest ? event.target.closest('.dropdown-select-menu') : null;
+
+                        if (target && target._formsjsKeydown) {
+                            target._formsjsKeydown(event);
+                        }
+                    }, true);
+                }
+
+                menu._formsjsKeydown = function (event) {
+                    if (event.target === search) {
+                        return;
+                    }
+
+                    if (event.key === 'ArrowUp' && event.target === visibleItems()[0]) {
+                        event.preventDefault();
+                        event.stopPropagation();
+                        search.focus();
+                    } else if (isTypedCharacter(event) || event.key === 'Backspace') {
+                        // Move focus without preventing the default so the key lands in the search box.
+                        search.focus();
+                    }
+                };
+
+                toggle.addEventListener('keydown', function (event) {
+                    if (! isTypedCharacter(event) || toggle.classList.contains('show')) {
+                        return;
+                    }
+
+                    event.preventDefault();
+                    search.value = event.key;
+                    filter();
+                    toggle.click();
+                });
+
+                toggle.addEventListener('shown.bs.dropdown', function () {
+                    let active = menu.querySelector('.dropdown-item.active');
+
+                    if (search.value === '' && active) {
+                        menu.scrollTop = Math.max(0, active.offsetTop - searchItem.offsetHeight);
+                    }
+
+                    search.focus();
+                    search.setSelectionRange(search.value.length, search.value.length);
+                });
+
+                toggle.addEventListener('hidden.bs.dropdown', function () {
+                    if (search.value !== '') {
+                        search.value = '';
+                        filter();
+                    }
+
+                    // Keyboard selection leaves focus inside the now-hidden menu.
+                    if (menu.contains(document.activeElement)) {
+                        toggle.focus();
+                    }
+                });
+            }
 
             wrapper.appendChild(toggle);
             wrapper.appendChild(menu);

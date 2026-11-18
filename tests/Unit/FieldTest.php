@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use Grafite\Forms\Fields\Bootstrap\DropdownSelect;
+use Grafite\Forms\Fields\Bootstrap\SearchableDropdownSelect;
 use Grafite\Forms\Fields\Bootstrap\Select2;
 use Grafite\Forms\Fields\Bootstrap\SimpleSelect;
 use Grafite\Forms\Fields\Bootstrap\StatusSelect;
@@ -358,6 +359,70 @@ class FieldTest extends TestCase
         ]);
 
         $this->assertMatchesRegularExpression('/<select[^>]*><option value="" selected>Pick one<\/option><option value="open">Open<\/option>/', $rendered);
+    }
+
+    public function test_searchable_dropdown_select()
+    {
+        $options = [
+            'Open' => 'open',
+            'Closed' => 'closed',
+        ];
+
+        $field = SearchableDropdownSelect::make('status', [
+            'options' => $options,
+        ])->toArray();
+
+        $this->assertEquals('select', $field['type']);
+        $this->assertEquals('open', $field['options']['Open']);
+        $this->assertEquals('form-select', $field['attributes']['class']);
+        $this->assertEquals('_formsjs_dropdownSelectField', $field['attributes']['data-formsjs-onload']);
+        $this->assertEquals([
+            'search' => true,
+            'placeholder' => 'Search...',
+            'noResults' => 'No results found',
+        ], json_decode($field['attributes']['data-formsjs-onload-data'], true));
+        $this->assertStringContainsString('window._formsjs_dropdownSelectField', $field['assets']['js']);
+        $this->assertStringContainsString('dropdown-select-search', $field['assets']['js']);
+        $this->assertStringContainsString('.dropdown-select-search', $field['assets']['styles']);
+
+        $rendered = (string) SearchableDropdownSelect::make('status', [
+            'options' => $options,
+        ]);
+
+        $this->assertStringContainsString('<select', $rendered);
+        $this->assertStringContainsString('class="form-select"', $rendered);
+        $this->assertStringContainsString('data-formsjs-onload="_formsjs_dropdownSelectField"', $rendered);
+        $this->assertStringContainsString('data-formsjs-onload-data=', $rendered);
+        $this->assertStringContainsString('<option value="open">Open</option>', $rendered);
+    }
+
+    public function test_searchable_dropdown_select_custom_labels()
+    {
+        $field = SearchableDropdownSelect::make('status', [
+            'options' => [
+                'Open' => 'open',
+            ],
+            'search_placeholder' => 'Find a status',
+            'no_results_label' => 'Nothing matches',
+        ])->toArray();
+
+        $config = json_decode($field['attributes']['data-formsjs-onload-data'], true);
+
+        $this->assertEquals('Find a status', $config['placeholder']);
+        $this->assertEquals('Nothing matches', $config['noResults']);
+        $this->assertArrayNotHasKey('search_placeholder', $field['attributes']);
+        $this->assertArrayNotHasKey('no_results_label', $field['attributes']);
+
+        $rendered = (string) SearchableDropdownSelect::make('status', [
+            'options' => [
+                'Open' => 'open',
+            ],
+            'search_placeholder' => 'Find a status',
+            'no_results_label' => 'Nothing matches',
+        ]);
+
+        $this->assertStringNotContainsString('search_placeholder=', $rendered);
+        $this->assertStringNotContainsString('no_results_label=', $rendered);
     }
 
     public function test_select_with_options_method()
