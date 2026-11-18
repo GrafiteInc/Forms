@@ -2,6 +2,7 @@
 
 namespace Tests\Unit;
 
+use Grafite\Forms\Fields\Bootstrap\DropdownSelect;
 use Grafite\Forms\Fields\Bootstrap\Select2;
 use Grafite\Forms\Fields\Bootstrap\SimpleSelect;
 use Grafite\Forms\Fields\Bootstrap\StatusSelect;
@@ -315,6 +316,48 @@ class FieldTest extends TestCase
         ])->toArray();
 
         $this->assertEquals('{}', $field['attributes']['data-formsjs-onload-data']);
+    }
+
+    public function test_dropdown_select()
+    {
+        $options = [
+            'Open' => 'open',
+            'Closed' => 'closed',
+        ];
+
+        $field = DropdownSelect::make('status', [
+            'options' => $options,
+        ])->toArray();
+
+        $this->assertEquals('select', $field['type']);
+        $this->assertEquals('open', $field['options']['Open']);
+        $this->assertEquals('form-select', $field['attributes']['class']);
+        $this->assertEquals('_formsjs_dropdownSelectField', $field['attributes']['data-formsjs-onload']);
+        $this->assertStringContainsString('window._formsjs_dropdownSelectField', $field['assets']['js']);
+        $this->assertStringContainsString('.dropdown-select', $field['assets']['styles']);
+
+        $rendered = (string) DropdownSelect::make('status', [
+            'options' => $options,
+        ]);
+
+        $this->assertStringContainsString('<select', $rendered);
+        $this->assertStringContainsString('class="form-select"', $rendered);
+        $this->assertStringContainsString('data-formsjs-onload="_formsjs_dropdownSelectField"', $rendered);
+        $this->assertStringContainsString('<option value="open">Open</option>', $rendered);
+        $this->assertStringNotContainsString('data-formsjs-onload-data', $rendered);
+    }
+
+    public function test_dropdown_select_with_null_value()
+    {
+        $rendered = (string) DropdownSelect::make('status', [
+            'options' => [
+                'Open' => 'open',
+            ],
+            'null_value' => true,
+            'null_label' => 'Pick one',
+        ]);
+
+        $this->assertMatchesRegularExpression('/<select[^>]*><option value="" selected>Pick one<\/option><option value="open">Open<\/option>/', $rendered);
     }
 
     public function test_select_with_options_method()
